@@ -158,3 +158,63 @@ Moja rekomendacja pozostaje przy Hermesie na etap pierwszy — bo kontrola dost�
 wymaganiem numer jeden, a konfiguracja zamiast kodu przy jednej osobie technicznej ma
 znaczenie. Ale **przewaga jest teraz cienka** i uczciwie: gdyby doszedł deweloper
 TypeScriptu, wybrałbym Eve.
+
+---
+
+## 6. Aneks — praktyki z transkrypcji o oprogramowaniu osobistym
+
+Materiał innego gatunku (budowanie osobistego oprogramowania przez nietechnicznych),
+więc architektury nie zmienia. Cztery rzeczy przenoszą się wprost.
+
+### 6.1 Dyscyplina czterech plików — adoptuję do repozytorium
+
+| Plik | Zawartość | Po co u nas |
+|---|---|---|
+| `project.md` | dla kogo, co się dzieje dziś, co ma się dziać zamiast, gdzie ma działać, co ma zostać prywatne | zastępuje rozproszone ustalenia z rozmów |
+| `decisions.md` | **każdy wybór dotyczący kosztu, danych, dostępu, wdrożenia lub odwracalności: opcje, rekomendacja, uzasadnienie** | przy jednej osobie technicznej to jedyna obrona przed bus factor = 1 |
+| `scenarios.md` | realne sytuacje, które system ma obsłużyć | to są nasze evals, zapisane zanim powstanie kod |
+| `CLAUDE.md` | jak ma się zachowywać narzędzie budujące | krótkie, zmienne — trwała prawda siedzi w trzech powyższych |
+
+Zasada towarzysząca: **model ma ujawniać wybory zwykłym językiem, zanim je podejmie** —
+dwie lub trzy realne opcje, rekomendacja, co staje się łatwiejsze, a co trudniejsze
+do zmiany później.
+
+### 6.2 „Ukrycie przycisku to nie jest kontrola dostępu"
+
+Autoryzacja musi być egzekwowana na poziomie danych, nie interfejsu.
+**To potwierdza decyzję z noty 03**, żeby agenci stanowiskowi nie mieli własnych kluczy:
+`TEAMS_ALLOWED_USERS` jest listą na poziomie kanału, a nie na poziomie danych.
+Prawdziwą granicą jest to, jakie klucze profil w ogóle posiada.
+
+### 6.3 Luka, której nie pokryliśmy: kopie zapasowe
+
+W żadnej nocie nie ma słowa o backupie, a mamy zaplanowane 27 profili z narastającą
+pamięcią. **Do planu wchodzi:** cykliczny eksport profili (`hermes profile export` daje
+archiwum bez kluczy) plus **udowodnione odtworzenie** — nie „zrobiliśmy kopię", tylko
+„odtworzyliśmy ją i sprawdziliśmy, że działa". Element do etapu pierwszego, ok. 1 dzień.
+
+### 6.4 Rewizja: pilot nie powinien startować na danych osobowych
+
+Rada z materiału: nie zaczynaj od wrażliwych danych, nie wchodź od razu na trudny poziom.
+Zestawione z naszym **nierozwiązanym ryzykiem nr 2** (gdzie fizycznie mieszka wspólna
+pamięć) daje konkretny wniosek.
+
+Nota 03 wskazywała księgowość jako pilota — bo tam są gotowe skille i wynik sprawdzalny
+co do złotówki. To nadal dobry wybór **procesu**, ale niesie numery PPE i dane z umów.
+
+**Rozwiązanie:** rozdzielić dwie rzeczy, które niepotrzebnie związaliśmy.
+Pilot rusza na procesie księgowym, ale **ze wspólną pamięcią wyłączoną albo trzymaną
+wyłącznie lokalnie**, dopóki kwestia rezydencji danych nie zostanie rozstrzygnięta.
+Dowodzimy, że proces działa; włączenie pamięci domenowej to osobna decyzja, po sprawdzeniu
+dostawcy i podpisaniu umowy powierzenia.
+
+### 6.5 Testowanie
+
+„Nie można poprosić agenta kodującego, żeby przetestował wszystko za ciebie, i przyjąć,
+że skoro mówi »gotowe«, to jest gotowe." Dotyczy to także mnie przy budowie uprzęży —
+kryterium odbioru etapu pierwszego zostaje takie, jak w nocie 03: trzy zamknięte miesiące
+przeliczone przez agenta zgadzają się co do złotówki z liczeniem ręcznym.
+
+*Uwaga o źródle: materiał pochodzi od twórcy promującego własne produkty (OpenBrain,
+OpenSkills, OpenEngine, Ringer). Praktyki powyżej są niezależne od tych narzędzi;
+samych narzędzi nie oceniam, bo nie są nam potrzebne.*
