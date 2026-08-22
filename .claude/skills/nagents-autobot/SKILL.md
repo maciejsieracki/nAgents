@@ -486,6 +486,32 @@ roli, a `label` wywołania ma zawierać rolę i temat.
 **Każde wywołanie `agent()` musi mieć jawnie podane `model` i `effort`.**
 Pominięcie któregokolwiek oznacza, że przydział z §11.2 nie został zastosowany.
 
+### 11.3.1 Dobierz szerokość fan-outu do faktycznego limitu
+
+Workflow uruchamia równolegle **najwyżej `min(16, liczba_CPU − 2)`** agentów.
+Nadmiar czeka w kolejce. **Sprawdź limit, zanim zaplanujesz rozrzut:**
+
+```bash
+nproc        # limit = min(16, nproc - 2)
+```
+
+W kontenerze o 4 CPU limit wynosi **2**. Zlecenie siedmiu agentów nie daje wtedy
+siedmiokrotnego przyspieszenia — daje cztery fale po dwóch, plus koszt
+przełączania i siedem razy powtórzony wstęp do promptu.
+
+**Reguła:** liczba równoległych wywołań w jednej fali powinna odpowiadać limitowi.
+Gdy zadań jest więcej niż miejsc, **łącz je w grubsze paczki** zamiast mnożyć
+cienkich agentów. Cztery paczki przy limicie dwóch kończą się szybciej niż
+siedem drobnych.
+
+Zaobserwowane w praktyce (2026-08-22, workflow `nagents-pytania-abc`): siedmiu
+Operatorów przy limicie 2 wykonywało się falami po dwóch — trzeci startował
+dokładnie w chwili zakończenia pierwszego.
+
+**Uwaga o zbieżności:** limit techniczny (2) zgadza się z pulą tematów z §10 (2),
+ustaloną z zupełnie innego powodu — pojemności przeglądu jednej osoby.
+Przy zmianie któregokolwiek sprawdź, czy drugi nadal ma sens.
+
 ### 11.4 Co orkiestrator robi sam
 
 Wyjątki od §11.1, bo z definicji nie da się ich delegować:
