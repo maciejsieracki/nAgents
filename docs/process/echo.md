@@ -54,3 +54,30 @@ kto:  właściciel
 4. Przy kilku zebranych tematach — workflow z fan-outem, nie kolejka wywołań.
 
 **Zapisane w:** `.claude/skills/nagents-autobot/SKILL.md` §11.
+
+---
+
+### ECHO-002 — dispatch wyłącznie przez workflow
+
+```text
+ECHO-002 = przyjęte
+data: 2026-08-22
+kto:  właściciel
+```
+
+**Treść decyzji, zapisana literalnie:**
+
+> „Jeżeli przydzielasz subagentów do pracy, dawaj zawsze w agencie workflow,
+> ponieważ wtedy możesz wyznaczyć afort. Jeśli przydzielasz zwykłych subagentów
+> bez workflow, nie możesz tego zrobić."
+
+**Skutek:**
+
+1. **Każde** zlecenie pracy subagentowi idzie przez narzędzie workflow — także
+   pojedyncze, drobne zadanie.
+2. Powód techniczny: zwykłe wywołanie subagenta przyjmuje wyłącznie model;
+   **effort jest ustawialny tylko w workflow**. Bez workflow przydział
+   „Sonnet 5, effort wysoki" z ECHO-001 jest niewykonalny.
+3. Każde wywołanie `agent()` musi mieć **jawnie** podane `model` i `effort`.
+
+**Zapisane w:** `.claude/skills/nagents-autobot/SKILL.md` §11.3.

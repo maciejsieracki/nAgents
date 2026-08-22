@@ -459,16 +459,32 @@ opcjonalna. **W nAgents jest normą.**
 Przydział jest rozstrzygnięty i **nie wymaga potwierdzania przy każdym dispatchu.**
 Zmiana wymaga ECHO.
 
-### 11.3 Kiedy pojedynczy subagent, a kiedy workflow
+### 11.3 Zawsze przez workflow — nigdy przez zwykłego subagenta
+
+Decyzja właściciela z 2026-08-22, zapisana jako **ECHO-002**:
+
+> **Każde zlecenie pracy subagentowi idzie przez narzędzie workflow.**
+> Powód jest techniczny: zwykłe wywołanie subagenta przyjmuje wyłącznie model,
+> a **effort da się przypisać tylko w workflow**. Bez workflow nie da się
+> zrealizować przydziału z §11.2, więc dispatch poza workflow jest naruszeniem
+> procesu — nawet dla pojedynczego, drobnego zadania.
 
 | Sytuacja | Narzędzie |
 |---|---|
-| Jeden temat, jedna runda | pojedynczy subagent per rola |
-| **Kilka tematów zebranych naraz** | **workflow z fan-outem** — nie kolejka pojedynczych wywołań |
-| Analiza wymagająca wielu niezależnych perspektyw | workflow z równoległymi rolami |
+| Jedno zadanie, jedna rola | **workflow** z jednym wywołaniem `agent()` |
+| Jeden temat, pełna pętla | **workflow**: etapy Operator → Evaluator → Final Control |
+| Kilka tematów zebranych naraz | **workflow** z fan-outem — nie kolejka wywołań |
+| Analiza wymagająca wielu perspektyw | **workflow** z równoległymi rolami |
+
+Nie ma wiersza „bez workflow". Jeden agent to nadal workflow — po prostu z jednym
+wywołaniem.
 
 Przy workflow obowiązuje ta sama pętla: Operator → Evaluator → Final Control.
-Etapy workflow odwzorowują role, nie zastępują ich.
+Etapy workflow **odwzorowują role, nie zastępują ich** — nazwa etapu ma odpowiadać
+roli, a `label` wywołania ma zawierać rolę i temat.
+
+**Każde wywołanie `agent()` musi mieć jawnie podane `model` i `effort`.**
+Pominięcie któregokolwiek oznacza, że przydział z §11.2 nie został zastosowany.
 
 ### 11.4 Co orkiestrator robi sam
 
