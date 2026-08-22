@@ -5,8 +5,10 @@ description: >-
   checklisty ról Operator/Evaluator/Final Control, allowlisty, izolacja przez worktree,
   plan testów oparty na scenarios.md, effort per rola, limit rund, PASS-WITH-NOTES,
   manual resume, watchdog, kontrakt raportu, szablon pytania ABC, rejestr ECHO oraz
-  siedem twardych barier. Używaj razem ze skillem `autobots` przy rozpoczęciu pracy,
-  przejęciu tematu, dispatchu, kontroli statusu i przygotowaniu integracji w nAgents.
+  siedem twardych barier, dyscyplina źródeł i korekt, dyscyplina zakresu, konwencje
+  repozytorium i szybki start dla nowego agenta. Używaj razem ze skillem `autobots`
+  przy rozpoczęciu pracy, przejęciu tematu, dispatchu, kontroli statusu, przygotowaniu
+  integracji oraz przy wchodzeniu w projekt nAgents po raz pierwszy.
 ---
 
 # nAgents — wiązania procesu AutoBot
@@ -37,6 +39,7 @@ w zdaniu zamykającym. Nic nie zostało wyłączone.
 | 8 · Watchdog | §8 — ZWIS 20 min, pula 2, obsadzanie slotów |
 | 9 · Dobre praktyki | §9 — siedem barier, recon, przegląd diffu, bramka push |
 | 10 · Meldunek startowy | §10 — wzór dla tego projektu |
+| *(poza szkieletem)* | §11–§15 — praktyki wypracowane w tym projekcie |
 
 ---
 
@@ -433,3 +436,198 @@ Nie zaczynam zmian, dopóki nie potwierdzę właściwego ID, GOAL, allowlisty
 i decyzji wymaganych od właściciela. Pracuję wyłącznie w bieżącym, czystym
 worktree.
 ```
+
+---
+
+# Praktyki tego projektu — poza szkieletem
+
+Sekcje 11–15 nie mają odpowiednika w szkielecie uniwersalnym. To reguły
+wypracowane w trakcie pracy nad nAgents, w tym **wyprowadzone z faktycznie
+popełnionych błędów**. Obowiązują tak samo jak reszta.
+
+## 11. Dyscyplina źródeł i korekt
+
+### 11.1 Hierarchia źródeł
+
+Projekt opiera się na ocenie cudzych narzędzi. Dwa razy pomyliłem się, opierając
+na źródle niższego rzędu. Stąd twarda kolejność:
+
+| Rząd | Źródło | Status |
+|---|---|---|
+| 1 | oficjalna dokumentacja narzędzia | **rozstrzygające** |
+| 2 | repozytorium i zgłoszenia błędów projektu | rozstrzygające dla stanu faktycznego |
+| 3 | wpis producenta, notatka o wydaniu | wiarygodne, ale marketing |
+| 4 | artykuł branżowy, podsumowanie | poszlaka — sprawdź w rzędzie 1 |
+| 5 | film promocyjny, materiał prowadzący do sprzedaży | **nigdy jako podstawa decyzji** |
+
+**Zanim wpiszesz cechę narzędzia do dokumentu decyzyjnego, sprawdź ją w rzędzie 1 albo 2.**
+Fakt z rzędu 4 lub 5 zapisuj jawnie jako niepotwierdzony.
+
+### 11.2 Rzeczywiste przypadki, które tę regułę wywołały
+
+| Błąd | Skąd wziąłem | Jak było naprawdę |
+|---|---|---|
+| „Eve nie ma kanału do Teams" | opis repozytorium z przykładem dla Slacka | dokumentacja kanałów wymienia Teams jako wbudowany |
+| „Hermes ma panel administracyjny" | podsumowanie w wyszukiwarce | dokumentacja mówi wprost, że panelu nie ma |
+
+Oba wpłynęły na rekomendację. Pierwszy zawężał przewagę jednego narzędzia z dwóch
+punktów do jednego — czyli zmieniał wynik porównania.
+
+### 11.3 Jak korygować własny błąd
+
+Gdy okaże się, że wcześniejsze ustalenie było fałszywe:
+
+1. **Popraw w miejscu, gdzie mieszka ustalenie** — nie tylko w rozmowie.
+   Dokument z nieprawdą przeżyje rozmowę.
+2. **Zostaw ślad korekty**, nie ciche nadpisanie. Czytelnik musi wiedzieć,
+   że wcześniejsza wersja mówiła inaczej — inaczej straci zaufanie do reszty.
+3. **Nazwij skutek dla decyzji.** „To był błąd" bez „a to zmienia rekomendację o tyle"
+   jest bezużyteczne.
+4. **Nie rozwodź się.** Jedno zdanie o pomyłce, reszta o konsekwencji.
+
+## 12. Dyscyplina zakresu
+
+### 12.1 Nie gonimy parytetu
+
+Projekt istnieje obok gotowych platform komercyjnych, które mają więcej funkcji
+i zawsze będą miały. **Gonienie parytetu funkcja po funkcji zamienia projekt
+na trzy tygodnie w projekt na pół roku.**
+
+Budujemy pod listę wymagań właściciela, nie pod to, co widać na cudzym demie.
+Funkcja, która nie realizuje żadnego wymagania ani scenariusza, **nie wchodzi** —
+idzie do `docs/spec/decisions.md` jako rozważona i odrzucona.
+
+### 12.2 Lista rzeczy, których ten projekt nie robi
+
+Trzymaj ją w głowie przy każdym dispatchu:
+
+- **nie jest silnikiem agenta** — tym jest Hermes
+- **nie jest komunikatorem** — tym jest Teams
+- **nie przechowuje pamięci agenta** — robi to Hermes i dostawca pamięci
+- **nie hostuje modeli** — te są po API, wymienne
+- **nie zawiera niczego specyficznego dla NASTER w kodzie** — konfiguracja i wiedza,
+  nigdy kod
+
+Temat naruszający którykolwiek punkt wymaga pytania ABC, nie decyzji Operatora.
+
+### 12.3 Rozjazd zakresu w trakcie tematu
+
+Gdy w trakcie pracy pojawi się pomysł spoza `GOAL` — **zapisz go jako nowy temat
+w rejestrze i wróć do swojego.** Nie poszerzaj allowlisty w biegu.
+To najczęstszy sposób, w jaki dwutygodniowy etap staje się sześciotygodniowym.
+
+## 13. Cztery pliki trwałej prawdy i ujawnianie wyborów
+
+### 13.1 Cztery pliki
+
+Przy jednej osobie technicznej to jedyna obrona przed tym, że cała wiedza
+o projekcie mieszka w jednej głowie.
+
+| Plik | Zawartość |
+|---|---|
+| `docs/spec/00-architektura.md` | co budujemy i dlaczego tak |
+| `docs/spec/decisions.md` | każdy wybór dotyczący kosztu, danych, dostępu, odwracalności |
+| `docs/spec/scenarios.md` | sytuacje do obsłużenia — źródło testów |
+| `CLAUDE.md` | jak pracujemy; krótkie i zmienne |
+
+**Reguła:** wybór trafia do `decisions.md` **zanim** powstanie realizujący go kod.
+Decyzja udokumentowana po fakcie jest opisem, nie decyzją.
+
+### 13.2 Ujawnianie wyborów zwykłym językiem
+
+Gdy w trakcie pracy pojawi się wybór dotyczący danych, kosztu, prywatności,
+przenośności, wdrożenia lub utrzymania — **nie podejmuj go po cichu w kodzie.**
+
+Przedstaw właścicielowi:
+
+- dwie lub trzy realne opcje, zwykłym językiem
+- rekomendację z jednym zdaniem uzasadnienia
+- **co staje się łatwiejsze, a co trudniejsze do zmiany później**
+
+Ostatni punkt jest najważniejszy i najczęściej pomijany. Właściciel podejmuje
+decyzje o odwracalności, nie o składni.
+
+Gdy wybór spełnia kryteria z §6 — idzie pełnym trybem ABC/ECHO.
+Gdy nie spełnia — wystarczy zdanie w rozmowie i wpis w `decisions.md`.
+
+### 13.3 Kopia, której nie odtworzono, nie jest kopią
+
+Dotyczy każdego etapu z kopiami zapasowymi. **Odtworzenie musi zostać
+przećwiczone przed uznaniem tematu za zamknięty.** Deklaracja „mamy backup"
+bez udokumentowanego odtworzenia to `FAIL`.
+
+## 14. Gdzie co trafia i konwencje repozytorium
+
+### 14.1 Rodzaje dokumentów
+
+| Rodzaj | Miejsce | Uwagi |
+|---|---|---|
+| Specyfikacja techniczna | `docs/spec/` | trwała, wersjonowana, źródło prawdy |
+| Rejestry procesu | `docs/process/` | tematy, handoff, ECHO, dispatch |
+| Notatki decyzyjne | `docs/nota-*.md` | **historia rozważań, nie routing** |
+| Dokument do pokazania | artefakt + kopia w repo | artefakt do czytania, repo do trwałości |
+
+**Notatki `nota-*` są zamrożone.** Nie aktualizuj ich, gdy ustalenie się zmieni —
+zmienia się `decisions.md` i specyfikacja. Notatka pokazuje, co wiedzieliśmy
+wtedy, i to jest jej wartość.
+
+### 14.2 Język
+
+Dokumentacja, komentarze w rejestrze i komunikaty dla użytkownika — **po polsku**.
+Nazwy techniczne, pola bazy, ścieżki i identyfikatory — po angielsku,
+bez polskich znaków.
+
+### 14.3 Commity
+
+- opis po polsku, bez polskich znaków diakrytycznych w treści commita
+- pierwszy wiersz: `<obszar>: <co się zmienia>` — np. `process:`, `docs:`, `app:`
+- w treści: co i dlaczego, nie jak
+- **nigdy identyfikator modelu ani nazwa narzędzia** w artefaktach wypychanych
+  do repozytorium
+
+### 14.4 Gałąź
+
+Push wyłącznie na gałąź wskazaną przez właściciela — bariera 7.
+**Nie zakładaj `main`.** Gałąź robocza jest zapisana w `CLAUDE.md`; jeśli jej tam
+nie ma albo wygląda na nieaktualną, zapytaj, nie zgaduj.
+
+### 14.5 Koszt
+
+Rachunek za modele przewyższa koszt infrastruktury o rząd wielkości.
+Wniosek dla decyzji projektowych: **optymalizuj dobór modeli i wielkość kontekstu,
+nie rozmiar serwera.** Warstwa rozmowy chodzi na modelu tanim; analiza nocna
+może być wolna i dokładna.
+
+## 15. Szybki start dla nowego agenta
+
+Pięć minut do produktywności. Wykonaj w tej kolejności.
+
+```text
+1. Przeczytaj `autobots` (szkielet), potem ten dokument.
+2. Przeczytaj siedem plików z §2 w podanej kolejności.
+3. Sprawdź stan:
+      git status && git branch --show-current
+4. Napisz meldunek startowy (§10) i CZEKAJ na potwierdzenie właściciela.
+5. Nie dotykaj kodu przed potwierdzeniem ID, GOAL i allowlisty.
+```
+
+### Pięć rzeczy, które trzeba wiedzieć od razu
+
+1. **To nie jest projekt agenta.** Budujemy warstwę zarządzania nad Hermesem.
+   Jeśli piszesz kod robiący to, co Hermes już robi — zatrzymaj się.
+2. **Domyślna odmowa wszędzie.** Uprawnienia, narzędzia, dane. Nigdy
+   „wszyscy mogą, chyba że".
+3. **Dwie decyzje są otwarte i blokujące** — D-010 (topologia) i D-011
+   (rezydencja pamięci). Nie rozstrzygaj ich w kodzie.
+4. **Orkiestracja wieloagentowa jest wyłączona**, dopóki właściciel nie włączy
+   jej zdaniem w tej sesji.
+5. **Siedem barier oznacza `FAIL`**, niezależnie od jakości reszty pracy.
+   Przeczytaj je zanim napiszesz pierwszą linijkę.
+
+### Trzy najczęstsze sposoby zepsucia tego projektu
+
+| Sposób | Objaw | Zapobieganie |
+|---|---|---|
+| Rozjazd zakresu | temat rośnie w trakcie rundy | §12.3 — nowy pomysł to nowy temat |
+| Fałszywe „gotowe" | raport `PASS` bez sprawdzonego scenariusza | §1 — lista rzeczy, które nie są dowodem |
+| Cicha decyzja w kodzie | wybór o danych zapadł w implementacji | §13.2 — ujawnij wybór, zanim go podejmiesz |
