@@ -29,6 +29,7 @@ Gałąź robocza: `claude/git-connection-9sz6dg`. Drzewo czyste.
 |---|---|---|---|
 | Rejestracja aplikacji w Entra ID | MVP1 staje w dniu trzecim | administrator dzierżawy | nieznany |
 | **Umowa powierzenia z dostawcą modelu** | scenariusz 8 nie ruszy — dni 11–12 | prawnik + dostawca | **nieznany, proces prawny** |
+| **Podstawa prawna wobec klientów** (PPE w prompcie) | scenariusz 8 nie ruszy legalnie | prawnik | **nieznany, analiza prawna** |
 | **Zawiadomienie pracowników o monitoringu** | pilot nie ruszy legalnie | właściciel + kadry | **ustawowe ~2 tygodnie** |
 | **D-011** — rezydencja wspólnej pamięci | MVP3 nie startuje | właściciel, po informacji o bazie | — |
 
@@ -53,12 +54,12 @@ zatrzyma pilota w dniu dziesiątym.
 ## Następna bramka
 
 **Odpowiedzi na zestaw pytań nr 1** — [`docs/process/pytania/2026-08-22-zestaw-1.md`](pytania/2026-08-22-zestaw-1.md),
-25 pytań w kolejności wyznaczonej przez Final Control.
+27 pytań w kolejności wyznaczonej przez Final Control.
 
 Bezwzględnie przed `NAG-MVP1-001-szkielet`:
 
 1. **Q-INFRA-3** — gałąź bazowa. Dosłowna blokada startu.
-2. **Q-ZAKRES-2, Q-INNE-1, Q-MODEL-1, Q-DANE-3** — cztery pytania uruchamiające
+2. **Q-ZAKRES-2, Q-INNE-1, Q-MODEL-1, Q-DANE-3, Q-PRAWO-1** — pięć pytań uruchamiających
    zależności zewnętrzne. Odpowiedzi na nie **nie czekają na kod** — uruchamiają
    zegary, które biegną równolegle.
 3. Rejestracja aplikacji w Entra ID — uruchomić natychmiast.
