@@ -495,6 +495,26 @@ Nadmiar czeka w kolejce. **Sprawdź limit, zanim zaplanujesz rozrzut:**
 nproc        # limit = min(16, nproc - 2)
 ```
 
+Wzór czyta się jako „mniejsza z dwóch liczb": sufit 16 oraz rdzenie minus 2 rezerwy
+dla orkiestratora i systemu. Sufit zaczyna cokolwiek znaczyć **dopiero od 18 rdzeni** —
+poniżej wiąże człon z procesorów.
+
+| Rdzenie | Rdzenie − 2 | Sufit | **Limit** |
+|---|---|---|---|
+| 4 | 2 | 16 | **2** |
+| 8 | 6 | 16 | **6** |
+| 16 | 14 | 16 | **14** |
+| 18 i więcej | ≥16 | 16 | **16** |
+
+**Limit nie zależy od obciążenia maszyny.** Rezerwa dwóch rdzeni jest odejmowana
+z góry, niezależnie od tego, czy cokolwiek je zajmuje. Zmierzone 2026-08-22:
+przy `loadavg` 0.08 (maszyna praktycznie bezczynna) i braku dławienia cgroup
+limit nadal wynosił 2. Czekanie na „spokojniejszą porę" niczego nie zmieni —
+zmienia to wyłącznie większy kontener.
+
+Uwaga o proporcji: przy 4 rdzeniach rezerwa zjada połowę mocy, przy 8 już ćwierć.
+Przeskok z 4 na 8 rdzeni **potraja** liczbę równoległych agentów.
+
 W kontenerze o 4 CPU limit wynosi **2**. Zlecenie siedmiu agentów nie daje wtedy
 siedmiokrotnego przyspieszenia — daje cztery fale po dwóch, plus koszt
 przełączania i siedem razy powtórzony wstęp do promptu.
