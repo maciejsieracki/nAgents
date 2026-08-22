@@ -133,3 +133,56 @@ To jest ten sam wniosek co u Raucha: własnością intelektualną nie jest platf
 tylko skille i kontekst. **A skoro tak, to platforma jest wymienna — i tym bardziej warto
 sprawdzić, czy trzeba ją budować samodzielnie.** Skille i kontekst, które napiszemy,
 przeniosą się i tak.
+
+---
+
+## 8. Uzupełnienie po drugim podsumowaniu
+
+Szczegółowszy opis wzmacnia rekomendację z punktu 3 o trzy konkretne rzeczy.
+
+### 8.1 Produkt powstał dla firm dokładnie waszej wielkości
+
+Deklarowany powód budowy: **duzi dostawcy nie oferują elastycznych wdrożeń dla zespołów
+40–50 osób**. To nie jest platforma dla korporacji przycięta w dół ani narzędzie dla
+jednoosobowej działalności rozdmuchane w górę — celowała w segment, w którym jesteście.
+Przy ocenie „czy pokrywa 80% wymagań" to zwiększa szanse na tak.
+
+### 8.2 Wsparcie wdrożeniowe odpowiada na ryzyko, które zgłaszam od noty 01
+
+W każdej dotychczasowej nocie wracał ten sam problem: **bus factor równy jeden**.
+Materiał wymienia bezpośrednie wsparcie wdrożeniowe jako kluczowy wymóg rynku polskiego —
+i to jest dokładnie ta pozycja, której własna uprząż nie ma i mieć nie będzie.
+Kupując, kupujecie także kogoś, kto odbierze telefon, gdy system stanie, a Ciebie nie ma.
+
+### 8.3 Integracje z lokalnymi systemami
+
+Wymieniony jest Comarch ERP i Optima. **Pytanie na demo: czy używacie Comarcha?**
+Jeśli tak, gotowa integracja z polskim ERP to pozycja, której w planie własnym nawet nie
+wyceniałem — a przy rozliczeniach i prowizjach byłaby to praca na tygodnie, nie dni.
+
+### 8.4 Element projektowy, którego nam brakuje
+
+> „Pamięć prywatna a pamięć firmowa: możliwość **odcięcia prywatnych nawyków użytkownika
+> od krytycznych asystentów procesowych**."
+
+To jest przełącznik, którego nasza architektura nie ma, a powinna. W nocie 03 pisałem,
+że przy przejmowaniu stanowiska następca dziedziczy pamięć poprzednika i trzeba ustalić,
+co do niej trafia. Tu jest to rozwiązane inaczej i lepiej: **agent procesowy w ogóle nie
+czyta prywatnych nawyków użytkownika.** Rozliczenie ma przebiegać tak samo niezależnie od
+tego, kto o nie pyta — prywatne preferencje są w tym miejscu zakłóceniem, nie pomocą.
+
+Do przyjęcia niezależnie od decyzji kupić-czy-zbudować: **rozdzielić pamięć na warstwę
+procesową (wspólna, obowiązkowa, wersjonowana) i warstwę nawyków (prywatna, ignorowana
+przez agentów krytycznych).**
+
+### 8.5 Wzorzec rutyny, wart skopiowania w całości
+
+Zademonstrowany przepływ jest dokładnie tym, co chcemy osiągnąć przy rozliczeniach:
+
+> formularz na stronie → wyzwolenie rutyny → asystent pobiera zasady z bazy wiedzy →
+> kwalifikuje → dodaje notatkę i tag w CRM → zmienia etap → powiadomienie na komunikatorze
+
+Plus najważniejsza część: **dodanie jednej reguły wykluczenia w bazie wiedzy natychmiast
+zmienia zachowanie systemu**, bez dotykania kodu i bez aktualizowania promptów u ludzi.
+To jest operacyjna definicja tego, co nazywaliśmy „centralnym kontekstem" — i dobre
+kryterium odbioru dla naszego etapu pierwszego, niezależnie od wybranej drogi.
