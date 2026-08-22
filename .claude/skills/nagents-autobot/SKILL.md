@@ -1,82 +1,90 @@
 ---
 name: nagents-autobot
 description: >-
-  Wiązania procesu AutoBot dla projektu nAgents: format ID tematu, zapis dispatchu,
-  checklisty ról Operator/Evaluator/Final Control, allowlisty, izolacja przez worktree,
-  plan testów oparty na scenarios.md, effort per rola, limit rund, PASS-WITH-NOTES,
-  manual resume, watchdog, kontrakt raportu, szablon pytania ABC, rejestr ECHO oraz
-  siedem twardych barier, dyscyplina źródeł i korekt, dyscyplina zakresu, konwencje
-  repozytorium i szybki start dla nowego agenta. Używaj razem ze skillem `autobots`
-  przy rozpoczęciu pracy, przejęciu tematu, dispatchu, kontroli statusu, przygotowaniu
-  integracji oraz przy wchodzeniu w projekt nAgents po raz pierwszy.
+  Kompletny proces pracy w projekcie nAgents — samowystarczalny, nie wymaga innych
+  skilli. Role Operator/Evaluator/Final Control/Orkiestrator, pętla tematu z pełnym ID,
+  zapis dispatchu, allowlisty, izolacja przez worktree, plan testów oparty na
+  scenariuszach, siedem twardych barier, dyscyplina decyzyjna ABC/ECHO, kontrakt
+  raportu, watchdog, dyscyplina źródeł i zakresu, konwencje repozytorium oraz szybki
+  start. Używaj przy każdym wejściu w projekt, przejęciu tematu, dispatchu, kontroli
+  statusu, przygotowaniu integracji i zmianie samego procesu.
 ---
 
-# nAgents — wiązania procesu AutoBot
+# nAgents AutoBot — proces pracy
 
-Towarzysz skilla `autobots`. Szkielet mówi *jak* prowadzić proces; ten dokument
-mówi *czym dokładnie* są w nAgents ID, dispatch, role, allowlista, izolacja,
-testy, limity, bariery i rejestry.
-
-**Kolejność:** przeczytaj `autobots`, potem ten dokument. Przy konflikcie wygrywa
-ten dokument — ale konflikt zgłoś właścicielowi, nie rozstrzygaj po cichu.
-
-## 0. Mapa zgodności ze szkieletem
-
-Numeracja poniżej odpowiada numeracji szkieletu, żeby dało się sprawdzić, że
-**żadna zasada nie została pominięta**. Szkielet jest w całości projektowo
-neutralny — jedyne odwołanie do innego projektu to przykład `civ-autobot`
-w zdaniu zamykającym. Nic nie zostało wyłączone.
-
-| Szkielet | Wiązanie w nAgents |
-|---|---|
-| 1 · Zasada nadrzędna | §1 — definicja `READY_FOR_DEPLOY` i lista rzeczy, które nim nie są |
-| 2 · Start sesji | §2 — kolejność czytania, `docs/process/zmiana-procesu.md`, meldunek |
-| 3 · Orkiestracja | §3 — domyślnie wyłączona, warunek włączenia |
-| 4 · Routing ról | §4 — checklisty per rola |
-| 5 · Pętla | §5 — ID, zapis dispatchu, limit 3, PASS-WITH-NOTES, resume, pauza |
-| 6 · ABC/ECHO | §6 — kiedy obowiązkowe, szablon pytania, rejestr |
-| 7 · Kontrakt raportu | §7 — domeny i statusy projektu |
-| 8 · Watchdog | §8 — ZWIS 20 min, pula 2, obsadzanie slotów |
-| 9 · Dobre praktyki | §9 — siedem barier, recon, przegląd diffu, bramka push |
-| 10 · Meldunek startowy | §10 — wzór dla tego projektu |
-| *(poza szkieletem)* | §11–§15 — praktyki wypracowane w tym projekcie |
+**Ten dokument jest kompletny.** Nie odsyła do innego skilla procesowego i nie
+wymaga go do działania. Wywodzi się z uniwersalnego szkieletu AutoBot (kopia
+źródłowa: `docs/process/zrodla/autobots-szkielet-uniwersalny.md`), ale wartości
+konfigurowalne są tu już rozstrzygnięte, a rzeczy nieprzydatne w tym projekcie
+usunięte.
 
 ---
+
+## 0. Szybki start — pięć minut
+
+```text
+1. Przeczytaj ten dokument w całości. Jest długi, ale krótszy niż koszt błędu.
+2. Przeczytaj siedem plików z §2 w podanej kolejności.
+3. Sprawdź stan:  git status && git branch --show-current
+4. Napisz meldunek startowy (§2.3) i CZEKAJ na potwierdzenie właściciela.
+5. Nie dotykaj kodu przed potwierdzeniem ID, GOAL i allowlisty.
+```
+
+### Pięć rzeczy do wiedzy od razu
+
+1. **To nie jest projekt agenta.** Budujemy warstwę zarządzania nad Hermesem.
+   Jeśli piszesz kod robiący to, co Hermes już robi — zatrzymaj się.
+2. **Domyślna odmowa wszędzie** — uprawnienia, narzędzia, dane.
+   Nigdy „wszyscy mogą, chyba że".
+3. **Dwie decyzje są otwarte i blokujące** — D-010 (topologia agentów)
+   i D-011 (rezydencja pamięci). Nie rozstrzygaj ich w kodzie.
+4. **Orkiestracja wieloagentowa jest wyłączona**, dopóki właściciel nie włączy
+   jej jawnie na daną sesję (§11).
+5. **Siedem barier (§7) oznacza `FAIL`**, niezależnie od jakości reszty pracy.
+
+### Trzy najczęstsze sposoby zepsucia tego projektu
+
+| Sposób | Objaw | Zapobieganie |
+|---|---|---|
+| Rozjazd zakresu | temat rośnie w trakcie rundy | §13.3 — nowy pomysł to nowy temat |
+| Fałszywe „gotowe" | raport `PASS` bez sprawdzonego scenariusza | §1.2 — co nie jest dowodem |
+| Cicha decyzja w kodzie | wybór o danych zapadł w implementacji | §14.2 — ujawnij wybór wcześniej |
 
 ## 1. Zasada nadrzędna
 
-Każdy temat ma: pełne ID, jawny `GOAL`, mierzalne kryteria końca wskazujące
-numery scenariuszy, allowlistę, izolację i plan testów. Bez kompletu — nie ma dispatchu.
+Każdy temat ma: **pełne ID, jawny `GOAL`, mierzalne kryteria końca wskazujące
+numery scenariuszy, allowlistę, izolację i plan testów.** Bez kompletu nie ma dispatchu.
 
-### `READY_FOR_DEPLOY` w nAgents oznacza łącznie
+### 1.1 `READY_FOR_DEPLOY` oznacza łącznie
 
 - zmiana wyłącznie w zatwierdzonej allowliście
 - `pytest` zielony w całości
-- **scenariusze z kryteriów końca przechodzą sprawdzone ręcznie**, nie tylko automatycznie
-- żadna z siedmiu barier (§9) nienaruszona
+- **scenariusze z kryteriów końca sprawdzone ręcznie**, nie tylko automatycznie
+- żadna z siedmiu barier nienaruszona
 - brak nowych wartości sekretów w repozytorium
-- `docs/process/tematy.md` zaktualizowany
-- zmiana faktycznie zintegrowana przez orkiestratora
+- `docs/process/tematy.md` odzwierciedla stan faktyczny
+- zmiana **faktycznie zintegrowana** przez orkiestratora
 
-### Co NIE oznacza zakończenia
+**Push pozostaje osobną bramką** po `READY_FOR_DEPLOY`. Wymaga wyraźnego polecenia
+właściciela i idzie **wyłącznie na gałąź przez niego wskazaną**. Operator, Evaluator
+i Final Control nigdy nie pushują.
 
-Wymieniam wprost, bo to najczęstsze źródło fałszywego „gotowe":
+### 1.2 Co NIE jest dowodem zakończenia
+
+Najczęstsze źródło fałszywego „gotowe":
 
 | To nie jest dowód | Dlaczego |
 |---|---|
-| Raport `PASS` | Raport opisuje pracę, nie jej skutek w repozytorium |
-| Istnienie gałęzi lub worktree | Nazwa katalogu nie jest stanem |
-| Commit | Commit to zapis, nie integracja |
-| Widoczny status subagenta | UI pokazuje przebieg, nie wynik |
-| Deklaracja agenta „zrobione" | Deklaracja bez artefaktu jest niczym |
-| Brak artefaktu | Brak dowodu to nie jest dowód |
-
-**Push pozostaje osobną bramką** po `READY_FOR_DEPLOY`, wymaga wyraźnego polecenia
-właściciela i idzie **wyłącznie na gałąź przez niego wskazaną**.
+| Raport `PASS` | opisuje pracę, nie jej skutek w repozytorium |
+| Gałąź albo worktree | nazwa katalogu nie jest stanem |
+| Commit | zapis, nie integracja |
+| Widoczny status subagenta | interfejs pokazuje przebieg, nie wynik |
+| Deklaracja „zrobione" | deklaracja bez artefaktu jest niczym |
+| Brak artefaktu | brak dowodu to nie jest dowód |
 
 ## 2. Start sesji
 
-### Kolejność czytania — obowiązkowa
+### 2.1 Kolejność czytania — obowiązkowa
 
 | # | Plik | Po co |
 |---|---|---|
@@ -89,88 +97,80 @@ właściciela i idzie **wyłącznie na gałąź przez niego wskazaną**.
 | 7 | `docs/spec/0X-mvpX.md` | specyfikacja bieżącego etapu |
 
 **Nie zaczynaj** od starego handoffu, samego czatu, artefaktów zamkniętych tematów
-ani od `docs/nota-*.md` — notatki decyzyjne są historią rozważań, nie routingiem.
+ani od `docs/nota-*.md`. Notatki decyzyjne są historią rozważań, nie routingiem.
 
-### Zmiana samego mechanizmu procesu
+### 2.2 Gdy zmieniasz sam proces
 
-Szkielet wymaga osobnego dokumentu na wypadek modyfikowania AutoBota zamiast kodu
-produktu. W nAgents jest nim **[`docs/process/zmiana-procesu.md`](../../../docs/process/zmiana-procesu.md)**.
-Przeczytaj go **przed** dotknięciem `.claude/skills/**`, `CLAUDE.md` lub
-`docs/process/**` — te ścieżki mają własny, ostrzejszy tryb.
+Przed dotknięciem `.claude/skills/**`, `CLAUDE.md` lub `docs/process/**` przeczytaj
+**`docs/process/zmiana-procesu.md`**. Te ścieżki mają własny, ostrzejszy tryb —
+błąd w kodzie produktu wyłapie Evaluator, błąd w definicji Evaluatora nie wyłapie nikt.
 
-## 3. Orkiestracja wieloagentowa
+### 2.3 Meldunek startowy
 
-**Domyślnie WYŁĄCZONA.** Wymaga jednoczesnego spełnienia dwóch warunków:
+```text
+Przeczytałem: CLAUDE.md, rejestr tematów, handoff, README specyfikacji,
+dziennik decyzji, scenariusze, specyfikację bieżącego etapu.
 
-1. narzędzie pozwalające przypisać model/effort per rola jest dostępne
-2. właściciel dał **jawną zgodę na tę sesję**
+Stan: <etap; tematy aktywne z pełnym ID i statusem>
+Blokady: <lista, w tym decyzje otwarte>
+Następna bramka: <co dokładnie>
+Orkiestracja wieloagentowa: <wyłączona / włączona zgodą z dnia …>
 
-Zgodą jest zdanie w rodzaju „zgoda na orkiestrację wieloagentową w tej sesji".
-**Brak takiego zdania = brak zgody.** Nie domniemywaj jej z rozmiaru tematu,
-z pośpiechu ani z tego, że poprzednia sesja ją miała.
+Nie zaczynam zmian, dopóki nie potwierdzę ID, GOAL, allowlisty i decyzji
+wymaganych od właściciela. Pracuję wyłącznie w bieżącym, czystym worktree.
+```
 
-Bez obu warunków role różnicujemy **wyłącznie treścią promptu**, w jednym wątku.
-
-### Effort per rola — gdy orkiestracja jest włączona
-
-| Rola | Effort |
-|---|---|
-| Operator | wysoki |
-| Evaluator | wysoki |
-| Final Control | wysoki |
-| Orkiestrator | model sesji |
-
-## 4. Routing ról i checklisty
+## 3. Role
 
 ```text
 Operator → Evaluator → Final Control → integracja → READY_FOR_DEPLOY → bramka push
 ```
 
-### Operator
-Wykonuje jeden temat w izolacji, wyłącznie w allowliście.
+### 3.1 Operator
+Wykonuje **jeden** temat w izolacji, wyłącznie w allowliście.
 **Nie ocenia własnej pracy, nie integruje, nie pushuje.**
 
-Kończy raportem terminalnym z kontraktu §7. Jeśli natrafi na decyzję
-produktową — zatrzymuje się ze statusem `DECISION_REQUIRED`, nie rozstrzyga sam.
+Kończy raportem terminalnym (§9). Gdy natrafi na decyzję produktową — zatrzymuje się
+ze statusem `DECISION_REQUIRED`, nie rozstrzyga sam.
 
-### Evaluator — checklista dla nAgents
-Niezależny adwokat diabła. **Nie integruje, nie publikuje.** Sprawdza:
+### 3.2 Evaluator — niezależny adwokat diabła
+**Nie integruje, nie publikuje.** Sprawdza:
 
 1. Czy diff mieści się w allowliście — co do pliku
-2. Czy nie narusza żadnej z siedmiu barier (§9)
-3. Czy scenariusze z kryteriów końca faktycznie przechodzą — **nie czy raport tak twierdzi**
-4. Czy zmiana dotyka uprawnień choćby pośrednio; jeśli tak, czy A2 i A3 przechodzą
+2. Czy nie narusza żadnej z siedmiu barier (§7)
+3. Czy scenariusze z kryteriów końca **faktycznie** przechodzą — nie czy raport tak twierdzi
+4. Czy temat dotyka uprawnień choćby pośrednio; jeśli tak — czy A2 i A3 przechodzą
 5. Czy w diffie nie ma wartości sekretów, także w testach i przykładach
-6. Czy nie ma usunięć, których GOAL nie wymagał
+6. Czy nie ma usunięć, których `GOAL` nie wymagał
 7. Czy nie nakłada się z drugim aktywnym tematem
 8. Czy `pytest` jest zielony na faktycznym stanie drzewa, a nie w raporcie
 
-### Final Control — checklista dla nAgents
+### 3.3 Final Control
 Zawsze **osobny subagent**, nigdy główny agent. **Nie wystawia `READY_FOR_DEPLOY`.**
 Kontroluje kompletność śladu:
 
-1. Czy istnieje zapis dispatchu (§5) i czy GOAL się nie zmienił po drodze
+1. Czy istnieje zapis dispatchu i czy `GOAL` nie zmienił się po drodze
 2. Czy ID jest to samo we wszystkich rundach
-3. Czy werdykt Evaluatora jest oparty na artefaktach, nie na deklaracjach
+3. Czy werdykt Evaluatora opiera się na artefaktach, nie na deklaracjach
 4. Czy `PASS-WITH-NOTES` nie ukrywa uwagi dotyczącej GOAL, testów, zakresu,
    bezpieczeństwa, dowodu lub gotowości do integracji
 5. Czy licznik rund się zgadza i nie został po cichu zresetowany
 6. Czy `docs/process/tematy.md` odzwierciedla stan faktyczny
 
-### Orkiestrator
-Działa w głównym czacie. Integruje **wyłącznie zatwierdzoną allowlistę**,
-per plik, w razie potrzeby per hunk. Jako **jedyny** wystawia `READY_FOR_DEPLOY`,
-i dopiero **po faktycznej integracji** — nie po pozytywnym Final Control.
+### 3.4 Orkiestrator
+Działa w głównym czacie. Integruje **wyłącznie zatwierdzoną allowlistę**, per plik,
+w razie potrzeby per hunk. Jako **jedyny** wystawia `READY_FOR_DEPLOY` — i dopiero
+**po faktycznej integracji**, nie po pozytywnym Final Control.
 
 Przed integracją sprawdza rzeczywisty stan: `git status`, `git diff`, wynik testów,
 raporty, allowlistę.
 
-### Właściciel
+### 3.5 Właściciel
 Odpowiada na decyzje **wyłącznie w głównym czacie orkiestratora**.
 Subagenty są kanałami technicznymi — nie prowadź z nimi osobnych rozstrzygnięć
-produktowych i nie przyjmuj od nich decyzji za właściciela.
+produktowych i nie przyjmuj decyzji za właściciela.
 
-## 5. Pętla
+## 4. Pętla tematu
 
 ```text
 dispatch → Operator → Evaluator → Final Control → integracja → READY_FOR_DEPLOY
@@ -179,7 +179,7 @@ dispatch → Operator → Evaluator → Final Control → integracja → READY_F
       FAIL / BLOCK / TIMEOUT / INFRA / ZWIS / brak dowodu
 ```
 
-### Format ID
+### 4.1 Format ID
 
 ```
 NAG-<ETAP>-<NNN>-<slug>
@@ -187,66 +187,154 @@ NAG-<ETAP>-<NNN>-<slug>
 
 `ETAP` ∈ `MVP1` `MVP2` `MVP3` `MVP4` `PROC` `INFRA`.
 `NNN` trzycyfrowy, rosnący w obrębie etapu, **nigdy nieużywany ponownie**.
-ID jest niezmienne przez wszystkie rundy. Pytanie decyzyjne:
-`NAG-MVP1-003-uprawnienia-Q2` — nigdy samo „Q2".
+ID jest niezmienne przez wszystkie rundy.
 
-### Zapis dispatchu — przed dispatchem, nie po
+Pytanie decyzyjne: `NAG-MVP1-003-uprawnienia-Q2` — **nigdy samo „Q2"**.
+Nie numeruj pytań tak, by kolidowały z wcześniejszymi.
 
-Plik `docs/process/dispatch/<ID>.md`, tworzony **zanim** ruszy Operator.
-Szablon: `docs/process/dispatch/SZABLON.md`. Zawiera pełne ID, GOAL, kryteria
-końca z numerami scenariuszy, zakres, allowlistę, izolację, bazę worktree
-i plan testów.
+### 4.2 Zapis dispatchu — przed dispatchem, nie po
 
-**Dispatch bez tego pliku jest naruszeniem procesu.** Bez niego nie da się
-później sprawdzić, czy GOAL się nie przesunął w trakcie.
+Plik `docs/process/dispatch/<PEŁNE-ID>.md`, tworzony **zanim** ruszy Operator.
+Szablon: `docs/process/dispatch/SZABLON.md`.
 
-### Przebieg
+**Dispatch bez tego pliku jest naruszeniem procesu** — bez niego nie da się później
+sprawdzić, czy `GOAL` nie przesunął się w trakcie.
+
+### 4.3 Przebieg
 
 1. Zapis dispatchu → Operator
 2. Terminalny raport Operatora → **natychmiast** zamknij przebieg i uruchom
    Evaluatora dla tego samego ID
 3. `PASS` uruchamia Final Control **bez czekania na dodatkową zgodę**
-4. Pozytywny Final Control → orkiestrator sprawdza faktyczny stan repozytorium
-   i integruje
+4. Pozytywny Final Control → orkiestrator sprawdza faktyczny stan i integruje
 5. Dopiero po **faktycznej integracji** orkiestrator zapisuje `READY_FOR_DEPLOY`
 6. Każdy `FAIL`, `BLOCK`, `TIMEOUT`, `INFRA`, `ZWIS`, brak artefaktu lub błąd
    izolacji wraca do Operatora, potem Evaluatora i Final Control — z tym samym ID
 
-### `PASS-WITH-NOTES`
+### 4.4 `PASS-WITH-NOTES`
 
-**Nie kończy procesu**, jeśli uwagi dotyczą któregokolwiek z: kryterium GOAL,
+**Nie kończy procesu**, jeśli uwagi dotyczą któregokolwiek z: kryterium `GOAL`,
 testów, zakresu, bezpieczeństwa, dowodu lub gotowości do integracji.
-W takim wypadku temat wraca do Operatora jak przy `FAIL`.
+Wtedy temat wraca do Operatora jak przy `FAIL`.
 
 Kończy proces tylko wtedy, gdy uwagi są kosmetyczne i zapisane jako osobny temat.
 
-### Limit rund
-
-**3 rundy na temat.** Szkielet podaje 5 jako przykład konfigurowalny; w nAgents
-przyjmujemy 3, bo przy jednej osobie technicznej wcześniejsza eskalacja jest
-tańsza niż czwarta pętla.
+### 4.5 Limit rund: 3
 
 Po trzeciej rundzie orkiestrator **zatrzymuje temat i zgłasza właścicielowi**:
-co próbowano, co zawiodło, jakie są warianty. **Cichy reset licznika jest
-naruszeniem procesu.**
+co próbowano, co zawiodło, jakie są warianty.
 
-### Manual resume
+**Cichy reset licznika jest naruszeniem procesu.** Licznik ma boleć — to jego funkcja.
+Przenumerowanie tematu w celu wyzerowania licznika jest tym samym naruszeniem.
 
-Wymaga jawnej decyzji właściciela i **zachowuje ID, licznik rund i ostatni werdykt**.
+### 4.6 Manual resume
+
+Wymaga jawnej decyzji właściciela i **zachowuje ID, licznik rund oraz ostatni werdykt**.
 Wznowienie nie jest nowym tematem i nie zeruje historii.
 
-### Pauza
+### 4.7 Pauza
 
 Jedyna normalna pauza to **oczekiwanie na decyzję właściciela**.
-Pauzuje **wyłącznie temat, który jej wymaga** — pozostałe niezależne tematy
-pracują dalej. Zatrzymywanie całej pracy z powodu jednego pytania jest błędem.
+Pauzuje **wyłącznie temat, który jej wymaga** — pozostałe niezależne tematy pracują dalej.
+Zatrzymywanie całej pracy z powodu jednego pytania jest błędem.
 
-## 6. Dyscyplina ABC/ECHO
+## 5. Allowlista, izolacja, testy
 
-### Kiedy formalna decyzja jest obowiązkowa
+### 5.1 Allowlisty
 
-Gdy zmiana dotyka realnego kompromisu produktowego lub architektonicznego —
-w nAgents konkretnie:
+| Obszar | Typowa allowlista |
+|---|---|
+| Uprząż — logika | `app/**`, `tests/**` |
+| Rejestr agentów | `registry/agents.yaml`, `app/registry/**` |
+| Migracje | `migrations/**`, `app/models/**` |
+| Wiedza | `knowledge/**` |
+| Dokumentacja | `docs/spec/**` (poza `decisions.md`) |
+| Proces | `docs/process/**`, `.claude/skills/**`, `CLAUDE.md` |
+
+**Nigdy w allowliście:** `.env*`, dowolny plik z wartościami sekretów,
+`docs/spec/decisions.md` (zmienia go wyłącznie orkiestrator po ECHO), `.git/**`,
+konfiguracja produkcyjna bez jawnej zgody właściciela.
+
+**Zmiana procesu nigdy nie jedzie w allowliście tematu produktowego** — nawet
+jednolinijkowa. To osobny temat w domenie `PROCES`.
+
+### 5.2 Izolacja
+
+```
+worktree:  ../nagents-<ID>
+branch:    auto/<ID>
+baza:      gałąź robocza wskazana przez właściciela — nie zakładaj `main`
+```
+
+Jeden temat = jeden worktree = jeden aktywny przebieg Operatora.
+Worktree usuwany po integracji albo po zamknięciu tematu.
+
+### 5.3 Plan testów
+
+```text
+1. pytest -q                       # całość zielona
+2. pytest tests/<obszar> -v        # obszar tematu
+3. scenariusze z kryteriów końca   # ręcznie, na dev
+4. przy zmianie uprawnień: A2 i A3 obowiązkowo, bezwarunkowo
+5. przy zmianie wiedzy: pełny zestaw testów agenta (od MVP3)
+```
+
+Punkt 4 obowiązuje także wtedy, gdy temat dotyka uprawnień tylko pośrednio.
+
+### 5.4 Recon przed kodowaniem
+
+```bash
+git status && git branch --show-current
+grep -rn "<pojęcie z GOAL>" app/ docs/spec/
+```
+
+Plus lektura: rejestr tematów (kolizje), dziennik decyzji (czy decyzja to przesądza),
+scenariusze (czy scenariusz istnieje — jeśli nie, dopisz go **przed** startem tematu).
+
+### 5.5 Przed integracją
+
+Przejrzyj diff **również pod kątem usunięć**, nakładania się z drugim aktywnym
+tematem i regresji względem pracy równoległej. Usunięcie, którego `GOAL` nie wymagał,
+jest sygnałem ostrzegawczym.
+
+## 6. Kryteria końca
+
+Każdy temat ma jednozdaniowy `GOAL` i kryteria końca **wskazujące numery scenariuszy**
+z `docs/spec/scenarios.md`.
+
+```text
+GOAL: Pracownik spoza grupy nie dobija się do agenta ani przez interfejs,
+      ani z jego pominięciem.
+KONIEC: scenariusze A2 i A3 przechodzą; wpisy `deny` widoczne w audycie;
+        testy tests/test_permissions.py zielone.
+```
+
+**Kryterium bez numeru scenariusza jest niekompletne.**
+
+## 7. Siedem twardych barier
+
+Naruszenie oznacza **natychmiastowy `FAIL`**, niezależnie od jakości reszty pracy.
+Wynikają z modelu bezpieczeństwa w `docs/spec/00-architektura.md`.
+
+1. **Żadnych wartości sekretów w repozytorium.** W rejestrze wyłącznie `vault_ref`.
+   Sekret w diffie = `FAIL` i rotacja klucza.
+2. **Agent rodzaju `stanowiskowy` nie ma własnych poświadczeń.** Niepusta lista
+   `secrets` = `FAIL` na poziomie walidatora rejestru.
+3. **Brak dostępu zwraca 404, nie 403.** Zmiana tego zachowania wymaga ECHO.
+4. **Domyślna odmowa.** Kod dodający ścieżkę „wszyscy mogą, chyba że" = `FAIL`.
+5. **Nigdy `git add -A` ani `git add .`** — integracja allowlist-only, per plik,
+   w razie potrzeby per hunk. Szczególnie niebezpieczne w drzewie współdzielonym.
+6. **Żadnych prawdziwych danych osobowych poza `prod`.**
+7. **Push wyłącznie na gałąź wskazaną przez właściciela.**
+
+**Osłabienie, usunięcie albo dodanie wyjątku do którejkolwiek wymaga ECHO** —
+patrz `docs/process/zmiana-procesu.md`.
+
+## 8. Decyzje — ABC/ECHO
+
+### 8.1 Kiedy formalna decyzja jest obowiązkowa
+
+Gdy zmiana dotyka realnego kompromisu — w nAgents konkretnie:
 
 - modelu uprawnień lub sposobu ich egzekwowania
 - zakresu danych wysyłanych do dostawcy modelu
@@ -254,16 +342,17 @@ w nAgents konkretnie:
 - retencji, audytu lub realizacji praw osób
 - topologii agentów (**D-010**) i rezydencji pamięci (**D-011**)
 - wyboru silnika, bramy modeli lub bazy
+- którejkolwiek z siedmiu barier
 
-Dla drobnej implementacji **w ramach** już przyjętej decyzji — nie jest wymagana.
+Dla drobnej implementacji **w ramach** przyjętej decyzji — nie jest wymagana.
 
-### Szablon pytania — wszystkie pola obowiązkowe
+### 8.2 Szablon pytania — wszystkie pola obowiązkowe
 
 ```text
 PYTANIE: NAG-<ETAP>-<NNN>-<slug>-Q<n>
-SYTUACJA:      <co się dzieje, stan faktyczny>
-CEL PYTANIA:   <co rozstrzygamy>
-DLACZEGO TERAZ:<co blokuje, jeśli nie rozstrzygniemy>
+SYTUACJA:       <stan faktyczny>
+CEL PYTANIA:    <co rozstrzygamy>
+DLACZEGO TERAZ: <co blokuje, jeśli nie rozstrzygniemy>
 
 WARIANT A: <opis>
   ZA:      1) …  2) …          ← minimum dwa
@@ -275,15 +364,15 @@ WARIANT C: <opis>
   ZA:      1) …  2) …
   PRZECIW: 1) …  2) …
 
-REKOMENDACJA: <litera + jedno zdanie uzasadnienia>
-KONSEKWENCJE IMPLEMENTACYJNE: <co trzeba będzie napisać albo przepisać>
+REKOMENDACJA: <litera + jedno zdanie>
+KONSEKWENCJE IMPLEMENTACYJNE: <co trzeba napisać albo przepisać>
 KONSEKWENCJE TESTOWE: <które scenariusze się zmieniają lub dochodzą>
 ```
 
-Pytanie bez dwóch argumentów za i dwóch przeciw dla **każdego** wariantu
-jest niekompletne — uzupełnij przed zadaniem.
+Pytanie bez dwóch argumentów za i dwóch przeciw dla **każdego** wariantu jest
+niekompletne — uzupełnij przed zadaniem.
 
-### ECHO
+### 8.3 ECHO
 
 **Nie zamieniaj odpowiedzi „chyba", luźnej rozmowy ani rekomendacji agenta
 w formalną decyzję.** Rekomendacja nie staje się decyzją przez brak sprzeciwu.
@@ -292,14 +381,12 @@ ECHO zapisuje się **dopiero po jednoznacznej odpowiedzi literą**, w
 `docs/process/echo.md`, w formacie `NAG-MVP1-003-Q2 = B` z datą i autorem.
 Dopiero potem kontynuuj ten sam ID.
 
-Nie numeruj pytań ponownie tak, by kolidowały z wcześniejszymi.
-
 | Artefakt | Plik | Kiedy |
 |---|---|---|
 | ECHO | `docs/process/echo.md` | zawsze po odpowiedzi literą |
 | ADR | `docs/spec/decisions.md` | dodatkowo, gdy decyzja zmienia architekturę |
 
-## 7. Kontrakt raportu
+## 9. Kontrakt raportu
 
 ```text
 STATUS: PASS | PASS-WITH-NOTES | FAIL | BLOCK | TIMEOUT | INFRA | DECISION_REQUIRED
@@ -316,8 +403,8 @@ DEPLOY/PUSH: NIE WYKONANO
 `DEPLOY/PUSH` domyślnie `NIE WYKONANO`. `WYKONANO` wpisuje wyłącznie orkiestrator,
 po jawnym poleceniu właściciela i wyłącznie na wskazaną gałąź.
 
-**Status nie zmienia się** na podstawie nazwy worktree, interfejsu, deklaracji
-agenta ani nieistniejącego raportu.
+**Status nie zmienia się** na podstawie nazwy worktree, interfejsu, deklaracji agenta
+ani nieistniejącego raportu.
 
 ### Domeny
 
@@ -328,178 +415,130 @@ agenta ani nieistniejącego raportu.
 | `INFRA` | wdrożenie, kontenery, baza, brama modeli, kopie zapasowe |
 | `INFORMACYJNY` | analiza, rozpoznanie, dokumentacja bez zmiany zachowania |
 
-## 8. Watchdog
+## 10. Watchdog i pojemność
 
 | Parametr | Wartość |
 |---|---|
 | Jeden temat | **jeden aktywny przebieg Operatora** |
-| Brak ruchu → `ZWIS` | 20 minut |
+| Brak ruchu → `ZWIS` | **20 minut** |
 | Aktywna pula tematów | **2 równolegle** |
 
-Pula wynosi 2, bo wszystko przegląda jedna osoba; trzeci równoległy temat
-przekracza pojemność przeglądu i kończy się integracją bez realnej kontroli.
+Pula wynosi 2, bo wszystko przegląda jedna osoba; trzeci równoległy temat przekracza
+pojemność przeglądu i kończy się integracją bez realnej kontroli.
 
-**Obsadzanie slotów:** gdy istnieje niezablokowana praca, a slot jest wolny —
-obsadź go. Zostawienie wolnego zasobu przez przeoczenie jest błędem tak samo
-jak przeciążenie.
+**Obsadzanie slotów:** gdy istnieje niezablokowana praca, a slot jest wolny — obsadź go.
+Zostawienie wolnego zasobu przez przeoczenie jest błędem tak samo jak przeciążenie.
 
 **Po raporcie terminalnym** zwolnij slot i uruchom następny etap natychmiast.
 
 **Przy `ZWIS`:** sprawdź transcript, stan repozytorium, worktree i artefakty
-**zamiast zgadywać**. Nie anuluj i nie restartuj w ciemno — orkiestrator
-przejmuje temat.
+**zamiast zgadywać**. Nie anuluj i nie restartuj w ciemno — orkiestrator przejmuje temat.
 
-## 9. Dobre praktyki i twarde bariery
+## 11. Orkiestracja wieloagentowa i delegowanie
 
-### Siedem barier — naruszenie oznacza `FAIL`
+### 11.1 Norma tego projektu: orkiestrator nie wykonuje pracy sam
 
-Niezależnie od jakości reszty pracy. Wynikają z modelu bezpieczeństwa
-w `docs/spec/00-architektura.md`.
+Decyzja właściciela z 2026-08-22, zapisana jako **ECHO-001**:
 
-1. **Żadnych wartości sekretów w repozytorium.** W rejestrze wyłącznie `vault_ref`.
-   Sekret w diffie = `FAIL` i rotacja klucza.
-2. **Agent rodzaju `stanowiskowy` nie ma własnych poświadczeń.** Niepusta lista
-   `secrets` = `FAIL` na poziomie walidatora rejestru.
-3. **Brak dostępu zwraca 404, nie 403.** Zmiana tego zachowania wymaga ECHO.
-4. **Domyślna odmowa.** Kod dodający ścieżkę „wszyscy mogą, chyba że" = `FAIL`.
-5. **Nigdy `git add -A` ani `git add .`** — integracja allowlist-only, per plik,
-   w razie potrzeby per hunk. Szczególnie niebezpieczne w drzewie współdzielonym
-   albo przy cudzej pracy.
-6. **Żadnych prawdziwych danych osobowych poza `prod`.**
-7. **Push wyłącznie na gałąź wskazaną przez właściciela.**
+> W tym projekcie **cała praca wykonawcza idzie do subagentów.** Orkiestrator
+> prowadzi rozmowę z właścicielem, przygotowuje dispatch, integruje i wystawia
+> `READY_FOR_DEPLOY` — ale nie pisze kodu ani nie prowadzi analizy samodzielnie.
 
-### Allowlisty
+To jest odwrócenie domyślnego ustawienia ze szkieletu, gdzie orkiestracja była
+opcjonalna. **W nAgents jest normą.**
 
-| Obszar | Typowa allowlista |
+### 11.2 Przydział modeli — ustalony
+
+| Rola | Model | Effort |
+|---|---|---|
+| Operator | **Sonnet 5** | **wysoki** |
+| Evaluator | **Sonnet 5** | **wysoki** |
+| Final Control | **Sonnet 5** | **wysoki** |
+| Orkiestrator | model sesji | — |
+
+Przydział jest rozstrzygnięty i **nie wymaga potwierdzania przy każdym dispatchu.**
+Zmiana wymaga ECHO.
+
+### 11.3 Kiedy pojedynczy subagent, a kiedy workflow
+
+| Sytuacja | Narzędzie |
 |---|---|
-| Uprząż — logika | `app/**`, `tests/**` |
-| Rejestr agentów | `registry/agents.yaml`, `app/registry/**` |
-| Migracje | `migrations/**`, `app/models/**` |
-| Wiedza | `knowledge/**` |
-| Dokumentacja | `docs/spec/**` (poza `decisions.md`) |
-| Proces | `docs/process/**`, `.claude/skills/**`, `CLAUDE.md` |
+| Jeden temat, jedna runda | pojedynczy subagent per rola |
+| **Kilka tematów zebranych naraz** | **workflow z fan-outem** — nie kolejka pojedynczych wywołań |
+| Analiza wymagająca wielu niezależnych perspektyw | workflow z równoległymi rolami |
 
-**Nigdy w allowliście:** `.env*`, dowolny plik z wartościami sekretów,
-`docs/spec/decisions.md` (zmienia go wyłącznie orkiestrator po ECHO),
-`.git/**`, konfiguracja produkcyjna bez jawnej zgody właściciela.
+Przy workflow obowiązuje ta sama pętla: Operator → Evaluator → Final Control.
+Etapy workflow odwzorowują role, nie zastępują ich.
 
-### Izolacja
+### 11.4 Co orkiestrator robi sam
 
-```
-worktree:  ../nagents-<ID>
-branch:    auto/<ID>
-baza:      gałąź robocza wskazana przez właściciela — nie zakładaj `main`
-```
+Wyjątki od §11.1, bo z definicji nie da się ich delegować:
 
-Worktree usuwany po integracji albo po zamknięciu tematu.
+- rozmowa z właścicielem i przyjmowanie decyzji
+- zapis ECHO i aktualizacja rejestrów procesu
+- przygotowanie dispatchu i allowlisty
+- integracja zatwierdzonej pracy i wystawienie `READY_FOR_DEPLOY`
+- push po jawnym poleceniu
 
-### Plan testów
+**Wszystko poza tą listą jest delegowane.**
 
-```text
-1. pytest -q                       # całość zielona
-2. pytest tests/<obszar> -v        # obszar tematu
-3. scenariusze z kryteriów końca   # ręcznie, na dev
-4. przy zmianie uprawnień: A2 i A3 obowiązkowo, bezwarunkowo
-5. przy zmianie wiedzy: pełny zestaw testów agenta (od MVP3)
-```
+### 11.5 Gdy zgoda zostanie cofnięta
 
-Punkt 4 obowiązuje także wtedy, gdy temat dotyka uprawnień tylko pośrednio.
+Właściciel może wrócić do trybu jednowątkowego zdaniem w rozmowie.
+Wtedy role różnicujemy **wyłącznie treścią promptu**, w jednym wątku,
+a §11.1 przestaje obowiązywać do odwołania.
 
-### Recon przed kodowaniem
+## 12. Dyscyplina źródeł i korekt
 
-```bash
-git status && git branch --show-current
-grep -rn "<pojęcie z GOAL>" app/ docs/spec/
-```
+### 12.1 Hierarchia źródeł
 
-Plus lektura: rejestr tematów (kolizje z aktywnym), dziennik decyzji
-(czy decyzja już to przesądza), scenariusze (czy scenariusz istnieje).
-
-### Przed integracją
-
-Przejrzyj diff **również pod kątem usunięć**, nakładania się z drugim aktywnym
-tematem i regresji względem pracy równoległej. Usunięcie, którego GOAL nie
-wymagał, jest sygnałem ostrzegawczym.
-
-## 10. Meldunek startowy
-
-```text
-Przeczytałem: CLAUDE.md, rejestr tematów, handoff, README specyfikacji,
-dziennik decyzji, scenariusze, specyfikację bieżącego etapu.
-
-Stan: <etap; tematy aktywne z pełnym ID i statusem>
-Blokady: <lista, w tym decyzje otwarte>
-Następna bramka: <co dokładnie>
-Orkiestracja wieloagentowa: <wyłączona / włączona zgodą z dnia …>
-
-Nie zaczynam zmian, dopóki nie potwierdzę właściwego ID, GOAL, allowlisty
-i decyzji wymaganych od właściciela. Pracuję wyłącznie w bieżącym, czystym
-worktree.
-```
-
----
-
-# Praktyki tego projektu — poza szkieletem
-
-Sekcje 11–15 nie mają odpowiednika w szkielecie uniwersalnym. To reguły
-wypracowane w trakcie pracy nad nAgents, w tym **wyprowadzone z faktycznie
-popełnionych błędów**. Obowiązują tak samo jak reszta.
-
-## 11. Dyscyplina źródeł i korekt
-
-### 11.1 Hierarchia źródeł
-
-Projekt opiera się na ocenie cudzych narzędzi. Dwa razy pomyliłem się, opierając
-na źródle niższego rzędu. Stąd twarda kolejność:
+Projekt opiera się na ocenie cudzych narzędzi. Dwa razy zapisano w dokumentach
+nieprawdę, opierając się na źródle niższego rzędu. Stąd twarda kolejność:
 
 | Rząd | Źródło | Status |
 |---|---|---|
 | 1 | oficjalna dokumentacja narzędzia | **rozstrzygające** |
-| 2 | repozytorium i zgłoszenia błędów projektu | rozstrzygające dla stanu faktycznego |
+| 2 | repozytorium i zgłoszenia błędów | rozstrzygające dla stanu faktycznego |
 | 3 | wpis producenta, notatka o wydaniu | wiarygodne, ale marketing |
 | 4 | artykuł branżowy, podsumowanie | poszlaka — sprawdź w rzędzie 1 |
-| 5 | film promocyjny, materiał prowadzący do sprzedaży | **nigdy jako podstawa decyzji** |
+| 5 | film promocyjny, materiał sprzedażowy | **nigdy jako podstawa decyzji** |
 
-**Zanim wpiszesz cechę narzędzia do dokumentu decyzyjnego, sprawdź ją w rzędzie 1 albo 2.**
+**Zanim wpiszesz cechę narzędzia do dokumentu decyzyjnego, sprawdź ją w rzędzie 1 lub 2.**
 Fakt z rzędu 4 lub 5 zapisuj jawnie jako niepotwierdzony.
 
-### 11.2 Rzeczywiste przypadki, które tę regułę wywołały
+### 12.2 Przypadki, które tę regułę wywołały
 
-| Błąd | Skąd wziąłem | Jak było naprawdę |
+| Błąd | Skąd | Jak było naprawdę |
 |---|---|---|
-| „Eve nie ma kanału do Teams" | opis repozytorium z przykładem dla Slacka | dokumentacja kanałów wymienia Teams jako wbudowany |
+| „Eve nie ma kanału do Teams" | opis repozytorium z przykładem dla Slacka | dokumentacja wymienia Teams jako wbudowany |
 | „Hermes ma panel administracyjny" | podsumowanie w wyszukiwarce | dokumentacja mówi wprost, że panelu nie ma |
 
-Oba wpłynęły na rekomendację. Pierwszy zawężał przewagę jednego narzędzia z dwóch
-punktów do jednego — czyli zmieniał wynik porównania.
+Pierwszy zawężał przewagę jednego narzędzia z dwóch punktów do jednego — czyli
+zmieniał wynik porównania.
 
-### 11.3 Jak korygować własny błąd
+### 12.3 Jak korygować własny błąd
 
-Gdy okaże się, że wcześniejsze ustalenie było fałszywe:
-
-1. **Popraw w miejscu, gdzie mieszka ustalenie** — nie tylko w rozmowie.
+1. **Popraw tam, gdzie mieszka ustalenie** — nie tylko w rozmowie.
    Dokument z nieprawdą przeżyje rozmowę.
 2. **Zostaw ślad korekty**, nie ciche nadpisanie. Czytelnik musi wiedzieć,
-   że wcześniejsza wersja mówiła inaczej — inaczej straci zaufanie do reszty.
-3. **Nazwij skutek dla decyzji.** „To był błąd" bez „a to zmienia rekomendację o tyle"
-   jest bezużyteczne.
+   że wcześniejsza wersja mówiła inaczej.
+3. **Nazwij skutek dla decyzji.** „To był błąd" bez „a to zmienia rekomendację
+   o tyle" jest bezużyteczne.
 4. **Nie rozwodź się.** Jedno zdanie o pomyłce, reszta o konsekwencji.
 
-## 12. Dyscyplina zakresu
+## 13. Dyscyplina zakresu
 
-### 12.1 Nie gonimy parytetu
+### 13.1 Nie gonimy parytetu
 
 Projekt istnieje obok gotowych platform komercyjnych, które mają więcej funkcji
 i zawsze będą miały. **Gonienie parytetu funkcja po funkcji zamienia projekt
 na trzy tygodnie w projekt na pół roku.**
 
 Budujemy pod listę wymagań właściciela, nie pod to, co widać na cudzym demie.
-Funkcja, która nie realizuje żadnego wymagania ani scenariusza, **nie wchodzi** —
-idzie do `docs/spec/decisions.md` jako rozważona i odrzucona.
+Funkcja nierealizująca żadnego wymagania ani scenariusza **nie wchodzi** — idzie
+do `docs/spec/decisions.md` jako rozważona i odrzucona.
 
-### 12.2 Lista rzeczy, których ten projekt nie robi
-
-Trzymaj ją w głowie przy każdym dispatchu:
+### 13.2 Czego ten projekt nie robi
 
 - **nie jest silnikiem agenta** — tym jest Hermes
 - **nie jest komunikatorem** — tym jest Teams
@@ -510,15 +549,14 @@ Trzymaj ją w głowie przy każdym dispatchu:
 
 Temat naruszający którykolwiek punkt wymaga pytania ABC, nie decyzji Operatora.
 
-### 12.3 Rozjazd zakresu w trakcie tematu
+### 13.3 Rozjazd w trakcie tematu
 
-Gdy w trakcie pracy pojawi się pomysł spoza `GOAL` — **zapisz go jako nowy temat
-w rejestrze i wróć do swojego.** Nie poszerzaj allowlisty w biegu.
-To najczęstszy sposób, w jaki dwutygodniowy etap staje się sześciotygodniowym.
+Gdy pojawi się pomysł spoza `GOAL` — **zapisz go jako nowy temat w rejestrze
+i wróć do swojego.** Nie poszerzaj allowlisty w biegu.
 
-## 13. Cztery pliki trwałej prawdy i ujawnianie wyborów
+## 14. Cztery pliki trwałej prawdy
 
-### 13.1 Cztery pliki
+### 14.1 Pliki
 
 Przy jednej osobie technicznej to jedyna obrona przed tym, że cała wiedza
 o projekcie mieszka w jednej głowie.
@@ -526,19 +564,17 @@ o projekcie mieszka w jednej głowie.
 | Plik | Zawartość |
 |---|---|
 | `docs/spec/00-architektura.md` | co budujemy i dlaczego tak |
-| `docs/spec/decisions.md` | każdy wybór dotyczący kosztu, danych, dostępu, odwracalności |
+| `docs/spec/decisions.md` | wybory dotyczące kosztu, danych, dostępu, odwracalności |
 | `docs/spec/scenarios.md` | sytuacje do obsłużenia — źródło testów |
 | `CLAUDE.md` | jak pracujemy; krótkie i zmienne |
 
-**Reguła:** wybór trafia do `decisions.md` **zanim** powstanie realizujący go kod.
+**Wybór trafia do `decisions.md` zanim powstanie realizujący go kod.**
 Decyzja udokumentowana po fakcie jest opisem, nie decyzją.
 
-### 13.2 Ujawnianie wyborów zwykłym językiem
+### 14.2 Ujawnianie wyborów zwykłym językiem
 
-Gdy w trakcie pracy pojawi się wybór dotyczący danych, kosztu, prywatności,
-przenośności, wdrożenia lub utrzymania — **nie podejmuj go po cichu w kodzie.**
-
-Przedstaw właścicielowi:
+Gdy pojawi się wybór dotyczący danych, kosztu, prywatności, przenośności, wdrożenia
+lub utrzymania — **nie podejmuj go po cichu w kodzie.** Przedstaw właścicielowi:
 
 - dwie lub trzy realne opcje, zwykłym językiem
 - rekomendację z jednym zdaniem uzasadnienia
@@ -547,87 +583,75 @@ Przedstaw właścicielowi:
 Ostatni punkt jest najważniejszy i najczęściej pomijany. Właściciel podejmuje
 decyzje o odwracalności, nie o składni.
 
-Gdy wybór spełnia kryteria z §6 — idzie pełnym trybem ABC/ECHO.
-Gdy nie spełnia — wystarczy zdanie w rozmowie i wpis w `decisions.md`.
+Wybór spełniający kryteria z §8.1 idzie pełnym trybem ABC/ECHO.
 
-### 13.3 Kopia, której nie odtworzono, nie jest kopią
+### 14.3 Kopia, której nie odtworzono, nie jest kopią
 
-Dotyczy każdego etapu z kopiami zapasowymi. **Odtworzenie musi zostać
-przećwiczone przed uznaniem tematu za zamknięty.** Deklaracja „mamy backup"
-bez udokumentowanego odtworzenia to `FAIL`.
+**Odtworzenie musi zostać przećwiczone przed uznaniem tematu za zamknięty.**
+Deklaracja „mamy backup" bez udokumentowanego odtworzenia to `FAIL`.
 
-## 14. Gdzie co trafia i konwencje repozytorium
+## 15. Konwencje repozytorium
 
-### 14.1 Rodzaje dokumentów
+### 15.1 Gdzie co trafia
 
 | Rodzaj | Miejsce | Uwagi |
 |---|---|---|
 | Specyfikacja techniczna | `docs/spec/` | trwała, wersjonowana, źródło prawdy |
 | Rejestry procesu | `docs/process/` | tematy, handoff, ECHO, dispatch |
+| Materiały źródłowe | `docs/process/zrodla/` | cudze dokumenty — **nie modyfikujemy** |
 | Notatki decyzyjne | `docs/nota-*.md` | **historia rozważań, nie routing** |
 | Dokument do pokazania | artefakt + kopia w repo | artefakt do czytania, repo do trwałości |
 
 **Notatki `nota-*` są zamrożone.** Nie aktualizuj ich, gdy ustalenie się zmieni —
-zmienia się `decisions.md` i specyfikacja. Notatka pokazuje, co wiedzieliśmy
-wtedy, i to jest jej wartość.
+zmienia się `decisions.md` i specyfikacja. Notatka pokazuje, co wiedzieliśmy wtedy,
+i to jest jej wartość.
 
-### 14.2 Język
+### 15.2 Język
 
 Dokumentacja, komentarze w rejestrze i komunikaty dla użytkownika — **po polsku**.
 Nazwy techniczne, pola bazy, ścieżki i identyfikatory — po angielsku,
 bez polskich znaków.
 
-### 14.3 Commity
+### 15.3 Commity
 
-- opis po polsku, bez polskich znaków diakrytycznych w treści commita
-- pierwszy wiersz: `<obszar>: <co się zmienia>` — np. `process:`, `docs:`, `app:`
-- w treści: co i dlaczego, nie jak
-- **nigdy identyfikator modelu ani nazwa narzędzia** w artefaktach wypychanych
-  do repozytorium
+- opis po polsku, bez znaków diakrytycznych w treści commita
+- pierwszy wiersz: `<obszar>: <co się zmienia>` — `process:`, `docs:`, `app:`
+- w treści: **co i dlaczego**, nie jak
+- **nigdy identyfikator modelu ani nazwa narzędzia** w artefaktach wypychanych do repo
 
-### 14.4 Gałąź
+### 15.4 Gałąź
 
-Push wyłącznie na gałąź wskazaną przez właściciela — bariera 7.
-**Nie zakładaj `main`.** Gałąź robocza jest zapisana w `CLAUDE.md`; jeśli jej tam
-nie ma albo wygląda na nieaktualną, zapytaj, nie zgaduj.
+Push wyłącznie na gałąź wskazaną przez właściciela (bariera 7).
+**Nie zakładaj `main`.** Gałąź robocza jest w `CLAUDE.md`; jeśli jej tam nie ma
+albo wygląda na nieaktualną — zapytaj, nie zgaduj.
 
-### 14.5 Koszt
+### 15.5 Koszt
 
 Rachunek za modele przewyższa koszt infrastruktury o rząd wielkości.
-Wniosek dla decyzji projektowych: **optymalizuj dobór modeli i wielkość kontekstu,
-nie rozmiar serwera.** Warstwa rozmowy chodzi na modelu tanim; analiza nocna
-może być wolna i dokładna.
+**Optymalizuj dobór modeli i wielkość kontekstu, nie rozmiar serwera.**
+Warstwa rozmowy chodzi na modelu tanim; analiza nocna może być wolna i dokładna.
 
-## 15. Szybki start dla nowego agenta
+---
 
-Pięć minut do produktywności. Wykonaj w tej kolejności.
+## Pochodzenie
 
-```text
-1. Przeczytaj `autobots` (szkielet), potem ten dokument.
-2. Przeczytaj siedem plików z §2 w podanej kolejności.
-3. Sprawdź stan:
-      git status && git branch --show-current
-4. Napisz meldunek startowy (§10) i CZEKAJ na potwierdzenie właściciela.
-5. Nie dotykaj kodu przed potwierdzeniem ID, GOAL i allowlisty.
-```
+Dokument wywodzi się z uniwersalnego szkieletu procesu AutoBot, dostarczonego
+przez właściciela i napisanego pierwotnie dla innego projektu. Kopia źródłowa
+leży w `docs/process/zrodla/autobots-szkielet-uniwersalny.md` i **nie jest
+modyfikowana** — służy jako odniesienie przy sporze o brzmienie zasady.
 
-### Pięć rzeczy, które trzeba wiedzieć od razu
+Względem szkieletu ta wersja:
 
-1. **To nie jest projekt agenta.** Budujemy warstwę zarządzania nad Hermesem.
-   Jeśli piszesz kod robiący to, co Hermes już robi — zatrzymaj się.
-2. **Domyślna odmowa wszędzie.** Uprawnienia, narzędzia, dane. Nigdy
-   „wszyscy mogą, chyba że".
-3. **Dwie decyzje są otwarte i blokujące** — D-010 (topologia) i D-011
-   (rezydencja pamięci). Nie rozstrzygaj ich w kodzie.
-4. **Orkiestracja wieloagentowa jest wyłączona**, dopóki właściciel nie włączy
-   jej zdaniem w tej sesji.
-5. **Siedem barier oznacza `FAIL`**, niezależnie od jakości reszty pracy.
-   Przeczytaj je zanim napiszesz pierwszą linijkę.
+- **rozstrzyga** wartości pozostawione jako konfigurowalne: limit rund 3 zamiast
+  przykładowych 5, pula 2 tematy, próg `ZWIS` 20 minut, domeny i statusy raportu,
+  effort per rola, konkretny punkt startowy zamiast „README albo CLAUDE albo AGENTS"
+- **uzupełnia** o rzeczy, których szkielet wymagał, ale nie definiował: zapis
+  dispatchu jako plik, checklisty Evaluatora i Final Control, szablon pytania ABC,
+  jawną listę tego, co nie jest dowodem zakończenia
+- **dodaje** praktyki wypracowane w tym projekcie: dyscyplinę źródeł i korekt (§12),
+  dyscyplinę zakresu (§13), cztery pliki trwałej prawdy (§14), konwencje
+  repozytorium (§15), szybki start (§0)
+- **usuwa** warstwę „ustal per projekt", odwołania do innych projektów i wskazówki
+  o kopiowalności szkieletu — tu są już bezużyteczne
 
-### Trzy najczęstsze sposoby zepsucia tego projektu
-
-| Sposób | Objaw | Zapobieganie |
-|---|---|---|
-| Rozjazd zakresu | temat rośnie w trakcie rundy | §12.3 — nowy pomysł to nowy temat |
-| Fałszywe „gotowe" | raport `PASS` bez sprawdzonego scenariusza | §1 — lista rzeczy, które nie są dowodem |
-| Cicha decyzja w kodzie | wybór o danych zapadł w implementacji | §13.2 — ujawnij wybór, zanim go podejmiesz |
+Zmiana tego dokumentu podlega trybowi z `docs/process/zmiana-procesu.md`.
