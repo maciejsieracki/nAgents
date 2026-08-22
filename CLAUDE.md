@@ -15,6 +15,10 @@ dla procesu** i pierwszą rzeczą do przeczytania w każdej sesji.
 | 6 | [`docs/spec/scenarios.md`](docs/spec/scenarios.md) | scenariusze — źródło planów testów |
 | 7 | `docs/spec/0X-mvpX.md` | specyfikacja bieżącego etapu |
 
+Opcjonalnie, gdy chcesz zrozumieć **dlaczego** projekt wygląda tak, jak wygląda:
+[`docs/process/pamiec.md`](docs/process/pamiec.md) — kondensat rozumowania, warianty
+odrzucone, pytania i odpowiedzi, popełnione błędy. To kontekst, nie routing.
+
 **Nie zaczynaj** od samego czatu, starego handoffu ani od `docs/nota-*.md`.
 Notatki decyzyjne są historią rozważań — pokazują, *dlaczego* projekt wygląda
 tak, jak wygląda, ale nie są aktywnym routingiem.
