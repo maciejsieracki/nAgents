@@ -3,7 +3,7 @@
 Stan na teraz. Zastępowany w całości przy każdym przekazaniu — to nie jest log,
 tylko zdjęcie bieżącej sytuacji.
 
-**Ostatnia aktualizacja:** 2026-08-22
+**Ostatnia aktualizacja:** 2026-08-22 (po zestawie pytań nr 1)
 
 ---
 
@@ -25,13 +25,23 @@ Gałąź robocza: `claude/git-connection-9sz6dg`. Drzewo czyste.
 
 ## Co blokuje
 
-| Co | Skutek | Kto odblokuje |
-|---|---|---|
-| **D-011** — rezydencja wspólnej pamięci | MVP3 nie startuje | właściciel, po informacji o bazie |
-| Rejestracja aplikacji w Entra ID | MVP1 staje w dniu trzecim | administrator dzierżawy |
+| Co | Skutek | Kto odblokuje | Zegar |
+|---|---|---|---|
+| Rejestracja aplikacji w Entra ID | MVP1 staje w dniu trzecim | administrator dzierżawy | nieznany |
+| **Umowa powierzenia z dostawcą modelu** | scenariusz 8 nie ruszy — dni 11–12 | prawnik + dostawca | **nieznany, proces prawny** |
+| **Zawiadomienie pracowników o monitoringu** | pilot nie ruszy legalnie | właściciel + kadry | **ustawowe ~2 tygodnie** |
+| **D-011** — rezydencja wspólnej pamięci | MVP3 nie startuje | właściciel, po informacji o bazie | — |
 
-Druga pozycja jest pilniejsza, choć wygląda mniej poważnie — jest jedyną
-zależnością zewnętrzną etapu pierwszego i warto ją uruchomić przed startem kodu.
+**Korekta z 2026-08-22.** Poprzednia wersja tego dokumentu nazywała rejestrację
+w Entra ID „jedyną zależnością zewnętrzną" etapu pierwszego. **To była nieprawda.**
+Final Control wykazał dwie kolejne zależności tego samego rodzaju — procesy poza
+kontrolą zespołu technicznego, o nieznanym czasie trwania, na krytycznej ścieżce.
+
+Zawiadomienie pracowników jest z nich najgroźniejsze: jego zegar jest **dłuższy
+niż większość etapu MVP1**. Jeśli nie ruszy w dniu pierwszym, to ono, a nie kod,
+zatrzyma pilota w dniu dziesiątym.
+
+**Wszystkie trzy uruchomić równolegle, przed pierwszą linijką kodu.**
 
 ## Decyzje czekające na właściciela
 
@@ -42,12 +52,19 @@ zależnością zewnętrzną etapu pierwszego i warto ją uruchomić przed starte
 
 ## Następna bramka
 
-Rozpoczęcie `NAG-MVP1-001-szkielet`. Wymaga od właściciela:
+**Odpowiedzi na zestaw pytań nr 1** — [`docs/process/pytania/2026-08-22-zestaw-1.md`](pytania/2026-08-22-zestaw-1.md),
+25 pytań w kolejności wyznaczonej przez Final Control.
 
-1. potwierdzenia gałęzi bazowej
-2. potwierdzenia, czy orkiestracja wieloagentowa jest w tej sesji dozwolona
-   (domyślnie **nie**)
-3. uruchomienia rejestracji aplikacji w Entra ID — równolegle, nie blokuje dnia pierwszego
+Bezwzględnie przed `NAG-MVP1-001-szkielet`:
+
+1. **Q-INFRA-3** — gałąź bazowa. Dosłowna blokada startu.
+2. **Q-ZAKRES-2, Q-INNE-1, Q-MODEL-1, Q-DANE-3** — cztery pytania uruchamiające
+   zależności zewnętrzne. Odpowiedzi na nie **nie czekają na kod** — uruchamiają
+   zegary, które biegną równolegle.
+3. Rejestracja aplikacji w Entra ID — uruchomić natychmiast.
+
+Orkiestracja wieloagentowa: **włączona** decyzją ECHO-001, Sonnet 5 high dla
+Operatora, Evaluatora i Final Control. Dispatch wyłącznie przez workflow (ECHO-002).
 
 ## Czego nie robić
 
