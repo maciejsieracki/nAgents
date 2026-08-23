@@ -71,6 +71,13 @@ ma dispatchu.
 
 ### 1.1 `READY_FOR_DEPLOY` oznacza łącznie
 
+`READY_FOR_DEPLOY` zostaje jako stały znacznik stanu tego kontraktu wszędzie —
+nawet tam, gdzie jego odpowiednikiem jest publikacja, złożenie pisma, wysyłka
+do klienta albo wdrożenie zmiany, nie dosłowne „wdrożenie" w sensie
+informatycznym. Nazwa nie zmienia się między projektami; zmienia się wyłącznie
+to, co fizycznie oznacza (patrz tabela odwzorowań, §18.2, „Uznanie pracy za
+obowiązującą").
+
 - zmiana wyłącznie w zatwierdzonej allowliście ({mapa-obszarow-dopuszczonych-zmian})
 - dowód wykonania ({dowod-wykonania}) przechodzi w całości — w projekcie
   informatycznym jest nim zwykle zielony zestaw testów automatycznych, patrz
@@ -97,12 +104,13 @@ Najczęstsze źródło fałszywego „gotowe":
 | Raport `PASS` | opisuje pracę, nie jej skutek w stanie obowiązującym |
 | Nazwa miejsca pracy w toku | nazwa miejsca pracy nie jest stanem |
 | Zapis punktu kontrolnego | zapis, nie włączenie do stanu obowiązującego |
-| Widoczny status subagenta | interfejs pokazuje przebieg, nie wynik |
+| Widoczny status zadania w narzędziu pracy | narzędzie pokazuje przebieg, nie wynik |
 | Deklaracja „zrobione" | deklaracja bez artefaktu jest niczym |
 | Brak artefaktu | brak dowodu to nie jest dowód |
 
 (W nAgents: „nazwa miejsca pracy w toku" to gałąź albo worktree; „zapis punktu
-kontrolnego" to commit — zapis, nie integracja.)
+kontrolnego" to commit — zapis, nie integracja; „widoczny status zadania w
+narzędziu pracy" to status subagenta w interfejsie narzędzia orkiestracji.)
 
 ## 2. Start sesji
 
@@ -194,7 +202,10 @@ ze statusem `DECISION_REQUIRED`, nie rozstrzyga sam.
     Węzły z `PASS` nie wracają razem z nim
 
 ### 3.3 Final Control
-Zawsze **osobny subagent**, nigdy główny agent. **Nie wystawia `READY_FOR_DEPLOY`.**
+Zawsze **ktoś inny niż osoba, która wykonała temat, i inny niż zlecający** —
+nigdy ten sam wykonawca, nigdy zlecający prowadzący rozmowę z właścicielem
+(przy wykonawcy-programie: zawsze osobny subagent, nigdy główny agent).
+**Nie wystawia `READY_FOR_DEPLOY`.**
 Punktem odniesienia jest zawsze **wytwór na miejscu pracy w toku**, sprawdzony
 bezpośrednio — nie tylko raporty Operatora i Evaluatora, które są deklaracją,
 nie dowodem. Kontroluje kompletność śladu:
@@ -212,18 +223,21 @@ nie dowodem. Kontroluje kompletność śladu:
    orkiestratorowi do zapisu (§9.2)
 
 ### 3.4 Orkiestrator
-Działa w głównym czacie. Włącza do stanu obowiązującego **wyłącznie zatwierdzoną
+Prowadzi rozmowę z właścicielem (przy wykonawcy-programie: główny czat).
+Włącza do stanu obowiązującego **wyłącznie zatwierdzoną
 allowlistę**, per pozycję, w razie potrzeby per fragment. Jako **jedyny** wystawia
-`READY_FOR_DEPLOY` — i dopiero **po faktycznym włączeniu do stanu obowiązującego**,
-nie po pozytywnym Final Control.
+`READY_FOR_DEPLOY` (§1.1) — i dopiero **po faktycznym włączeniu do stanu
+obowiązującego**, nie po pozytywnym Final Control.
 
 Przed włączeniem sprawdza rzeczywisty stan: co faktycznie leży w miejscu pracy
 w toku, treść zmiany do weryfikacji, wynik dowodu wykonania, raporty, allowlistę.
 
 ### 3.5 Właściciel
-Odpowiada na decyzje **wyłącznie w głównym czacie orkiestratora**.
-Subagenty są kanałami technicznymi — nie prowadź z nimi osobnych rozstrzygnięć
-produktowych i nie przyjmuj decyzji za właściciela.
+Odpowiada na decyzje **wyłącznie w rozmowie z orkiestratorem** (przy
+wykonawcy-programie: wyłącznie w głównym czacie orkiestratora).
+Wykonawcy są kanałami technicznymi (przy wykonawcy-programie: subagenty) —
+nie prowadź z nimi osobnych rozstrzygnięć produktowych i nie przyjmuj decyzji
+za właściciela.
 
 ## 4. Pętla tematu
 
@@ -442,7 +456,7 @@ których nie wolno przekroczyć, niezależnie od tego, jak dobra jest reszta pra
 — i skutek naruszenia którejkolwiek z nich jest zawsze ten sam: natychmiastowy
 `FAIL`.** Treść tej listy jest odwzorowaniem dziedziny — inna w księgowości,
 inna w kancelarii, inna w informatyce — i ustala się ją pytaniami rozpoznającymi
-dziedzinę §17.7, §17.8, §17.9: czego nie wolno naruszyć nigdy choćby reszta
+dziedzinę §17.10, §17.11, §17.12: czego nie wolno naruszyć nigdy choćby reszta
 pracy była bez zarzutu; co narzuca prawo albo umowa z klientem; które dane są
 wrażliwe i gdzie nie wolno ich wynosić.
 
@@ -493,8 +507,8 @@ Dla drobnej implementacji **w ramach** przyjętej decyzji — nie jest wymagana.
 
 | Rodzaj | Kto | Przykłady |
 |---|---|---|
-| Pieniądze, prawo, ludzie, ryzyko, zakres | **Właściciel** — pytanie ABC | ile agent może wydać, czy dane klientów idą do modelu, kto jest w pilocie, co robimy z monitoringiem pracowników |
-| Technika bez konsekwencji dla powyższych | **Orkiestrator** — decyduje i **informuje**, nie pyta | gdzie stoi baza, na której wersji zależności budujemy, jak nazywamy miejsca pracy roboczej, gdzie leżą kopie |
+| Pieniądze, prawo, ludzie, ryzyko, zakres | **Właściciel** — pytanie ABC | ile wolno wydać na jedno zlecenie, czy dane klientów idą do narzędzia spoza firmy, kto jest w pilocie, co robimy z monitoringiem pracowników |
+| Technika bez konsekwencji dla powyższych | **Orkiestrator** — decyduje i **informuje**, nie pyta | jak nazywamy miejsca pracy roboczej, w jakim formacie trzymamy wersje robocze, gdzie leżą kopie |
 
 Pytanie techniczne postawione właścicielowi **nie jest ostrożnością — jest przerzuceniem
 na niego decyzji, do której nie ma podstaw.** Kosztuje jego czas i opóźnia pracę.
@@ -628,6 +642,11 @@ widać, co się psuje najczęściej.
 
 ## 10. Watchdog i pojemność
 
+„Watchdog" i `ZWIS` zostają jako stałe tokeny procesu wszędzie, tak samo jak
+`READY_FOR_DEPLOY` (§1.1) i `DEPLOY/PUSH` (§9) — nazwa nie zmienia się między
+projektami, zmienia się tylko to, po czym w danej dziedzinie poznaje się brak
+ruchu.
+
 | Parametr | Wartość |
 |---|---|
 | Jeden temat | **jeden aktywny przebieg Operatora** |
@@ -650,20 +669,39 @@ Zostawienie wolnego zasobu przez przeoczenie jest błędem tak samo jak przecią
 **Przy `ZWIS`:** sprawdź przebieg pracy, stan miejsca pracy w toku i artefakty
 **zamiast zgadywać**. Nie anuluj i nie restartuj w ciemno — orkiestrator przejmuje temat.
 
-## 11. Orkiestracja wieloagentowa i delegowanie
+## 11. Delegowanie pracy i orkiestracja wieloagentowa
 
-### 11.1 Norma tego projektu: orkiestrator nie wykonuje pracy sam
+Ta sekcja ma dwie warstwy. **§11.1, §11.3.2, §11.3.3, §11.4 i §11.5 opisują
+delegowanie pracy jako takie** — działają identycznie, niezależnie od tego,
+czy wykonawcą jest osoba czy program; to samo dotyczy koleżanki z rozliczeń
+przekazującej pracę koleżance. **§11.2, §11.3 i §11.3.1 stosują się wyłącznie,
+gdy wykonawcą jest program** (patrz pytanie rozpoznające §17.1) — każda z nich
+otwiera się tym zdaniem wprost.
 
-Decyzja właściciela z 2026-08-22, zapisana jako **ECHO-001**:
+### 11.1 Kto zleca, nie wykonuje sam
 
-> W tym projekcie **cała praca wykonawcza idzie do subagentów.** Orkiestrator
-> prowadzi rozmowę z właścicielem, przygotowuje dispatch, integruje i wystawia
-> `READY_FOR_DEPLOY` — ale nie pisze kodu ani nie prowadzi analizy samodzielnie.
+**Zasada jest uniwersalna:** osoba, która prowadzi rozmowę z właścicielem,
+przygotowuje zlecenie i włącza zatwierdzony wynik do stanu obowiązującego
+(rola zlecającego, §3.4), **nie wykonuje sama pracy merytorycznej zlecenia** —
+tę wykonuje wykonawca (§3.1). Powód jest ten sam, co przy zakazie oceniania
+własnej pracy (§3.2): kto zleca i integruje, traci zewnętrzny punkt odniesienia,
+jeśli jest jednocześnie tym, kto wykonał. Rozdzielenie tych dwóch ról jest
+warunkiem, żeby reszta pętli (Operator → Evaluator → Final Control) w ogóle
+miała sens — zlecający sprawdzający sam siebie nie jest sprawdzeniem.
 
-To jest odwrócenie domyślnego ustawienia ze szkieletu, gdzie orkiestracja była
-opcjonalna. **W nAgents jest normą.**
+To, czy w danej organizacji zlecający i wykonawca są zawsze różnymi osobami,
+czy czasem jedna osoba pełni obie role po kolei, w różnym czasie i z jasnym
+przełączeniem kapelusza, jest odwzorowaniem dziedziny — rozstrzyga je pytanie
+rozpoznające §17.1.
+
+(W nAgents ta norma jest zapisana jako decyzja właściciela ECHO-001 — pełna
+treść i uzasadnienie w §21.)
+
+**Poniższe (§11.2, §11.3, §11.3.1) stosuje się, gdy wykonawcą jest program.**
 
 ### 11.2 Przydział modeli i poziomu wysiłku
+
+**Stosuje się, gdy wykonawcą jest program.**
 
 Każda rola ma przypisany model i poziom wysiłku myślenia —
 {model-wykonawcy}, {model-sprawdzajacego}, {model-kontroli-koncowej},
@@ -674,43 +712,36 @@ nie od tego, co jest dziś technicznie dostępne jako najmocniejsze.
 Przydział, raz ustalony, **nie wymaga potwierdzania przy każdym dispatchu.**
 Zmiana wymaga ECHO.
 
-(W nAgents: Operator, Evaluator i Final Control — model Sonnet 5, poziom
-wysiłku wysoki, jednakowo dla wszystkich trzech ról. Orkiestrator — model
-sesji głównego czatu, bez osobnego przydziału.)
+(W nAgents: patrz §21.)
 
-### 11.3 Zawsze przez workflow — nigdy przez zwykłego subagenta
+### 11.3 Zawsze przez to samo narzędzie zlecania — nigdy przez wywołanie ad hoc
 
-Decyzja właściciela z 2026-08-22, zapisana jako **ECHO-002**:
+**Stosuje się, gdy wykonawcą jest program.**
 
-> **Każde zlecenie pracy subagentowi idzie przez narzędzie workflow.**
-> Powód jest techniczny: zwykłe wywołanie subagenta przyjmuje wyłącznie model,
-> a **effort da się przypisać tylko w workflow**. Bez workflow nie da się
-> zrealizować przydziału z §11.2, więc dispatch poza workflow jest naruszeniem
-> procesu — nawet dla pojedynczego, drobnego zadania.
+Gdy zlecenie idzie do programu, musi przejść przez narzędzie orkiestracji,
+które pozwala jawnie przypisać do wywołania i model, i poziom wysiłku (§11.2)
+— zwykłe, doraźne wywołanie tego zwykle nie umożliwia. Dispatch z pominięciem
+tego narzędzia jest naruszeniem procesu, nawet dla pojedynczego, drobnego
+zadania, bo oznacza, że przydział z §11.2 nie został zastosowany.
 
-| Sytuacja | Narzędzie |
-|---|---|
-| Jedno zadanie, jedna rola | **workflow** z jednym wywołaniem `agent()` |
-| Jeden temat, pełna pętla | **workflow**: etapy Operator → Evaluator → Final Control |
-| Kilka tematów zebranych naraz | **workflow** z fan-outem — nie kolejka wywołań |
-| Analiza wymagająca wielu perspektyw | **workflow** z równoległymi rolami |
+Przy takim narzędziu obowiązuje ta sama pętla: Operator → Evaluator → Final
+Control. Etapy narzędzia **odwzorowują role, nie zastępują ich** — nazwa
+etapu ma odpowiadać roli, a etykieta wywołania ma zawierać rolę i temat.
 
-Nie ma wiersza „bez workflow". Jeden agent to nadal workflow — po prostu z jednym
-wywołaniem.
+**Każde wywołanie musi mieć jawnie podane `model` i `effort`.** Pominięcie
+któregokolwiek oznacza, że przydział z §11.2 nie został zastosowany.
 
-Przy workflow obowiązuje ta sama pętla: Operator → Evaluator → Final Control.
-Etapy workflow **odwzorowują role, nie zastępują ich** — nazwa etapu ma odpowiadać
-roli, a `label` wywołania ma zawierać rolę i temat.
-
-**Każde wywołanie `agent()` musi mieć jawnie podane `model` i `effort`.**
-Pominięcie któregokolwiek oznacza, że przydział z §11.2 nie został zastosowany.
+(W nAgents: narzędzie workflow, decyzja właściciela ECHO-002 — pełna treść
+w §21.)
 
 ### 11.3.1 Dobierz szerokość fan-outu do faktycznego limitu
 
-Ten limit ({limit-rownoleglosci-wywolan}) nie jest odwzorowaniem dziedziny —
-wynika wyłącznie z zasobów kontenera uruchomieniowego, nie z rodzaju pracy.
-Ten sam wzór obowiązuje niezależnie od tego, czy temat jest informatyczny,
-księgowy czy kancelaryjny; różni się wyłącznie od maszyny do maszyny.
+**Stosuje się, gdy wykonawcą jest program.** Ten limit ({limit-rownoleglosci-wywolan})
+nie jest odwzorowaniem dziedziny — wynika wyłącznie z zasobów kontenera
+uruchomieniowego, nie z rodzaju pracy. Ten sam wzór obowiązuje niezależnie od
+tego, czy temat jest informatyczny, księgowy czy kancelaryjny; różni się
+wyłącznie od maszyny do maszyny. (Dla wykonawców-ludzi odpowiednikiem tego
+ograniczenia jest pojemność przeglądu jednej osoby, §10 — nie moc obliczeniowa.)
 
 Workflow uruchamia równolegle **najwyżej `min(16, liczba_CPU − 2)`** agentów.
 Nadmiar czeka w kolejce. **Sprawdź limit, zanim zaplanujesz rozrzut:**
@@ -731,120 +762,109 @@ poniżej wiąże człon z procesorów.
 | 18 i więcej | ≥16 | 16 | **16** |
 
 **Limit nie zależy od obciążenia maszyny.** Rezerwa dwóch rdzeni jest odejmowana
-z góry, niezależnie od tego, czy cokolwiek je zajmuje. Zmierzone 2026-08-22:
-przy `loadavg` 0.08 (maszyna praktycznie bezczynna) i braku dławienia cgroup
-limit nadal wynosił 2. Czekanie na „spokojniejszą porę" niczego nie zmieni —
-zmienia to wyłącznie większy kontener.
+z góry, niezależnie od tego, czy cokolwiek je zajmuje. Czekanie na „spokojniejszą
+porę" niczego nie zmieni — zmienia to wyłącznie większy kontener.
 
 Uwaga o proporcji: przy 4 rdzeniach rezerwa zjada połowę mocy, przy 8 już ćwierć.
 Przeskok z 4 na 8 rdzeni **potraja** liczbę równoległych agentów.
-
-W kontenerze o 4 CPU limit wynosi **2**. Zlecenie siedmiu agentów nie daje wtedy
-siedmiokrotnego przyspieszenia — daje cztery fale po dwóch, plus koszt
-przełączania i siedem razy powtórzony wstęp do promptu.
 
 **Reguła:** liczba równoległych wywołań w jednej fali powinna odpowiadać limitowi.
 Gdy zadań jest więcej niż miejsc, **łącz je w grubsze paczki** zamiast mnożyć
 cienkich agentów. Cztery paczki przy limicie dwóch kończą się szybciej niż
 siedem drobnych.
 
-Zaobserwowane w praktyce (2026-08-22, workflow `nagents-pytania-abc`): siedmiu
-Operatorów przy limicie 2 wykonywało się falami po dwóch — trzeci startował
-dokładnie w chwili zakończenia pierwszego.
+(W nAgents: konkretny zmierzony limit, obserwacja w praktyce i uwaga o
+zbieżności z pulą tematów z §10 — patrz §21.)
 
-**Uwaga o zbieżności:** limit techniczny (2) zgadza się z pulą tematów z §10 (2),
-ustaloną z zupełnie innego powodu — pojemności przeglądu jednej osoby.
-Przy zmianie któregokolwiek sprawdź, czy drugi nadal ma sens.
+### 11.3.2 Kiedy dzielić zadanie na mniejsze, a kiedy nie
 
-### 11.3.2 Brama triage — dzielić temat na węzły czy nie
-
-Przed dispatchem odpowiedz na dwa pytania:
-
-Progi podziału są parametrem tego projektu ({progi-podzialu-tematu-na-wezly}) —
-poniższe wartości są wypełnieniem dla nAgents, nie zasadą samą w sobie.
+Przed dispatchem odpowiedz na dwa pytania. Progi podziału są parametrem tego
+projektu ({progi-podzialu-tematu-na-wezly}) — poniższe wartości są wypełnieniem
+dla nAgents, nie zasadą samą w sobie.
 
 | Pytanie | Próg (nAgents) |
 |---|---|
 | Czy temat ma co najmniej dwa niezależne obszary z mapy obszarów dopuszczonych zmian, więcej scenariuszy w kryteriach końca niż próg tego projektu, albo więcej pozycji w allowliście niż próg tego projektu? | dwa obszary / >3 scenariusze / >6 pozycji w allowliście — dowolny z trzech |
-| Czy przetworzenie w jednym ciągu grozi przepełnieniem kontekstu? | surowe dane powyżej progu tego projektu (nAgents: ok. 3000 tokenów) |
+| Czy przetworzenie w jednym ciągu grozi przepełnieniem tego, co jeden wykonawca potrafi rzetelnie utrzymać naraz w głowie (dla programu: kontekstu)? | surowe dane powyżej progu tego projektu (nAgents: ok. 3000 tokenów) |
 
-**Choć jedno „tak" i kroki nie są sekwencyjnie zależne** → podziel na węzły.
-Kroki zależne (krok 2 potrzebuje wyniku kroku 1) **nie dzielą się**, niezależnie od progów.
-Obie odpowiedzi „nie" → jeden Operator, bez podziału.
+**Choć jedno „tak" i kroki nie są sekwencyjnie zależne** → podziel na
+mniejsze zadania. Kroki zależne (krok 2 potrzebuje wyniku kroku 1) **nie
+dzielą się**, niezależnie od progów. Obie odpowiedzi „nie" → jeden wykonawca,
+bez podziału.
 
-Szerokość fan-outu dobierz według §11.3.1 — nie według liczby z zewnętrznych protokołów.
-Trzy węzły przy limicie dwóch to dwie fale, nie trzy równoległe strumienie.
+Dla wykonawcy-programu szerokość fan-outu dobierz według §11.3.1. Dla
+wykonawców-ludzi liczbę równocześnie prowadzonych węzłów ogranicza pojemność
+przeglądu — patrz §10 i pytanie kalibrujące §19.3.
 
 #### Najmniejszy skuteczny graf, nie największy możliwy
 
-Podział kosztuje. Każdy węzeł powtarza wstęp do promptu, a architektura wieloagentowa
-zużywa **rząd wielkości więcej tokenów niż pojedyncze zapytanie** — spotykana szacunkowa
-wielokrotność to około piętnastu.
-*Liczba pochodzi ze źródła rzędu czwartego (§12.1) i nie została zweryfikowana u źródła —
-traktuj jako rząd wielkości, nie jako pomiar.*
+**Podział kosztuje, niezależnie od tego, kto wykonuje.** Każdy dodatkowy
+węzeł powtarza wstęp/kontekst, wymaga własnej koordynacji i własnego
+przekazania wyniku — więcej węzłów nie skraca pracy proporcjonalnie do ich
+liczby, bo ten narzut się sumuje. Dziel wtedy, gdy progi z tabeli powyżej są
+przekroczone — nie dlatego, że się da.
 
-Konsekwencja praktyczna: **triage nie jest formalnością.** Przy temacie, który mieści się
-w jednym Operatorze, podział na trzy węzły to trzy razy droższa droga do tego samego
-wyniku. Dziel wtedy, gdy progi z tabeli powyżej są przekroczone — nie dlatego, że można.
+(Stosuje się dodatkowo, gdy wykonawcą jest program: architektura wieloagentowa
+bywa szacowana na rząd wielkości więcej tokenów niż pojedyncze zapytanie —
+patrz §21 po konkretną, niezweryfikowaną wielokrotność i źródło.)
 
 **ID węzła:** ID rodzica z sufiksem litery — `NAG-MVP1-003-a`, `-b`, `-c`.
-Węzeł nie dostaje osobnego wpisu w rejestrze. **Licznik rund (§4.5) liczy się dla całego
-tematu**, nie osobno dla węzła.
+Węzeł nie dostaje osobnego wpisu w rejestrze. **Licznik rund (§4.5) liczy się
+dla całego tematu**, nie osobno dla każdego węzła.
 
-Każdy węzeł ma **binarne kryterium sukcesu** obok numeru scenariusza z §6 — sprawdzalne
-`PRAWDA`/`FAŁSZ`. Brak formy binarnej jest niekompletnością tak samo jak brak numeru scenariusza.
+Każdy węzeł ma **binarne kryterium sukcesu** obok numeru scenariusza z §6 —
+sprawdzalne `PRAWDA`/`FAŁSZ`. Brak formy binarnej jest niekompletnością tak
+samo jak brak numeru scenariusza.
 
-*Trzeciego kryterium triage z protokołów zewnętrznych — „wynik krytyczny wymaga zewnętrznej
-walidacji" — nie wprowadzamy jako osobnej bramki: u nas obowiązuje bezwarunkowo dla każdego
-tematu przez Evaluatora (§3.2). Osobna bramka sugerowałaby fałszywie, że tematy nieoznaczone
-jako krytyczne tej walidacji nie przechodzą.*
+*Trzeciego kryterium podziału z protokołów zewnętrznych — „wynik krytyczny
+wymaga zewnętrznej walidacji" — nie wprowadzamy jako osobnej bramki: u nas
+obowiązuje bezwarunkowo dla każdego tematu przez Evaluatora (§3.2). Osobna
+bramka sugerowałaby fałszywie, że tematy nieoznaczone jako krytyczne tej
+walidacji nie przechodzą.*
 
-### 11.3.3 Matryca węzła — cztery pola, wszystkie obowiązkowe
+### 11.3.3 Co wykonawca dostaje w zleceniu — cztery pola, wszystkie obowiązkowe
 
 Zapis dispatchu dla każdego węzła zawiera:
 
 | Pole | Co to jest |
 |---|---|
 | **Zadanie** | wąski zakres, jedno zdanie |
-| **Reguła anty-halucynacyjna** | konkretny sposób oszukania siebie, którego **zakazujemy** |
+| **Reguła przeciw samooszukiwaniu** | konkretny sposób oszukania siebie, którego **zakazujemy** (przy wykonawcy-programie nazywana też regułą anty-halucynacyjną) |
 | **Binarne kryterium** | sprawdzalne `PRAWDA`/`FAŁSZ` |
-| **Procedura naprawcza** | co dokładnie robi Evaluator przy `FAIL` — zapisane z góry, nie improwizowane |
+| **Procedura naprawcza** | co dokładnie robi sprawdzający przy `FAIL` — zapisane z góry, nie improwizowane |
 
-Drugie pole jest tym, którego nam brakowało najbardziej. **Kryterium sukcesu sprawdza,
-czy wynik jest kompletny. Reguła anty-halucynacyjna zakazuje sposobu, w jaki agent
-oszuka sam siebie.** To są dwie różne rzeczy.
+Drugie pole jest tym, którego brakuje najczęściej. **Kryterium sukcesu
+sprawdza, czy wynik jest kompletny. Reguła przeciw samooszukiwaniu zakazuje
+sposobu, w jaki wykonawca oszuka sam siebie** — uzna niedokończoną albo błędną
+pracę za gotową. To są dwie różne rzeczy.
 
-#### Nasze tryby halucynacji — obserwowane, nie hipotetyczne
+Reguły przeciw samooszukiwaniu tego projektu **pochodzą z faktycznie
+zaobserwowanych błędów, nie z teorii** — zbierz własne z pierwszych tematów,
+zanim spiszesz listę na stałe. Nie kopiuj cudzych przykładów: błąd popełniony
+w innym projekcie rzadko trafia w to, co faktycznie zawodzi w tym.
 
-| Tryb | Przypadek z tego projektu | Reguła zakazująca |
-|---|---|---|
-| Cecha narzędzia z podsumowania | „Hermes ma panel administracyjny" | Zakaz opisywania cechy narzędzia bez odwołania do źródła rzędu 1 lub 2 (§12.1) |
-| Wniosek z opisu zamiast z dokumentacji | „Eve nie ma kanału Teams" — zmieniło wynik porównania | jak wyżej |
-| Deklaracja zamiast artefaktu | „zleciłem uzupełnienie" — nie zlecono | Zakaz raportowania czynności bez identyfikatora zadania albo SHA |
-| Pytanie o rzecz rozstrzygniętą | wariant sprzeczny z D-006 | Zakaz proponowania wariantu bez sprawdzenia dziennika decyzji |
+(Nasze obserwowane przypadki — patrz §21.)
 
-Żaden z nich nie został złapany przez regułę procesu, bo takiej reguły nie było.
+#### Przykład: węzły dla tematu, w którym wytworem jest kod
 
-#### Węzły dla tematu kodującego
+Konkretny podział — dla tematu, w którym wytworem jest kod. Inna dziedzina
+dzieli funkcjonalnie tak samo (wykonanie / sprawdzenie / zgodność albo
+bezpieczeństwo), ale nazywa strumienie inaczej i definiuje własne reguły
+przeciw samooszukiwaniu — patrz tabela odwzorowań, „Podział na równoległe
+strumienie pracy z regułą przeciw samooszukiwaniu".
 
-Przykład konkretnego podziału — dla tematu, w którym wytworem jest kod. Inna
-dziedzina dzieli funkcjonalnie tak samo (wykonanie / sprawdzenie / zgodność
-albo bezpieczeństwo), ale nazywa strumienie inaczej i definiuje własne reguły
-anty-halucynacyjne — patrz tabela odwzorowań, „Podział na równoległe strumienie
-pracy z regułą przeciw samooszukiwaniu".
-
-| Węzeł | Zakres | Reguła anty-halucynacyjna |
+| Węzeł | Zakres | Reguła przeciw samooszukiwaniu |
 |---|---|---|
 | `-a` **Logika** | `app/**` | Zakaz `Any` bez uzasadnienia w komentarzu. Zakaz `except: pass` i łapania `Exception` bez ponownego rzucenia albo zalogowania. Zakaz `# TODO` w kodzie idącym do integracji |
-| `-b` **Testy** | `tests/**`, pisane z `scenarios.md` | Zakaz `assert wynik` i `assert wynik is not None` jako jedynej asercji. Przy uprawnieniach obowiązkowo testy negatywne A2 i A3 |
-| `-c` **Bezpieczeństwo** | siedem barier, sekrety, zapytania | **Zakaz twierdzenia „uprawnienia są sprawdzane" bez wskazania linii wywołania `can_use`.** Zakaz deklaracji o bezpieczeństwie bez nazwania wektora. Wymóg podania liczby zapytań do bazy na żądanie |
+| `-b` **Testy** | `tests/**`, pisane z `scenarios.md` | Zakaz `assert wynik` i `assert wynik is not None` jako jedynej asercji. Przy uprawnieniach obowiązkowo testy negatywne dla scenariuszy wskazanych w kryteriach końca tego obszaru |
+| `-c` **Bezpieczeństwo** | siedem barier, sekrety, zapytania | **Zakaz twierdzenia „uprawnienia są sprawdzane" bez wskazania linii wywołania sprawdzenia dostępu.** Zakaz deklaracji o bezpieczeństwie bez nazwania wektora. Wymóg podania liczby zapytań do bazy na żądanie |
 
 **Testy pisze inny węzeł niż kod, z `scenarios.md`, bez wglądu w implementację.**
-Agent, który napisał kod, pisze testy sprawdzające to, co kod robi — a nie to, czego
-wymaga scenariusz. Testy przechodzą, wymaganie nie jest zrealizowane, wszystko świeci
-na zielono i nikt tego nie łapie.
+Wykonawca, który napisał kod, pisze testy sprawdzające to, co kod robi — a nie
+to, czego wymaga scenariusz. Testy przechodzą, wymaganie nie jest
+zrealizowane, wszystko świeci na zielono i nikt tego nie łapie.
 
-### 11.4 Co orkiestrator robi sam
+### 11.4 Co zlecający robi sam
 
 Wyjątki od §11.1, bo z definicji nie da się ich delegować:
 
@@ -856,11 +876,12 @@ Wyjątki od §11.1, bo z definicji nie da się ich delegować:
 
 **Wszystko poza tą listą jest delegowane.**
 
-### 11.5 Gdy zgoda zostanie cofnięta
+### 11.5 Gdy zgoda na pracę wielu wykonawców naraz zostanie cofnięta
 
-Właściciel może wrócić do trybu jednowątkowego zdaniem w rozmowie.
-Wtedy role różnicujemy **wyłącznie treścią promptu**, w jednym wątku,
-a §11.1 przestaje obowiązywać do odwołania.
+Właściciel może cofnąć zgodę na pracę wielu wykonawców naraz jednym zdaniem w
+rozmowie. Wtedy jedna osoba (albo jeden ciągły wątek pracy z programem) pełni
+po kolei wszystkie role, różnicowane wyłącznie treścią zlecenia, a §11.1
+przestaje obowiązywać do odwołania.
 
 ## 12. Dyscyplina źródeł i korekt
 
@@ -891,6 +912,8 @@ kolejność dla oceny narzędzi:
 Fakt z rzędu 4 lub 5 zapisuj jawnie jako niepotwierdzony.
 
 ### 12.2 Przypadki, które tę regułę wywołały
+
+(W nAgents: dwa przypadki obserwowane w tym projekcie.)
 
 | Błąd | Skąd | Jak było naprawdę |
 |---|---|---|
@@ -928,16 +951,24 @@ odrzucona.
 więcej funkcji i zawsze będą miały — patrz §13.2, czego ten projekt świadomie
 nie robi. Rozważone i odrzucone idą do `docs/spec/decisions.md`.)
 
-### 13.2 Czego ten projekt nie robi
+### 13.2 Czego dany projekt świadomie nie robi
 
-- **nie jest silnikiem agenta** — tym jest Hermes
-- **nie jest komunikatorem** — tym jest Teams
-- **nie przechowuje pamięci agenta** — robi to Hermes i dostawca pamięci
-- **nie hostuje modeli** — te są po API, wymienne
-- **nie zawiera niczego specyficznego dla NASTER w kodzie** — konfiguracja i wiedza,
-  nigdy kod
+**Zasada jest uniwersalna:** każdy projekt ma spisaną wprost listę rzeczy,
+których świadomie nie robi, choć mógłby — razem z krótkim uzasadnieniem, po co
+ta granica. Lista chroni przed powolnym rozrostem opisanym w §13.1: bez niej
+granica projektu żyje wyłącznie w pamięci jednej osoby i zaciera się przy
+każdej kolejnej prośbie „skoro już przy tym jesteśmy". Dotyczy to biura
+rachunkowego równie dobrze jak firmy informatycznej — biuro też może świadomie
+nie prowadzić np. kadr klienta, mimo że umiałoby.
 
-Temat naruszający którykolwiek punkt wymaga pytania ABC, nie decyzji Operatora.
+Lista powstaje przy rozpoznaniu zakresu na starcie i rośnie, gdy pojawi się
+kolejna rzecz świadomie rozważona i odrzucona (§13.1) — nigdy jako spis z góry
+wszystkiego, czego teoretycznie projekt mógłby nie robić.
+
+Temat naruszający którykolwiek punkt tej listy wymaga pytania ABC, nie decyzji
+Operatora.
+
+(Wypełnienie dla nAgents — patrz §21.)
 
 ### 13.3 Rozjazd w trakcie tematu
 
@@ -1003,17 +1034,19 @@ Wybór spełniający kryteria z §8.1 idzie pełnym trybem ABC/ECHO.
 ### 14.3 Kopia, której nie odtworzono, nie jest kopią
 
 **Odtworzenie musi zostać przećwiczone przed uznaniem tematu za zamknięty.**
-Deklaracja „mamy backup" bez udokumentowanego odtworzenia to `FAIL`.
+Deklaracja „mamy backup" (przećwiczone zabezpieczenie ciągłości, patrz tabela
+odwzorowań §18.5) bez udokumentowanego odtworzenia to `FAIL`.
 
 ## 15. Konwencje repozytorium
 
 ### 15.1 Gdzie co trafia
 
 Każdy projekt ustala własną mapę miejsc w archiwum trwałej prawdy
-({mapa-miejsc-w-archiwum-projektu}). Siedem funkcji dokumentacyjnych, które ta
-mapa musi pokrywać — punkt wejścia, rejestr zadań, przekazanie, decyzje
-właściciela, wybory trwałe, sytuacje, zapis zlecenia — są opisane pełniej w
-§20; tu tylko to, czego §20 nie obejmuje, bo dotyczy repozytorium jako całości,
+({mapa-miejsc-w-archiwum-projektu}). Osiem funkcji dokumentacyjnych, które ta
+mapa musi pokrywać — punkt wejścia, tryb zmiany samego procesu, rejestr zadań,
+przekazanie, decyzje właściciela, wybory trwałe, sytuacje, zapis zlecenia —
+są opisane pełniej w §20; tu tylko to, czego §20 nie obejmuje, bo dotyczy
+repozytorium jako całości,
 nie samego procesu:
 
 | Funkcja | Uwagi |
@@ -1052,8 +1085,8 @@ Niezależnie od postaci, każdy zapis niesie:
 - krótki opis w pierwszym wierszu/polu: `<obszar>: <co się zmienia>`
 - w treści: **co i dlaczego**, nie jak
 - język zgodny z ustaleniem tego projektu (§15.2)
-- **nigdy identyfikator modelu ani nazwę narzędzia wykonawcy** w zapisie
-  trafiającym do archiwum trwałej prawdy
+- (przy wykonawcy-programie: **nigdy identyfikator modelu ani nazwę narzędzia
+  wykonawcy** w zapisie trafiającym do archiwum trwałej prawdy)
 
 (W nAgents: commit git; opis po polsku, bez znaków diakrytycznych w treści —
 ograniczenie samego narzędzia, nie zasada procesu; pierwszy wiersz `process:`,
@@ -1072,11 +1105,20 @@ na nieaktualne — zapytaj, nie zgaduj.
 
 ### 15.5 Koszt
 
-Rachunek za modele przewyższa koszt infrastruktury o rząd wielkości.
-**Optymalizuj dobór modeli i wielkość kontekstu, nie rozmiar serwera.**
-Warstwa rozmowy chodzi na modelu tanim; analiza nocna może być wolna i dokładna.
+**Zasada jest uniwersalna:** koszt pracy trzeba znać i pilnować. **Co dokładnie
+jest jego głównym składnikiem, jest odwzorowaniem dziedziny** — bywa nim
+rachunek za model językowy, czas ludzkiej pracy rozliczany godzinowo, materiał
+zużyty w produkcji, albo opłata za dostęp do systemu zewnętrznego. Optymalizuj
+ten składnik, który w tym projekcie faktycznie kosztuje najwięcej — nie ten,
+który najłatwiej zmierzyć albo który kosztował najwięcej gdzie indziej.
+
+(W nAgents: patrz §21.)
 
 ## 16. Wzorzec promptu dla subagenta
+
+**Stosuje się, gdy wykonawcą jest program.** Dla wykonawcy-człowieka zlecenie
+ma te same cztery pola treści (§11.3.3), ale nie przyjmuje postaci „promptu" —
+koleżanka z rozliczeń dostaje zlecenie, nie prompt.
 
 Gotowy szablon zlecenia. Kopiuj i wypełnij — pola odpowiadają matrycy z §11.3.3.
 Miejsca oznaczone parametrem zależą od dziedziny i od tego konkretnego
@@ -1096,7 +1138,7 @@ TEMAT:      {prefiks-identyfikatora-tematu}-<ETAP>-<NNN>-<slug>[-<litera węzła
 ZADANIE
 <wąski zakres, jedno zdanie — co ma być prawdą po zakończeniu>
 
-REGUŁA ANTY-HALUCYNACYJNA
+REGUŁA PRZECIW SAMOOSZUKIWANIU (ANTY-HALUCYNACYJNA, gdy wykonawcą jest program)
 <konkretny sposób oszukania siebie, którego zakazujemy — patrz §11.3.3>
 
 BINARNE KRYTERIUM SUKCESU
@@ -1133,7 +1175,7 @@ nad flotą Hermesów. Nie jest silnikiem agenta."; TEMAT wg wzoru
 
 | Pole | Co się dzieje przy braku |
 |---|---|
-| Reguła anty-halucynacyjna | agent wypełni lukę domysłem i nie zauważy, że zgaduje |
+| Reguła przeciw samooszukiwaniu (anty-halucynacyjna, gdy wykonawcą jest program) | wykonawca wypełni lukę domysłem i nie zauważy, że zgaduje |
 | Binarne kryterium | krytyk nie ma wobec czego orzekać, ocena robi się uznaniowa |
 | Limit słów | do syntezy trafiają surowe dane i zatruwają kontekst orkiestratora |
 | Allowlista | zmiana wychodzi poza zakres tematu, integracja staje się ryzykowna |
@@ -1156,7 +1198,57 @@ Odpowiedź niepełna — na przykład „tak jakoś to sprawdzamy" bez wskazania
 czym poznać, że coś jest sprawdzone — nie jest odpowiedzią i pytanie zostaje
 otwarte.
 
-### 17.1 Co powstaje w wyniku pracy
+### 17.1 Kto wykonuje pracę w tym projekcie: ludzie, programy, czy jedno i drugie
+
+**Dlaczego o to pytam.** Od tej odpowiedzi zależy, czy w ogóle ma sens pytanie
+o dobór modelu językowego i o to, jak dokładnie ma on „myśleć" (§19.1) — ta
+grupa pytań dotyczy wyłącznie wykonawcy będącego programem. Gdy wykonawcą jest
+osoba, reszta procesu działa identycznie, ale to jedno pytanie odpada.
+
+**Pytanie.** Kto w tym projekcie faktycznie wykonuje zlecenia — osoby,
+programy, czy jedno i drugie, zależnie od zadania?
+
+**Przykładowe odpowiedzi z różnych branż.**
+Księgowość: „zlecenia wykonują księgowe i księgowi, żaden program nie
+prowadzi rozliczenia samodzielnie."
+Firma informatyczna: „program (agent oparty na modelu językowym) wykonuje
+zlecenie, osoba je zleca i sprawdza wynik."
+Marketing: „zależnie od zadania — treść pisze czasem osoba, czasem program,
+ale zawsze sprawdza to samo, druga osoba."
+
+**Co się stanie, jeśli nie odpowiesz.** Agent założy domyślnie, że wykonawcą
+jest program, i zada pytanie o model oraz poziom wysiłku myślenia tam, gdzie
+ono nie ma zastosowania — co zdezorientuje osobę, która nigdy nie miała do
+czynienia z takim wyborem.
+
+**Co zapisujemy.** Pojęcie „rodzaj wykonawcy" — zapis w opisie projektu;
+rozstrzyga, czy w ogóle zadaje się pytanie 19.1.
+
+### 17.2 Ile trwa typowy krok pracy w tej dziedzinie
+
+**Dlaczego o to pytam.** To jest podstawa do ustawienia czasu, po którym
+proces uznaje wykonawcę za zawieszonego (§19.4) — bez tej wiedzy próg jest
+zgadywany. W księgowości krok bywa dniem, w rozmowie z programem minutami.
+
+**Pytanie.** Ile zwykle trwa jeden krok pracy w tej dziedzinie, zanim
+wykonawca da znać o postępie albo skończy?
+
+**Przykładowe odpowiedzi z różnych branż.**
+Księgowość: „jedno zamknięcie miesiąca dla jednego klienta trwa zwykle cały
+dzień roboczy, czasem dwa."
+Kancelaria: „przygotowanie jednego pisma procesowego to zwykle pół dnia do
+dnia."
+Firma informatyczna: „jedno zlecenie dla programu trwa od kilku do
+kilkudziesięciu minut."
+
+**Co się stanie, jeśli nie odpowiesz.** Próg zawieszenia zostanie ustawiony na
+wyczucie — może fałszywie alarmować przy zwykłym, długim kroku pracy, albo
+przeciwnie, wykrywać realne zawieszenie dopiero po zbyt długim czasie.
+
+**Co zapisujemy.** Pojęcie „typowy czas kroku pracy" — zapis obok progu
+zawieszenia (§19.4).
+
+### 17.3 Co powstaje w wyniku pracy
 
 **Dlaczego o to pytam.** Bez wiedzy, jaki rodzaj rzeczy ma powstać na końcu
 zlecenia — dokument, obliczenie, umowa, gotowa część programu, opublikowana
@@ -1181,7 +1273,7 @@ od nowa, co da niespójne rezultaty między zleceniami.
 **Co zapisujemy.** Pojęcie „wytwór" — zapis w opisie projektu (odpowiednik
 pliku wprowadzającego, jak `docs/spec/README.md` w tym projekcie).
 
-### 17.2 Po czym poznajemy, że rzecz jest skończona i dobra
+### 17.4 Po czym poznajemy, że rzecz jest skończona i dobra
 
 **Dlaczego o to pytam.** To jest pytanie najważniejsze w całym procesie —
 każde zlecenie na końcu jest oceniane właśnie pod tym kątem. Bez jasnej
@@ -1206,7 +1298,7 @@ pytaniem przy każdym zadaniu.
 **Co zapisujemy.** Pojęcie „dowód wykonania" — zapis w opisie zasad danej
 dziedziny (odpowiednik `docs/spec/decisions.md` w tym projekcie).
 
-### 17.3 Czy sprawdzenie jest niezależne od tego, kto pracę wykonał
+### 17.5 Czy sprawdzenie jest niezależne od tego, kto pracę wykonał
 
 **Dlaczego o to pytam.** Zasada mówi, że nikt nie ocenia własnej pracy, ale
 to działa tylko wtedy, gdy istnieje sposób sprawdzenia, który nie polega na
@@ -1238,7 +1330,35 @@ jest brakiem, który proces musi wypełnić, zanim zacznie działać.
 **Co zapisujemy.** Pojęcie „sprawdzenie niezależne od wykonawcy" — zapis
 razem z dowodem wykonania, w tym samym miejscu.
 
-### 17.4 Gdzie praca powstaje, zanim zacznie obowiązywać
+### 17.6 Co w tej firmie rozstrzyga spór o fakt
+
+**Dlaczego o to pytam.** Zanim fakt o zewnętrznym rozwiązaniu, dostawcy albo
+przepisie trafi do dokumentu decyzyjnego, trzeba wiedzieć, które źródło w tej
+firmie liczy się jako rozstrzygające, a które jest tylko plotką albo
+skojarzeniem (§12). Bez tej wiedzy agent nie odróżni ustalonego faktu od
+domysłu.
+
+**Pytanie.** Gdy w tej pracy pojawi się spór o fakt — na przykład czy dany
+dostawca faktycznie coś oferuje, albo co dokładnie mówi przepis — co go
+rozstrzyga: jaki dokument, jaka osoba, jakie źródło?
+
+**Przykładowe odpowiedzi z różnych branż.**
+Księgowość: „saldo rozstrzyga wyciąg bankowy, nie zapamiętana rozmowa z
+klientem."
+Kancelaria: „treść obowiązku rozstrzyga tekst przepisu, nie przekonanie
+kolegi z sąsiedniego pokoju."
+Firma informatyczna: „cechę narzędzia rozstrzyga jego oficjalna dokumentacja,
+nie artykuł podsumowujący."
+
+**Co się stanie, jeśli nie odpowiesz.** Agent będzie traktował artykuł,
+wrażenie albo cudzą opinię jako rozstrzygający fakt i może oprzeć na tym
+decyzję, która okaże się błędna.
+
+**Co zapisujemy.** Pojęcie „źródło rozstrzygające faktu"
+({zrodlo-rozstrzygajace-faktu}) — zapis obok hierarchii źródeł tej dziedziny
+(§12).
+
+### 17.7 Gdzie praca powstaje, zanim zacznie obowiązywać
 
 **Dlaczego o to pytam.** Trzeba rozróżnić wersję roboczą, jeszcze do
 poprawki, od wersji ostatecznej, na której firma faktycznie się opiera. Bez
@@ -1263,7 +1383,7 @@ obowiązującej i może potraktować niedokończoną pracę jako gotową do uży
 **Co zapisujemy.** Pojęcia „miejsce pracy roboczej" i „wersja obowiązująca" —
 zapis w opisie sposobu pracy danej dziedziny.
 
-### 17.5 Czy da się cofnąć zmianę i wrócić do stanu sprzed
+### 17.8 Czy da się cofnąć zmianę i wrócić do stanu sprzed
 
 **Dlaczego o to pytam.** Od odpowiedzi zależy, jak ostrożnie agent ma
 podchodzić do danej zmiany. To, czego nie da się cofnąć, wymaga dodatkowej
@@ -1287,7 +1407,7 @@ dodatkowej ostrożności przed krokiem, którego nie da się cofnąć.
 **Co zapisujemy.** Pojęcie „odwracalność zmiany" — zapis przy opisie ryzyka
 danego rodzaju pracy.
 
-### 17.6 Kto zatwierdza i bez czyjej zgody rzecz nie wchodzi w życie
+### 17.9 Kto zatwierdza i bez czyjej zgody rzecz nie wchodzi w życie
 
 **Dlaczego o to pytam.** Muszę wiedzieć, kto ma prawo powiedzieć ostatnie
 słowo, zanim wynik zacznie obowiązywać na zewnątrz — trafi do klienta, do
@@ -1311,7 +1431,7 @@ zgodę, której zakres nie jest jasny.
 **Co zapisujemy.** Pojęcie „osoba zatwierdzająca" — zapis przy zasadach
 zatwierdzania danego rodzaju pracy.
 
-### 17.7 Czego nie wolno naruszyć nigdy, choćby reszta pracy była bez zarzutu
+### 17.10 Czego nie wolno naruszyć nigdy, choćby reszta pracy była bez zarzutu
 
 **Dlaczego o to pytam.** To są granice, których przekroczenie oznacza
 odrzucenie pracy niezależnie od tego, jak dobra jest ona poza tym. Muszą być
@@ -1336,7 +1456,7 @@ tej pracy nie ma dodatkowych granic — nawet jeśli w rzeczywistości są.
 **Co zapisujemy.** Lista „granic nienaruszalnych tej dziedziny" — zapis obok
 ogólnych barier, jako ich uzupełnienie (§7).
 
-### 17.8 Co narzuca prawo albo umowa z klientem
+### 17.11 Co narzuca prawo albo umowa z klientem
 
 **Dlaczego o to pytam.** Terminy ustawowe, obowiązek zachowania tajemnicy
 albo wymóg uzyskania zgody klienta na coś mogą ograniczać to, co w tej pracy
@@ -1361,7 +1481,7 @@ dobrej woli.
 **Co zapisujemy.** Pojęcie „wymogi prawne i umowne" — zapis obok granic
 nienaruszalnych tej dziedziny.
 
-### 17.9 Które dane są wrażliwe i gdzie nie wolno ich wynosić
+### 17.12 Które dane są wrażliwe i gdzie nie wolno ich wynosić
 
 **Dlaczego o to pytam.** Muszę wiedzieć, jakie informacje w tej pracy
 wymagają szczególnej ostrożności — dane osobowe, finansowe, tajemnice
@@ -1386,7 +1506,7 @@ przekazać je tam, gdzie nie powinny trafić.
 **Co zapisujemy.** Pojęcie „dane wrażliwe i ich dozwolone miejsca" — zapis
 obok granic nienaruszalnych, jako uzupełnienie zasady ochrony danych.
 
-### 17.10 Co się dzieje, gdy praca jest błędna i wyjdzie to po czasie
+### 17.13 Co się dzieje, gdy praca jest błędna i wyjdzie to po czasie
 
 **Dlaczego o to pytam.** To określa, jak poważnie traktować niepewność przy
 podejmowaniu decyzji. Jeśli skutek błędu jest mały i łatwo naprawialny,
@@ -1464,6 +1584,16 @@ z odpowiedzi na pytania z sekcji 17.
 | Obsługa prawna | Ponowne przeczytanie pisma od zera przez osobę, która go nie pisała | Drugi prawnik niebędący autorem pisma | Nie pomylić akceptacji „bo autor ma doświadczenie" z faktyczną drugą lekturą |
 | Marketing i sprzedaż | Ocena materiału względem briefu przez osobę spoza zespołu tworzącego | Osoba/dział spoza zespołu tworzącego, lub klient | Nie pomylić pochwały współpracownika z formalną, udokumentowaną oceną względem kryteriów |
 | Operacje i produkcja | Powtórzenie pomiaru lub kontroli przez inną osobę niż wykonawca czynności | Inny inspektor niż wykonawca | Nie pomylić kontroli przez tę samą osobę w innym dniu z kontrolą przez inną osobę |
+
+**Źródło rozstrzygające fakt**
+
+| DZIEDZINA | POSTAĆ W TEJ DZIEDZINIE | KTO TO ROBI | CZEGO NIE WOLNO POMYLIĆ |
+|---|---|---|---|
+| Wytwarzanie oprogramowania | Oficjalna dokumentacja narzędzia albo repozytorium i jego zgłoszenia błędów | Wykonawca sprawdza przed wpisaniem cechy narzędzia do dokumentu decyzyjnego | Nie pomylić artykułu podsumowującego albo materiału marketingowego z dokumentacją źródłową (§12.1) |
+| Księgowość i finanse | Wyciąg bankowy albo dokument źródłowy klienta | Osoba uzgadniająca saldo | Nie pomylić zapamiętanej rozmowy z klientem z zapisem w wyciągu |
+| Obsługa prawna | Treść przepisu albo orzeczenia | Prawnik ustalający stan prawny | Nie pomylić przekonania kolegi z sąsiedniego pokoju z brzmieniem ustawy |
+| Marketing i sprzedaż | Brief zatwierdzony przez zamawiającego albo wytyczne marki | Osoba oceniająca zgodność materiału | Nie pomylić własnego wyobrażenia o marce z zapisanymi wytycznymi |
+| Operacje i produkcja | Specyfikacja producenta albo protokół pomiaru | Technolog/kontroler ustalający parametr | Nie pomylić „tak się zawsze robiło" z aktualną specyfikacją |
 
 ### 18.2 Przestrzeń pracy, zapis, włączenie do stanu obowiązującego
 
@@ -1571,7 +1701,7 @@ z odpowiedzi na pytania z sekcji 17.
 
 Ten wzorzec (404 zamiast 403) jest twardą konwencją techniczną w informatyce.
 W dziedzinach spoza IT rzadko istnieje jako sformalizowana procedura — pytanie
-17.9 sprawdza, czy w danej firmie w ogóle ma zastosowanie, zanim ktokolwiek
+17.12 sprawdza, czy w danej firmie w ogóle ma zastosowanie, zanim ktokolwiek
 wpisze go jako granicę nienaruszalną.
 
 ### 18.4 Przygotowanie i środowisko
@@ -1703,6 +1833,11 @@ znamy. Punktem odniesienia (1×) jest zawsze wariant najtańszy w danym
 pytaniu.
 
 ### 19.1 Który model do wykonania, który do sprawdzenia, który do kontroli końcowej — i jak dokładnie mają myśleć
+
+**To pytanie zadaje się tylko wtedy, gdy z odpowiedzi na pytanie rozpoznające
+§17.1 wynika, że wykonawcą jest — choćby częściowo — program.** Gdy w tym
+projekcie wykonują wyłącznie ludzie, pytanie 19.1 odpada w całości, a tabela
+w §19.7 nie ma tych czterech wierszy.
 
 **Dlaczego o to pytam.** W obecnym projekcie nAgents wszystkie trzy role —
 ten, kto wykonuje zlecenie (Operator), ten, kto sprawdza wynik (Evaluator), i
@@ -1841,7 +1976,10 @@ dziedziny, odpowiednik §10 SKILL.md.
 nie wiadomo, czy nadal pracuje, czy utknął. Zbyt krótki czas do uznania
 takiego stanu daje fałszywe alarmy przy zwykłych, dłuższych etapach pracy
 (np. długim sprawdzaniu). Zbyt długi czas opóźnia wykrycie, że coś naprawdę
-stoi w miejscu. W nAgents ten czas wynosi dziś 20 minut.
+stoi w miejscu. Punktem wyjścia jest odpowiedź na pytanie rozpoznające §17.2 —
+ile trwa typowy krok pracy w tej dziedzinie; próg zawieszenia ustawia się
+wyraźnie poniżej tego czasu, nie w oderwaniu od niego. W nAgents ten czas
+wynosi dziś 20 minut.
 
 **Pytanie.** Po ilu minutach ciszy ze strony wykonawcy uznajemy, że utknął, i
 trzeba to zgłosić?
@@ -1877,7 +2015,7 @@ dziedziny, odpowiednik §10 SKILL.md.
 
 ### 19.5 Gdzie dokładnie ma powstawać wersja robocza każdego zlecenia
 
-**Dlaczego o to pytam.** Z pytania rozpoznającego dziedzinę (§17.4) wiadomo
+**Dlaczego o to pytam.** Z pytania rozpoznającego dziedzinę (§17.7) wiadomo
 już, że praca ma powstawać osobno od wersji obowiązującej, zanim zostanie
 zatwierdzona. Zostaje wskazać konkretne, nazwane miejsce — na przykład osobny
 system śledzenia wersji z historią zmian, wspólny folder roboczy, albo
@@ -1983,7 +2121,7 @@ dotyczy, na dodatkowe parametry ujawnione w rozmowie kalibrującej z §17).
 
 ## 20. Dokumenty projektu — co założyć i jak to wygląda
 
-Poniższe jest niezależne od dziedziny — te same siedem funkcji obsługuje
+Poniższe jest niezależne od dziedziny — te same osiem funkcji obsługuje
 zamknięcie miesiąca w biurze rachunkowym, rejestr umów w kancelarii i
 wdrożenie w projekcie informatycznym. Zmienia się tylko to, co trzy warstwy
 tego procesu każą zmieniać: nazwa i lokalizacja pliku to **parametr**,
@@ -1992,9 +2130,9 @@ ustalany pytaniem na starcie danego projektu; to, co wpisuje się w pole
 §17 (patrz też §18); a sam fakt, że taki dokument musi istnieć i pełnić tę
 funkcję, jest **zasadą** i nie podlega negocjacji.
 
-### 20.1 Siedem funkcji dokumentacyjnych
+### 20.1 Osiem funkcji dokumentacyjnych
 
-Każdy projekt, niezależnie od dziedziny, potrzebuje siedmiu dokumentów
+Każdy projekt, niezależnie od dziedziny, potrzebuje ośmiu dokumentów
 pełniących te funkcje. Brak którejś nie jest oszczędnością — jest dziurą,
 która ujawni się dopiero wtedy, gdy będzie kosztować najwięcej.
 
@@ -2010,6 +2148,22 @@ która ujawni się dopiero wtedy, gdy będzie kosztować najwięcej.
 - *Co się psuje, gdy jej brak:* każdy uczestnik buduje własny, inny obraz
   stanu sprawy. Dwie osoby — albo agent i właściciel — rozmawiają o dwóch
   różnych projektach, nie wiedząc o tym, dopóki się nie zderzą.
+
+**Funkcja: tryb bezpiecznej zmiany samego procesu**
+
+- *Po co istnieje:* pliki opisujące sam proces — definicje ról, punkt
+  startowy, rejestry procesu — potrzebują ostrzejszego trybu zmiany niż
+  zwykły wytwór: błąd w wytworze wyłapie sprawdzający, błąd w definicji
+  samego sprawdzającego nie wyłapie nikt (§2.2). Ten dokument nazywa, co wolno
+  zmienić od ręki, a co wymaga osobnej decyzji, żeby niewygodna reguła nie
+  zniknęła po cichu przy pierwszej okazji.
+- *Kto aktualizuje:* osoba prowadząca proces, w porozumieniu z właścicielem,
+  przy każdej zmianie samego trybu zmiany — rzadko.
+- *W jakim momencie:* zakładany na starcie, zaraz po punkcie wejścia — zanim
+  ktokolwiek dotknie plików samego procesu.
+- *Co się psuje, gdy jej brak:* pierwsza niewygodna reguła zostaje po cichu
+  osłabiona albo usunięta w trakcie zwykłej pracy, bo nic nie wymusza
+  osobnego trybu i osobnej zgody na zmianę samych zasad.
 
 **Funkcja: rejestr zadań ze stanem**
 
@@ -2109,14 +2263,15 @@ procesu i jak nazywacie plik, od którego zaczyna się każda sesja pracy.
 ```text
 <punkt-wejścia>.md                     punkt wejścia i kolejność czytania — funkcja 1
 <katalog-procesu>/
-  zadania.md                           rejestr zadań ze stanem — funkcja 2
-  przekazanie.md                       zdjęcie bieżącej sytuacji do przekazania — funkcja 3
-  decyzje-właściciela.md               dosłowny zapis decyzji właściciela — funkcja 4
-  wybory-trwałe.md                     dziennik wyborów trwałych z uzasadnieniem — funkcja 5
-  sytuacje.md                          opis sytuacji, które proces ma obsłużyć — funkcja 6
+  zmiana-procesu.md                    tryb bezpiecznej zmiany samego procesu — funkcja 2
+  zadania.md                           rejestr zadań ze stanem — funkcja 3
+  przekazanie.md                       zdjęcie bieżącej sytuacji do przekazania — funkcja 4
+  decyzje-właściciela.md               dosłowny zapis decyzji właściciela — funkcja 5
+  wybory-trwałe.md                     dziennik wyborów trwałych z uzasadnieniem — funkcja 6
+  sytuacje.md                          opis sytuacji, które proces ma obsłużyć — funkcja 7
   zlecenia/
-    SZABLON.md                         wzorzec zapisu pojedynczego zlecenia — funkcja 7
-    <ID>.md                            zapis pojedynczego zlecenia, jeden plik na zadanie — funkcja 7
+    SZABLON.md                         wzorzec zapisu pojedynczego zlecenia — funkcja 8
+    <ID>.md                            zapis pojedynczego zlecenia, jeden plik na zadanie — funkcja 8
 ```
 
 ### 20.3 Oznaczenie plików
@@ -2124,6 +2279,7 @@ procesu i jak nazywacie plik, od którego zaczyna się każda sesja pracy.
 | Plik | Oznaczenie |
 |---|---|
 | `<punkt-wejścia>.md` | OBOWIĄZKOWY |
+| `<katalog-procesu>/zmiana-procesu.md` | OBOWIĄZKOWY |
 | `<katalog-procesu>/zadania.md` | ROSNĄCY |
 | `<katalog-procesu>/przekazanie.md` | ROSNĄCY |
 | `<katalog-procesu>/decyzje-właściciela.md` | ROSNĄCY |
@@ -2143,28 +2299,32 @@ nie zakłada się go na zapas.
 1. **`<punkt-wejścia>.md`** — musi powstać pierwszy, bo to jedyne miejsce
    wskazujące, gdzie szukać reszty; bez niego kolejne pliki nie mają się skąd
    wziąć w polu widzenia kogokolwiek, kto dołącza do pracy.
-2. **`zadania.md`** — zanim cokolwiek się zacznie, musi być gdzie zapisać, że
+2. **`zmiana-procesu.md`** — zakładany zaraz potem, zanim ktokolwiek zacznie
+   dotykać plików samego procesu; bez niego pierwsza zmiana zasad — nawet ta
+   z rozmowy kalibrującej — nie ma ostrzejszego trybu, do którego mogłaby się
+   odwołać.
+3. **`zadania.md`** — zanim cokolwiek się zacznie, musi być gdzie zapisać, że
    się zaczęło; pusty rejestr w chwili pierwszego zadania jest lepszy niż jego
    tworzenie pod presją, gdy zadania już się piętrzą.
-3. **`wybory-trwałe.md`** — zakładany zaraz potem, bo pierwsze trwałe wybory
+4. **`wybory-trwałe.md`** — zakładany zaraz potem, bo pierwsze trwałe wybory
    — nawet o samym kształcie tej struktury dokumentów — zapadają w rozmowie
    kalibrującej, zanim powstanie pierwsze zadanie robocze.
-4. **`sytuacje.md`** — musi istnieć, zanim powstanie pierwsze zlecenie, bo
+5. **`sytuacje.md`** — musi istnieć, zanim powstanie pierwsze zlecenie, bo
    zlecenie odwołuje się do sytuacji jako do kryterium końca, a nie da się
    odwołać do czegoś, co jeszcze nie istnieje.
-5. **`zlecenia/SZABLON.md`** — zakładany przed pierwszym zleceniem, bo
+6. **`zlecenia/SZABLON.md`** — zakładany przed pierwszym zleceniem, bo
    zlecenie pisane bez wzorca ryzykuje pominięcie pola, które później okaże
    się rozstrzygające.
-6. **`decyzje-właściciela.md`** — zakładany jako pusty rejestr gotowy przyjąć
+7. **`decyzje-właściciela.md`** — zakładany jako pusty rejestr gotowy przyjąć
    pierwszy wpis, który zwykle pojawia się jeszcze podczas rozmowy
    kalibrującej proces do dziedziny.
-7. **`przekazanie.md`** — zakładany jako ostatni z siedmiu, bo dopiero po
-   istnieniu poprzednich sześciu jest co streszczać w zdjęciu sytuacji; pisany
+8. **`przekazanie.md`** — zakładany jako ostatni z ośmiu, bo dopiero po
+   istnieniu poprzednich siedmiu jest co streszczać w zdjęciu sytuacji; pisany
    od razu po rozmowie kalibrującej, przed pierwszym realnym zleceniem.
 
 Plik pojedynczego zlecenia (`zlecenia/<ID>.md`) nie ma numeru w tej
 kolejności — powstaje dopiero w chwili konkretnego dispatchu, nigdy wcześniej.
-Wyjaśnienie w punkcie 5.
+Wyjaśnienie w punkcie 6.
 
 ### 20.5 Szkielety do skopiowania
 
@@ -2204,6 +2364,35 @@ dokumentu źródłowego.
 Decyzje dotyczące kosztu, terminu, danych klienta albo tego, co nieodwracalne,
 zapadają wyłącznie w rozmowie z właścicielką biura i są zapisywane w
 `decyzje-właściciela.md` dopiero po jednoznacznej odpowiedzi.
+```
+
+**`<katalog-procesu>/zmiana-procesu.md`**
+
+```text
+# Tryb bezpiecznej zmiany samego procesu
+
+Ten dokument, definicje ról i punkt startowy mają ostrzejszy tryb zmiany niż
+zwykłe zlecenie klienta: błąd w rozliczeniu wyłapie druga księgowa, błąd w
+opisie tego, jak ma wyglądać sprawdzenie, nie wyłapie nikt.
+
+## Co wymaga tego trybu
+
+Zmiana definicji ról, kolejności czytania, listy granic nienaruszalnych albo
+samego tego pliku.
+
+## Tryb
+
+1. Zmiana idzie jako osobny temat w rejestrze zadań, nigdy w allowliście
+   zlecenia klienckiego — nawet jednolinijkowa.
+2. Właścicielka biura potwierdza zmianę jednoznaczną odpowiedzią, zanim
+   powstanie realizująca ją treść.
+3. Zapis zmiany trafia do dziennika wyborów trwałych z uzasadnieniem i datą.
+
+## Co się psuje bez tego trybu
+
+Niewygodna reguła — na przykład wymóg drugiej lektury przed wysyłką do
+urzędu — znika po cichu przy pierwszym napiętym terminie, bo nic nie wymusza
+osobnej zgody na zmianę samych zasad.
 ```
 
 **`<katalog-procesu>/zadania.md`**
@@ -2407,7 +2596,7 @@ Poza zakresem:  korekty za czerwiec — osobne zlecenie
 
 DOWÓD
 <Co dokładnie wykonawca przedstawi jako dowód wykonania. Postać dowodu jest
-odwzorowaniem dziedziny — ustala się ją pytaniem do właściciela (§17.2), nie
+odwzorowaniem dziedziny — ustala się ją pytaniem do właściciela (§17.4), nie
 zakłada z góry. Przykład dla biura rachunkowego: zestawienie księgowań plus
 zgodność z wyciągiem bankowym, sprawdzona ręcznie przez drugą osobę, nie
 tylko wygenerowana.>
@@ -2527,7 +2716,7 @@ NASTĘPNY KROK: brak
   w tabeli, nawet oznaczony jako przykład, bywa później czytany jako wpis
   prawdziwy — zwłaszcza przez kogoś, kto dołącza do pracy bez pełnego
   kontekstu.
-- **Dodatkowych warstw procesu ponad siedem funkcji, zanim brak którejś z nich
+- **Dodatkowych warstw procesu ponad osiem funkcji, zanim brak którejś z nich
   faktycznie zaboli.** Dokument bez funkcji, którą ktoś potrafi nazwać, jest
   balastem — kimś musi być utrzymywany, nikt go nie czyta.
 - **Treści, której nie ma pokrycia w rozmowie z właścicielem.** Dotyczy to
@@ -2542,7 +2731,9 @@ właśnie ta różnica ma być widoczna przez cały czas trwania projektu.
 ### 20.8 Lista kontrolna
 
 - [ ] Plik wejściowy istnieje, ma realną treść i wskazuje kolejność czytania
-      pozostałych sześciu dokumentów.
+      pozostałych siedmiu dokumentów.
+- [ ] Tryb bezpiecznej zmiany samego procesu istnieje i jest założony przed
+      dotknięciem jakiegokolwiek pliku samego procesu.
 - [ ] Rejestr zadań istnieje, choćby pusty, z sekcjami stanu odpowiednimi dla
       tego projektu.
 - [ ] Dziennik wyborów trwałych istnieje i zawiera przynajmniej te wybory,
@@ -2558,7 +2749,7 @@ właśnie ta różnica ma być widoczna przez cały czas trwania projektu.
       stanem przed pierwszym przekazaniem — albo istnieje i jest aktualne na
       dziś, nie sprzed tygodnia.
 - [ ] Żaden plik pojedynczego zlecenia nie został założony na zapas.
-- [ ] Nazwy i lokalizacje wszystkich siedmiu dokumentów są zapisane w pliku
+- [ ] Nazwy i lokalizacje wszystkich ośmiu dokumentów są zapisane w pliku
       wejściowym jako ustalony parametr — nie istnieją wyłącznie w pamięci
       agenta prowadzącego pierwszą sesję.
 
@@ -2588,6 +2779,7 @@ projektu.
 | {model-sprawdzajacego} | Sonnet 5 | §11.2 |
 | {model-kontroli-koncowej} | Sonnet 5 | §11.2 |
 | {poziom-wysilku-mysleniowego} | wysoki, jednakowo dla wszystkich trzech ról | §11.2 |
+| model orkiestratora | model sesji głównego czatu, bez osobnego przydziału — rola nieujęta w §11.2, bo prowadzi rozmowę, nie wykonuje zlecenia | §3.4 |
 | {liczba-podejsc-przed-eskalacja} | 3 | §4.5 |
 | {liczba-tematow-rownoleglych} | 2 | §10 |
 | {czas-do-uznania-zawieszenia} | 20 minut | §10 |
@@ -2608,14 +2800,92 @@ projektu.
 | {konwencja-numeracji-wezlow} | sufiks litery: `-a`, `-b`, `-c` | §11.3.2 |
 | {mapa-miejsc-w-archiwum-projektu} | `docs/spec/`, `docs/process/`, `docs/process/zrodla/`, `docs/nota-*.md`, artefakt + kopia w repo | §15.1 |
 | {zmiana-elementu-strukturalnego} | migracja struktury bazy danych (`migrations/**`, `app/models/**`) | §5.1 |
+| {zrodlo-rozstrzygajace-faktu} | hierarchia pięciu rzędów źródeł dla oceny narzędzi i dostawców | §12.1 |
 
 Skąd wzięły się wartości nietypowe: przydział modeli (§11.2) i zasada, że
 cała praca wykonawcza idzie wyłącznie przez workflow (§11.3), pochodzą z
-zapisów decyzji właściciela **ECHO-001** i **ECHO-002**, nie z domyślnego
-ustawienia szkieletu. Limit szerokości fan-outu ({limit-rownoleglosci-wywolan})
-nie pochodzi z rozmowy z właścicielem — wynika z liczby rdzeni maszyny, na
-której działa orkiestrator, i przelicza się automatycznie, bez osobnego
-pytania kalibrującego (§11.3.1).
+zapisów decyzji właściciela **ECHO-001** i **ECHO-002** — pełna treść w §21.5
+— nie z domyślnego ustawienia szkieletu. Limit szerokości fan-outu
+({limit-rownoleglosci-wywolan}) nie pochodzi z rozmowy z właścicielem —
+wynika z liczby rdzeni maszyny, na której działa orkiestrator, i przelicza się
+automatycznie, bez osobnego pytania kalibrującego (§11.3.1).
+
+### 21.3 Czego nAgents świadomie nie robi
+
+Wypełnienie reguły uniwersalnej z §13.2:
+
+- **nie jest silnikiem agenta** — tym jest Hermes
+- **nie jest komunikatorem** — tym jest Teams
+- **nie przechowuje pamięci agenta** — robi to Hermes i dostawca pamięci
+- **nie hostuje modeli** — te są po API, wymienne
+- **nie zawiera niczego specyficznego dla NASTER w kodzie** — konfiguracja i
+  wiedza, nigdy kod
+
+### 21.4 Koszt w nAgents
+
+Wypełnienie reguły uniwersalnej z §15.5: w nAgents głównym składnikiem kosztu
+jest rachunek za modele językowe, i przewyższa on koszt infrastruktury o rząd
+wielkości. Stąd optymalizujemy dobór modeli i wielkość kontekstu, nie rozmiar
+serwera — warstwa rozmowy chodzi na modelu tanim, analiza nocna może być
+wolna i dokładna.
+
+### 21.5 Decyzje ECHO-001 i ECHO-002, przykłady obserwowane w praktyce
+
+**ECHO-001** — decyzja właściciela z 2026-08-22, wypełnienie normy z §11.1:
+
+> W tym projekcie **cała praca wykonawcza idzie do subagentów.** Orkiestrator
+> prowadzi rozmowę z właścicielem, przygotowuje dispatch, integruje i wystawia
+> `READY_FOR_DEPLOY` — ale nie pisze kodu ani nie prowadzi analizy samodzielnie.
+
+To jest odwrócenie domyślnego ustawienia ze szkieletu, gdzie orkiestracja
+była opcjonalna. W nAgents jest normą.
+
+**ECHO-002** — decyzja właściciela z 2026-08-22, wypełnienie normy z §11.3:
+
+> **Każde zlecenie pracy subagentowi idzie przez narzędzie workflow.**
+> Powód jest techniczny: zwykłe wywołanie subagenta przyjmuje wyłącznie model,
+> a **effort da się przypisać tylko w workflow**. Bez workflow nie da się
+> zrealizować przydziału z §11.2, więc dispatch poza workflow jest naruszeniem
+> procesu — nawet dla pojedynczego, drobnego zadania.
+
+| Sytuacja | Narzędzie |
+|---|---|
+| Jedno zadanie, jedna rola | **workflow** z jednym wywołaniem `agent()` |
+| Jeden temat, pełna pętla | **workflow**: etapy Operator → Evaluator → Final Control |
+| Kilka tematów zebranych naraz | **workflow** z fan-outem — nie kolejka wywołań |
+| Analiza wymagająca wielu perspektyw | **workflow** z równoległymi rolami |
+
+Nie ma wiersza „bez workflow". Jeden agent to nadal workflow — po prostu z
+jednym wywołaniem.
+
+**Fan-out, obserwacje 2026-08-22 (§11.3.1):** przy `loadavg` 0.08 (maszyna
+praktycznie bezczynna) i braku dławienia cgroup limit nadal wynosił 2 —
+czekanie na „spokojniejszą porę" niczego nie zmienia, zmienia to wyłącznie
+większy kontener. W workflow `nagents-pytania-abc` siedmiu Operatorów przy
+limicie 2 wykonywało się falami po dwóch — trzeci startował dokładnie w
+chwili zakończenia pierwszego, czyli cztery fale po dwóch zamiast
+siedmiokrotnego przyspieszenia, plus koszt przełączania i siedem razy
+powtórzony wstęp do promptu. Uwaga o zbieżności: limit techniczny (2) zgadza
+się z pulą tematów z §10 (2), ustaloną z zupełnie innego powodu — pojemności
+przeglądu jednej osoby. Przy zmianie któregokolwiek sprawdź, czy drugi nadal
+ma sens.
+
+**Koszt podziału na węzły (§11.3.2):** architektura wieloagentowa zużywa
+rząd wielkości więcej tokenów niż pojedyncze zapytanie — spotykana szacunkowa
+wielokrotność to około piętnastu. Liczba pochodzi ze źródła rzędu czwartego
+(§12.1) i nie została zweryfikowana u źródła — traktuj jako rząd wielkości,
+nie jako pomiar.
+
+**Nasze tryby samooszukiwania — obserwowane, nie hipotetyczne (§11.3.3):**
+
+| Tryb | Przypadek z tego projektu | Reguła zakazująca |
+|---|---|---|
+| Cecha narzędzia z podsumowania | „Hermes ma panel administracyjny" | Zakaz opisywania cechy narzędzia bez odwołania do źródła rzędu 1 lub 2 (§12.1) |
+| Wniosek z opisu zamiast z dokumentacji | „Eve nie ma kanału Teams" — zmieniło wynik porównania | jak wyżej |
+| Deklaracja zamiast artefaktu | „zleciłem uzupełnienie" — nie zlecono | Zakaz raportowania czynności bez identyfikatora zadania albo SHA |
+| Pytanie o rzecz rozstrzygniętą | wariant sprzeczny z D-006 | Zakaz proponowania wariantu bez sprawdzenia dziennika decyzji |
+
+Żaden z nich nie został złapany przez regułę procesu, bo takiej reguły nie było.
 
 ---
 

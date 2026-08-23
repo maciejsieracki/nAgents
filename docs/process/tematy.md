@@ -43,3 +43,4 @@ Allowlisty i plany testów ustalane przy dispatchu, nie z góry.
 |---|---|---|---|
 | `NAG-PROC-001-dokumentacja` | Architektura i cztery etapy opisane | 2026-08-22 | `docs/spec/` |
 | `NAG-PROC-002-proces` | Proces AutoBot związany z projektem | 2026-08-22 | `CLAUDE.md`, `.claude/skills/` |
+| `NAG-PROC-005-skill-uniwersalny` | Skill niezależny od dziedziny, sekcje 17 do 21 | 2026-08-23 | `.claude/skills/nagents-autobot/SKILL.md`, `README.md` |

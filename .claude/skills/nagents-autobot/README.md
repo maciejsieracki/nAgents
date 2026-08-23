@@ -1,7 +1,8 @@
 # nAgents AutoBot — co to jest i jak to wdrożyć gdzie indziej
 
 Plik `SKILL.md` to kompletny proces pracy agentowej. **Jest samowystarczalny** —
-nie wymaga innych skilli procesowych. 2641 linii, dwadzieścia jeden sekcji.
+nie wymaga innych skilli procesowych. 2913 linii, dwadzieścia dwie sekcje
+(0–21).
 
 **Dokument jest niezależny od dziedziny.** Nie zakłada, że projekt, w którym
 działa, jest projektem informatycznym — sekcja 17 to rozpoznanie dziedziny (o
@@ -46,24 +47,25 @@ Do tego doszły dwie warstwy:
 
 | Element | Sekcja |
 |---|---|
-| Brama triage z progami liczbowymi: 2 obszary / 3 scenariusze / 6 plików / 3000 tokenów | §11.3.2 |
-| Matryca węzła: zadanie, **reguła anty-halucynacyjna**, binarne kryterium, procedura naprawcza | §11.3.3 |
+| Brama „kiedy dzielić na węzły" z progami liczbowymi: 2 obszary / 3 scenariusze / 6 plików / 3000 tokenów — uniwersalna, progi są parametrem | §11.3.2 |
+| Co wykonawca dostaje w zleceniu: zadanie, **reguła przeciw samooszukiwaniu**, binarne kryterium, procedura naprawcza — uniwersalne | §11.3.3 |
 | Wskazanie **dokładnie jednego** wadliwego węzła zamiast zwrotu całego tematu | §3.2 pkt 10, §4.3 |
 | Metryka wdrożenia: który węzeł był najsłabszy | §9.2 |
 | Dobór szerokości fan-outu do faktycznego limitu współbieżności | §11.3.1 |
 
-**Reguła anty-halucynacyjna to najważniejszy pojedynczy dodatek.** Binarne kryterium
-sprawdza, czy wynik jest kompletny. Reguła anty-halucynacyjna zakazuje konkretnego
-sposobu, w jaki agent oszuka sam siebie. To dwie różne rzeczy i większość procesów
-ma tylko pierwszą.
+**Reguła przeciw samooszukiwaniu to najważniejszy pojedynczy dodatek** (przy
+wykonawcy-programie nazywana też anty-halucynacyjną). Binarne kryterium
+sprawdza, czy wynik jest kompletny. Reguła przeciw samooszukiwaniu zakazuje
+konkretnego sposobu, w jaki wykonawca oszuka sam siebie. To dwie różne rzeczy
+i większość procesów ma tylko pierwszą.
 
 ### Reguły z popełnionych błędów
 
 | Reguła | Sekcja | Błąd, który ją wywołał |
 |---|---|---|
 | Hierarchia źródeł, pięć rzędów wiarygodności | §12.1 | dwa razy wpisano do dokumentu decyzyjnego nieprawdziwą cechę narzędzia, wziętą z podsumowania zamiast z dokumentacji |
-| Zakaz raportowania czynności bez identyfikatora zadania albo SHA | §11.3.3 | „zleciłem uzupełnienie" — nie zlecono |
-| Zakaz proponowania wariantu bez sprawdzenia dziennika decyzji | §11.3.3 | zadano pytanie o rzecz już rozstrzygniętą |
+| Zakaz raportowania czynności bez identyfikatora zadania albo SHA | §21.5 | „zleciłem uzupełnienie" — nie zlecono |
+| Zakaz proponowania wariantu bez sprawdzenia dziennika decyzji | §21.5 | zadano pytanie o rzecz już rozstrzygniętą |
 | Procedura korygowania własnego błędu | §12.3 | poprawka musi trafić tam, gdzie mieszka ustalenie, nie tylko do rozmowy |
 
 ### Komunikacja z właścicielem
@@ -90,7 +92,7 @@ konwencje repozytorium (§15), szybki start dla nowego agenta (§0).
 - Struktura ról i pętli, w tym reguła jednego wadliwego węzła
 - Lista rzeczy, które nie są dowodem zakończenia (§1.2)
 - Zasada czystości i limit słów (§9.1)
-- Matryca węzła i **idea** reguły anty-halucynacyjnej (§11.3.3)
+- Co wykonawca dostaje w zleceniu i **idea** reguły przeciw samooszukiwaniu (§11.3.3)
 - Hierarchia źródeł (§12.1)
 - Podział decyzji, test zrozumiałości, rejestr języka (§8.1, §14.2)
 - Dyscyplina zakresu (§13.1, §13.3)
@@ -101,12 +103,12 @@ konwencje repozytorium (§15), szybki start dla nowego agenta (§0).
 | Co | Gdzie | Uwaga |
 |---|---|---|
 | **Siedem twardych barier** | §7 | wynikają z modelu bezpieczeństwa nAgents; wypisz własne |
-| **Konkretne reguły anty-halucynacyjne** | §11.3.3 | nasze dotyczą oceny narzędzi i dokumentów; przy innym rodzaju pracy będą inne |
+| **Konkretne reguły przeciw samooszukiwaniu** | §21.5 | nasze dotyczą oceny narzędzi i dokumentów; przy innym rodzaju pracy będą inne |
 | Format identyfikatora tematu | §4.1 | prefiks i etapy |
 | Allowlisty i ścieżki | §5.1 | struktura repozytorium |
 | Kolejność czytania i punkt startowy | §2.1 | nazwy plików procesu |
 | Limity: 3 rundy, pula 2, zwis 20 min | §4.5, §10 | wynikają z tego, że wszystko przegląda jedna osoba |
-| Przydział modeli i zgoda na orkiestrację | §11.2, §11.3 | u nas zapisane jako ECHO-001 i ECHO-002 |
+| Przydział modeli i zgoda na orkiestrację (stosuje się tylko, gdy wykonawcą jest program — §17.1) | §11.2, §11.3 | u nas zapisane jako ECHO-001 i ECHO-002, pełna treść w §21.5 |
 | Węzły dla tematu kodującego | §11.3.3 | nasze są pod Pythona i nasz model uprawnień |
 
 ---
@@ -120,9 +122,10 @@ konwencje repozytorium (§15), szybki start dla nowego agenta (§0).
    `tematy.md`, `handoff.md`, `echo.md`, katalog `dispatch/`.
 4. Utwórz `zmiana-procesu.md` — tryb bezpiecznej zmiany samego procesu.
    Bez niego pierwsza niewygodna reguła zostanie po cichu usunięta.
-5. Wypisz **własne tryby halucynacji** (§11.3.3). Nie kopiuj naszych —
-   zbierz je z rzeczywistych błędów w swoim projekcie. Do tego czasu zostaw
-   tabelę pustą z adnotacją „do uzupełnienia po pierwszych tematach".
+5. Wypisz **własne reguły przeciw samooszukiwaniu** (mechanizm w §11.3.3, nasze
+   przykłady w §21.5). Nie kopiuj naszych — zbierz je z rzeczywistych błędów w
+   swoim projekcie. Do tego czasu zostaw tabelę pustą z adnotacją „do
+   uzupełnienia po pierwszych tematach".
 
 **Nie zaczynaj od kopiowania limitów.** Liczby w §4.5 i §10 wynikają z pojemności
 przeglądu jednej osoby. Przy zespole trzyosobowym będą inne.
