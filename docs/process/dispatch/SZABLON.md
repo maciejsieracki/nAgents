@@ -12,6 +12,12 @@ DOMENA:  PRODUKT | PROCES | INFRA | INFORMACYJNY
 DATA:    <RRRR-MM-DD>
 RUNDA:   1 z 3
 
+WYZWALACZ
+<Dlaczego ten temat startuje teraz i kto tak zdecydował. Jedno z:
+ decyzja właściciela (podaj ID ECHO) | odblokowanie zależności (co się odblokowało) |
+ powrót po FAIL (numer rundy) | przegląd okresowy | zdarzenie zewnętrzne.
+ „Bo była kolej" nie jest wyzwalaczem.>
+
 GOAL
 <Jedno zdanie. Co ma być prawdą po zakończeniu, a nie jest teraz.>
 

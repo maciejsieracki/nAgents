@@ -206,6 +206,19 @@ Nie numeruj pytań tak, by kolidowały z wcześniejszymi.
 Plik `docs/process/dispatch/<PEŁNE-ID>.md`, tworzony **zanim** ruszy Operator.
 Szablon: `docs/process/dispatch/SZABLON.md`.
 
+Zapis niesie **trzy obowiązkowe składniki pętli**: wyzwalacz, zadanie i kryterium sukcesu.
+
+| Składnik | Co odpowiada |
+|---|---|
+| **Wyzwalacz** | dlaczego ten temat startuje **teraz** i kto tak zdecydował |
+| **Zadanie** | co ma być prawdą po zakończeniu |
+| **Kryterium** | binarne `PRAWDA`/`FAŁSZ` plus numery scenariuszy (§6) |
+
+Dopuszczalne wyzwalacze: decyzja właściciela (podaj ID ECHO), odblokowanie zależności
+(podaj co się odblokowało), powrót po `FAIL` (podaj numer rundy), przegląd okresowy,
+zdarzenie zewnętrzne. **„Bo była kolej" nie jest wyzwalaczem** — jeśli nie umiesz go
+nazwać, temat prawdopodobnie nie powinien jeszcze startować.
+
 **Dispatch bez tego pliku jest naruszeniem procesu** — bez niego nie da się później
 sprawdzić, czy `GOAL` nie przesunął się w trakcie.
 
@@ -609,6 +622,18 @@ Obie odpowiedzi „nie" → jeden Operator, bez podziału.
 
 Szerokość fan-outu dobierz według §11.3.1 — nie według liczby z zewnętrznych protokołów.
 Trzy węzły przy limicie dwóch to dwie fale, nie trzy równoległe strumienie.
+
+#### Najmniejszy skuteczny graf, nie największy możliwy
+
+Podział kosztuje. Każdy węzeł powtarza wstęp do promptu, a architektura wieloagentowa
+zużywa **rząd wielkości więcej tokenów niż pojedyncze zapytanie** — spotykana szacunkowa
+wielokrotność to około piętnastu.
+*Liczba pochodzi ze źródła rzędu czwartego (§12.1) i nie została zweryfikowana u źródła —
+traktuj jako rząd wielkości, nie jako pomiar.*
+
+Konsekwencja praktyczna: **triage nie jest formalnością.** Przy temacie, który mieści się
+w jednym Operatorze, podział na trzy węzły to trzy razy droższa droga do tego samego
+wyniku. Dziel wtedy, gdy progi z tabeli powyżej są przekroczone — nie dlatego, że można.
 
 **ID węzła:** ID rodzica z sufiksem litery — `NAG-MVP1-003-a`, `-b`, `-c`.
 Węzeł nie dostaje osobnego wpisu w rejestrze. **Licznik rund (§4.5) liczy się dla całego
