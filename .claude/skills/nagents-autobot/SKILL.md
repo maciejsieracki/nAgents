@@ -144,6 +144,12 @@ ze statusem `DECISION_REQUIRED`, nie rozstrzyga sam.
 6. Czy nie ma usunięć, których `GOAL` nie wymagał
 7. Czy nie nakłada się z drugim aktywnym tematem
 8. Czy `pytest` jest zielony na faktycznym stanie drzewa, a nie w raporcie
+9. Czy `GOAL` w raporcie zgadza się z `GOAL` z zapisu dispatchu i czy numery
+   scenariuszy w raporcie odpowiadają kryteriom końca — **rozbieżność jest sygnałem
+   utraty kontekstu przez Operatora**, niezależnie od wyniku `PASS`/`FAIL`
+10. Gdy temat był dzielony na węzły (§11.3.2) i choć jeden ma `FAIL` — wskazuje
+    **dokładnie jeden** wadliwy węzeł i precyzyjną poprawkę wyłącznie dla niego.
+    Węzły z `PASS` nie wracają razem z nim
 
 ### 3.3 Final Control
 Zawsze **osobny subagent**, nigdy główny agent. **Nie wystawia `READY_FOR_DEPLOY`.**
@@ -156,6 +162,9 @@ Kontroluje kompletność śladu:
    bezpieczeństwa, dowodu lub gotowości do integracji
 5. Czy licznik rund się zgadza i nie został po cichu zresetowany
 6. Czy `docs/process/tematy.md` odzwierciedla stan faktyczny
+7. Przy temacie dzielonym na węzły — **ustala, który węzeł był najsłabszy**
+   (dostał `FAIL` choć raz albo wymagał najwięcej rund) i przekazuje to
+   orkiestratorowi do zapisu (§9.2)
 
 ### 3.4 Orkiestrator
 Działa w głównym czacie. Integruje **wyłącznie zatwierdzoną allowlistę**, per plik,
@@ -210,6 +219,8 @@ sprawdzić, czy `GOAL` nie przesunął się w trakcie.
 5. Dopiero po **faktycznej integracji** orkiestrator zapisuje `READY_FOR_DEPLOY`
 6. Każdy `FAIL`, `BLOCK`, `TIMEOUT`, `INFRA`, `ZWIS`, brak artefaktu lub błąd
    izolacji wraca do Operatora, potem Evaluatora i Final Control — z tym samym ID
+   Przy temacie dzielonym na węzły (§11.3.2) wraca **wyłącznie węzeł wskazany
+   przez Evaluatora** — reszta tematu stoi nietknięta
 
 ### 4.4 `PASS-WITH-NOTES`
 
@@ -415,6 +426,28 @@ ani nieistniejącego raportu.
 | `INFRA` | wdrożenie, kontenery, baza, brama modeli, kopie zapasowe |
 | `INFORMACYJNY` | analiza, rozpoznanie, dokumentacja bez zmiany zachowania |
 
+### 9.1 Zasada czystości — co wraca do orkiestratora
+
+Raport terminalny niesie **destylat, nie surowe dane**: ścieżki plików i SHA zamiast
+wklejonego diffu, wynik testu zamiast pełnego logu, jedno zdanie cytatu zamiast strony
+źródła. Surowe materiały zostają w worktree Operatora — orkiestrator sięga po nie sam,
+jeśli musi zweryfikować, ale domyślnie pracuje na destylacie z pól `ZMIANY` i `TESTY`.
+
+**Limit twardy: 400 słów na raport węzła.** Zasada bez liczby jest apelem, nie regułą.
+Przekroczenie to `PASS-WITH-NOTES`, nie `FAIL` — ale wraca do poprawy, bo raport, którego
+nikt nie przeczyta w całości, nie pełni swojej funkcji.
+
+### 9.2 Metryka wdrożenia przy dekompozycji
+
+Gdy temat przeszedł przez bramę triage (§11.3.2), **Final Control ustala** przy zamknięciu,
+który węzeł był najsłabszy, a **orkiestrator zapisuje** to jednym zdaniem w
+`docs/process/tematy.md`. Rozdzielenie jest celowe: Final Control ma dane z przeglądu rund,
+ale tylko orkiestrator zamyka temat.
+
+Żaden węzeł nie miał `FAIL` → wpisz „brak, wszystkie węzły `PASS` za pierwszym razem".
+To nie jest osobny artefakt — jedno zdanie w istniejącym rejestrze. Po kilku tematach
+widać, co się psuje najczęściej.
+
 ## 10. Watchdog i pojemność
 
 | Parametr | Wartość |
@@ -531,6 +564,73 @@ dokładnie w chwili zakończenia pierwszego.
 **Uwaga o zbieżności:** limit techniczny (2) zgadza się z pulą tematów z §10 (2),
 ustaloną z zupełnie innego powodu — pojemności przeglądu jednej osoby.
 Przy zmianie któregokolwiek sprawdź, czy drugi nadal ma sens.
+
+### 11.3.2 Brama triage — dzielić temat na węzły czy nie
+
+Przed dispatchem odpowiedz na dwa pytania:
+
+| Pytanie | Próg |
+|---|---|
+| Czy temat ma co najmniej dwa niezależne obszary z tabeli §5.1, więcej niż 3 scenariusze w kryteriach końca, albo więcej niż 6 plików w allowliście? | dowolny z trzech |
+| Czy przetworzenie w jednym ciągu grozi przepełnieniem kontekstu? | surowe dane powyżej ok. 3000 tokenów |
+
+**Choć jedno „tak" i kroki nie są sekwencyjnie zależne** → podziel na węzły.
+Kroki zależne (krok 2 potrzebuje wyniku kroku 1) **nie dzielą się**, niezależnie od progów.
+Obie odpowiedzi „nie" → jeden Operator, bez podziału.
+
+Szerokość fan-outu dobierz według §11.3.1 — nie według liczby z zewnętrznych protokołów.
+Trzy węzły przy limicie dwóch to dwie fale, nie trzy równoległe strumienie.
+
+**ID węzła:** ID rodzica z sufiksem litery — `NAG-MVP1-003-a`, `-b`, `-c`.
+Węzeł nie dostaje osobnego wpisu w rejestrze. **Licznik rund (§4.5) liczy się dla całego
+tematu**, nie osobno dla węzła.
+
+Każdy węzeł ma **binarne kryterium sukcesu** obok numeru scenariusza z §6 — sprawdzalne
+`PRAWDA`/`FAŁSZ`. Brak formy binarnej jest niekompletnością tak samo jak brak numeru scenariusza.
+
+*Trzeciego kryterium triage z protokołów zewnętrznych — „wynik krytyczny wymaga zewnętrznej
+walidacji" — nie wprowadzamy jako osobnej bramki: u nas obowiązuje bezwarunkowo dla każdego
+tematu przez Evaluatora (§3.2). Osobna bramka sugerowałaby fałszywie, że tematy nieoznaczone
+jako krytyczne tej walidacji nie przechodzą.*
+
+### 11.3.3 Matryca węzła — cztery pola, wszystkie obowiązkowe
+
+Zapis dispatchu dla każdego węzła zawiera:
+
+| Pole | Co to jest |
+|---|---|
+| **Zadanie** | wąski zakres, jedno zdanie |
+| **Reguła anty-halucynacyjna** | konkretny sposób oszukania siebie, którego **zakazujemy** |
+| **Binarne kryterium** | sprawdzalne `PRAWDA`/`FAŁSZ` |
+| **Procedura naprawcza** | co dokładnie robi Evaluator przy `FAIL` — zapisane z góry, nie improwizowane |
+
+Drugie pole jest tym, którego nam brakowało najbardziej. **Kryterium sukcesu sprawdza,
+czy wynik jest kompletny. Reguła anty-halucynacyjna zakazuje sposobu, w jaki agent
+oszuka sam siebie.** To są dwie różne rzeczy.
+
+#### Nasze tryby halucynacji — obserwowane, nie hipotetyczne
+
+| Tryb | Przypadek z tego projektu | Reguła zakazująca |
+|---|---|---|
+| Cecha narzędzia z podsumowania | „Hermes ma panel administracyjny" | Zakaz opisywania cechy narzędzia bez odwołania do źródła rzędu 1 lub 2 (§12.1) |
+| Wniosek z opisu zamiast z dokumentacji | „Eve nie ma kanału Teams" — zmieniło wynik porównania | jak wyżej |
+| Deklaracja zamiast artefaktu | „zleciłem uzupełnienie" — nie zlecono | Zakaz raportowania czynności bez identyfikatora zadania albo SHA |
+| Pytanie o rzecz rozstrzygniętą | wariant sprzeczny z D-006 | Zakaz proponowania wariantu bez sprawdzenia dziennika decyzji |
+
+Żaden z nich nie został złapany przez regułę procesu, bo takiej reguły nie było.
+
+#### Węzły dla tematu kodującego
+
+| Węzeł | Zakres | Reguła anty-halucynacyjna |
+|---|---|---|
+| `-a` **Logika** | `app/**` | Zakaz `Any` bez uzasadnienia w komentarzu. Zakaz `except: pass` i łapania `Exception` bez ponownego rzucenia albo zalogowania. Zakaz `# TODO` w kodzie idącym do integracji |
+| `-b` **Testy** | `tests/**`, pisane z `scenarios.md` | Zakaz `assert wynik` i `assert wynik is not None` jako jedynej asercji. Przy uprawnieniach obowiązkowo testy negatywne A2 i A3 |
+| `-c` **Bezpieczeństwo** | siedem barier, sekrety, zapytania | **Zakaz twierdzenia „uprawnienia są sprawdzane" bez wskazania linii wywołania `can_use`.** Zakaz deklaracji o bezpieczeństwie bez nazwania wektora. Wymóg podania liczby zapytań do bazy na żądanie |
+
+**Testy pisze inny węzeł niż kod, z `scenarios.md`, bez wglądu w implementację.**
+Agent, który napisał kod, pisze testy sprawdzające to, co kod robi — a nie to, czego
+wymaga scenariusz. Testy przechodzą, wymaganie nie jest zrealizowane, wszystko świeci
+na zielono i nikt tego nie łapie.
 
 ### 11.4 Co orkiestrator robi sam
 
