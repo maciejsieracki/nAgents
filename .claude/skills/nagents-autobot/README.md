@@ -1,7 +1,15 @@
 # nAgents AutoBot — co to jest i jak to wdrożyć gdzie indziej
 
 Plik `SKILL.md` to kompletny proces pracy agentowej. **Jest samowystarczalny** —
-nie wymaga innych skilli procesowych. 918 linii, szesnaście sekcji.
+nie wymaga innych skilli procesowych. 2641 linii, dwadzieścia jeden sekcji.
+
+**Dokument jest niezależny od dziedziny.** Nie zakłada, że projekt, w którym
+działa, jest projektem informatycznym — sekcja 17 to rozpoznanie dziedziny (o
+co dopytać, zanim zapytasz o liczby), sekcja 19 to kalibracja liczb (parametry
+ustalane pytaniem do właściciela), a sekcja 21 to nasze wypełnienie —
+konkretne wartości i odwzorowania obowiązujące w projekcie nAgents. Projekt
+przejmujący ten dokument wymienia wyłącznie sekcję 21 na swoją; sekcje 0–20
+zostają bez zmian.
 
 ---
 
