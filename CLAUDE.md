@@ -74,6 +74,8 @@ Naruszenie którejkolwiek oznacza `FAIL`, niezależnie od jakości reszty pracy.
 - Odpowiedź „chyba tak" nie jest decyzją. ECHO zapisuje się dopiero po
   jednoznacznej odpowiedzi literą — patrz [`docs/process/echo.md`](docs/process/echo.md).
 - Orkiestracja wieloagentowa jest **domyślnie wyłączona** i wymaga jawnej
-  zgody na daną sesję.
+  zgody. W tym projekcie zgoda **została udzielona bezterminowo** decyzją
+  **ECHO-001**, potwierdzoną **ECHO-003** — nie pytaj o nią co sesję.
+  Reguła domyślna dotyczy projektów, w których takie ECHO nie zapadło.
 - Każdy wybór dotyczący kosztu, danych, dostępu lub odwracalności trafia do
   dziennika decyzji **zanim** powstanie realizujący go kod.

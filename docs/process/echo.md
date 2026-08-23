@@ -81,3 +81,40 @@ kto:  właściciel
 3. Każde wywołanie `agent()` musi mieć **jawnie** podane `model` i `effort`.
 
 **Zapisane w:** `.claude/skills/nagents-autobot/SKILL.md` §11.3.
+
+---
+
+### ECHO-003 — potwierdzenie ECHO-001 przy sprzeczności zapisów
+
+```text
+ECHO-003 = A
+data: 2026-08-23
+kto:  właściciel
+```
+
+**Skąd wzięło się pytanie.** Właściciel zapisał poza tym repozytorium: „ten
+proces obowiązuje w projekcie nAgents, orkiestracja wieloagentowa domyślnie OFF
+do jawnej zgody". To stało w sprzeczności z **ECHO-001**, gdzie zgoda została
+udzielona bezterminowo, oraz z całą pracą wykonaną 2026-08-23, która na tej
+zgodzie się opierała. Orkiestrator nie rozstrzygnął sprzeczności sam — zadał
+pytanie w głównym wątku, zgodnie z zasadą, że przy konflikcie zapisów decyzję
+podejmuje właściciel.
+
+**Pytanie:** ECHO-001 dał bezterminową zgodę na pracę przez subagentów, a
+nowszy zapis mówi o zgodzie na daną sesję. Co obowiązuje?
+
+**Wybrany wariant A:** ECHO-001 zostaje w mocy. Zgoda jest bezterminowa.
+Zlecający nie pyta o nią przy każdym zadaniu ani na starcie sesji.
+
+**Skutek:**
+
+1. **ECHO-001 obowiązuje bez zmian.** Zgoda na pracę wielu wykonawców naraz
+   jest bezterminowa, do jawnego odwołania.
+2. Reguła „domyślnie wyłączona, wymaga zgody na daną sesję" z `CLAUDE.md`
+   opisuje stan wyjściowy projektu, w którym takie ECHO nie zapadło. Tutaj
+   zapadło. `CLAUDE.md` uzupełniony o to zastrzeżenie, żeby następny agent nie
+   trafił na tę samą sprzeczność.
+3. Sposób odwołania zgody nie zmienia się — opisuje go §11.5 skilla.
+
+**Zapisane w:** `CLAUDE.md` (zasady pracy z właścicielem),
+`.claude/skills/nagents-autobot/SKILL.md` §21.

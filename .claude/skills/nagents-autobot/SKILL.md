@@ -2840,6 +2840,18 @@ wolna i dokładna.
 To jest odwrócenie domyślnego ustawienia ze szkieletu, gdzie orkiestracja
 była opcjonalna. W nAgents jest normą.
 
+**ECHO-003** — potwierdzenie z 2026-08-23. Zapis właściciela poza repozytorium
+mówił, że orkiestracja jest domyślnie wyłączona do jawnej zgody, co stało
+w sprzeczności z bezterminową zgodą z ECHO-001. Zlecający nie rozstrzygnął
+sprzeczności sam — zadał pytanie w głównym wątku. Właściciel potwierdził, że
+**ECHO-001 zostaje w mocy**, a reguła „zgoda na daną sesję" opisuje stan
+wyjściowy projektu, w którym takie ECHO nie zapadło.
+
+To jest wzorzec postępowania przy sprzeczności zapisów, nie tylko przy tym
+jednym: nowszy zapis nie unieważnia decyzji ECHO milczeniem. Sprzeczność wraca
+do właściciela, a rozstrzygnięcie dopisuje się jako nowe ECHO obok starego —
+stare zostaje, żeby widać było, co się zmieniło i dlaczego.
+
 **ECHO-002** — decyzja właściciela z 2026-08-22, wypełnienie normy z §11.3:
 
 > **Każde zlecenie pracy subagentowi idzie przez narzędzie workflow.**
