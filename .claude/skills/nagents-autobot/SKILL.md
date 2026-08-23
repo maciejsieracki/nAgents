@@ -357,6 +357,35 @@ Gdy zmiana dotyka realnego kompromisu — w nAgents konkretnie:
 
 Dla drobnej implementacji **w ramach** przyjętej decyzji — nie jest wymagana.
 
+#### Kto rozstrzyga — właściciel czy orkiestrator
+
+**Nie każda otwarta kwestia jest pytaniem do właściciela.** Podział:
+
+| Rodzaj | Kto | Przykłady |
+|---|---|---|
+| Pieniądze, prawo, ludzie, ryzyko, zakres | **Właściciel** — pytanie ABC | ile agent może wydać, czy dane klientów idą do modelu, kto jest w pilocie, co robimy z monitoringiem pracowników |
+| Technika bez konsekwencji dla powyższych | **Orkiestrator** — decyduje i **informuje**, nie pyta | gdzie stoi baza, na której wersji zależności budujemy, jak nazywamy gałęzie, gdzie leżą kopie |
+
+Pytanie techniczne postawione właścicielowi **nie jest ostrożnością — jest przerzuceniem
+na niego decyzji, do której nie ma podstaw.** Kosztuje jego czas i opóźnia pracę.
+Gdy technika ma konsekwencję dla pieniędzy, prawa lub ryzyka — pytaj o **konsekwencję**,
+nie o mechanizm.
+
+#### Test zrozumiałości — przed wysłaniem pytania
+
+Pytanie idzie do właściciela dopiero, gdy przechodzi wszystkie trzy:
+
+1. Czy da się je przeczytać na głos osobie spoza projektu i dostać sensowną odpowiedź?
+2. Czy w treści pytania **nie ma** numeru paragrafu, ścieżki pliku, nazwy narzędzia
+   ani identyfikatora wewnętrznego? Te idą do odnośnika, nie do zdania.
+3. Czy warianty różnią się **skutkiem dla firmy**, a nie sposobem wykonania?
+
+**Przypadek, który tę regułę wywołał** (2026-08-22): zestaw 27 pytań przeszedł kontrolę
+formy, ale właściciel odpowiedział „zadałeś je technicznym językiem, że ja w ogóle nie
+wiem, o co chodzi". Kontrola sprawdzała kompletność wariantów i argumentów — nie
+sprawdzała, czy adresat je rozumie. Około siedemnastu z nich w ogóle nie powinno do
+niego trafić.
+
 ### 8.2 Szablon pytania — wszystkie pola obowiązkowe
 
 ```text
@@ -745,6 +774,24 @@ lub utrzymania — **nie podejmuj go po cichu w kodzie.** Przedstaw właściciel
 Ostatni punkt jest najważniejszy i najczęściej pomijany. Właściciel podejmuje
 decyzje o odwracalności, nie o składni.
 
+#### Rejestr języka w tekstach dla właściciela
+
+Dokument, pytanie albo raport adresowany do właściciela pisze się **językiem skutków,
+nie mechanizmów**. Obowiązują zakazy:
+
+| Zakaz | Zamiast tego |
+|---|---|
+| Nazwa narzędzia albo biblioteki w zdaniu głównym | co to daje firmie |
+| Numer paragrafu, ID tematu, ścieżka pliku w treści | odnośnik na końcu akapitu |
+| Skrót bez rozwinięcia przy pierwszym użyciu | pełne określenie, skrót w nawiasie |
+| „Zaimplementujemy", „skonfigurujemy", „wdrożymy warstwę" | co się zmieni w pracy ludzi |
+
+Sprawdzian: **usuń z tekstu wszystkie nazwy własne narzędzi. Jeśli zdanie przestaje
+cokolwiek znaczyć — było napisane o mechanizmie, nie o skutku.**
+
+To nie dotyczy dokumentacji technicznej w `docs/spec/` ani tego skilla — te są dla
+agentów i dla osoby technicznej, więc żargon jest tam właściwy.
+
 Wybór spełniający kryteria z §8.1 idzie pełnym trybem ABC/ECHO.
 
 ### 14.3 Kopia, której nie odtworzono, nie jest kopią
@@ -792,6 +839,57 @@ albo wygląda na nieaktualną — zapytaj, nie zgaduj.
 Rachunek za modele przewyższa koszt infrastruktury o rząd wielkości.
 **Optymalizuj dobór modeli i wielkość kontekstu, nie rozmiar serwera.**
 Warstwa rozmowy chodzi na modelu tanim; analiza nocna może być wolna i dokładna.
+
+## 16. Wzorzec promptu dla subagenta
+
+Gotowy szablon zlecenia. Kopiuj i wypełnij — pola odpowiadają matrycy z §11.3.3.
+
+```text
+KONTEKST PROJEKTU
+Przeczytaj obowiązkowo, w tej kolejności:
+  CLAUDE.md, docs/process/tematy.md, docs/spec/00-architektura.md,
+  docs/spec/decisions.md, docs/spec/scenarios.md, <specyfikacja etapu>
+nAgents to warstwa zarządzania nad flotą Hermesów. Nie jest silnikiem agenta.
+
+TWOJA ROLA: Operator | Evaluator | Final Control
+TEMAT:      NAG-<ETAP>-<NNN>-<slug>[-<litera węzła>]
+
+ZADANIE
+<wąski zakres, jedno zdanie — co ma być prawdą po zakończeniu>
+
+REGUŁA ANTY-HALUCYNACYJNA
+<konkretny sposób oszukania siebie, którego zakazujemy — patrz §11.3.3>
+
+BINARNE KRYTERIUM SUKCESU
+<sprawdzalne PRAWDA/FAŁSZ; twój wynik zostanie wobec niego zweryfikowany>
+Dodatkowo: scenariusze <numery ze scenarios.md> muszą przechodzić.
+
+ALLOWLISTA
+<ścieżki, per plik lub katalog>
+Zakazane bezwzględnie: .env*, docs/spec/decisions.md, .git/**
+
+OGRANICZENIA WYJŚCIA
+- maksymalnie 400 słów w raporcie (§9.1)
+- destylat, nie surowe dane: ścieżki i SHA zamiast diffu, wynik testu zamiast logu
+- nie edytujesz plików spoza allowlisty
+- przy decyzji produktowej zatrzymujesz się ze statusem DECISION_REQUIRED
+
+FORMAT ODPOWIEDZI
+STATUS / DOMAIN / TEMAT / GOAL / ZMIANY / TESTY / BLOKADY / NASTĘPNY KROK
+DEPLOY/PUSH: NIE WYKONANO
+```
+
+**Wywołanie zawsze przez workflow, z jawnym `model` i `effort`** (§11.2, §11.3).
+
+### 16.1 Czego w prompcie nie może zabraknąć
+
+| Pole | Co się dzieje przy braku |
+|---|---|
+| Reguła anty-halucynacyjna | agent wypełni lukę domysłem i nie zauważy, że zgaduje |
+| Binarne kryterium | krytyk nie ma wobec czego orzekać, ocena robi się uznaniowa |
+| Limit słów | do syntezy trafiają surowe dane i zatruwają kontekst orkiestratora |
+| Allowlista | zmiana wychodzi poza zakres tematu, integracja staje się ryzykowna |
+| Kolejność czytania | agent zaczyna od przypadkowego pliku i buduje na nieaktualnym stanie |
 
 ---
 
