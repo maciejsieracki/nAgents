@@ -16,6 +16,7 @@ Format ID: `NAG-<ETAP>-<NNN>-<slug>`. ID jest niezmienne i nigdy nieużywane pon
 | ID | GOAL | Blokada | Odblokuje |
 |---|---|---|---|
 | `NAG-MVP3-001-pamiec-wspolna` | Agenci domeny dzielą pamięć procesową | **D-011** — nierozstrzygnięta rezydencja danych | odpowiedź właściciela o bazie |
+| `NAG-INFO-001-appto-research` | Wiemy, co appto faktycznie robi, jak zarządza dostępem i kosztem, na czym stoi | **polityka sieciowa środowiska** — `appto.ai` zwraca 403 na bramce wyjściowej, żadnej strony nie otwarto | dopuszczenie domeny w środowisku albo wykonanie badania z innego miejsca |
 
 ## Do rozpoczęcia — MVP1
 
