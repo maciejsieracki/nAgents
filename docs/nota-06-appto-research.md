@@ -13,6 +13,16 @@ Ustalenia o infrastrukturze sieciowej (DNS), które nie zależą od treści stro
 zostały utrzymane z poprzedniej rundy i sprawdzone pod kątem zgodności z nowymi
 źródłami w sekcji 6.
 
+**Ta runda, tego samego dnia:** właściciel dostarczył dwa kolejne źródła — politykę
+prywatności i regulamin appto wraz z umową powierzenia przetwarzania (Załącznik
+nr 1). To dokumenty prawne, nie sprzedażowe — mają wagę dowodową wyższą niż cztery
+strony wyżej: gdzie się rozchodzą, wiąże treść prawna, a sama rozbieżność jest
+ustaleniem. Nowe ustalenia z tych dwóch źródeł są w skorygowanych fragmentach
+sekcji 4 i 7 oraz w nowych sekcjach 8 i 9. **Najważniejsze pojedyncze
+sprostowanie** — poprzednia wersja tej noty (sekcja 4) błędnie twierdziła, że
+umowa powierzenia przetwarzania nie istnieje; to było błędem wynikającym
+z niepełnych źródeł, poprawionym niżej wprost w tym samym miejscu.
+
 **Znaczniki użyte w tekście:**
 
 - **[F] FAKT** — to, co strona appto dosłownie mówi o sobie (mamy cytat), albo
@@ -23,12 +33,16 @@ zostały utrzymane z poprzedniej rundy i sprawdzone pod kątem zgodności z nowy
 - **[D] DOMYSŁ** — prawdopodobne, niepotwierdzone wprost w żadnym z czterech
   źródeł; z poziomem pewności i tym, co by je rozstrzygnęło.
 
-**Przypomnienie ważne dla całej noty:** cztery źródła, na których stoi ta nota, to
-materiał sprzedażowy producenta appto — najniższy poziom wiarygodności w naszej
-hierarchii źródeł. „appto twierdzi, że…" opisuje wyłącznie to, co firma o sobie
-mówi, nigdy nie jest to samo co potwierdzenie, że produkt tak działa. To dotyczy
-zwłaszcza sekcji 4 (bezpieczeństwo) — najbardziej wrażliwej kategorii na
-naciąganie marketingu na fakt.
+**Przypomnienie ważne dla całej noty:** cztery pierwotne źródła, na których stoi
+ta nota, to materiał sprzedażowy producenta appto — najniższy poziom
+wiarygodności w naszej hierarchii źródeł. „appto twierdzi, że…" opisuje wyłącznie
+to, co firma o sobie mówi, nigdy nie jest to samo co potwierdzenie, że produkt
+tak działa. To dotyczy zwłaszcza sekcji 4 (bezpieczeństwo) — najbardziej
+wrażliwej kategorii na naciąganie marketingu na fakt. **Wyjątek stanowią dwa
+źródła prawne dodane w tej rundzie** (polityka prywatności, regulamin z umową
+powierzenia) — to dokumenty, za których treść Let's Automate sp. z o.o. odpowiada
+wobec kontrahenta i organu nadzorczego, więc mają wagę dowodową najwyższą, nie
+najniższą, i tam gdzie się rozchodzą z materiałem sprzedażowym, to one wiążą.
 
 ---
 
@@ -77,8 +91,9 @@ nieustalone, nie zaprzeczone.
 ## 3. Funkcjonalność — skrót
 
 Pełny katalog funkcji appto, pogrupowany i zestawiony z naszymi etapami, jest
-osobnym dokumentem: `docs/nota-07-katalog-funkcji.md` (54 pozycje w jedenastu
-grupach, plus zestawienia „mamy w planie" / „luki" / „odrzucamy"). Tu tylko
+osobnym dokumentem: `docs/nota-07-katalog-funkcji.md` (58 pozycji w jedenastu
+grupach, po dodaniu czterech pozycji z dokumentów prawnych w tej rundzie, plus
+zestawienia „mamy w planie" / „luki" / „odrzucamy"). Tu tylko
 najważniejszy szkielet:
 
 [F] appto ma asystentów przypisanych do ról (Wise — ogólny domyślny, Strateg
@@ -125,19 +140,68 @@ współdzielona w zespole i automatyczne doładowanie — koniec niespodzianek n
 fakturze". Rozliczenie jest zbiorowe dla zespołu; źródła nie wspominają
 twardego limitu per pojedynczą osobę.
 
-**Lokalizacja danych, RODO.** [F] „Hosting w UE — serwery w Irlandii."
-[F] „Zgodność z RODO — 2FA, audit log" (strona główna); cennik dodaje „zero-
-retention u dostawców modeli" i deklarację zgodności z **DSA** (Digital Services
-Act — unijne prawo o platformach obsługujących treści użytkowników trzecich,
-np. serwisy społecznościowe czy marketplace'y; prawdopodobnie nieadekwatne dla
-appto jako narzędzia B2B, ale to jest nasz wniosek, nie zaprzeczenie ze strony
-appto).
+**Lokalizacja danych, RODO — z korektą po dokumentach prawnych.** [F] „Hosting
+w UE — serwery w Irlandii." [F] „Zgodność z RODO — 2FA, audit log" (strona
+główna); cennik dodaje „zero-retention u dostawców modeli" i deklarację
+zgodności z **DSA** (Digital Services Act — unijne prawo o platformach
+obsługujących treści użytkowników trzecich, np. serwisy społecznościowe czy
+marketplace'y; prawdopodobnie nieadekwatne dla appto jako narzędzia B2B, ale to
+jest nasz wniosek, nie zaprzeczenie ze strony appto).
 
-**Powierzenie przetwarzania, lista podprzetwarzających.** [F] Brak — żadne
-z czterech źródeł nie zawiera umowy powierzenia przetwarzania danych (skrót
-branżowy: DPA) ani listy podprzetwarzających (podwykonawców, którym appto
-przekazuje dane — np. dostawca modelu, hosting). Pole całkowicie puste, tak
-jak w poprzedniej wersji tej noty.
+[F] **Polityka prywatności dodaje warstwę, o której cztery strony sprzedażowe
+milczą:** dane mogą być przekazywane do **szesnastu państw trzecich** — Wielka
+Brytania, Kanada, USA, Chile, Brazylia, Izrael, Arabia Saudyjska, Katar, Indie,
+**Chiny**, Korea Południowa, Japonia, Singapur, Tajwan, Indonezja, Australia —
+w związku z narzędziami dostarczanymi m.in. przez Google LLC (część na
+podstawie decyzji Komisji Europejskiej o adekwatności, część na podstawie
+standardowych klauzul umownych, w tym USA, Chiny i Arabia Saudyjska).
+
+**Dlaczego to niekoniecznie sprzeczność:** „serwery w Irlandii" opisuje, gdzie
+stoi sama aplikacja appto; szesnaście państw trzecich to inna warstwa —
+podmioty przetwarzające, którym appto zleca fragmenty przetwarzania (np.
+narzędzia analityczne, narzędzia AI/LLM). Lokalizacja aplikacji i przepływ
+danych do poddostawców to dwie różne rzeczy, więc obie deklaracje mogą być
+prawdziwe jednocześnie.
+
+**Dlaczego mimo to ma znaczenie:** hasło „dane zostają u Was" na stronie
+sprzedażowej tej różnicy nie ujawnia i sugeruje więcej niż polityka faktycznie
+gwarantuje. Firma oceniająca dostawcę pod kątem ochrony danych, czytając
+wyłącznie materiał sprzedażowy, nie dowie się o przekazaniu danych do Chin czy
+Arabii Saudyjskiej — dowiaduje się o tym dopiero z dokumentu prawnego, który
+przeciętny kupujący rzadko czyta w całości przed zakupem. Dla nas, jako
+przyszłego dostawcy analogicznych zapisów, to wzór tego, czego **nie** warto
+kopiować w komunikacji sprzedażowej: skrót niebędący kłamstwem, ale
+niewspółmierny do pełnego obrazu w dokumencie wiążącym.
+
+**Powierzenie przetwarzania — SPROSTOWANIE (2026-08-25).** Poprzednia wersja tej
+sekcji twierdziła: „Brak — żadne z czterech źródeł nie zawiera umowy powierzenia
+przetwarzania danych (skrót branżowy: DPA) (…) Pole całkowicie puste." **To
+twierdzenie było błędne.** Powód: opierało się wyłącznie na czterech źródłach
+sprzedażowych, które o umowie powierzenia w ogóle nie wspominają — nie dlatego,
+że appto jej nie ma, tylko dlatego, że strona sprzedażowa nie jest miejscem, gdzie
+taki dokument by się pojawił. Właściciel dostarczył tego samego dnia regulamin
+appto, który zawiera **Załącznik nr 1 — umowę powierzenia przetwarzania danych,
+zawartą w trybie art. 28 RODO** (przepis nakładający na administratora obowiązek
+zawarcia takiej umowy z każdym podmiotem przetwarzającym dane w jego imieniu),
+jako integralną część regulaminu.
+
+[F] Najważniejsze postanowienia umowy: zakres — wszelkie dane osobowe wprowadzone
+do aplikacji przez klienta; dane szczególnych kategorii (art. 9/10 RODO — np.
+dane o zdrowiu, poglądach, wyrokach) **wyłączone** z zakresu powierzenia;
+zgłoszenie naruszenia w **48 godzin** od wykrycia; realizacja żądań osób,
+których dane dotyczą, w **48 godzin**; udostępnienie dokumentów na żądanie
+w **14 dni**; zwrot i usunięcie danych po zakończeniu współpracy w **14 dni
+roboczych**; podpowierzenie dalszym podmiotom na zasadzie zgody ogólnej
+udzielonej z góry, z prawem sprzeciwu klienta w ciągu 7 dni od zawiadomienia —
+ale skutkiem sprzeciwu jest prawo appto do natychmiastowego odstąpienia od
+umowy głównej, co czyni to prawo sprzeciwu w praktyce trudnym do wykonania bez
+utraty usługi (ocena, czy to zgodne z art. 28 RODO, wymaga prawnika — nie
+rozstrzygamy tego tu).
+
+**Co nadal pozostaje nieznane:** wyłącznie wykaz podprocesorów z nazwami
+własnymi (regulamin odsyła do `appto.ai/podprocesorzy`, strony nie mamy — patrz
+sekcja 10). Sama umowa powierzenia jako dokument **istnieje i jest dostępna** —
+to jedyna rzecz, którą to sprostowanie zmienia względem poprzedniej wersji.
 
 **Certyfikaty (ISO 27001, SOC 2).** [F] Brak wzmianki w żadnym z czterech
 źródeł. Brak potwierdzenia nie jest równoznaczny z zaprzeczeniem.
@@ -324,10 +388,23 @@ prawdopodobnie dwa różne podmioty prawne w tej samej grupie kapitałowej** —
 poprzednia nota mogła wskazywać niewłaściwy z dwóch, bo opierała się na
 regulaminie innej marki grupy (wisegroup.pl), nie na stopce appto.ai samego.
 
-[D] Pewność średnia, nierozstrzygnięte przez te cztery źródła: numer KRS, NIP
-i adres siedziby „Let's Automate Sp. z o.o." — żadne z czterech źródeł ich nie
-podaje. Rozstrzygnąłby to bezpośredni odczyt regulaminu appto.ai albo
-wyszukiwarki KRS pod tą nazwą.
+[F] **Dane rejestrowe potwierdzone tego samego dnia** wprost z polityki
+prywatności appto (dokument prawny, piąte źródło tej rundy) — luka z poprzedniej
+wersji tej noty jest tym samym zamknięta:
+
+| Pole | Wartość |
+|---|---|
+| Nazwa | Let's Automate sp. z o.o. |
+| Siedziba | ul. Nowy Świat 33/13, 00-029 Warszawa |
+| KRS | 0000972542 |
+| Sąd rejestrowy | Sąd Rejonowy dla m.st. Warszawy, XII Wydział Gospodarczy |
+| NIP | 5252908405 |
+| REGON | 52206686800000 |
+| **Kapitał zakładowy** | **10 000 zł, w całości opłacony** |
+
+Kapitał zakładowy w tej wysokości to ustawowe minimum dla spółki z ograniczoną
+odpowiedzialnością — odnotowane jako fakt rejestrowy, nie ocena zdolności
+majątkowej spółki (rozwinięte w sekcji 9, ryzyko 6).
 
 [F] Program wdrożeniowy: pierwsza kohorta ma **30 miejsc** w pakietach
 z mentorem, start **wrzesień 2026**, ceny **7900 / 19 900 / 29 900 zł netto**.
@@ -354,35 +431,122 @@ wnioskiem, nie ustaleniem obalonym albo potwierdzonym przez te cztery strony.
 
 ---
 
-## 8. Czego nadal nie wiemy
+## 8. Rozbieżności między materiałem sprzedażowym a dokumentami prawnymi
 
-- **Treści stron appto.ai spoza czterech dostarczonych**: `/pl/funkcje/`,
-  `/pl/zastosowania/`, `/pl/polityka-prywatnosci/`, `/pl/regulamin/`,
-  `/pl/polityka-cookies/`, `/pl/kontakt/`, `/pl/webinar/`, `/pl/partnerzy/` —
-  wszystkie wymienione w nawigacji strony głównej, żadna nie dostarczona.
-  Rozstrzygnęłoby to wklejenie ich treści przez właściciela albo odblokowanie
-  dostępu sieciowego do domeny w tej sesji.
-- **Numer KRS/NIP „Let's Automate Sp. z o.o."** — nowa, bardziej precyzyjna luka
-  względem poprzedniej rundy (sekcja 7).
-- **Czy istnieje twardy limit budżetu per pojedynczy agent/osoba** u appto, czy
-  tylko zbiorcze rozliczenie zespołu.
-- **Czy appto ma certyfikat ISO 27001/SOC 2** i czy publikuje dowód (raport,
-  trust center).
-- **Listy podprzetwarzających appto** (dostawca modelu z nazwy, hosting, baza
-  danych) — najlepsze źródło do rozstrzygnięcia hipotezy o architekturze
-  pośredniczącej appto (sekcja 6), nadal nie sprawdzone.
-- **Czy appto oferuje wariant on-premise / instalowany w chmurze klienta.**
-- **Czy Marketplace appto zawiera gotowe szablony OD APPTO**, czy wyłącznie
-  mechanizm dzielenia się tym, co zbudował klient.
-- **Czy appto ma kanał głosowy/telefoniczny** — brak w źródłach nie jest
-  dowodem braku funkcji.
-- **Czy DSA rzeczywiście dotyczy appto** — deklaracja zgodności jest w cenniku,
-  ale żadne źródło nie tłumaczy, dlaczego prawo o platformach z treścią
-  użytkowników trzecich miałoby dotyczyć narzędzia B2B. Możliwe, że to
-  nadgorliwa deklaracja marketingowa — do wyjaśnienia, gdyby temat zgodności
-  prawnej appto był kiedyś istotny dla decyzji.
+Regulamin i polityka prywatności wiążą; strona główna, cennik i wdrożenie
+kohortowe to materiał sprzedażowy. Poniżej pięć miejsc, w których się rozchodzą
+— sprawdzone otwierając oba typy źródeł, nie tylko cytując jedną stronę.
 
-**Rekomendacja, nie rozstrzygnięcie:** jeśli którakolwiek z powyższych luk stanie
-się istotna dla przyszłej decyzji (np. porównawczej), właściciel powinien albo
-dostarczyć brakujące strony bezpośrednio, albo rozważyć odblokowanie dostępu
-sieciowego do `appto.ai` w polityce proxy tej sesji dla kolejnej rundy badania.
+| # | Co mówi strona sprzedażowa | Co mówi dokument prawny | Charakter | Dlaczego ma znaczenie |
+|---|---|---|---|---|
+| 1 | „Hosting w UE — serwery w Irlandii"; „Dane zostają u Was" | Polityka: dane mogą trafiać do **szesnastu państw trzecich**, w tym Chin i Arabii Saudyjskiej | Uzupełnienie, nie dosłowna sprzeczność (rozwinięte w sekcji 4) | Kupujący czytający tylko stronę sprzedażową nie dowie się o przekazaniu do Chin |
+| 2 | „Pula odnawia się co miesiąc" (sugeruje przepadanie kredytów) | § 9 ust. 7: „Kredyty nie wygasają (…) nie mają okresu ważności" | Sprzeczność literalna, częściowo do pogodzenia rozróżnieniem kredytów abonamentowych i dokupionych — regulamin tego rozróżnienia jednak nie zapisuje wprost | Klient może planować budżet zakładając przepadanie puli, podczas gdy dokument wiążący mówi przeciwnie |
+| 3 | „Pełne appto — żadnych ukrytych poziomów ani dopłat za premium" | § 8: funkcjonalność dzieli się na moduły; aktywacja części następuje na indywidualną wycenę, z osobną opłatą | Sprzeczność częściowa — prawdziwe tylko dla modułów objętych cennikiem | Klient dowiaduje się o dopłatach dopiero przy próbie włączenia modułu |
+| 4 | „Dane zostają u Was" | § 4 ust. 3–4: stały dostęp administracyjny usługodawcy do wszystkich Treści Usługobiorcy, ograniczony tylko co do usuwania/zmiany, nie co do wglądu | Sprzeczność w warstwie znaczeniowej — **największa waga praktyczna z całej tabeli** | Klient wprowadzający dane firmowe powinien wiedzieć o stałym dostępie wglądowym dostawcy; hasło sprzedażowe sugeruje przeciwnie |
+| 5 | Zgodność z **DSA** wymieniona w cenniku jako atut bezpieczeństwa, obok RODO | Polityka i regulamin rzeczywiście przywołują DSA (art. 16/20, punkt kontaktowy z art. 11–12) | Uzupełnienie w sensie literalnym, ale DSA reguluje platformy pośredniczące w treściach **osób trzecich** — appto jako narzędzie B2B jest nietypowym adresatem | Powołanie może być formalnie prawdziwe, a jednocześnie sugerować szerszy zakres regulacyjny niż appto naprawdę reprezentuje — ocena należy do prawnika |
+
+**Ustalenie dodatkowe:** sama strona sprzedażowa ma wewnętrzną sprzeczność
+liczbową — „40+ integracji" wobec „956 narzędzi" (sekcja 3, `nota-07`). To nie
+jest rozbieżność strona-kontra-prawo, ale obniża wiarygodność materiału
+sprzedażowego jako źródła w ogóle.
+
+---
+
+## 9. Ryzyka dostawcy, uszeregowane
+
+To jest część, o którą właściciel pytał, prosząc o research konkurencji.
+Uszeregowane od najpoważniejszego. Właściciel przy własnej platformie znajdzie
+się po drugiej stronie analogicznych zapisów — stąd wartość tej części także
+dla nas, nie tylko dla oceny appto jako dostawcy.
+
+**1. Trwałe usunięcie danych po 30 dniach zaległości (§ 10 ust. 9).** Po 30
+dniach od powstania zadłużenia dane, konto i subkonta są trwale usuwane — bez
+okresu przejściowego poza samym brakiem dostępu do edycji w trakcie zaległości.
+Najgorszy przypadek: spór o fakturę albo awaria płatności powodują
+nieodwracalną utratę całej historii pracy zespołu. Do wynegocjowania
+prawdopodobnie tylko w umowie enterprise — nic w źródłach nie wskazuje na taką
+możliwość w planie standardowym.
+
+**2. Granica odpowiedzialności ograniczona do trzech miesięcy opłat
+(§ 14 ust. 8).** Przy planie 490–990 zł/mc daje to pułap rzędu 1500–3000 zł.
+Limit nie działa przy **rażącym niedbalstwie** (skrajnie niestaranne działanie,
+odbiegające od minimum ostrożności, jakiego można oczekiwać) i **winie
+umyślnej** (celowe działanie ze świadomością skutku) — próg trudny do wykazania
+przez klienta. Dodatkowo wyłączona **rękojmia** (ustawowe uprawnienie kupującego
+do żądania naprawy albo obniżenia ceny wadliwego świadczenia, niezależne od
+odrębnej gwarancji) oraz odpowiedzialność za utracone korzyści. Najgorszy
+przypadek: błąd automatyzacji powoduje szkodę biznesową rzędu dziesiątek albo
+setek tysięcy złotych — odzyskanie ograniczone do ułamka rocznego kosztu
+subskrypcji. Standardowa klauzula SaaS, możliwa do podniesienia tylko
+w negocjacjach enterprise.
+
+**3. Dostęp administracyjny usługodawcy do treści klienta (§ 4 ust. 3–4).**
+Patrz też sekcja 8, punkt 4. Najgorszy przypadek: pracownik dostawcy, złośliwie
+albo przez błąd, przegląda poufne dokumenty firmowe klienta — nic w źródłach
+nie ogranicza tego prawa wglądu w standardowej umowie.
+
+**4. Sprzeciw wobec podpowierzenia kończący umowę (Załącznik nr 1).**
+Podpowierzenie kolejnym podprzetwarzającym odbywa się na zgodę ogólną z góry;
+klient może się sprzeciwić w 7 dni, ale skutkiem jest prawo appto do
+natychmiastowego odstąpienia od umowy głównej. Prawo sprzeciwu istnieje
+formalnie, ale jego wykonanie kosztuje utratę usługi — w praktyce iluzoryczne
+dla klienta zależnego od appto operacyjnie. Czy taka konstrukcja jest zgodna
+z art. 28 RODO w części o rzeczywistej możliwości sprzeciwu — wymaga oceny
+prawnika, nie rozstrzygamy tego tu.
+
+**5. Brzmienie licencji na treści i opinie klienta (§ 13 ust. 21–26).**
+Przesłanie „Treści Usługobiorcy" lub opinii jest równoznaczne z udzieleniem
+appto nieodpłatnej licencji niewyłącznej, bezterminowej (wypowiadalnej z
+dwuletnim wyprzedzeniem), z prawem udzielania dalszych licencji podmiotom
+trzecim i z rezygnacją klienta z wykonywania **autorskich praw osobistych**
+(więź twórcy z własnym utworem — prawo do autorstwa i do integralności dzieła;
+inna kategoria niż prawa majątkowe, które można sprzedać). Czytane literalnie
+razem z definicją „Treści Usługobiorcy" (§ 2 pkt 15 — wszelkie dane i pliki na
+koncie), zapis obejmowałby licencję na wszystkie dokumenty firmowe, nie tylko
+opinie o produkcie. To prawdopodobnie wada redakcyjna, ale treść zapisu jest
+szersza niż prawdopodobna intencja — rozstrzygnięcie należy do prawnika, nie do
+nas.
+
+**6. Kapitał zakładowy w wysokości ustawowego minimum (10 000 zł).** Przy
+sporze o odszkodowanie przewyższające limit z ryzyka 2, zdolność majątkowa
+spółki do pokrycia zobowiązań jest ograniczona strukturalnie — kapitał
+zakładowy nie jest jedynym majątkiem spółki, ale jest sygnałem, nie gwarancją
+wypłacalności. Fakt rejestrowy, nie zapis umowny — nie do wynegocjowania.
+
+**7. Zgoda marketingowa na nazwę i logo klienta (§ 16 ust. 1).** O ile odrębna
+umowa nie stanowi inaczej, klient z góry udziela zgody na wykorzystanie swojej
+nazwy i logo w materiałach marketingowych appto. Do wynegocjowania — ale wymaga
+inicjatywy klienta, nie jest opt-in.
+
+---
+
+## 10. Czego nadal nie wiemy
+
+Po dwóch rundach źródeł (cztery strony sprzedażowe, dwa dokumenty prawne)
+zostaje **jeden** rodzaj luki, nie kilka jak w poprzednich wersjach tej noty —
+KRS/NIP i istnienie umowy powierzenia zostały rozstrzygnięte w tej rundzie
+(sekcje 4 i 7).
+
+**Wykaz podprocesorów z nazwami** — `appto.ai/subprocessors` i
+`appto.ai/pl/podprocesorzy` — nie jest jednym z sześciu dostarczonych źródeł;
+oba dokumenty prawne wprost do niego odsyłają, zamiast podawać nazwy. To
+jedyny dokument, który powiedziałby wprost: kto jest dostawcą modelu (albo
+dostawcami — polityka mówi mnogo o „dostawcach narzędzi AI/LLM"), co
+pozwoliłoby zweryfikować hipotezę o appto jako bramce nad kilkoma modelami
+(sekcja 6); kto fizycznie hostuje bazę i aplikację, nazwą, nie kategorią
+„firma hostingowa"; które z szesnastu państw trzecich odpowiadają któremu
+konkretnie podprzetwarzającemu.
+
+Poza tym: czy istnieje twardy limit budżetu per pojedynczy agent/osoba, czy
+tylko zbiorcze rozliczenie zespołu; czy appto ma certyfikat ISO 27001/SOC 2;
+czy Marketplace appto zawiera gotowe szablony od samego appto, czy wyłącznie
+mechanizm dzielenia się tym, co zbudował klient; czy appto ma kanał
+głosowy/telefoniczny (brak w źródłach nie jest dowodem braku funkcji); czy DSA
+rzeczywiście dotyczy appto (deklaracja jest, uzasadnienie regulacyjne — nie,
+patrz sekcja 8 punkt 5).
+
+**Rekomendacja, nie rozstrzygnięcie:** jeśli wykaz podprocesorów stanie się
+istotny dla przyszłej decyzji (np. porównawczej albo przy ocenie ryzyka
+łańcucha dostaw appto), właściciel powinien albo dostarczyć treść strony
+bezpośrednio, albo rozważyć odblokowanie dostępu sieciowego do `appto.ai`
+w polityce proxy tej sesji.

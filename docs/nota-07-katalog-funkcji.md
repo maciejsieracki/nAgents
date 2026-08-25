@@ -25,6 +25,15 @@ Wszystkie cztery to treść wklejona przez właściciela, bo bramka sieciowa śr
 blokuje domenę appto.ai. Nikt w tym zwiadzie nie otworzył ani jednej strony appto
 samodzielnie.
 
+**Dodatek tej rundy:** właściciel dostarczył tego samego dnia dwa dokumenty
+prawne — `appto-polityka-prywatnosci-pl.md` i `appto-regulamin-pl.md`. Cztery
+pozycje katalogu w sekcji 2 (subkonta, moduły na wycenę indywidualną, wdrożenie
+w infrastrukturze klienta, umowa powierzenia przetwarzania) pochodzą z tych
+dwóch źródeł, oznaczonych w tabelach jako „regulamin" — waga dowodowa wyższa niż
+materiału sprzedażowego, bo to dokumenty wiążące, nie hasła marketingowe. Nowa
+sekcja 8 tej noty streszcza, czego te dwa dokumenty uczą nas o naszej własnej
+budowie.
+
 **Ważne zastrzeżenie, które trzeba mieć w pamięci przy każdej pozycji tej noty:**
 to jest materiał sprzedażowy producenta. Jest dowodem na to, **co appto o sobie
 twierdzi**, nie na to, jak appto naprawdę działa pod spodem. Funkcja opisana na
@@ -141,6 +150,7 @@ wymienionych w katalogu: źródła wiedzy z narzędzi zewnętrznych (transkrypt 
 | Logowanie SSO (Google/Microsoft/własne) | Rozszerzone opcje logowania firmowego przez SSO | cennik | „zaloguj zespół przez Google, Microsoft albo własne SSO" |
 | Uwierzytelnianie dwuskładnikowe (2FA) | Dodatkowy składnik logowania | strona główna FAQ | „2FA i audit log" |
 | Gotowy komplet dostępu dla nowej osoby | Konfiguracja ról/wiedzy/modeli ustawiona raz działa od dnia startu | strona główna | „nowa osoba dostaje gotowy komplet w dniu startu" |
+| Subkonta z konfigurowalnym poziomem dostępu | Klient dostaje konto administratora i sam tworzy subkonta, ustawiając poziom uprawnień dla każdego z osobna; odpowiada za działania subkont jak za własne | regulamin | § 6 |
 
 ### h) nadzór
 
@@ -161,6 +171,7 @@ wymienionych w katalogu: źródła wiedzy z narzędzi zewnętrznych (transkrypt 
 | Automatyczne doładowanie (top-up) | Dokupienie kredytów w trakcie miesiąca, wg wyższej stawki | cennik | „22 zł / 10 tys." poza abonamentem |
 | Miesięczne odnawianie puli bez przenoszenia | Niewykorzystane kredyty przepadają na koniec okresu | cennik | „Pula odnawia się co miesiąc" |
 | Konfigurator planu wg wielkości zespołu | Dobór planu przez próg liczby osób i suwak kredytów | cennik | progi do 10/25/50/100 osób |
+| Moduły płatne osobno (wycena indywidualna) | Część funkcjonalności jest w cenniku, aktywacja pozostałych modułów następuje na indywidualną wycenę, z osobną opłatą za wdrożenie i możliwym podwyższeniem opłaty subskrypcyjnej | regulamin | § 8 |
 
 ### j) dane i zgodność
 
@@ -171,6 +182,8 @@ wymienionych w katalogu: źródła wiedzy z narzędzi zewnętrznych (transkrypt 
 | Zero-retention u dostawców modeli | Zewnętrzni dostawcy modeli bazowych nie zatrzymują przetwarzanych danych | cennik | „zero-retention u dostawców modeli" |
 | Zgodność z RODO (i deklaracja DSA) | Deklarowana zgodność z regulacjami europejskimi | cennik | „Serwery w UE i RODO (…) DSA" |
 | Eksport danych na żądanie | Możliwość wyeksportowania własnych danych w dowolnym momencie | cennik | „eksport w każdej chwili" |
+| Wdrożenie w infrastrukturze klienta (on-premise) | Za odrębną umową appto może zainstalować aplikację w infrastrukturze klienta zamiast w swojej chmurze | regulamin | § 5 ust. 8 |
+| Umowa powierzenia przetwarzania z terminami operacyjnymi | Osobny dokument (Załącznik nr 1, art. 28 RODO) z konkretnymi terminami: 48h zgłoszenie naruszenia, 48h żądania osób, 14 dni dokumenty, 14 dni robocze zwrot/usunięcie danych po zakończeniu | regulamin | Załącznik nr 1 |
 
 **Wszystkie pozycje tej kolumny to twierdzenie producenta o sobie, nie potwierdzona
 praktyka.** Dotyczy to zwłaszcza tego wiersza — bezpieczeństwo i zgodność danych to
@@ -184,14 +197,16 @@ czytał tę tabelę bez reszty noty.
 | Eksport do plików biurowych | Generowanie wyniku pracy jako PDF, DOCX lub arkusz | strona główna | „Eksport plików — PDF, DOCX, arkusze" |
 | Artefakty gotowe do użycia | Wygenerowany artefakt (mail, task, faktura, dokument) gotowy do akceptacji i wysłania | cennik / strona główna | „Artefakty — maile, taski, faktury, dokumenty" |
 
-**Razem w katalogu: 54 funkcje appto**, plus cztery pozycje jawnie wyłączone
-(program wdrożeniowy, „Wsparcie we wdrożeniu", kalkulator zwrotu, pakiet
-enterprise powyżej ok. 100 osób) i jedno złożenie nazwane wprost (asystent
-spisujący ustalenia ze spotkania).
+**Razem w katalogu: 58 funkcji appto** (54 z czterech źródeł sprzedażowych plus
+cztery dopisane z regulaminu w tej rundzie: subkonta, moduły na wycenę
+indywidualną, wdrożenie on-premise, umowa powierzenia przetwarzania), plus
+cztery pozycje jawnie wyłączone (program wdrożeniowy, „Wsparcie we wdrożeniu",
+kalkulator zwrotu, pakiet enterprise powyżej ok. 100 osób) i jedno złożenie
+nazwane wprost (asystent spisujący ustalenia ze spotkania).
 
 ---
 
-## 3. Zestawienie A — mamy już w planie (25 pozycji)
+## 3. Zestawienie A — mamy już w planie (26 pozycji)
 
 Poniżej funkcje appto, które nasza specyfikacja już przewiduje w którymś etapie —
 inaczej sformułowane, czasem węziej, ale ten sam mechanizm.
@@ -225,7 +240,12 @@ widoczność kosztu wobec planu (MVP2 §4, budżety z progami ostrzegawczymi) ·
 wspólna pula budżetu — u nas w dolarach per agent, nie w kredytach (MVP2 §4) ·
 rozliczenie za wykonaną pracę, nie za miejsce — naturalna konsekwencja
 `usage_event` (MVP1 §5) · zgodność z RODO — rozproszona w D-009, barierze 6
-i MVP4 §7 · eksport danych na żądanie (MVP4 §7).
+i MVP4 §7 · eksport danych na żądanie (MVP4 §7) · wdrożenie w infrastrukturze
+klienta (on-premise) — **uwaga o różnicy struktury**: u appto to opcja
+enterprise dokontraktowana osobno (§ 5 ust. 8, regulamin); u nas to model
+domyślny od startu, bo nAgents nie jest produktem sprzedawanym na zewnątrz —
+jesteśmy jedynym najemcą od początku (D-007), więc pytanie „czyja to
+infrastruktura" nie powstaje w tej samej formie co u dostawcy SaaS.
 
 **Korekta dwóch pozycji po ocenie Evaluatora** (przeniesione z tej listy do
 Zestawienia B poniżej):
@@ -242,11 +262,11 @@ Zestawienia B poniżej):
   wewnętrznym narzędziem firmowym, nie platformą pośredniczącą w treściach
   publikowanych przez osoby trzecie, co jest warunkiem stosowania tej regulacji.
   Zapisujemy to jako wniosek do potwierdzenia prawnego, nie jako lukę do zamknięcia
-  kodem — patrz pytanie 11 w sekcji 8.
+  kodem — patrz pytanie 11 w sekcji 9.
 
 ---
 
-## 4. Zestawienie B — luki, od najważniejszej (23 pozycje)
+## 4. Zestawienie B — luki, od najważniejszej (25 pozycji)
 
 To, co appto pokazuje, a czego nasza specyfikacja dziś nie przewiduje. Brak
 wzmianki nie znaczy, że funkcja jest niemożliwa albo niepotrzebna — znaczy, że nie
@@ -307,10 +327,22 @@ jest jeszcze zaplanowana.
 23. **2FA jako jawne ustalenie specyfikacji** — patrz korekta w sekcji 3. Dziś to
     tylko założenie, że dzierżawa Entra ID ma je włączone; wymaga potwierdzenia
     i zapisania, nie kodu.
+24. **Umowa powierzenia przetwarzania z dostawcą modelu, jako artefakt z
+    własnymi terminami operacyjnymi** — nowa pozycja z regulaminu appto
+    (Załącznik nr 1, § 6 dostępów). D-009 nazywa wprost obowiązek zawarcia
+    takiej umowy z dostawcą modelu, ale nie ustala terminów zgłoszenia
+    naruszenia ani realizacji żądań osób, ani momentu w harmonogramie, w
+    którym umowa musi być podpisana — rozwinięte w sekcji 8.
+25. **Subkonta z konfigurowalnym poziomem dostępu, jako osobna struktura od
+    ról.** appto rozróżnia rolę (Member/Manager/Admin, pozycja już w Zestawieniu
+    A) od subkonta jako jednostki administracyjnej z własnym poziomem dostępu
+    ustawianym per subkonto. To pokrewne, ale nie to samo co pytanie 6 w
+    sekcji 9 (dwa czy trzy poziomy ról) — u nas nie ma dziś odpowiednika
+    struktury „konto administratora + subkonta".
 
 ---
 
-## 5. Zestawienie C — świadomie odrzucamy (6 pozycji)
+## 5. Zestawienie C — świadomie odrzucamy (7 pozycji)
 
 - **Katalog integracji z policzoną liczbą akcji, na wzór agregatora.** Budowa
   takiego katalogu jest gonieniem parytetu funkcji z appto, co `CLAUDE.md` zabrania
@@ -328,6 +360,11 @@ jest jeszcze zaplanowana.
   dostępu do nAgents na zewnątrz, więc nie ma komu doładowywać.
 - **Konfigurator planu wg wielkości zespołu (progi 10/25/50/100 osób).** Mamy
   jednego najemcę (D-007) — oś cennika appto jest u nas nieadekwatna.
+- **Moduły płatne osobno, na indywidualną wycenę (§ 8 regulaminu).** To
+  mechanizm różnicowania ceny dla klientów zewnętrznych appto — my nie
+  sprzedajemy nAgents na zewnątrz (D-007, jeden najemca), więc nie ma komu
+  wyceniać modułu osobno; wszystkie funkcje, które budujemy, są dostępne od
+  razu naszemu jedynemu najemcy.
 
 ---
 
@@ -382,7 +419,109 @@ zapisać wybór w dzienniku decyzji, bo dotyczy kosztu i odwracalności.
 
 ---
 
-## 8. Wnioski wymagające decyzji właściciela
+## 8. Czego te dokumenty prawne uczą nas o naszej własnej budowie
+
+Regulamin i polityka prywatności appto nie są tylko materiałem do porównania
+funkcji — pokazują też, jakich dokumentów i mechanizmów będziemy sami
+potrzebować, gdy nAgents będzie miał choćby drugiego najemcę. Poniżej lista
+użytkowa: co musimy mieć, po co, i co appto pokazuje jako wzór (dobry albo zły).
+
+### a) Dokumenty, które będziemy musieli mieć
+
+| Dokument | Po co jest | Co musi zawierać (na wzór appto) |
+|---|---|---|
+| **Regulamin świadczenia usługi** | Określa strony, zakres usługi, zasady rozliczeń, ograniczenia odpowiedzialności, tryb zmiany warunków, prawo właściwe i sąd | Definicje, zasady dostępu i kont, skutki zaległości, granica odpowiedzialności, tryb zmiany z prawem wypowiedzenia |
+| **Polityka prywatności** | Realizuje obowiązek informacyjny wobec osób, których dane nAgents przetwarza jako administrator (pracownicy najemcy, ich konta, logi aktywności) | Podstawy prawne przetwarzania per cel, kategorie danych, okresy przechowywania, odbiorcy danych, katalog uprawnień osoby (dostęp, sprostowanie, usunięcie, skarga do UODO) |
+| **Umowa powierzenia przetwarzania (art. 28 RODO** — przepis nakładający na administratora obowiązek zawarcia takiej umowy z każdym podmiotem przetwarzającym dane w jego imieniu**)** | Osobny dokument od polityki prywatności — reguluje status danych, które **klient** (najemca) wprowadza do systemu jako administrator, a nAgents przetwarza na jego zlecenie | Zakres i cel powierzenia, czas trwania, obowiązki podmiotu przetwarzającego, warunki podpowierzenia, tryb zgłaszania naruszeń (appto: 48h), termin na żądania osób (appto: 48h), prawo audytu, zwrot/usunięcie danych po zakończeniu (appto: 14 dni roboczych) |
+| **Wykaz podprocesorów** | Realizuje obowiązek transparentności wobec najemcy co do tego, komu powierzane dane są dalej przekazywane — dostawca modelu, hosting, ewentualne narzędzia analityczne | Nazwa i rola każdego podmiotu, tryb informowania o zmianach, tryb sprzeciwu **realny**, nie iluzoryczny jak u appto (patrz nota-06, sekcja 9, ryzyko 4) |
+| **Punkt kontaktowy dla zgłoszeń/naruszeń** | Jeden adres/kanał do zgłaszania incydentów bezpieczeństwa i żądań osób | Adres, czas reakcji zadeklarowany i dotrzymywany, procedura eskalacji do IOD/właściciela |
+
+### b) Obowiązki, które mamy już dziś — przed drugim najemcą
+
+Sam fakt przetwarzania danych pracowników NASTER (konta Entra ID, historia
+rozmów z agentami, logi audytu) czyni nAgents **administratorem danych** tych
+osób już teraz, niezależnie od tego, kiedy pojawi się drugi najemca:
+
+- prawdopodobny obowiązek informacyjny wobec pracowników o przetwarzaniu danych
+  aktywności w agentach (art. 13 RODO) — **wymaga potwierdzenia prawnika**, nie
+  zakładamy tego tu jako rozstrzygnięte;
+- podstawa prawna przetwarzania logów i audytu — najpewniej uzasadniony interes
+  pracodawcy (jedna z sześciu podstaw z art. 6 RODO, obok zgody — uzasadnia
+  przetwarzanie bez zgody osoby, gdy interes administratora przeważa nad jej
+  prawami), analogicznie do pozycji 8–9 polityki appto;
+- **umowa powierzenia z dostawcą modelu** (bramka LiteLLM → dostawcy modeli) —
+  to jest dokładnie to, co D-009 już nazywa wprost, ale D-009 mówi tylko „że"
+  taka umowa jest potrzebna, nie „kiedy" ma być podpisana — rozwinięte w
+  punkcie d) niżej;
+- retencja audytu — dziś „bezterminowo" w MVP1, „konfigurowalna per najemca"
+  docelowo. **Pytanie do prawnika, nie ustalenie:** czy retencja bezterminowa
+  daje się uzasadnić zasadą minimalizacji RODO (obowiązek ograniczenia zakresu
+  i czasu przechowywania danych do tego, co niezbędne dla celu przetwarzania),
+  czy wymaga rewizji przed MVP2/3.
+
+### c) Co warto skopiować z konstrukcji appto, a co jest wyłącznie ochroną dostawcy
+
+**Warte skopiowania:** rozdzielenie polityki prywatności (administrator wobec
+własnych użytkowników) od umowy powierzenia (przetwarzający wobec danych
+klienta) — poprawna konstrukcja prawna, nie duplikacja; konkretne terminy
+operacyjne zamiast ogólników; wyłączenie danych szczególnych kategorii (art. 9/10
+RODO) z zakresu powierzenia; jeden punkt kontaktowy do zgłoszeń.
+
+**Wyłącznie ochrona interesu dostawcy, nie do kopiowania wprost:** limit
+odpowiedzialności do trzech miesięcy opłat i wyłączenie rękojmi — przy naszym
+modelu (agent stanowiskowy bez kluczy, zatwierdzenie człowieka przy operacjach
+nieodwracalnych — bariera 6.5 architektury) ryzyko realnej szkody jest inaczej
+rozłożone niż u appto, więc to wymaga świadomej decyzji właściciela, nie
+automatycznego przeniesienia zapisu; trwałe usunięcie danych po 30 dniach
+zaległości bez okresu ostrzegawczego — sprzeczne z duchem „domyślnej odmowy, nie
+domyślnej utraty" tego projektu; zgoda z góry na podpowierzenie ze skutkiem
+natychmiastowego rozwiązania umowy przy sprzeciwie — nasz wykaz podprocesorów
+powinien dawać realny tryb sprzeciwu; szeroka licencja na „Treści Usługobiorcy" —
+nie ma uzasadnienia w naszym modelu.
+
+### d) Co dotyka harmonogramu MVP1–MVP4
+
+- **Umowa powierzenia z dostawcą modelu jest zależnością brakującą w
+  harmonogramie już od MVP1** — bramka modeli (D-002) zaczyna wywoływać
+  zewnętrznych dostawców od pierwszego etapu, więc obowiązek jej zawarcia nie
+  powinien czekać do MVP4, nawet jeśli tokenizacja (techniczne ograniczenie
+  szkody, MVP4) czeka.
+- **Polityka prywatności wobec pracowników NASTER** powinna istnieć przed
+  pierwszym realnym logowaniem przez Entra ID w MVP1 — nie jest to dziś zapisane
+  jako zadanie w żadnym etapie.
+- **Wykaz podprocesorów** wiąże się z MVP4 tylko **częściowo**: pozycja
+  dotycząca pamięci współdzielonej między agentami czeka na D-011 (bo to ta
+  decyzja rozstrzyga, gdzie fizycznie leży ta pamięć), ale pozycje dotyczące
+  dostawcy modeli (D-002, aktywne już od MVP1) i hostingu nie zależą od D-011 —
+  te części wykazu dałoby się opisać niezależnie i wcześniej. MVP4 §7, element 6
+  („Retencja i eksport") obejmuje wyłącznie okresy przechowywania i realizację
+  praw osób — **nie** obejmuje wykazu podprocesorów ani trybu zgłaszania
+  naruszeń; związek z MVP4 jest tematyczny, nie zapisany w specyfikacji.
+
+### Luka w decisions.md, nie sprzeczność
+
+**D-009** wprost nazywa obowiązek zawarcia umowy powierzenia z dostawcą modelu
+i słusznie odróżnia go od tokenizacji. **Nie obejmuje**: terminów operacyjnych
+umowy powierzenia, obowiązku posiadania własnej polityki prywatności wobec
+pracowników NASTER, wykazu podprocesorów jako osobnego artefaktu, ani momentu
+w harmonogramie, w którym umowa z dostawcą modelu musi zostać podpisana. To
+wymaga uzupełnienia albo nowej decyzji, nie zmiany D-009 — pytania z tego
+rozpoznane w sekcji 9, pozycje 14–17.
+
+### Propozycja przypisania do etapów (propozycja, nie zmiana specyfikacji)
+
+- Umowa powierzenia z dostawcą modelu — **przed albo równolegle z MVP1**, nie
+  czekać do MVP4, skoro bramka modeli działa od pierwszego etapu.
+- Polityka prywatności wobec pracowników NASTER — **przed MVP1**, przed
+  pierwszym logowaniem Entra ID.
+- Wykaz podprocesorów, część niezależna od D-011 (dostawca modeli, hosting) —
+  **możliwa już w MVP1/MVP2**; część dotycząca pamięci współdzielonej —
+  dopiero po rozstrzygnięciu D-011, zgodnie z tym, co D-011 już dziś zakłada
+  dla MVP3.
+
+---
+
+## 9. Wnioski wymagające decyzji właściciela
 
 1. **[KRYTYCZNE] Korekta uzasadnienia D-001.** Cennik appto pokazuje, że wszystkie
    modele (Claude, GPT, Gemini, Kimi) są dostępne bez dopłat i przełączane przez
@@ -420,36 +559,54 @@ zapisać wybór w dzienniku decyzji, bo dotyczy kosztu i odwracalności.
 13. **2FA jako jawne ustalenie.** Czy potwierdzić i zapisać w specyfikacji, że
     dzierżawa Entra ID ma włączone uwierzytelnianie dwuskładnikowe, zamiast
     zostawiać to jako niepisane założenie?
+14. **[wynika z sekcji 8] Moment podpisania umowy powierzenia z dostawcą
+    modelu.** D-009 mówi „że" taka umowa jest potrzebna, nie „kiedy". Czy
+    zawrzeć ją przed MVP1 (bramka modeli działa od pierwszego etapu), czy
+    świadomie odłożyć — z jakim uzasadnieniem?
+15. **[wynika z sekcji 8] Polityka prywatności wobec pracowników NASTER.**
+    Czy powstaje przed pierwszym logowaniem Entra ID w MVP1, czy później —
+    i kto ją przygotowuje?
+16. **[wynika z sekcji 8] Wykaz podprocesorów — podział na część niezależną
+    i zależną od D-011.** Czy zgodzić się z propozycją, żeby część dotycząca
+    dostawcy modeli i hostingu powstała już w MVP1/MVP2, niezależnie od
+    rozstrzygnięcia D-011, które dotyczy wyłącznie pamięci współdzielonej?
+17. **[wynika z sekcji 8] Retencja audytu a zasada minimalizacji RODO.** Czy
+    retencja „bezterminowo" w MVP1 wymaga formalnego uzasadnienia prawnego już
+    teraz, czy wystarczy zaplanowana rewizja przed MVP2/3 — do potwierdzenia
+    u prawnika, nie do rozstrzygnięcia tu.
 
 ---
 
-## 9. Czego nie wiemy
+## 10. Czego nie wiemy
 
-Ta nota opiera się na czterech stronach appto wklejonych przez właściciela.
-Nawigacja jednej z nich (strona główna) wymienia adresy stron, których **nie
+Ta nota opierała się początkowo na czterech stronach appto; w tej rundzie
+doszły dwa dokumenty prawne (polityka prywatności, regulamin z umową
+powierzenia), które rozstrzygnęły część wcześniejszych luk — **wariant
+on-premise istnieje** (§ 5 ust. 8), **umowa powierzenia istnieje** (Załącznik
+nr 1), zakres deklaracji o danych jest teraz znany (patrz sekcja 8 i nota-06,
+sekcje 8–10). Nawigacja strony głównej wymienia adresy, których nadal **nie
 mamy**:
 
 - `appto.ai/pl/funkcje` — osobna strona funkcji, może zawierać pozycje nieobecne
   na stronie głównej i w cenniku.
 - `appto.ai/pl/zastosowania` — strona zastosowań/branż, mogłaby pokazać, dla kogo
   appto projektuje swoje funkcje w praktyce.
-- `appto.ai/pl/polityka-prywatnosci` — jedyne źródło, które rozstrzygnęłoby
-  rzeczywisty zakres deklaracji o danych (podprzetwarzający, okres retencji,
-  podstawa prawna) zamiast haseł typu „dane zostają u Was".
-- `appto.ai/pl/regulamin` — warunki umowne wiążące klienta, w tym rzeczywisty
-  zakres SLA i odpowiedzialności — cennik i wdrożenie tylko o nich wspominają.
+- `appto.ai/pl/podprocesorzy` — jedyne pozostałe źródło prawne, którego nie
+  mamy: wykaz podprocesorów z nazwami (dostawca modelu, hosting) zamiast samych
+  kategorii — patrz nota-06, sekcja 10.
 - `appto.ai/pl/polityka-cookies`, `/kontakt`, `/webinar`, `/partnerzy` — bez
   znaczenia dla katalogu funkcji, wymienione dla porządku.
 
-Inne braki, których żadne z czterech źródeł nie rozstrzyga: czy appto ma
-certyfikat ISO 27001/SOC 2; czy istnieje lista podprzetwarzających (dostawca
-modelu, hosting, baza danych) potwierdzająca deklaracje z sekcji „dane
-i zgodność"; czy appto oferuje wariant instalowany u klienta (on-premise); czy
-appto pozwala podłączyć własny klucz API do dostawcy modelu (BYOK) zamiast
-rozliczać się w kredytach; czy marketplace umiejętności zawiera gotowe szablony
-od samego appto, czy wyłącznie mechanizm dzielenia się tym, co zbudował klient.
+Inne braki, których żadne z sześciu źródeł nie rozstrzyga: czy appto ma
+certyfikat ISO 27001/SOC 2; czy appto pozwala podłączyć własny klucz API do
+dostawcy modelu (BYOK) zamiast rozliczać się w kredytach; czy marketplace
+umiejętności zawiera gotowe szablony od samego appto, czy wyłącznie mechanizm
+dzielenia się tym, co zbudował klient.
 
-**Przypomnienie na koniec:** cała ta nota operuje wyłącznie na materiale
-sprzedażowym producenta — najniższym poziomie wiarygodności w naszej hierarchii
-źródeł. Żadna pozycja katalogu nie jest potwierdzeniem, że appto rzeczywiście
-działa tak, jak twierdzi jego własna strona.
+**Przypomnienie na koniec:** katalog funkcji (sekcja 2) wciąż operuje głównie
+na materiale sprzedażowym producenta — najniższym poziomie wiarygodności
+w naszej hierarchii źródeł; żadna z tamtych pozycji nie jest potwierdzeniem,
+że appto rzeczywiście działa tak, jak twierdzi jego własna strona. Cztery
+pozycje dopisane z regulaminu w tej rundzie (oznaczone „regulamin" w tabelach)
+mają wagę dowodową wyższą, bo pochodzą z dokumentu wiążącego, nie z hasła
+marketingowego.
