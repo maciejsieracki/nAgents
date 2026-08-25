@@ -16,7 +16,6 @@ Format ID: `NAG-<ETAP>-<NNN>-<slug>`. ID jest niezmienne i nigdy nieużywane pon
 | ID | GOAL | Blokada | Odblokuje |
 |---|---|---|---|
 | `NAG-MVP3-001-pamiec-wspolna` | Agenci domeny dzielą pamięć procesową | **D-011** — nierozstrzygnięta rezydencja danych | odpowiedź właściciela o bazie |
-| `NAG-INFO-001-appto-research` | Wiemy, co appto faktycznie robi, jak zarządza dostępem i kosztem, na czym stoi | **polityka sieciowa środowiska** — `appto.ai` zwraca 403 na bramce wyjściowej, żadnej strony nie otwarto | dopuszczenie domeny w środowisku albo wykonanie badania z innego miejsca |
 
 ## Do rozpoczęcia — MVP1
 
@@ -46,3 +45,5 @@ Allowlisty i plany testów ustalane przy dispatchu, nie z góry.
 | `NAG-PROC-002-proces` | Proces AutoBot związany z projektem | 2026-08-22 | `CLAUDE.md`, `.claude/skills/` |
 | `NAG-PROC-005-skill-uniwersalny` | Skill niezależny od dziedziny, sekcje 17 do 21 | 2026-08-23 | `.claude/skills/nagents-autobot/SKILL.md`, `README.md` |
 | `NAG-PROC-006-ulotka-dla-pracownikow` | Dokument informacyjny o zasadzie AutoBot dla pracowników | 2026-08-23 | `docs/proces-dla-pracownikow.md` |
+| `NAG-INFO-001-appto-research` | Wiemy, co appto faktycznie robi, jak zarządza dostępem i kosztem, na czym stoi | 2026-08-25 | Blokadę (403 na bramce wyjściowej) obeszło dostarczenie czterech stron appto przez właściciela wklejeniem treści — `docs/nota-06-appto-research.md` |
+| `NAG-INFO-002-katalog-funkcji` | Katalog funkcji appto zestawiony z naszą specyfikacją, z korektą przesłanki D-001 do decyzji właściciela | 2026-08-25 | `docs/nota-06-appto-research.md`, `docs/nota-07-katalog-funkcji.md` |

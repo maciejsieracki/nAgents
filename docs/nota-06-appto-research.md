@@ -1,520 +1,388 @@
 # Nota 06 — Research appto.ai
 
-**NASTER · projekt nAgents · temat NAG-INFO-001-appto-research · 25 sierpnia 2026**
+**NASTER · projekt nAgents · temat `NAG-INFO-001-appto-research` → dokończony
+w ramach `NAG-INFO-002-katalog-funkcji` · 25 sierpnia 2026**
 
-Polecenie właściciela: appto.ai wskazane jako wzorzec tego, co ma powstać. Zadanie —
-zbadać funkcjonalność, zarządzanie, model rozliczenia i warstwę techniczną appto,
-i zestawić to z naszą specyfikacją. Pięciu operatorów pracowało równolegle nad czterema
-obszarami i jednym węzłem „kto za tym stoi"; ocena Evaluatora poniżej jest wiążąca dla
-tego, co trafiło do tej noty — jej ustalenia i korekty są wpisane w treść.
+**Co się zmieniło od poprzedniej wersji tej noty:** poprzednia wersja powstała, gdy
+dostęp sieciowy do appto.ai był w tej sesji całkowicie zablokowany, a wszystko, co
+wiedzieliśmy o produkcie, pochodziło ze streszczeń wyszukiwarki — bez jednego
+potwierdzonego cytatu ze strony. Właściciel dostarczył od tego czasu cztery strony
+appto wklejone bezpośrednio (strona główna, cennik, wdrożenie kohortowe,
+integracje). Ta wersja jest przepisana na tych czterech źródłach pierwotnych.
+Ustalenia o infrastrukturze sieciowej (DNS), które nie zależą od treści stron,
+zostały utrzymane z poprzedniej rundy i sprawdzone pod kątem zgodności z nowymi
+źródłami w sekcji 6.
 
 **Znaczniki użyte w tekście:**
 
-- **[F] FAKT** — potwierdzone bezpośrednio u źródła (adres, cytat/opis miejsca).
+- **[F] FAKT** — to, co strona appto dosłownie mówi o sobie (mamy cytat), albo
+  ustalenie techniczne sprawdzone niezależnie (np. zapytanie DNS). Nie jest to
+  potwierdzenie, że produkt naprawdę tak działa — tylko że appto tak twierdzi, albo
+  że infrastruktura tak wygląda z zewnątrz.
 - **[W] WNIOSEK** — wyprowadzone rozumowaniem z faktów, zawsze z „ponieważ".
-- **[D] DOMYSŁ** — prawdopodobne, niepotwierdzone; z poziomem pewności i tym, co by
-  je rozstrzygnęło.
+- **[D] DOMYSŁ** — prawdopodobne, niepotwierdzone wprost w żadnym z czterech
+  źródeł; z poziomem pewności i tym, co by je rozstrzygnęło.
 
-Zdanie ze strony appto zapisane jako `appto twierdzi, że…` opisuje wyłącznie to, co
-firma o sobie mówi — nie jest to samo co potwierdzenie, że produkt tak działa.
+**Przypomnienie ważne dla całej noty:** cztery źródła, na których stoi ta nota, to
+materiał sprzedażowy producenta appto — najniższy poziom wiarygodności w naszej
+hierarchii źródeł. „appto twierdzi, że…" opisuje wyłącznie to, co firma o sobie
+mówi, nigdy nie jest to samo co potwierdzenie, że produkt tak działa. To dotyczy
+zwłaszcza sekcji 4 (bezpieczeństwo) — najbardziej wrażliwej kategorii na
+naciąganie marketingu na fakt.
 
 ---
 
 ## 1. Co ustaliliśmy w skrócie
 
-[F] Bezpośredni dostęp do appto.ai był w tej sesji **całkowicie zablokowany** — nie
-przez appto, tylko przez politykę sieciową naszego środowiska (zablokowane były też
-domeny kontrolne: `example.com`, `wikipedia.org`, `web.archive.org`; szczegóły i próba
-niezależnej weryfikacji tego zapisu — sekcja 6). Nie otworzyliśmy ani jednej strony
-appto.ai. Wszystko, co wiemy o samym produkcie, pochodzi ze streszczeń wyszukiwarki
-(WebSearch) — dlatego żadne twierdzenie o treści strony appto nie ma znacznika [F],
-tylko [D] (pełne uzasadnienie i przykłady — sekcje 2–5). [F] Jedyny kanał, który
-zadziałał bez pośrednika, to zapytania DNS (sekcja 6) — stąd [W]/[F] ustalenie: appto
-hostuje frontend na Vercelu ([W], ponieważ pełna delegacja stref DNS na nameservery
-Vercela występuje wyłącznie przy faktycznym podłączeniu domeny do tej platformy — patrz
-sekcja 6) i pocztę na Google Workspace ([F], rekord MX — sekcja 6). [D] Pewność
-średnia: kto stoi za appto pozostaje domysłem (WiseGroup/Szymon Negacz), nie faktem —
-szczegóły i zastrzeżenia w sekcji 7. Przesłanka decyzji **D-001** („rozliczenie za
-tokeny odbiera swobodę wyboru modelu") **nie została ani potwierdzona, ani obalona** —
-[D] pewność średnia: appto opisuje jednostkę rozliczeniową jako „kredyt", nie „token",
-co jest słabym, pośrednim sygnałem, nie rozstrzygnięciem (sekcja 5). [W] Funkcjonalnie
-appto pokrywa się w dużej mierze z naszą specyfikacją MVP1–MVP3 (panel, role, kontekst
-firmowy, zatwierdzenia, audyt), ponieważ zestawienie w sekcji 8 pokazuje pokrycie
-większości punktów appto przez nasze etapy — to potwierdza trafność kierunku, nie
-podważa go. [D] Pewność średnia: największa luka to mechanizm appto do udostępniania
-zbudowanych „umiejętności" jednym kliknięciem (marketplace), którego nie mamy w żadnym
-etapie (sekcja 8). [W] appto samo wygląda na produkt wczesnego etapu (early access),
-poboczny wobec głównego biznesu grupy, która za nim stoi, ponieważ jedyne potwierdzone
-przychody i wielkość zespołu dotyczą głównych marek grupy, nie appto konkretnie
-(uzasadnienie pełne — sekcja 7) — to podnosi, nie obniża, wagę argumentu „budujemy, nie
-kupujemy" z D-001, niezależnie od tego, czy sama przesłanka o tokenach się potwierdzi.
-Rekomendacja (działanie, nie twierdzenie o appto): właściciel powinien albo odblokować
-dostęp sieciowy do appto.ai na potrzeby drugiej rundy, albo osobiście zajrzeć na stronę
-cennika i rozstrzygnąć D-001 z pierwszej ręki.
+[F] Cztery strony appto.ai — strona główna, cennik, wdrożenie kohortowe,
+integracje — są teraz dostępne jako wklejony materiał źródłowy. To pierwsza runda
+tego zwiadu z realnym cytatem zamiast streszczenia wyszukiwarki. [F] appto to
+platforma AI osadzona w procesach firmy: asystenci przypisani do ról, wiedza
+firmowa dostępna bez wklejania jej ręcznie, integracje z narzędziami zewnętrznymi,
+rozliczenie w jednostce zwanej „kredytem". [F] Podmiotem stojącym za appto jest,
+zgodnie z własną stopką strony, **„Let's Automate Sp. z o.o."** — to koryguje
+poprzedni domysł tej noty (szczegóły w sekcji 7). [F] Jednostką rozliczeniową
+appto jest **kredyt, nie token** — cennik podaje konkretne liczby (sekcja 5).
+**Przesłanka decyzji D-001 nie potwierdza się w świetle tych liczb** — sekcja 5
+zawiera pełną korektę i propozycję nowego uzasadnienia do zatwierdzenia przez
+właściciela. [W] Funkcjonalnie appto pokrywa się w dużej mierze z naszą
+specyfikacją MVP1–MVP3 (pełne zestawienie — `docs/nota-07-katalog-funkcji.md`) —
+to potwierdza trafność obranego kierunku, nie podważa go.
 
 ---
 
 ## 2. Czym jest appto
 
-[D] Poziom pewności: wysoki (spójne w kilku niezależnych zapytaniach WebSearch, w tym
-tytuł strony głównej „appto — Platforma AI dla całej firmy", adres
-`https://www.appto.ai/pl/`). appto twierdzi, że jest platformą AI osadzoną w procesach
-firmy: pracownik dostaje asystenta znającego dokumenty, procedury i ustalenia firmy,
-a sam produkt przejmuje część zadań (odpowiadanie na maile, tworzenie ofert,
-podsumowania spotkań) zamiast tylko odpowiadać na pytania. Potwierdziłoby to
-bezpośrednie otwarcie strony głównej — niedostępne w tej sesji.
+[F] appto to, w opisie własnym: „AI, którego potrzebuje biznes" — „nie kolejny
+czat do wszystkiego i niczego", tylko funkcje zbudowane pod konkretne zadania
+zespołu, z wiedzą i narzędziami firmy, dowożące efekt, nie sam tekst. Adresat:
+cała firma, jedno miejsce pracy z AI dla całego zespołu.
 
-[D] Pewność niska. Materiał sugeruje trzy ścieżki wdrożenia różniące się wielkością
-zespołu klienta (3–15 osób, 15+ osób, „dla każdego, we własnym tempie") w ramach celu
-„zespół w formie w 30 dni" — to brzmi jak opis sposobu wdrożenia/onboardingu, nie
-segmentacji cenowej ani branżowej. Konkretne branże (e-commerce, agencje, IT) pojawiły
-się raz, bez potwierdzenia w innym zapytaniu — nie uznane za ustalone.
+[F] Trzy ścieżki wdrożenia, wskazane wprost w stopce strony głównej:
+„Samodzielnie", „Z opiekunem", „Kohortowo" — ta ostatnia jest osobnym, płatnym
+programem doradczym (opisanym w sekcji 5), nie wariantem cenowym samej platformy.
 
-[D] Pewność niska. Sposób sprzedaży wygląda na model z udziałem handlowca: jedno
-streszczenie sugeruje stopniowe otwieranie dostępu po zostawieniu danych
-kontaktowych i indywidualny onboarding, a nie czysty self-service. Nie sprawdzone
-wprost — kontakt handlowy jest poza zakresem tego zlecenia.
+[F] Model sprzedaży platformy: brak przycisku samoobsługowego zakupu. Cennik
+kończy się wezwaniem „zostaw kontakt" i „umów demo" — sprzedaż idzie przez
+rozmowę handlową, nie przez natychmiastowe założenie konta z kartą płatniczą.
 
-[D] Pewność wysoka, że nie ma trafienia. Nie znaleziono żadnej niezależnej recenzji na
-Trustpilot/G2/Capterra dla tego konkretnego produktu, ani opublikowanego studium
-przypadku poza jednym niepewnym śladem („Stalmetsz" — możliwe zniekształcenie nazwy
-przez streszczenie, nieodnaleziona strona źródłowa, nie budujemy na tym wniosku).
-
-**Ostrzeżenie dla przyszłych badań:** istnieją co najmniej trzy niepowiązane podmioty
-o zbliżonej nazwie — `appto.io` (komunikacja z klientem/live chat, USA), aplikacja
-mobilna argentyńska `Appto` (Google Play, sysgestion) oraz wpis w Crunchbase
-`appto-1cd2`, który w dwóch niezależnych, świeżych zapytaniach opisywał **dwie różne,
-sprzeczne ze sobą** treści (raz: system QR kontroli dostępu; raz: aplikacja dostawcza
-w RPA/Gauteng) — [F] fakt sprawdzony przez Evaluatora niezależnym zapytaniem: żadna z
-dwóch wersji nie jest appto.ai. To dobry powód, dla którego żaden z operatorów nie
-oznaczył treści tego wpisu jako [F] — synteza wyszukiwarki dla tego adresu okazała się
-niestabilna między zapytaniami.
+[D] Pewność niska, nieobecne w naszych czterech źródłach: segmentacja branżowa
+(e-commerce, agencje, IT) i jakiekolwiek niezależne recenzje (Trustpilot, G2,
+Capterra) — żadne z czterech źródeł, będących materiałem samego producenta, nie
+zawiera ani nie mogłoby zawierać takiego potwierdzenia z definicji. To pozostaje
+nieustalone, nie zaprzeczone.
 
 ---
 
-## 3. Funkcjonalność
+## 3. Funkcjonalność — skrót
 
-Wszystkie pozycje poniżej: [D], źródło — synteza WebSearch wskazująca adresy
-`appto.ai/pl` i `appto.ai/pl/funkcje`, nie zweryfikowane bezpośrednio na stronie.
-Pewność podana per wiersz.
+Pełny katalog funkcji appto, pogrupowany i zestawiony z naszymi etapami, jest
+osobnym dokumentem: `docs/nota-07-katalog-funkcji.md` (54 pozycje w jedenastu
+grupach, plus zestawienia „mamy w planie" / „luki" / „odrzucamy"). Tu tylko
+najważniejszy szkielet:
 
-| Funkcja | appto twierdzi, że… | Pewność |
-|---|---|---|
-| Asystenci przypisani do ról + „company skills" | ma wielu wyspecjalizowanych asystentów/umiejętności, nie jednego uniwersalnego agenta | wysoka (4 niezależne zapytania) |
-| Centralny panel zarządzania | użytkownicy, asystenci, wiedza firmowa i uprawnienia z jednego miejsca | wysoka |
-| Wybór modelu LLM per zadanie | GPT, Claude, Gemini, Kimi wybieralne z jednego miejsca | wysoka |
-| Kontekst firmowy | dokumenty, procesy, rozmowy i dane wpływają na każdą odpowiedź bez wklejania ich ręcznie | wysoka |
-| Integracje czytające i piszące | nie tylko odpowiada — działa w narzędziach firmowych | wysoka |
-| Samodzielne przejmowanie zadań | odpowiada na maile, tworzy oferty, podsumowuje spotkania | wysoka (dosłowne powtórzenie w 2 zapytaniach) |
-| Marketplace umiejętności | udostępnianie zbudowanego „skilla" osobie/działowi/firmie jednym kliknięciem, z wersjonowaniem | średnia |
-| Wspólne wątki i artefakty | pod kontrolą dostępu, dzielone w zespole | średnia |
-| Integracje z nazwy | Slack, Teams, Gmail, Outlook, Google Drive, Pipedrive, Notion, HubSpot, Stripe, ifirma | wysoka |
-| Liczba integracji „40+" | pojawiła się w dwóch niezależnych zapytaniach o różnej treści | **średnia** — podniesiona względem pierwotnej oceny operatora (pewność niska); Evaluator odnalazł tę samą liczbę w osobnym, niezależnym zapytaniu |
-| Kanały rozmowy | aplikacja appto, Slack, Teams, e-mail | wysoka |
-| Kanał głosowy/telefoniczny | brak wzmianki w żadnym zapytaniu | brak sygnału — nie dowód nieistnienia |
-| Rezydencja danych w UE, brak trenowania modeli na danych klienta | twierdzenie appto o prywatności | wysoka (twierdzenie, nie potwierdzona praktyka) |
-| Rozliczenie: pay-as-you-go lub pakiet kredytów, pula zespołowa, autodoładowanie | patrz sekcja 5 | wysoka co do opisu, zero liczb |
-
-[D] Pewność niska. Mechanika tworzenia asystenta (formularz, kreator konwersacyjny,
-prompt systemowy wprost) nie została ustalona — jedyny trop to hasło „logujesz się i
-pracujesz z gotowymi asystentami", bez opisu procesu tworzenia nowego.
-
-[D] Pewność niska. Nie ustalono, czy asystenci mogą wywoływać się nawzajem
-(orkiestracja) czy działają jako niezależne, osobno wywoływane jednostki — materiał
-mówi językiem „asystentów i umiejętności", nie językiem grafów agentów.
-
-[D] Pewność niska. Nie ustalono, czy Marketplace zawiera gotowe szablony OD APPTO, czy
-wyłącznie mechanizm dzielenia się tym, co zbudował klient — to rozróżnienie ma
-znaczenie i nie zostało rozstrzygnięte.
-
-**Odrzucone jako niewiarygodne:** twierdzenie jednej syntezy o „wzroście appto.ai
-głównie w segmencie Enterprise, spadek w SMB (-6%)" — brak wiarygodnego źródła takiej
-statystyki dla spółki tej wielkości, prawdopodobne pomylenie z innym raportem
-zaindeksowanym pod podobne słowa kluczowe. Nie przenosimy tego dalej.
+[F] appto ma asystentów przypisanych do ról (Wise — ogólny domyślny, Strateg
+sprzedaży — oferty i follow-upy), z własnym promptem, dostępem i modelem dla
+każdego. [F] Integracje: appto deklaruje **956 narzędzi** na osobnej stronie
+integracji, ale **„40+"** na stronie głównej i w cenniku — sprzeczność, którą
+samo źródło integracji nazywa niewyjaśnioną, nie naszą pomyłką odczytu. [F]
+Praca w tle: rutyny czasowe/zdarzeniowe z powiadomieniem mailem albo na kanał
+zespołu. [F] Marketplace: „udostępniaj umiejętności, nie przeklejaj promptów",
+z wersjonowaniem i natychmiastową propagacją poprawki do wszystkich użytkowników.
 
 ---
 
-## 4. Zarządzanie i bezpieczeństwo
+## 4. Zarządzanie i bezpieczeństwo — deklaracje appto
 
-To jest sedno naszego projektu — poniżej każde ustalenie jest oznaczone wprost jako
-potwierdzone, wywnioskowane albo lukę.
+To jest sedno naszego projektu, dlatego każde ustalenie poniżej jest oznaczone
+wprost jako cytat producenta, nie jako potwierdzony mechanizm.
 
-**Role i uprawnienia.** [D] Pewność średnia. appto twierdzi o „jednym panelu
-administracyjnym", w którym widać kto ma dostęp, na jakich asystentach pracuje, z
-jakiej wiedzy korzysta i jakie ma uprawnienia, oraz o „asystentach opartych na
-rolach". [D] Pewność niska — brak nazw konkretnych ról i brak informacji o
-granularności uprawnień (per agent, per dział, per integracja).
+**Role i uprawnienia.** [F] appto deklaruje trzy poziomy: „Member, Manager,
+Admin — każdy ma dokładnie tyle dostępu, ile trzeba. Asystenci, wiedza
+i integracje pod jednym zarządem." Brak w źródłach opisu granularności per
+integracja czy per agent poza tym ogólnym podziałem.
 
-**Logowanie firmowym kontem (SSO).** [D] Pewność niska. Żadne zapytanie nie zwróciło
-bezpośredniego potwierdzenia SSO z Microsoft Entra ID ani Google Workspace dla
-appto.ai konkretnie. **Korekta wynikająca z oceny Evaluatora:** dodatkowe,
-niezależne zapytanie WebSearch znalazło sformułowania „logowanie przez Google z 2FA,
-bez dodatkowych haseł firmowych" — to podnosi ten trop z „brak sygnału" do [D] pewność
-niska, ale wciąż niepotwierdzone u źródła i wciąż niejasne, czy chodzi o SSO firmowe
-(Workspace) czy zwykłe logowanie kontem Google osobistym. To pozostaje jedną z
-najważniejszych luk tej noty.
+**Logowanie.** [F] Domyślne logowanie opisane wprost: „wchodzisz kontem Google,
+z 2FA, bez kolejnego firmowego hasła". [F] Cennik dodaje szerszą opcję: „zaloguj
+zespół przez Google, Microsoft albo własne SSO" — SSO firmowe (w tym
+prawdopodobnie Microsoft Entra ID) jest więc deklarowane jako opcja w planach
+płatnych, nie tylko zwykłe logowanie kontem prywatnym, jak sugerowała
+poprzednia wersja tej noty opartej na streszczeniach. To koryguje wcześniejszą
+niepewność w tym punkcie.
 
-**Dziennik zdarzeń / audyt dla administratora.** [D] Pewność niska. Jedno
-streszczenie wspomina ogólnie „bezpieczeństwo i kontrolę" oraz izolowane środowisko
-firmowe z dostępem per użytkownik, bez słów „log" czy „audyt" wprost. **Korekta:**
-dodatkowe zapytanie znalazło frazę „system śledzi, kto co zrobił… dzienniki audytu
-gotowe pod compliance" — podnosi to do [D] pewność niska (nie średnia — fraza
-brzmi jak ogólne hasło sprzedażowe, nie opis mechanizmu), nadal niepotwierdzone
-bezpośrednio.
+**Dziennik zdarzeń / audyt.** [F] „Pełny dziennik zdarzeń — kto, co i kiedy
+zrobił — w asystentach, wiedzy i działaniach. Audit log z historią, gotowy na
+wymogi zgodności." Deklarowane wprost, z konkretnym sformułowaniem, nie tylko
+hasłem ogólnym — mocniejsze potwierdzenie niż w poprzedniej wersji tej noty.
 
-**Zatwierdzanie przez człowieka przed działaniem.** [D] Pewność niska. appto ma
-twierdzić, że generuje „gotowe do sprawdzenia" oferty, umowy i notatki na podstawie
-cennika i historii rozmów — słowo „gotowe do sprawdzenia" sugeruje krok akceptacji
-przed wysyłką, ale to parafraza wyszukiwarki, nie cytat ze strony.
+**Zatwierdzanie przez człowieka przed działaniem.** [F] Artefakty (maile,
+oferty, dokumenty) opisane jako „gotowe do akceptacji" — sugeruje krok
+zatwierdzenia przed wysyłką, choć źródła nie opisują mechanizmu tego kroku
+(kto zatwierdza, czy jest to wymuszone czy opcjonalne).
 
-**Limity wydatków, budżety.** [D] Pewność niska. Model opisany jako zużycie
-rozliczane zbiorczo dla firmy (patrz sekcja 5) — brak potwierdzenia twardego limitu
-per agent lub per osoba.
+**Limity wydatków, budżety.** [F] Kredyty i koszty pod kontrolą: „pula
+współdzielona w zespole i automatyczne doładowanie — koniec niespodzianek na
+fakturze". Rozliczenie jest zbiorowe dla zespołu; źródła nie wspominają
+twardego limitu per pojedynczą osobę.
 
-**Lokalizacja danych, RODO.** [D] Pewność średnia-niska. Jedno streszczenie: „dane w
-UE, szyfrowanie w spoczynku i w tranzycie, izolowane środowisko per firma, modele nie
-uczą się na danych klienta". Region „Frankfurt" pojawił się w kontekście ogólnym o
-standardach bezpieczeństwa, nie jawnie przypisany do appto — nie traktujemy tego jako
-ustalone dla appto konkretnie.
+**Lokalizacja danych, RODO.** [F] „Hosting w UE — serwery w Irlandii."
+[F] „Zgodność z RODO — 2FA, audit log" (strona główna); cennik dodaje „zero-
+retention u dostawców modeli" i deklarację zgodności z **DSA** (Digital Services
+Act — unijne prawo o platformach obsługujących treści użytkowników trzecich,
+np. serwisy społecznościowe czy marketplace'y; prawdopodobnie nieadekwatne dla
+appto jako narzędzia B2B, ale to jest nasz wniosek, nie zaprzeczenie ze strony
+appto).
 
-**Powierzenie przetwarzania, lista podprzetwarzających.** [F] Brak jakichkolwiek
-danych — żadne zapytanie nie zwróciło wzmianki o umowie DPA ani liście
-podprzetwarzających appto. Pole całkowicie puste.
+**Powierzenie przetwarzania, lista podprzetwarzających.** [F] Brak — żadne
+z czterech źródeł nie zawiera umowy powierzenia przetwarzania danych (skrót
+branżowy: DPA) ani listy podprzetwarzających (podwykonawców, którym appto
+przekazuje dane — np. dostawca modelu, hosting). Pole całkowicie puste, tak
+jak w poprzedniej wersji tej noty.
 
-**Certyfikaty (ISO 27001, SOC 2).** [F] Nie znaleziono żadnej wzmianki o posiadaniu
-takich certyfikatów. Brak potwierdzenia nie jest równoznaczny z zaprzeczeniem.
+**Certyfikaty (ISO 27001, SOC 2).** [F] Brak wzmianki w żadnym z czterech
+źródeł. Brak potwierdzenia nie jest równoznaczny z zaprzeczeniem.
 
-**BYOK — własny klucz API do dostawcy modelu.** [D] Pewność niska, właściwie brak
-sygnału w obie strony. Kilka ukierunkowanych zapytań nie zwróciło niczego dotyczącego
-appto konkretnie (tylko inne produkty, które BYOK oferują). To rozróżnienie ma
-znaczenie kosztowe i compliance'owe i wymaga osobnego potwierdzenia (patrz sekcja 5 i
-6 — hipoteza architektury zakłada, że appto zawsze pośredniczy własnym kontraktem).
+**BYOK — własny klucz API do dostawcy modelu.** [F] Brak wzmianki. Model
+rozliczenia w kredytach (sekcja 5) sugeruje pośrednictwo appto we wszystkich
+wywołaniach modeli, ale żadne źródło nie potwierdza ani nie wyklucza wariantu
+z własnym kluczem klienta.
 
-**Polityka prywatności / regulamin.** [F] Nie otwarto i nie znaleziono bezpośredniego
-adresu takiego dokumentu na appto.ai.
+**Polityka prywatności / regulamin.** [F] Adresy istnieją (`/pl/polityka-
+prywatnosci/`, `/pl/regulamin/`, `/pl/polityka-cookies/`), wymienione w nawigacji
+strony głównej — ale treści tych stron nie mamy, właściciel ich nie wkleił.
+Rozstrzygnęłoby to dostarczenie tych trzech stron.
 
-Podsumowanie: obszar „zarządzanie i bezpieczeństwo" — najważniejszy dla naszego
-projektu — jest jednocześnie **obszarem z największą liczbą pustych pól** w całym
-zwiadzie. Wszystko, co appto twierdzi tu o sobie, jest marketingowym hasłem
-(„bezpieczeństwo i kontrola", „dane pod pełną kontrolą od pierwszego dnia"), nigdy
-mechanizmem opisanym na poziomie funkcji.
-
----
-
-## 5. Model rozliczenia — i odpowiedź w sprawie D-001
-
-[D] Pewność średnia (3 niezależne zapytania, spójne sformułowanie). appto twierdzi o
-rozliczeniu **pay-as-you-go albo pakietach kredytów** dopasowanych do skali zespołu, z
-pulą współdzieloną w zespole i automatycznym doładowaniem. [D] Pewność niska — nie
-znaleziono ani jednej konkretnej liczby (kwoty, progu, waluty) w żadnym streszczeniu.
-Nie wiadomo, czy cennik ma jawne liczby, czy kończy się na kontakcie handlowym.
-
-[D] Pewność niska. Nazw planów (Starter/Team/Enterprise) nie znaleziono. Jedyne
-rozróżnienie to ścieżki wdrożenia wg wielkości zespołu (sekcja 2), które prawdopodobnie
-opisują onboarding, nie siatkę cenową.
-
-[D] Pewność średnia. Jednostka rozliczeniowa nazwana w materiałach to **„kredyt"**, nie
-„token" — słowo „token" nie pojawiło się w żadnym streszczeniu dotyczącym appto
-konkretnie. **Uzupełnienie wymagane przez ocenę Evaluatora:** ten sam trop — rabaty do
-20% przy rocznych kontraktach 30+ osób — pojawił się wyłącznie w węźle „kto za tym
-stoi" (firma.md), z niską pewnością, mimo że tematycznie należał do tej sekcji; jest tu
-dopisany jako [D] pewność niska, niepotwierdzone u źródła, wymaga sprawdzenia na
-stronie cennika razem z resztą.
-
-[D] Pewność niska, brak sygnału w obie strony — czy istnieje możliwość podłączenia
-własnego klucza API (BYOK) i płacenia bezpośrednio dostawcy modelu. Nie sprawdzone,
-czy istnieje wariant instalowany u klienta (on-premise) — jedno zapytanie zwróciło
-tylko ogólne hasło o „danych pod pełną kontrolą", nie potwierdzenie takiego wariantu.
-
-### Odpowiedź wprost na pytanie o D-001
-
-**Zwiad nie potwierdził i nie obalił przesłanki D-001** („rozliczenie za tokeny u
-dostawcy odbiera swobodę wyboru modelu"). Dostęp do strony cennika appto.ai był przez
-cały czas zablokowany na poziomie sieci tej sesji — nie jest to twierdzenie o appto,
-tylko o granicach tego badania. Jedyny znaleziony sygnał: appto opisuje jednostkę
-rozliczeniową jako „kredyt" (jednostka wewnętrzna sprzedawcy), nie „token" (bezpośrednie
-przeliczenie zużycia u dostawcy modelu, widoczne dla klienta) — [W] to lekko przeczy
-przesłance D-001 w dosłownym brzmieniu, ponieważ „kredyt" sugeruje warstwę pośredniczącą
-z własną marżą appto, a nie bezpośrednie przeniesienie kosztu tokena dostawcy na
-klienta — ale to nie jest to samo twierdzenie ani jego zaprzeczenie, może opisywać ten
-sam mechanizm innym słownictwem albo dwa różne mechanizmy. Żaden operator nie znalazł
-strony cennika ani jednej konkretnej liczby.
-
-**Rekomendacja, nie rozstrzygnięcie:** właściciel powinien albo odblokować dostęp
-sieciowy do appto.ai dla drugiej rundy badania, albo osobiście otworzyć
-`https://www.appto.ai/pl/cennik` (adres prawdopodobny, niepotwierdzony) i ocenić, czy
-D-001 wymaga formalnej rewizji. Dziennik decyzji zmienia wyłącznie właściciel — ta nota
-tego nie robi.
+Podsumowanie: appto deklaruje więcej konkretu w tej rundzie niż w poprzedniej
+(cytaty wprost, nie parafrazy wyszukiwarki), ale nadal nic z tego nie jest
+niezależnie zweryfikowanym mechanizmem — to, co mamy, to spójna, dość szczegółowa
+obietnica marketingowa, nie audyt bezpieczeństwa.
 
 ---
 
-## 6. Na czym to prawdopodobnie stoi
+## 5. Model rozliczenia — konkretne liczby i odpowiedź w sprawie D-001
 
-Ten obszar ma **dwie warstwy dowodowe o zupełnie różnej jakości** — celowo rozdzielone
-poniżej, żeby nie uśredniać mocnego dowodu z czystym domysłem.
+[F] Hasło i zasada: „Płacisz, gdy zarabiasz. Rozliczasz się za realną pracę, nie
+za miejsca w zespole. Jednostką jest kredyt — appto zużywa go tylko wtedy, gdy
+naprawdę coś dla Was zrobi."
 
-### Warstwa 1 — hosting i infrastruktura (dobrze uzasadniona)
+[F] **Konkretny rozkład ceny, plan do 10 osób** (jedyny w pełni podany wprost
+w cenniku):
 
-[F] Zapytania DNS wykonane samodzielnie, surowym zapytaniem UDP do `8.8.8.8:53`
-(protokół DNS omija blokadę proxy tej sesji), 2026-08-25:
+| Składnik | Cena |
+|---|---|
+| Platforma, do 10 osób | 330 zł |
+| 80 000 kredytów, stawka 20 zł / 10 tys. | 160 zł |
+| **Razem** | **490 zł / mc netto** |
+| Kredyty poza abonamentem (top-up) | 22 zł / 10 tys. |
 
-- `NS appto.ai` → `ns1.vercel-dns.com`, `ns2.vercel-dns.com`
-- `A appto.ai` / `A www.appto.ai` → zakres `216.150.1.x` / `216.150.16.x` (rozrzut
-  typowy dla anycast, nie osobnych serwerów)
-- `MX appto.ai` → wyłącznie `smtp.google.com`
-- `TXT appto.ai` → SPF z `include:mail47.mydevil.net` i `include:_spf.google.com`, dwa
-  wpisy `google-site-verification`, jeden `hubspot-developer-verification`
-- Strefa DNS appto.ai jest typu **wildcard**: losowa, nieistniejąca subdomena zwraca te
-  same adresy IP co `app.`, `api.`, `docs.`, `status.` — jedyny wyjątek: `mail.appto.ai`
-  (brak rekordów)
+[F] Drugi punkt cenowy z kalkulatora: **12 osób, 180 000 kredytów miesięcznie →
+990 zł/mc.** Teza producenta o zwrocie: koszt zwraca się przy odzyskaniu
+14 minut tygodniowo na osobę z 40-godzinnego tygodnia — niesprawdzalne bez
+danych o realnym zużyciu czasu zespołu, nie traktujemy tego jako fakt.
 
-[F] Weryfikacja niezależna surowym TCP+TLS do `216.150.16.1:443` (SNI `www.appto.ai`,
-z pominięciem zmiennych proxy) zwróciła certyfikat wystawiony przez „Anthropic Egress
-Gateway SDS Issuing CA (production)" — to dowód, że warstwa HTTP jest przechwytywana
-(MITM) przez bramkę egress **naszej** sesji, nie że appto ma taki certyfikat. Sama
-warstwa HTTP appto pozostaje niedostępna do bezpośredniego sprawdzenia w tym
-środowisku.
+[F] Progi konfiguratora: do 10, do 25, do 50, do 100 osób. Powyżej — wycena
+indywidualna („wdrożenie enterprise").
 
-[W] Ponieważ obsługa DNS (rekordy NS) jest w całości przekazana na `vercel-dns.com`,
-appto najprawdopodobniej hostuje przynajmniej warstwę frontendową na platformie
-Vercel, ponieważ pełne przekazanie strefy DNS na nameservery Vercela jest wymagane
-przez tę platformę wyłącznie wtedy, gdy domena jest u niej faktycznie skonfigurowana —
-nie jest to sposób podłączenia jednego rekordu u zewnętrznego dostawcy.
+[F] Zasady puli: wspólna dla całej firmy, odnawia się co miesiąc, **niewykorzystane
+kredyty nie przechodzą**, top-up w trakcie miesiąca po wyższej stawce niż
+w abonamencie (22 zł vs 20 zł / 10 tys.).
 
-[F] Poczta firmowa appto.ai idzie przez Google Workspace (`MX → smtp.google.com`), nie
-przez własny serwer. [D] Pewność średnia — wpis SPF wskazujący też
-`mail47.mydevil.net` (polski dostawca hostingu współdzielonego/VPS, nie klasy
-enterprise) może być aktywnym drugim nadawcą albo pozostałością po starszej wersji
-strony sprzed migracji na Vercel/Workspace — nierozstrzygnięte.
+[F] **Wszystkie modele dostępne bez dopłat, przełączane przez użytkownika**:
+„Wszystkie modele AI — Claude Opus i Sonnet, GPT, Gemini, Kimi — bez dopłat,
+przełączasz w dwa kliki" (sekcja „Każdy plan to pełne appto"). Mocniejszy model
+zużywa więcej kredytów za to samo zadanie, ale nie ma osobnej dopłaty ani planu
+wymagającego droższego poziomu, żeby w ogóle uzyskać dostęp do danego modelu.
 
-### Warstwa 2 — stack frontendu i architektura modelowa (domysł, nie dowód)
+[F] Widełki zużycia kredytów wg rodzaju zadania (przykłady z cennika):
+odpowiedź na maila 280–600 kr., streszczenie spotkania 770–1540 kr., analiza
+arkusza 1460–2930 kr., research wieloźródłowy 5280–10 560 kr.
 
-[D] Pewność średnia. Hosting na Vercelu **nie dowodzi** użycia Next.js/React — Vercel
-hostuje dowolne frameworki. Potwierdziłyby to nagłówki HTTP (`x-vercel-id`) albo ślady
-`_next/static/` w kodzie źródłowym — niesprawdzone, strona niedostępna.
+[F] Brak nazw planów (Starter/Team/Enterprise) — jedyna oś to liczba osób
+i suwak kredytów.
 
-[D] Pewność średnia, **ale oparta wyłącznie na marketingu, nie na żadnym śladzie
-technicznym**. Hipoteza: appto to warstwa pośrednicząca (gateway/router) nad kilkoma
-zewnętrznymi dostawcami modeli (GPT, Claude, Gemini, Kimi), a nie właściciel własnego
-modelu. Cała ta warstwa hipotezy opiera się **wyłącznie** na tym, co appto samo o
-sobie twierdzi w materiałach sprzedażowych („wybór modelu w jednym miejscu") — nie ma
-za nią żadnego nagłówka HTTP, śladu API ani polityki prywatności z listą
-podprzetwarzających. To jest przeniesienie obietnicy marketingowej na poziom
-architektury i tak należy to czytać: **prawdopodobne, ale bez żadnego niezależnego
-oparcia technicznego** — w odróżnieniu od warstwy 1 (hosting), która ma twardy dowód
-DNS.
+[F] BYOK (własny klucz API do dostawcy modelu) i wariant on-premise
+(instalacja u klienta zamiast w chmurze appto): brak wzmianki w żadnym
+z czterech źródeł — nierozstrzygnięte, tak jak poprzednio.
 
-Co by tę drugą warstwę potwierdziło: realny nagłówek HTTP serwera appto, polityka
-prywatności z nazwaną listą podprzetwarzających, dokumentacja API, ogłoszenie o pracę
-wymieniające stack. Co by ją obaliło: polityka prywatności nazywająca jednego,
-wyłącznego dostawcę modelu.
+### Odpowiedź wprost na pytanie o D-001 — KOREKTA WYMAGANA
 
-### Ślady w rejestrach — brak trafień
+**Zapisane uzasadnienie D-001** (`docs/spec/decisions.md`): „rozliczenie za
+tokeny u dostawcy odbiera swobodę wyboru modelu, co jest wymaganiem numer
+trzy. Wymóg podłączania dowolnych modeli przeważył nad oszczędnością czasu."
 
-[D] Pewność wysoka, że nie ma trafienia (nie że firma nie istnieje w rejestrze).
-Zapytania o KRS, LinkedIn, oferty pracy na polskich portalach IT (justjoin.it,
-nofluffjobs, theprotocol.it) nie zwróciły niczego dotyczącego tej konkretnej firmy.
-[F] Zapytanie o Crunchbase zwróciło stronę opisującą inny podmiot (patrz ostrzeżenie w
-sekcji 2) — odnotowane wprost, żeby nie zostało przepisane jako dane o appto.ai.
+**Cennik appto tego nie potwierdza.** Jednostką rozliczeniową jest kredyt, nie
+token przeliczany wprost od dostawcy modelu. Wszystkie wymienione modele
+(Claude Opus i Sonnet, GPT, Gemini, Kimi) są dostępne w każdym planie, bez
+dopłat za konkretny model, i przełączalne przez użytkownika „w dwa kliki".
+Jedyna zależność ceny od modelu to liczba zużytych kredytów za zadanie — silniejszy
+model kosztuje więcej kredytów, ale nie jest zablokowany planem ani dopłatą.
+**To jest odwrotność tego, co mówi zapisane uzasadnienie** — appto nie odbiera
+swobody wyboru modelu, tylko różnicuje koszt korzystania z niego.
+
+**To jest korekta przesłanki, nie decyzji.** Decyzja o budowie własnej
+platformy pozostaje w mocy — z woli właściciela, wyrażonej wprost 2026-08-25:
+„naszym celem jest osiągnąć to samo i te same funkcjonalności, ale jako własna
+platforma." Ta nota nie zmienia `docs/spec/decisions.md` — to zastrzeżone dla
+właściciela. Poniżej propozycja poprawionego uzasadnienia, do zatwierdzenia albo
+odrzucenia.
+
+**Dlaczego to ważne, jednym zdaniem:** decyzja słuszna, ale oparta na
+nieprawdziwej przesłance, przewróci się przy pierwszym, kto tę przesłankę
+sprawdzi.
+
+**Propozycja poprawionego uzasadnienia D-001** (do zatwierdzenia przez
+właściciela, nie wprowadzone do `decisions.md` przez tę notę):
+
+> Budujemy własną platformę, bo chcemy, żeby koszt każdego zapytania był
+> policzalny wprost — w realnej walucie i w tokenach zużytych u dostawcy modelu,
+> przypisany do konkretnego agenta i konkretnego człowieka (D-002) — a nie
+> ukryty za jedną, uproszczoną jednostką sprzedawcy platformy z jego własną
+> marżą, jak „kredyt" appto. Chcemy też, żeby nikt poza nami nie pośredniczył
+> w kontrakcie z dostawcami modeli i w rezydencji danych (D-011, bariera 1) —
+> a nie dlatego, że appto formalnie ogranicza wybór modelu, bo cennik appto
+> tego nie potwierdza. Dodatkowo: appto wygląda na produkt wczesnego etapu
+> (early access, brak niezależnych recenzji), wydany przez firmę, dla której to
+> nie jest główny udokumentowany biznes (sekcja 7) — to samodzielne ryzyko
+> dostawcy, niezależne od modelu rozliczenia, i osobny powód do budowy własnej
+> platformy zamiast uzależnienia się od cudzej.
+
+Warianty odpowiedzi właściciela: (a) przyjąć powyższe brzmienie w całości,
+(b) przyjąć część (np. samą korektę o kredycie, bez akapitu o ryzyku
+dostawcy), (c) sformułować własne uzasadnienie, (d) uznać, że zmiana
+uzasadnienia nie jest potrzebna i pozostawić zapis bez zmian mimo tej korekty.
 
 ---
 
-## 7. Kto za tym stoi
+## 6. Domeny i infrastruktura — ustalenia z poprzedniej rundy, sprawdzone pod kątem zgodności
 
-[D] Pewność średnia. appto wygląda na produkt grupy **WiseGroup**, prowadzonej przez
-**Szymona Negacza** — źródło pośrednie: streszczenie materiału wideo opisującego appto
-jako nową aplikację AI od WiseGroup, w fazie „early access" pod `appto.ai/pl`
-(`https://www.youtube.com/watch?v=TGvDqrh2AXs`, nieotwarty bezpośrednio).
+Poniższe ustalenia pochodzą z zapytań DNS wykonanych w poprzedniej rundzie tego
+zwiadu (niezależnie od treści stron, więc nie mogą być ani potwierdzone, ani
+zaprzeczone przez cztery nowe źródła tekstowe) — utrzymane tu bez zmian, bo
+żadne z czterech źródeł im nie przeczy. **Fragment techniczny, dla porządku:**
+DNS to adresowa „książka telefoniczna" domeny appto.ai — mówi, na jakim
+serwerze stoi strona i przez jaką pocztę appto wysyła maile. Można pominąć,
+jeśli nie interesuje Was warstwa techniczna infrastruktury:
 
-[D] Pewność średnia. Podmiotem prawnym za usługami WiseGroup (co najmniej za
-regulaminem `wisegroup.pl`) jest **SELLWISE SZYMON NEGACZ SPÓŁKA KOMANDYTOWA**, ul.
-Piwna 10, 44-100 Gliwice, NIP 6312699869, REGON 389975697, KRS 0000922240, wpis
-20 września 2021 — zgodnie potwierdzone przez pięć niezależnych agregatorów KRS
-(imsig.pl, bizraport.pl, krs-online.com.pl, rejestr.io, wyszukiwarkakrs.pl), świeżo
-zweryfikowane też przez Evaluatora niezależnym zapytaniem. **Nie potwierdzone: czy ta
-sama spółka figuruje w stopce/regulaminie samego appto.ai** — mogła zostać wydzielona
-osobna spółka. Rozstrzygnąłby to bezpośredni odczyt stopki appto.ai.
+[F] `NS appto.ai` → `ns1.vercel-dns.com`, `ns2.vercel-dns.com` — pełne
+przekazanie strefy DNS na nameservery Vercela.
+[F] `MX appto.ai` → wyłącznie `smtp.google.com` — poczta firmowa appto.ai idzie
+przez Google Workspace.
+[F] `TXT appto.ai` → SPF z `include:mail47.mydevil.net` i `include:_spf.google.com`,
+wpisy `google-site-verification` i `hubspot-developer-verification`.
+[W] Ponieważ obsługa DNS jest w całości przekazana na `vercel-dns.com`, appto
+najprawdopodobniej hostuje przynajmniej warstwę frontendową na platformie
+Vercel, ponieważ pełne przekazanie strefy DNS na nameservery Vercela jest
+wymagane przez tę platformę wyłącznie przy faktycznym podłączeniu domeny.
 
-[D] Pewność niska, ostrzeżenie ważne dla dalszych badań: istnieją dwa inne,
-niepowiązane podmioty o niemal identycznej nazwie „WISE GROUP SP. Z O.O." (KRS
-0000902314, wykreślona; KRS 0000957362, zarząd Basiuk) — podobieństwo nazwy nie jest
-dowodem tożsamości.
+[D] Pewność średnia, nierozstrzygnięte: hosting na Vercelu nie dowodzi
+konkretnego frameworka frontendu; hipoteza, że appto jest warstwą
+pośredniczącą (routerem) nad kilkoma zewnętrznymi dostawcami modeli, opiera
+się wyłącznie na tym, co appto twierdzi o sobie w materiale sprzedażowym
+(wybór modelu w jednym miejscu), nie na żadnym śladzie technicznym
+niezależnym od marketingu.
 
-[D] Pewność średnia. WiseGroup jako całość ma ok. 170 osób, przychody grupy ok. 27 mln
-zł w 2023, cel 39 mln zł w 2024. Marka zrzesza kilka brandów (SellWise, AdWise,
-HireWise, Let's Automate, Finerto, IRSM) — appto pojawia się jako nowy, dodatkowy
-produkt, nie jeden z głównych sześciu brandów. **Żadna z tych liczb nie dotyczy zespołu
-pracującego konkretnie nad appto** — może to być kilkuosobowy zespół wydzielony, może
-cały istniejący zespół techniczny grupy. Nie znaleziono nazwiska osoby opisanej wprost
-jako „CEO appto".
+Nowość tej rundy, z czterech źródeł: **hubspot-developer-verification** w
+rekordzie TXT domeny (ustalone niezależnie od treści stron w poprzedniej
+rundzie) jest teraz spójne z tym, że appto wymienia HubSpot jako jedną
+z integracji katalogowanych na stronie integracji — to nie jest nowy dowód,
+tylko potwierdzenie, że poprzednie ustalenie DNS i nowa treść źródeł nie są ze
+sobą sprzeczne.
 
-[D] Pewność wysoka, że brak danych (nie że brak finansowania). Żadne zapytanie o
-rundy, inwestorów, venture capital dla „appto.ai" nie zwróciło wyniku. Sam Negacz
-uruchomił w 2025 r. fundusz „WiseVentures" — to WiseGroup jako inwestor w inne spółki,
-nie inwestycja zewnętrzna w appto.
+---
 
-[D] Pewność średnia. Materiał wideo o appto mówi o „early access" i możliwości
-rezerwacji dostępu — sugeruje to produkt we wczesnej fazie dostępności w sierpniu 2026,
-nie dojrzały, wieloletni produkt. Data premiery i data rejestracji domeny nie zostały
-ustalone (WHOIS niedostępny w tej sesji).
+## 7. Kto stoi za produktem
 
-[D] Pewność wysoka, że nie znaleziono. Brak jakiejkolwiek niezależnej recenzji
-użytkownika (Trustpilot/G2/Capterra), brak klientów wymienionych z nazwy poza jednym
-niepewnym śladem, brak liczb o skali wdrożeń w Polsce.
+**Korekta wobec poprzedniej wersji tej noty.** Poprzednia wersja domyślała się
+(pewność średnia, źródło pośrednie — streszczenie materiału wideo), że podmiotem
+prawnym za appto jest **SELLWISE SZYMON NEGACZ SPÓŁKA KOMANDYTOWA** (KRS
+0000922240) — bo to ten sam podmiot, który figuruje w regulaminie wisegroup.pl.
+**Źródła pierwotne tej rundy dają inną, bardziej bezpośrednią odpowiedź:**
+
+[F] Stopka strony głównej appto.ai: **„© 2026 appto · Let's Automate Sp. z o.o."**
+— to jest podmiot wskazany przez samo appto, nie domysł wyprowadzony z innej
+strony grupy.
+
+[F] Strona wdrożenia kohortowego wymienia wprost troje ludzi za produktem:
+
+| Osoba | Funkcja podana na stronie |
+|---|---|
+| **Szymon Kita** | CEO appto · Let's Automate |
+| **Szymon Negacz** | Founder WiseGroup |
+| **Filip Kulikowski** | Head of WiseTools |
+
+[F] „Wdrażamy AI w firmach od 2023 roku" — deklaracja doświadczenia grupy,
+opisanej jako trzy światy: szkolenia i strategia, wdrożenia, własna technologia
+AI.
+
+[W] Zestawiając te dwa fakty: appto jest produktem spółki **Let's Automate
+Sp. z o.o.**, która działa w ramach grupy marek **WiseGroup** (założonej przez
+Szymona Negacza) — „Let's Automate" pojawiał się już w poprzedniej wersji tej
+noty jako jedna z sześciu marek WiseGroup, ale bez wskazania, że to właśnie ta
+konkretna spółka, nie SellWise sp.k., stoi bezpośrednio za appto. To jest
+poprawka do zanotowania: **SellWise sp.k. i Let's Automate Sp. z o.o. to
+prawdopodobnie dwa różne podmioty prawne w tej samej grupie kapitałowej** —
+poprzednia nota mogła wskazywać niewłaściwy z dwóch, bo opierała się na
+regulaminie innej marki grupy (wisegroup.pl), nie na stopce appto.ai samego.
+
+[D] Pewność średnia, nierozstrzygnięte przez te cztery źródła: numer KRS, NIP
+i adres siedziby „Let's Automate Sp. z o.o." — żadne z czterech źródeł ich nie
+podaje. Rozstrzygnąłby to bezpośredni odczyt regulaminu appto.ai albo
+wyszukiwarki KRS pod tą nazwą.
+
+[F] Program wdrożeniowy: pierwsza kohorta ma **30 miejsc** w pakietach
+z mentorem, start **wrzesień 2026**, ceny **7900 / 19 900 / 29 900 zł netto**.
+Adresat: „głównie zarządy polskich firm 10–500 osób". To potwierdza, że appto
+celuje w segment małych i średnich firm, zgodny z wielkością NASTER (ok.
+dwudziestu osób).
+
+[F] Studium przypadku „firma B2B usługowa, 35 osób" jest przez sam producent
+oznaczone jako **wdrożenie testowe, liczby zaokrąglone, bez nazwy firmy** — nie
+jest to referencja klienta i nie nadaje się do traktowania jako dowód (patrz
+`docs/nota-07-katalog-funkcji.md`, część B).
 
 ### Ocena ryzyka dostawcy
 
-[W] appto wygląda na produkt wczesnego etapu (early access, brak niezależnych
-recenzji, brak potwierdzonych klientów) wydany przez firmę usługową (WiseGroup/
-SellWise), której główny, udokumentowany biznes to doradztwo sprzedażowe i szkolenia,
-nie oprogramowanie AI — ponieważ wszystkie potwierdzone przychody i wielkość zespołu,
-jakie znaleziono, dotyczą głównych marek grupy (SellWise, AdWise, HireWise), a nie
-appto konkretnie. Wynika z tego podwyższone ryzyko: appto może być produktem pobocznym
-wobec głównego biznesu grupy — decyzja o jego rozwoju, cenie czy dalszym istnieniu
-może zależeć od wyników zupełnie innej części organizacji, niezwiązanej z tym, na czym
-zależy jego klientom AI.
-
-[D] Pewność średnia. Jeśli WiseGroup/SellWise jako całość ma kilkuletnią historię i
-rosnące przychody (w miarę spójnie potwierdzone przez źródła prasowe), ryzyko
-nagłego zniknięcia całej grupy jest niższe niż dla anonimowego startupu
-jednoosobowego — ale to nie jest to samo co ryzyko dla samej linii produktowej appto,
-o czym wyżej.
+[W] appto pozostaje produktem, co do którego żadne z czterech źródeł nie
+wskazuje niezależnej weryfikacji (recenzji, referencji klienta poza jednym
+zaznaczonym jako testowe wdrożenie) — ponieważ wszystkie cztery źródła to
+materiał wyprodukowany przez samego sprzedawcę. To nie zmienia się względem
+poprzedniej rundy: mamy teraz więcej konkretu o tym, co appto twierdzi, ale
+wciąż zero niezależnego potwierdzenia z zewnątrz. Ryzyko dostawcy — appto jako
+młody produkt organizacji, dla której doradztwo sprzedażowe i szkolenia (marki
+WiseGroup/SellWise) są głównym, dłużej udokumentowanym biznesem — pozostaje
+wnioskiem, nie ustaleniem obalonym albo potwierdzonym przez te cztery strony.
 
 ---
 
-## 8. Zestawienie z naszą specyfikacją
+## 8. Czego nadal nie wiemy
 
-Tabela porównuje to, co appto twierdzi o sobie (znacznik [D] wszędzie, chyba że
-zaznaczono inaczej), z naszymi czterema etapami (`docs/spec/01-mvp1.md` –
-`04-mvp4.md`).
-
-| Funkcja appto | Mamy w planie? | Etap | Uwaga |
-|---|---|---|---|
-| Rejestr agentów, uprawnienia per użytkownik/grupa | tak | MVP1 | `agent_grant`, domyślna odmowa — u nas dodatkowo 404 zamiast 403 (appto nieznane w tej kwestii) |
-| Centralny panel administracyjny | tak | MVP2 | appto: opis ogólny bez szczegółu ról; u nas konkretne ekrany `/admin/*` |
-| Wybór modelu LLM | tak, ale inaczej | MVP1 (D-002) | appto: przełącznik dla użytkownika per zadanie. U nas: `model_default`/`model_fallback` ustawiane per agent w rejestrze, nie wybór ręczny w locie — patrz kategoria „mają, a my nie mamy" |
-| Kontekst firmowy z dokumentów, wpływający na każdą odpowiedź | tak | MVP3 | u nas trzy poziomy kontekstu z dziedziczeniem i wersjonowaniem w gicie — appto nie ujawnia mechanizmu wersjonowania |
-| Integracje czytające/piszące w systemach firmowych | tak, częściowo | MVP1 (D-003) + MVP4 | u nas przez agenta projektowego z kluczami; konkretne konektory (ERP, CRM) dopiero MVP4 |
-| Samodzielne przejmowanie zadań (maile, oferty, podsumowania) | tak, jako mechanizm ogólny | MVP3 | rutyny czasowe/zdarzeniowe + zatwierdzenia (MVP2) — appto nie ujawnia, czy ma jawny harmonogram czy tylko reakcję na zdarzenia |
-| Zatwierdzanie przez człowieka przed operacją nieodwracalną | tak | MVP2 | appto: „gotowe do sprawdzenia" (sugerowane, niepotwierdzone). U nas: reguła 6.5, wymuszona przez walidator |
-| Limity kosztu / budżety | tak | MVP2 | appto: zbiorcze, brak potwierdzonego limitu per osoba. U nas: trzy poziomy, twarda blokada |
-| Logowanie firmowym kontem (SSO) | tak | MVP1 | appto: Google login z 2FA (D, pewność niska). U nas: Entra ID / OIDC |
-| Dziennik audytu | tak, to nasz rdzeń | MVP1 | appto: sugerowane hasłem marketingowym, brak potwierdzenia mechanizmu. U nas: `audit_event` z decyzją `allow/deny/error`, rejestruje też odmowy |
-| Kanał w komunikatorze firmowym | tak, częściowo | MVP3 (Teams) | appto: Slack + Teams + mail. My: tylko Teams (dopasowane do NASTER), Slack poza zakresem |
-| Wielonajemność / wdrożenie u nowego klienta | tak | MVP4 | appto: SaaS wielonajemny z założenia. U nas: `tenant_id` od MVP1, domknięcie w MVP4 |
-| Rezydencja danych, brak trenowania na danych klienta | częściowo | otwarte (D-011) | appto twierdzi wprost o UE i braku trenowania — my mamy to jako pytanie otwarte dla wspólnej pamięci, nierozstrzygnięte |
-
-### Mają, a my nie mamy — do rozważenia
-
-- **Marketplace / udostępnianie „skilli" jednym kliknięciem, z wersjonowaniem, do
-  wybranej osoby/działu/całej firmy.** Nie ma odpowiednika w żadnym naszym etapie.
-  Mamy wersjonowanie wiedzy w gicie (MVP3), ale nie mechanizm „udostępnij tę
-  umiejętność działowi jednym kliknięciem" jako osobną funkcję UI. Do rozważenia jako
-  rozszerzenie MVP3/MVP4 — priorytet niski, appto samo nie ujawnia, czy to zawiera
-  gotowe szablony od siebie czy tylko mechanizm dzielenia się.
-- **Wspólne wątki/artefakty widoczne w zespole pod kontrolą dostępu.** appto twierdzi o
-  tym wprost; u nas rozmowa jest własnością osoby/agenta, nie ma koncepcji
-  współdzielonego wątku zespołowego. Do rozważenia razem z poziomami kontekstu
-  zespołowego w MVP3, jeśli praktyka pokaże taką potrzebę.
-- **Wybór modelu przez pracownika w locie, per zadanie**, a nie tylko konfiguracja
-  agenta przez administratora w rejestrze. U nas model jest właściwością agenta, nie
-  parametrem rozmowy. Do rozważenia jako rozszerzenie panelu w MVP2, jeśli okaże się
-  potrzebne — nie zmienia architektury bramy modeli (D-002).
-
-### Mają, a my świadomie nie chcemy
-
-- **Rozliczenie w jednostkach własnych dostawcy platformy („kredyt")** zamiast
-  przejrzystego rozliczenia kosztu modelu widocznego co do tokena. Uzasadnienie: D-001
-  i D-002 — swoboda wyboru dostawcy modelu i przypisywalność kosztu do agenta i
-  człowieka wymaga, żeby to MY byli jedynym pośrednikiem do dostawców, nie zewnętrzna
-  platforma z własną marżą ukrytą w cenie kredytu.
-- **appto jako jedyny właściciel kontraktu z dostawcami modeli** (BYOK niepotwierdzone,
-  raczej brak). U nas odwrotnie z rozmysłem: brama modeli (LiteLLM) jest nasza, z
-  naszymi kluczami — żaden inny komponent ich nie zna (reguła 6.6). To nie jest brak
-  funkcji z naszej strony, tylko odwrotny wybór architektoniczny w tym samym punkcie.
-- **Hosting wyłącznie u dostawcy SaaS (appto/Vercel).** U nas: Docker Compose na
-  własnym serwerze, przenośne poza jedną chmurą (D-008, D-011) — bo rezydencja danych
-  i kontrola nad infrastrukturą są dla nas twardym wymogiem, nie tylko hasłem
-  marketingowym.
-
----
-
-## 9. Co z tego wynika dla nas
-
-1. [W] **D-001 pozostaje niezweryfikowane u źródła, nie tylko dla nas — dla nikogo bez
-   dostępu do cennika appto**, ponieważ dostęp sieciowy do appto.ai był w tej sesji
-   zablokowany i żaden operator nie znalazł strony cennika (sekcja 5). To jest wniosek
-   do właściciela, nie rozstrzygnięcie: sam fakt, że appto nazywa jednostkę
-   rozliczeniową „kredytem", a nie „tokenem" ([D] pewność średnia — sekcja 5), jest zbyt
-   słabym sygnałem, żeby cokolwiek zmieniać w dzienniku decyzji. Rekomendacja (działanie,
-   nie twierdzenie o appto): właściciel sprawdza `appto.ai/pl/cennik` osobiście albo
-   zleca drugą rundę badania z odblokowanym dostępem sieciowym.
-2. [W] **Ryzyko dostawcy appto (early-access, produkt poboczny firmy usługowej, zero
-   niezależnych recenzji) wzmacnia argument „budujemy, nie kupujemy" niezależnie od
-   szczegółu tokenów**, ponieważ to ryzyko dostawcy jest niezależne od tego, czy
-   przesłanka o tokenach się potwierdzi (fakty i domysły źródłowe — sekcja 7). Nawet
-   gdyby przesłanka o tokenach się nie potwierdziła, uzależnienie się od produktu,
-   którego istnienie może zależeć od wyników zupełnie innej części grupy WiseGroup,
-   jest samodzielnym powodem ostrożności — wart dopisania do D-001 jako dodatkowe
-   uzasadnienie, jeśli właściciel zechce je tam wpisać.
-3. [W] **Kierunek naszej specyfikacji jest wzorcowo trafny**, ponieważ appto pokrywa
-   dużą część MVP1–MVP3 (panel, role, kontekst firmowy, zatwierdzenia, audyt, budżety)
-   tym samym językiem funkcji, którym opisaliśmy własne etapy przed poznaniem appto
-   (zestawienie pełne — sekcja 8). To nie jest powód do zmiany planu, tylko
-   potwierdzenie, że wzorzec projektowy z D-001 miał sens.
-4. [W] **Obszar najsłabiej pokryty przez zwiad to dokładnie ten, który jest sednem
-   naszego projektu**, ponieważ zarządzanie i bezpieczeństwo appto (SSO, audyt, DPA,
-   certyfikaty) to w większości puste pola albo hasła marketingowe bez mechanizmu
-   (szczegóły — sekcja 4). Nie oznacza to, że appto tego nie ma — oznacza, że nie udało
-   się tego sprawdzić stąd. Jeśli bezpieczeństwo appto jest kryterium decyzyjnym w
-   jakiejkolwiek przyszłej rozmowie o kupnie zamiast budowy, ta luka musi zostać
-   zamknięta przed taką rozmową, nie po.
-5. [D] Pewność średnia: **Marketplace umiejętności appto to jedyna funkcjonalna luka
-   warta realnego rozważenia** — reszta różnic to świadome wybory architektoniczne
-   (brama modeli nasza, hosting własny), nie przeoczenia (pełne zestawienie — sekcja 8).
-
----
-
-## 10. Czego nie ustaliliśmy
-
-Sekcja celowo niepusta — brak dostępu sieciowego do appto.ai w tej sesji jest
-przyczyną wspólną większości poniższych braków.
-
-- **Treści jakiejkolwiek strony appto.ai** — strona główna, `/pl/funkcje`, `/pl/blog/`,
-  cennik, regulamin, polityka prywatności. Rozstrzygnęłoby odblokowanie dostępu
-  sieciowego do `appto.ai` (i najlepiej `web.archive.org`) w polityce proxy tej sesji,
-  albo dostarczenie treści strony przez właściciela (zrzut ekranu, zapis HTML, PDF).
-- **Konkretnych liczb w cenniku** (kwoty, progi, waluta) — model rozliczenia znany
-  tylko opisowo. Rozstrzygnąłby widok strony cennika.
-- **Czy istnieje twardy limit budżetu per agent/osoba u appto**, czy tylko zbiorcze
-  rozliczenie firmy.
-- **Czy istnieje SSO firmowe (Entra ID / Google Workspace) czy tylko zwykłe logowanie
-  kontem Google** — najważniejsza luka sekcji zarządzania.
-- **Czy jest dziennik audytu dostępny administratorowi i czy historia rozmów
-  pracowników jest widoczna dla admina.**
-- **Czy appto ma certyfikat ISO 27001/SOC 2 i czy publikuje dowód** (raport, trust
-  center).
-- **Listy podprzetwarzających appto** (dostawca modelu z nazwy, hosting, baza danych) —
-  to byłoby najlepsze źródło do rozstrzygnięcia hipotezy architektury z sekcji 6 i nie
-  zostało sprawdzone.
-- **Pełnej nazwy podmiotu prawnego wskazanego w SAMEJ stopce appto.ai** — mamy tylko
-  domysł (SellWise Szymon Negacz sp.k. albo inny podmiot grupy WiseGroup).
-- **Daty powstania appto jako produktu i daty rejestracji domeny** — WHOIS niedostępny
-  w tej sesji.
-- **Wielkości zespołu pracującego konkretnie nad appto** (mamy tylko rozmiar całej
-  grupy WiseGroup, ok. 170 osób) oraz czy appto ma jakiekolwiek finansowanie
-  zewnętrzne.
-- **Realnych nagłówków HTTP serwera appto** (`server`, `x-vercel-id`) i realnego
-  certyfikatu TLS — połączenie było przechwytywane przez bramkę egress tej sesji.
-  Rozstrzygnęłaby sesja bez tej blokady albo zewnętrzne narzędzie (crt.sh, Censys).
+- **Treści stron appto.ai spoza czterech dostarczonych**: `/pl/funkcje/`,
+  `/pl/zastosowania/`, `/pl/polityka-prywatnosci/`, `/pl/regulamin/`,
+  `/pl/polityka-cookies/`, `/pl/kontakt/`, `/pl/webinar/`, `/pl/partnerzy/` —
+  wszystkie wymienione w nawigacji strony głównej, żadna nie dostarczona.
+  Rozstrzygnęłoby to wklejenie ich treści przez właściciela albo odblokowanie
+  dostępu sieciowego do domeny w tej sesji.
+- **Numer KRS/NIP „Let's Automate Sp. z o.o."** — nowa, bardziej precyzyjna luka
+  względem poprzedniej rundy (sekcja 7).
+- **Czy istnieje twardy limit budżetu per pojedynczy agent/osoba** u appto, czy
+  tylko zbiorcze rozliczenie zespołu.
+- **Czy appto ma certyfikat ISO 27001/SOC 2** i czy publikuje dowód (raport,
+  trust center).
+- **Listy podprzetwarzających appto** (dostawca modelu z nazwy, hosting, baza
+  danych) — najlepsze źródło do rozstrzygnięcia hipotezy o architekturze
+  pośredniczącej appto (sekcja 6), nadal nie sprawdzone.
 - **Czy appto oferuje wariant on-premise / instalowany w chmurze klienta.**
-- **Czy Marketplace appto zawiera gotowe szablony OD APPTO, czy wyłącznie mechanizm
-  dzielenia się tym, co zbudował klient.**
-- **Czy appto ma kanał głosowy/telefoniczny** — brak w wynikach nie jest dowodem
-  braku funkcji.
+- **Czy Marketplace appto zawiera gotowe szablony OD APPTO**, czy wyłącznie
+  mechanizm dzielenia się tym, co zbudował klient.
+- **Czy appto ma kanał głosowy/telefoniczny** — brak w źródłach nie jest
+  dowodem braku funkcji.
+- **Czy DSA rzeczywiście dotyczy appto** — deklaracja zgodności jest w cenniku,
+  ale żadne źródło nie tłumaczy, dlaczego prawo o platformach z treścią
+  użytkowników trzecich miałoby dotyczyć narzędzia B2B. Możliwe, że to
+  nadgorliwa deklaracja marketingowa — do wyjaśnienia, gdyby temat zgodności
+  prawnej appto był kiedyś istotny dla decyzji.
 
-**Dlaczego ta sekcja nie jest krótsza mimo pięciu operatorów:** każdy z nich pracował
-w tym samym środowisku z tą samą blokadą sieciową, więc braki się nakładają, nie
-sumują niezależnie. Jedyny kanał, który dawał niezależne, sprawdzalne fakty (DNS),
-został wykorzystany w pełni — reszta wymaga albo odblokowania sieci dla tej sesji,
-albo materiału dostarczonego bezpośrednio przez właściciela.
+**Rekomendacja, nie rozstrzygnięcie:** jeśli którakolwiek z powyższych luk stanie
+się istotna dla przyszłej decyzji (np. porównawczej), właściciel powinien albo
+dostarczyć brakujące strony bezpośrednio, albo rozważyć odblokowanie dostępu
+sieciowego do `appto.ai` w polityce proxy tej sesji dla kolejnej rundy badania.
