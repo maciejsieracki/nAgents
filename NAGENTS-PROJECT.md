@@ -1,4 +1,4 @@
-# nAgents — PROJECT-INDEX
+# nAgents — NAGENTS-PROJECT
 
 > **Kanoniczny indeks dokumentacji projektu.** Ten plik mówi agentowi, gdzie
 > szukać informacji i jak odróżniać źródło prawdy od historii, propozycji,
@@ -21,7 +21,7 @@ Nowy agent czyta **tylko ten plik na start**. Następnie wybiera ścieżkę wed�
 tabeli w §2. Nie ładuje wszystkich raportów, handoffów i historii naraz.
 
 ```text
-1. PROJECT-INDEX.md                         — ta mapa
+1. NAGENTS-PROJECT.md                         — ta mapa
 2. CLAUDE.md                                 — twarde zasady projektu
 3. docs/process/tematy.md                    — bieżący rejestr tematów
 4. właściwa decyzja/specyfikacja/scenariusz  — tylko dla bieżącego zadania
@@ -167,7 +167,7 @@ Lokalne ścieżki nAgents niewystępujące na zdalnej gałęzi roboczej:
 docs/nota-09-interfejs-hermesa.md
 docs/nota-10-entra-instrukcja-dla-administratora.md
 docs/process/dispatch/NAG-INFRA-002-pomocnik-serwerowy.md
-PROJECT-INDEX.md
+NAGENTS-PROJECT.md
 ```
 
 ### 4.2. AutoBot Monitor
@@ -205,7 +205,7 @@ Statusy w tabeli:
 
 | Plik | Do czego służy | Status / kiedy czytać |
 |---|---|---|
-| `PROJECT-INDEX.md` | ta mapa: kolejność lektury, katalog plików, routing i korekty aktualności | CANONICAL ENTRYPOINT |
+| `NAGENTS-PROJECT.md` | ta mapa: kolejność lektury, katalog plików, routing i korekty aktualności | CANONICAL ENTRYPOINT |
 | `.claude/skills/nagents-autobot/README.md` | opis skilla i jego przenoszenia | CANONICAL pomocniczy |
 | `.claude/skills/nagents-autobot/SKILL.md` | pełny proces AutoBot, role, bariery, raporty i limity | CANONICAL; czytać sekcjami, nie ładować bez potrzeby |
 | `CLAUDE.md` | punkt startowy, kolejność lektury i twarde zasady | CANONICAL; lokalnie zmieniony, porównać z diffem |
