@@ -1,7 +1,8 @@
 # 8gent — manifest paczki dokumentacji
 
-Status: aktualizacja marki dokumentacji przygotowana do kontrolowanej publikacji
-Branch docelowy publikacji: `docs/rename-8gent-2026-09-15`
+Status: marka `8gent` zintegrowana z dokumentacją na `main`
+Branch źródłowy publikacji: `docs/rename-8gent-2026-09-15`
+Merge commit: `903d065aae7654934b2e16189a20ad989c2ccebe`
 Repozytorium: `maciejsieracki/nAgents`
 
 ## Zawartość główna
@@ -81,5 +82,6 @@ szkieletu jest w `docs/process/zrodla/autobots-szkielet-uniwersalny.md`.
 ## Granice publikacji
 
 Paczka nie oznacza wdrożenia aplikacji. Nie wykonuje instalacji live, restartu
-gatewaya, zmiany uprawnień, integracji Microsoft/Entra/Graph, merge ani deployu.
-Publikacja na branchu jest osobnym readbackiem GitHuba; `main` nie jest zmieniany.
+gatewaya, zmiany uprawnień, integracji Microsoft/Entra/Graph ani deployu.
+Zmiana marki została opublikowana przez PR #2 do `main`; merge nie uruchomił
+kodu ani runtime.
