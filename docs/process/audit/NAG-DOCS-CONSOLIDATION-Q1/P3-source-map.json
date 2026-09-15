@@ -1,0 +1,1418 @@
+{
+  "schema": "NAG-DOCS-CONSOLIDATION-Q1/P3-source-map/v1",
+  "topic": "NAG-DOCS-CONSOLIDATION-Q1",
+  "phase": "P3-SOURCES",
+  "stable_phase_id": "NAG-DOCS-P3-SOURCES-OF-TRUTH-Q1",
+  "status": "PASS",
+  "domain": "INFORMACYJNY",
+  "goal": "Każda kategoria pytania agenta ma jedno źródło kanoniczne albo jawny status OWNER_DECISION_REQUIRED/LIVE_READBACK_REQUIRED/SEPARATE_PROJECT.",
+  "observed_at_utc": "2026-09-14T14:05:37+00:00",
+  "workspace": {
+    "path": "/home/ubuntu/projects/nAgents-readonly",
+    "branch": "claude/git-connection-9sz6dg",
+    "head": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+    "preexisting_dirty_state": true,
+    "source_files_modified_by_p3": false,
+    "push_fetch_pull_performed": false
+  },
+  "column_contract": [
+    {
+      "name": "question",
+      "label_pl": "pytanie"
+    },
+    {
+      "name": "canonical_source",
+      "label_pl": "źródło kanoniczne"
+    },
+    {
+      "name": "auxiliary_sources",
+      "label_pl": "pomocnicze"
+    },
+    {
+      "name": "when_to_read",
+      "label_pl": "kiedy czytać"
+    },
+    {
+      "name": "status",
+      "label_pl": "status"
+    },
+    {
+      "name": "owner_update",
+      "label_pl": "właściciel aktualizacji"
+    },
+    {
+      "name": "conflict",
+      "label_pl": "konflikt"
+    }
+  ],
+  "precedence": [
+    {
+      "rank": 1,
+      "rule": "fresh Git/worktree/ref, Kanban, event, receipt, service, or test readback for current state"
+    },
+    {
+      "rank": 2,
+      "rule": "explicit owner decision in docs/process/echo.md or current docs/spec/decisions.md"
+    },
+    {
+      "rank": 3,
+      "rule": "current nAgents specification, CLAUDE.md, and project AutoBot skill"
+    },
+    {
+      "rank": 4,
+      "rule": "AutoBot Monitor contract and operational documents for its own project"
+    },
+    {
+      "rank": 5,
+      "rule": "handoffs, reports, notes, and old question packets as dated context only"
+    }
+  ],
+  "input_inventory": {
+    "p1": [
+      {
+        "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P1-scope.md",
+        "sha256": "95804bc1b920dac4861a0f4578b1feb74d1a7610742eff331b8d414dcbc4d9f4"
+      },
+      {
+        "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P1-sources.json",
+        "sha256": "a65760798365ff4dd0d15a6a7408e831a305f161d3f68f824cfb5f59f95de5d0"
+      },
+      {
+        "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P1-exclusions.md",
+        "sha256": "35f4e2f5adb3322ba239ba7b7c03db1388151c4c545ff9862d34c85ac9a66f38"
+      }
+    ],
+    "p2": [
+      {
+        "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P2-inventory-local.jsonl",
+        "sha256": "462608d0b652a10480611025c87333eabd415cf5a14ba2700d58fa6c0e639347",
+        "records": 695
+      },
+      {
+        "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P2-inventory-github.jsonl",
+        "sha256": "c45fba908e6959907ade958bc72375981c04e8f9418067f0297721269ac1a279",
+        "records": 104
+      },
+      {
+        "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P2-inventory-external.jsonl",
+        "sha256": "03b9a95048f42d96aff459148ca32857d6c0aaa89ce361afedc078d56daa1535",
+        "records": 34
+      },
+      {
+        "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P2-inventory-summary.md",
+        "sha256": "3d1fecb89e486e9970987248bf9f312d592394d00278d2e2f205c932ceadb1a6"
+      },
+      {
+        "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P2-counts.json",
+        "sha256": "b0ebed19a8fd2b27f87ee1d19323d6954274f1bd3112adf08bac546c8096cd41"
+      }
+    ],
+    "totals": {
+      "local": 695,
+      "github": 104,
+      "external_handoff": 34,
+      "total": 833,
+      "local_only": 132,
+      "remote_only": 0
+    }
+  },
+  "remote_refs_read_in_p2": {
+    "nAgents_work": {
+      "repository": "maciejsieracki/nAgents",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "sha": "fad6f26c48d31ea7cb5a3e4aa8ad53b5da14ab81"
+    },
+    "nAgents_main": {
+      "repository": "maciejsieracki/nAgents",
+      "ref": "refs/heads/main",
+      "sha": "9522836d79679f5296ad23822c9a8efba9f949fb"
+    },
+    "AutoBot_Monitor_main": {
+      "repository": "maciejsieracki/Autoboot-Monitor",
+      "ref": "refs/heads/main",
+      "sha": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a"
+    }
+  },
+  "categories": [
+    {
+      "category_id": "start_agent",
+      "question": "Gdzie agent zaczyna lekturę i jakie twarde zasady obowiązują?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "NAGENTS_CHECKOUT",
+        "path": "CLAUDE.md",
+        "locator": "entire file; required first project read"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "NAGENTS-PROJECT.md",
+          "role": "candidate P5 index; not yet the process entrypoint"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": ".claude/skills/nagents-autobot/README.md",
+          "role": "skill entry"
+        }
+      ],
+      "when_to_read": "first read of every session and before scope changes",
+      "status": "CANONICAL",
+      "owner_update": "orchestrator; owner decisions stay in the main thread",
+      "conflict": "NAGENTS-PROJECT.md does not supersede CLAUDE.md before the P5 integration gate."
+    },
+    {
+      "category_id": "architecture",
+      "question": "Jaki system budujemy, z jakich warstw i z jakimi granicami bezpieczeństwa?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "NAGENTS_CHECKOUT",
+        "path": "docs/spec/00-architektura.md",
+        "locator": "sections 1-12"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/README.md",
+          "role": "specification index"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/01-mvp1.md",
+          "role": "stage detail"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/02-mvp2.md",
+          "role": "stage detail"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/03-mvp3.md",
+          "role": "stage detail"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/04-mvp4.md",
+          "role": "stage detail"
+        }
+      ],
+      "when_to_read": "when asking about model, scope, data, security, or stack",
+      "status": "CANONICAL",
+      "owner_update": "orchestrator within approved process; owner controls decision changes",
+      "conflict": "owner decisions and fresh state readback outrank a static architecture snapshot."
+    },
+    {
+      "category_id": "mvp",
+      "question": "Jaki jest zakres i kolejność MVP1–MVP4?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "NAGENTS_CHECKOUT",
+        "path": "docs/spec/README.md",
+        "locator": "roadmap and stage index"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/01-mvp1.md",
+          "role": "MVP1 acceptance detail"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/02-mvp2.md",
+          "role": "MVP2 acceptance detail"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/03-mvp3.md",
+          "role": "MVP3 acceptance detail"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/04-mvp4.md",
+          "role": "MVP4 acceptance detail"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/tematy.md",
+          "role": "topic order and current status"
+        }
+      ],
+      "when_to_read": "before planning a stage; then read only the selected stage detail",
+      "status": "CANONICAL",
+      "owner_update": "orchestrator; scope changes require owner approval",
+      "conflict": "specification defines target scope; registry and live readback define completion state."
+    },
+    {
+      "category_id": "process",
+      "question": "Jak działa proces AutoBot i jak bezpiecznie zmieniać sam proces?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "NAGENTS_CHECKOUT",
+        "path": ".claude/skills/nagents-autobot/SKILL.md",
+        "locator": "full project process contract"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "CLAUDE.md",
+          "role": "project entrypoint"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/zmiana-procesu.md",
+          "role": "process-change safety"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/dispatch/SZABLON.md",
+          "role": "dispatch format"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/tematy.md",
+          "role": "topic registry"
+        }
+      ],
+      "when_to_read": "before dispatch, evaluation, defense, integration, or process change",
+      "status": "CANONICAL",
+      "owner_update": "orchestrator under the process-change procedure; barriers require ECHO",
+      "conflict": "the universal skeleton is reference material; the project skill binds nAgents-specific values."
+    },
+    {
+      "category_id": "routing",
+      "question": "Która faza i karta mogą być uruchomione teraz?",
+      "canonical_source": {
+        "kind": "live_readback",
+        "source_id": "LIVE_READBACK_REQUIRED",
+        "path": "board autobot-monitor: task, parents, run, terminal event, receipt",
+        "required_checks": [
+          "board/project/profile identity",
+          "parent eligibility",
+          "current run",
+          "terminal event",
+          "receipt"
+        ]
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/NAGENTS-DOCS-CONSOLIDATION-PLAN.md",
+          "role": "static phase graph"
+        },
+        {
+          "source_id": "ABM_CHECKOUT",
+          "path": "AUTOBOT-KANBAN.md",
+          "role": "companion routing contract"
+        },
+        {
+          "source_id": "ABM_CHECKOUT",
+          "path": "docs/CRON-DIRECTIVE-LOOP.md",
+          "role": "Cron directive protocol"
+        },
+        {
+          "source_id": "ABM_ACTIVE_RELAY_WORKTREE",
+          "path": "docs/OWNER-CHAT-RELAY.md",
+          "role": "active relay boundary"
+        }
+      ],
+      "when_to_read": "before every transition, resume, successor creation, or status claim",
+      "status": "LIVE_READBACK_REQUIRED",
+      "owner_update": "dispatcher/receiver own runtime state; orchestrator qualifies readback",
+      "conflict": "static plans, queued state, UI, and reports cannot replace a terminal event and dependency readback."
+    },
+    {
+      "category_id": "current_state",
+      "question": "Jaki jest bieżący stan repozytorium, tematów, usług i pracy?",
+      "canonical_source": {
+        "kind": "live_readback",
+        "source_id": "LIVE_READBACK_REQUIRED",
+        "path": "git status/branch/HEAD + board stats/list/show + service/profile readback",
+        "required_checks": [
+          "working tree",
+          "branch and HEAD",
+          "board counts and cards",
+          "service/profile state"
+        ]
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/tematy.md",
+          "role": "status registry snapshot"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "NAGENTS-PROJECT.md",
+          "role": "audit snapshot and pointers"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "HANDOFF-nagents.md",
+          "role": "dated handoff snapshot"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/handoff.md",
+          "role": "dated process handoff"
+        }
+      ],
+      "when_to_read": "immediately before any claim about state, integration, or dispatch",
+      "status": "LIVE_READBACK_REQUIRED",
+      "owner_update": "owner of each live system; orchestrator records only safe snapshots",
+      "conflict": "handoffs and indexes are dated snapshots; a dirty checkout is not publication."
+    },
+    {
+      "category_id": "handoff",
+      "question": "Gdzie jest bieżący handoff i jaki ma format?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "NAGENTS_CHECKOUT",
+        "path": "docs/process/handoff.md",
+        "locator": "current handoff location and format"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "HANDOFF-nagents.md",
+          "role": "older project snapshot"
+        },
+        {
+          "source_id": "HANDOFFS_NAGENTS",
+          "path": "AUTOBOOT-INDEKS.md",
+          "role": "historical index"
+        },
+        {
+          "source_id": "HANDOFFS_NAGENTS",
+          "path": "NAGENTS-INDEKS.md",
+          "role": "older index"
+        }
+      ],
+      "when_to_read": "on context takeover, after terminal phase change, and before a new handoff",
+      "status": "CANONICAL",
+      "owner_update": "orchestrator replaces the current handoff; it is not an append-only log",
+      "conflict": "canonical location does not make its dated content live; older HANDOFF-nagents.md is history/snapshot."
+    },
+    {
+      "category_id": "decisions",
+      "question": "Jakie decyzje właściciela obowiązują?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "NAGENTS_CHECKOUT",
+        "path": "docs/spec/decisions.md",
+        "locator": "decision register"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/echo.md",
+          "role": "literal owner decision receipt"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/pytania/2026-08-25-wybory.md",
+          "role": "question wording"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "CLAUDE.md",
+          "role": "project rule pointing to decision register"
+        }
+      ],
+      "when_to_read": "before work touching cost, data, access, law, or reversibility",
+      "status": "CANONICAL",
+      "owner_update": "owner records decisions; orchestrator never infers or silently edits them",
+      "conflict": "literal ECHO and current decision log outrank recommendations, old handoffs, and silence."
+    },
+    {
+      "category_id": "open_questions",
+      "question": "Jakie pytania właścicielskie pozostają otwarte i w jakiej kolejności?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "NAGENTS_CHECKOUT",
+        "path": "docs/process/pytania/2026-08-25-wybory.md",
+        "locator": "open-question packet and priorities"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/decisions.md",
+          "role": "resolution status"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/echo.md",
+          "role": "answered owner choices"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/pytania/2026-08-22-zestaw-1.md",
+          "role": "older question packet"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/pytania/2026-08-22-warianty-c.md",
+          "role": "older variants"
+        }
+      ],
+      "when_to_read": "before asking the owner; reconcile each question with decisions and ECHO first",
+      "status": "CANONICAL",
+      "owner_update": "orchestrator maintains the packet; owner answers in the main thread",
+      "conflict": "the packet can contain questions resolved later; do not resend without reconciliation."
+    },
+    {
+      "category_id": "scenarios",
+      "question": "Jakie sytuacje muszą działać i z czego wynikają testy?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "NAGENTS_CHECKOUT",
+        "path": "docs/spec/scenarios.md",
+        "locator": "acceptance/test contract"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/01-mvp1.md",
+          "role": "stage acceptance table"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/02-mvp2.md",
+          "role": "stage acceptance table"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/03-mvp3.md",
+          "role": "stage acceptance table"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/04-mvp4.md",
+          "role": "stage acceptance table"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/dispatch/SZABLON.md",
+          "role": "dispatch-specific criteria"
+        }
+      ],
+      "when_to_read": "before test planning and when judging GOAL satisfaction",
+      "status": "CANONICAL",
+      "owner_update": "orchestrator; scenario changes require an explicit scoped topic",
+      "conflict": "stage acceptance tables may narrow their view; the scenario register is the top-level contract."
+    },
+    {
+      "category_id": "integrations",
+      "question": "Jakie integracje są wybrane i które fakty są dowiedzione?",
+      "canonical_source": {
+        "kind": "owner_decision_required",
+        "source_id": "OWNER_DECISION_REQUIRED",
+        "path": "choice of primary Hermes integration surface and Microsoft 365 scope is not recorded as final owner decision"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/spec/00-architektura.md",
+          "role": "declared nAgents integration boundary"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/nota-09-interfejs-hermesa.md",
+          "role": "Hermes interface research; no runtime proof"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/nota-10-entra-instrukcja-dla-administratora.md",
+          "role": "Entra administrator procedure"
+        },
+        {
+          "source_id": "HANDOFFS_NAGENTS",
+          "path": "INTEGRACJA-MICROSOFT365.md",
+          "role": "design handoff; not proven with real accounts"
+        }
+      ],
+      "when_to_read": "before committing an integration fact to a decision, code, or deployment plan",
+      "status": "OWNER_DECISION_REQUIRED",
+      "owner_update": "owner chooses scope; orchestrator documents and commissions verification",
+      "conflict": "Hermes notes separate protocol description from runtime testing; Microsoft 365 handoff is not proof. Do not choose for the owner."
+    },
+    {
+      "category_id": "evidence",
+      "question": "Co jest dowodem wykonania fazy lub tematu?",
+      "canonical_source": {
+        "kind": "live_readback",
+        "source_id": "LIVE_READBACK_REQUIRED",
+        "path": "exact task run + report/artifact + terminal completion event + independent verification",
+        "required_checks": [
+          "artifact exists",
+          "report matches GOAL",
+          "completion event",
+          "independent readback"
+        ]
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/dispatch/SZABLON.md",
+          "role": "report/evidence contract"
+        },
+        {
+          "source_id": "ABM_CHECKOUT",
+          "path": "runs/README.md",
+          "role": "run directory semantics"
+        },
+        {
+          "source_id": "P2_OUTPUTS",
+          "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P2-counts.json",
+          "role": "P2 audit evidence; not in P2 Markdown inventory"
+        }
+      ],
+      "when_to_read": "after a worker terminates and before unlocking the next phase",
+      "status": "LIVE_READBACK_REQUIRED",
+      "owner_update": "worker writes artifact; Evaluator and Final Control independently verify; orchestrator qualifies",
+      "conflict": "PASS, UI status, worktree name, queued state, or worker declaration alone is not evidence."
+    },
+    {
+      "category_id": "history",
+      "question": "Gdzie szukać historii rozumowania i wcześniejszych ustaleń?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "NAGENTS_CHECKOUT",
+        "path": "docs/process/pamiec.md",
+        "locator": "project reasoning/history digest"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/zmiana-procesu.md",
+          "role": "process lessons"
+        },
+        {
+          "source_id": "HANDOFFS_NAGENTS",
+          "path": "RAPORT-nAgents-scenariusz-i-plan.md",
+          "role": "dated report history"
+        },
+        {
+          "source_id": "HANDOFFS_NAGENTS",
+          "path": "AUTOBOOT-INDEKS.md",
+          "role": "dated index history"
+        }
+      ],
+      "when_to_read": "to explain provenance or a correction; not for current routing",
+      "status": "CANONICAL",
+      "owner_update": "orchestrator records lessons through the process; primary sources remain read-only",
+      "conflict": "history explains why, but never replaces a decision, specification, or live readback."
+    },
+    {
+      "category_id": "publication",
+      "question": "Czy zmiana jest opublikowana i na jakim refie?",
+      "canonical_source": {
+        "kind": "live_readback",
+        "source_id": "LIVE_READBACK_REQUIRED",
+        "path": "git ls-remote named ref + remote tree/content readback",
+        "required_checks": [
+          "owner-approved allowlist",
+          "remote ref SHA",
+          "remote content"
+        ]
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "docs/process/NAGENTS-DOCS-CONSOLIDATION-PLAN.md",
+          "role": "P7 publication procedure"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "NAGENTS-PROJECT.md",
+          "role": "publication safety notes"
+        },
+        {
+          "source_id": "NAGENTS_CHECKOUT",
+          "path": "CLAUDE.md",
+          "role": "allowed working branch rule"
+        }
+      ],
+      "when_to_read": "only after explicit publication allowlist and authorized push",
+      "status": "LIVE_READBACK_REQUIRED",
+      "owner_update": "orchestrator/integrator after owner approval; worker does not publish",
+      "conflict": "local file, branch, commit, or report does not prove publication; main, push, and merge have separate gates."
+    },
+    {
+      "category_id": "autobot_monitor",
+      "question": "Jak działa AutoBot Monitor jako system towarzyszący?",
+      "canonical_source": {
+        "kind": "repository_file",
+        "source_id": "ABM_CHECKOUT",
+        "path": "AUTOBOT-KANBAN.md",
+        "locator": "AutoBot Monitor contract"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "ABM_CHECKOUT",
+          "path": "docs/ABM-CRON-HELPER-OPERATING-RUNBOOK.md",
+          "role": "Cron/helper runbook"
+        },
+        {
+          "source_id": "ABM_CHECKOUT",
+          "path": "docs/CRON-DIRECTIVE-LOOP.md",
+          "role": "Cron directive protocol"
+        },
+        {
+          "source_id": "ABM_CHECKOUT",
+          "path": "docs/AUTOBOT-MODEL-EFFORT-FAST-POLICY.md",
+          "role": "model routing policy"
+        },
+        {
+          "source_id": "ABM_ACTIVE_RELAY_WORKTREE",
+          "path": "docs/OWNER-CHAT-RELAY.md",
+          "role": "active relay boundary"
+        },
+        {
+          "source_id": "ABM_CHECKOUT",
+          "path": "runs/README.md",
+          "role": "evidence index"
+        }
+      ],
+      "when_to_read": "when asking about Monitor, Kanban, Cron, receiver, routing, or evidence",
+      "status": "CANONICAL",
+      "owner_update": "AutoBot Monitor maintainer/owner; nAgents workers do not edit this repo",
+      "conflict": "companion contract is separate from nAgents; static policy does not prove current service state."
+    },
+    {
+      "category_id": "the_game_separate_project",
+      "question": "Czy materiał dotyczący The-Game jest źródłem nAgents?",
+      "canonical_source": {
+        "kind": "separate_project",
+        "source_id": "SEPARATE_PROJECT",
+        "path": "The-Game repository and its own board/runtime"
+      },
+      "auxiliary_sources": [
+        {
+          "source_id": "HANDOFF_THE_GAME_SEPARATE",
+          "path": "THE-GAME-INTEGRATION-HANDOFF.md",
+          "role": "metadata-only project boundary"
+        }
+      ],
+      "when_to_read": "only for a task explicitly assigned to The-Game; never as an nAgents fallback",
+      "status": "SEPARATE_PROJECT",
+      "owner_update": "The-Game owner/orchestrator in its own board",
+      "conflict": "The-Game code, branches, handoffs, and status never become nAgents truth or control its board."
+    }
+  ],
+  "source_catalog": [
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "CLAUDE.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|CLAUDE.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "8de583cc4fece98c55c49b5fac9f1562669040204f571ee2daacc9905e9390d2",
+      "size_bytes": 6521,
+      "line_count": 121,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "project entrypoint and hard current rules"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "NAGENTS-PROJECT.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|NAGENTS-PROJECT.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "6da2750082316e205062cec6154b099740964250fab6b14e8829fb79e63fe143",
+      "size_bytes": 32249,
+      "line_count": 568,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "candidate lightweight index; pending P5 integration"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/spec/00-architektura.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/spec/00-architektura.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "322a6c2a76dc4c6bee53c7c1569c306767eb29cd05420bf298e34672aca133cc",
+      "size_bytes": 15112,
+      "line_count": 283,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "canonical nAgents architecture and security boundary"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/spec/README.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/spec/README.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "2f5719a2a41e0fb9f69404b66a0adfce6d90e3e8fabc96caaf8e5815d036b1f6",
+      "size_bytes": 2673,
+      "line_count": 54,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "canonical specification index and MVP roadmap"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/spec/01-mvp1.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/spec/01-mvp1.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "e2dfb80d198052474450b08a5a4de0b740c1230021a7608e51d56f37e6405066",
+      "size_bytes": 9289,
+      "line_count": 214,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "MVP1 scope and acceptance detail"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/spec/02-mvp2.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/spec/02-mvp2.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "10cbba06ac5179dee6ff97107fb9f1a109f91419cca7d803412eba25faaddd48",
+      "size_bytes": 6915,
+      "line_count": 153,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "MVP2 scope and acceptance detail"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/spec/03-mvp3.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/spec/03-mvp3.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "8d86f8ff83722b7e835d9f385dfe062960069982e55d512eeff2db3cc48b4047",
+      "size_bytes": 9409,
+      "line_count": 213,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "MVP3 scope and acceptance detail"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/spec/04-mvp4.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/spec/04-mvp4.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "cd52c8cf8a37cd31de8d34ca4a62a621a72a61fe8d37b3bdf5843fdf1f1fd7d6",
+      "size_bytes": 6398,
+      "line_count": 144,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "MVP4 scope and acceptance detail"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": ".claude/skills/nagents-autobot/README.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|.claude/skills/nagents-autobot/README.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "4215172be4100187dfe52697d2a8dd18023d521d85d1dc6ac78255d8d68c270e",
+      "size_bytes": 7930,
+      "line_count": 148,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "project skill entry and transfer note"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": ".claude/skills/nagents-autobot/SKILL.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|.claude/skills/nagents-autobot/SKILL.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "aa5aab364e0a86c6053e46532d835a35a466357a81c562021bf78555dbb6ac3e",
+      "size_bytes": 168486,
+      "line_count": 2925,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "full nAgents AutoBot process contract"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/zmiana-procesu.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/zmiana-procesu.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "2c2d366e3ed54a28dae14b47aa78387366e20d2c9b20b1eac9c286af380e0546",
+      "size_bytes": 4606,
+      "line_count": 107,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "safe process-change procedure"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/dispatch/SZABLON.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/dispatch/SZABLON.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "6f6317cfba20f461c1a62f3bf4edfe4f1fd987e3e57aa140c4e222717ed5b0a1",
+      "size_bytes": 1851,
+      "line_count": 58,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "dispatch artifact contract"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/dispatch/NAG-INFRA-002-pomocnik-serwerowy.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/dispatch/NAG-INFRA-002-pomocnik-serwerowy.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "ce5ac57d3f65942aaad53771a43a8597bc6588f0cac86aee1ae925029f3fc158",
+      "size_bytes": 3134,
+      "line_count": 75,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "current helper dispatch evidence"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/tematy.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/tematy.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "9257a6cd1c08ce221a7e9be1039e07019dac82d1d37024aa11f25875da59c125",
+      "size_bytes": 5613,
+      "line_count": 63,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "topic registry and status snapshot"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/handoff.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/handoff.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "16f22b7a1bad1d22226be206f8b3f827a4b9f24eca6ef3d6c4f00bc663ac06f8",
+      "size_bytes": 3506,
+      "line_count": 74,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "current handoff location and format"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "HANDOFF-nagents.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|HANDOFF-nagents.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "2e9ccd808e81321a20863d846c2f0521fbb99be01ca8566056e384203b2a8936",
+      "size_bytes": 24196,
+      "line_count": 421,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "dated project handoff snapshot"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/spec/decisions.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/spec/decisions.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49",
+      "size_bytes": 10789,
+      "line_count": 264,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "decision and ADR register"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/echo.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/echo.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "e631fb90812066690a1c1a927abb885472157c2607f8c0ba4f2e6ad56996bbde",
+      "size_bytes": 5334,
+      "line_count": 146,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "literal owner decision receipts"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/pytania/2026-08-25-wybory.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/pytania/2026-08-25-wybory.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "3e0b66a6157ed159fc5c95a8a65e8b3ec006ad465b69c164573249286d9398e7",
+      "size_bytes": 38007,
+      "line_count": 743,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "open-question packet and priorities"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/spec/scenarios.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/spec/scenarios.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "8b8be2a4e631fa92306dca1779a858d0c95803bc6623b0fc60a84c5b55dd570d",
+      "size_bytes": 5324,
+      "line_count": 92,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "acceptance/test scenario contract"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/pamiec.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/pamiec.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "6e1efb3fb3db353979f9d90fa461f3404183697ee861f8b0631258477aeb2318",
+      "size_bytes": 9784,
+      "line_count": 177,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "project reasoning/history digest"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/NAGENTS-DOCS-CONSOLIDATION-PLAN.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/NAGENTS-DOCS-CONSOLIDATION-PLAN.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "17caa0e7cce8b39b904104bf86c6bbcc0bb0773cd23ad54554c121343a15fefa",
+      "size_bytes": 13998,
+      "line_count": 493,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "documentation audit graph and P3/P4 boundary"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/nota-09-interfejs-hermesa.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/nota-09-interfejs-hermesa.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "cf7f771b04f1d57c3d0b1f66bdd41b8ab4e1ef3ace0fe50d667535c147928826",
+      "size_bytes": 10514,
+      "line_count": 220,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "Hermes integration research, not runtime proof"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/nota-10-entra-instrukcja-dla-administratora.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/nota-10-entra-instrukcja-dla-administratora.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "a25bd4abc9c643398ccd56ee6184c54087456a709451c7b0bf88ca517062e377",
+      "size_bytes": 9494,
+      "line_count": 180,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "Entra administrator procedure/reference"
+    },
+    {
+      "source_id": "ABM_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/Autoboot-Monitor",
+      "relative_path": "AUTOBOT-KANBAN.md",
+      "record_id": "ABM_CHECKOUT|/home/ubuntu/projects/Autoboot-Monitor|refs/heads/main|AUTOBOT-KANBAN.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE_COMPANION",
+      "repository": "maciejsieracki/Autoboot-Monitor",
+      "branch": "main",
+      "ref": "refs/heads/main",
+      "revision": "c44c381c2deaabccec15686494eb4c63bf54394d",
+      "sha256": "87c426598b7daa9ff75757f041dc25e68978454955574f45b9a0156b0e074c25",
+      "size_bytes": 25883,
+      "line_count": 592,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "AutoBot Monitor project contract"
+    },
+    {
+      "source_id": "ABM_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/Autoboot-Monitor",
+      "relative_path": "docs/ABM-CRON-HELPER-OPERATING-RUNBOOK.md",
+      "record_id": "ABM_CHECKOUT|/home/ubuntu/projects/Autoboot-Monitor|refs/heads/main|docs/ABM-CRON-HELPER-OPERATING-RUNBOOK.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE_COMPANION",
+      "repository": "maciejsieracki/Autoboot-Monitor",
+      "branch": "main",
+      "ref": "refs/heads/main",
+      "revision": "c44c381c2deaabccec15686494eb4c63bf54394d",
+      "sha256": "5252f9150e94261e50535e8b6f7f985082fef534f4573258cfe2b4632598c98d",
+      "size_bytes": 21733,
+      "line_count": 557,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "Monitor Cron/helper operating runbook"
+    },
+    {
+      "source_id": "ABM_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/Autoboot-Monitor",
+      "relative_path": "docs/CRON-DIRECTIVE-LOOP.md",
+      "record_id": "ABM_CHECKOUT|/home/ubuntu/projects/Autoboot-Monitor|refs/heads/main|docs/CRON-DIRECTIVE-LOOP.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE_COMPANION",
+      "repository": "maciejsieracki/Autoboot-Monitor",
+      "branch": "main",
+      "ref": "refs/heads/main",
+      "revision": "c44c381c2deaabccec15686494eb4c63bf54394d",
+      "sha256": "b64ed49d5d60ff4255c66d846e15fa5efd817dda5e5f5c8a3c1c43db28f58487",
+      "size_bytes": 5910,
+      "line_count": 151,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "read-only Cron directive protocol"
+    },
+    {
+      "source_id": "ABM_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/Autoboot-Monitor",
+      "relative_path": "docs/AUTOBOT-MODEL-EFFORT-FAST-POLICY.md",
+      "record_id": "ABM_CHECKOUT|/home/ubuntu/projects/Autoboot-Monitor|refs/heads/main|docs/AUTOBOT-MODEL-EFFORT-FAST-POLICY.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE_COMPANION",
+      "repository": "maciejsieracki/Autoboot-Monitor",
+      "branch": "main",
+      "ref": "refs/heads/main",
+      "revision": "c44c381c2deaabccec15686494eb4c63bf54394d",
+      "sha256": "86d0e4ea372620a179ab2d347186e3ecb89986d0c316d8059fb48f7aba813e18",
+      "size_bytes": 3755,
+      "line_count": 96,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "model/provider/effort routing policy"
+    },
+    {
+      "source_id": "ABM_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/Autoboot-Monitor",
+      "relative_path": "runs/README.md",
+      "record_id": "ABM_CHECKOUT|/home/ubuntu/projects/Autoboot-Monitor|refs/heads/main|runs/README.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE_COMPANION",
+      "repository": "maciejsieracki/Autoboot-Monitor",
+      "branch": "main",
+      "ref": "refs/heads/main",
+      "revision": "c44c381c2deaabccec15686494eb4c63bf54394d",
+      "sha256": "87f6236479db0cd0a120f557f7a4563527fd284cda84bcc0c5fc0e948a54c1f0",
+      "size_bytes": 149,
+      "line_count": 3,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "run/evidence directory contract"
+    },
+    {
+      "source_id": "ABM_ACTIVE_RELAY_WORKTREE",
+      "source_root": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_771608cd",
+      "relative_path": "docs/OWNER-CHAT-RELAY.md",
+      "record_id": "ABM_ACTIVE_RELAY_WORKTREE|/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_771608cd|refs/heads/wt/abm-cron-001-operator|docs/OWNER-CHAT-RELAY.md",
+      "source_kind": "registered_git_worktree",
+      "source_scope": "IN_SCOPE_READ_ONLY",
+      "repository": "maciejsieracki/Autoboot-Monitor",
+      "branch": "wt/abm-cron-001-operator",
+      "ref": "refs/heads/wt/abm-cron-001-operator",
+      "revision": "b358eeb8ea95c4b77fdb3344c103a15e61c125b0",
+      "sha256": "51ef048e3a0a3296fc21aaa7c41b2910d7f7cf305afd8df266c7451ee9e3e968",
+      "size_bytes": 5893,
+      "line_count": 124,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "active owner-chat relay boundary; read-only dirty worktree"
+    },
+    {
+      "source_id": "ABM_ACTIVE_RELAY_WORKTREE",
+      "source_root": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_771608cd",
+      "relative_path": "docs/CRON-DIRECTIVE-LOOP.md",
+      "record_id": "ABM_ACTIVE_RELAY_WORKTREE|/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_771608cd|refs/heads/wt/abm-cron-001-operator|docs/CRON-DIRECTIVE-LOOP.md",
+      "source_kind": "registered_git_worktree",
+      "source_scope": "IN_SCOPE_READ_ONLY",
+      "repository": "maciejsieracki/Autoboot-Monitor",
+      "branch": "wt/abm-cron-001-operator",
+      "ref": "refs/heads/wt/abm-cron-001-operator",
+      "revision": "b358eeb8ea95c4b77fdb3344c103a15e61c125b0",
+      "sha256": "cbe44f709567a56fdb1fab25ad9a5496f949cac1aa9057772b12476fa5a467fd",
+      "size_bytes": 10108,
+      "line_count": 180,
+      "freshness_status": "FRESH",
+      "presence_status": "LOCAL_ONLY",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "active relay worktree Cron snapshot"
+    },
+    {
+      "source_id": "HANDOFFS_NAGENTS",
+      "source_root": "/home/ubuntu/handoffs",
+      "relative_path": "AUTOBOOT-INDEKS.md",
+      "record_id": "HANDOFFS_NAGENTS|/home/ubuntu/handoffs||AUTOBOOT-INDEKS.md",
+      "source_kind": "external_handoff_archive",
+      "source_scope": "IN_SCOPE_HISTORY_REFERENCE",
+      "repository": null,
+      "branch": null,
+      "ref": null,
+      "revision": null,
+      "sha256": "b30bf8bc22e9dd74dbf437c54c0bd988403809b54fa1a6277803aa5c236c51a3",
+      "size_bytes": 15255,
+      "line_count": 207,
+      "freshness_status": "FRESH",
+      "presence_status": "NOT_APPLICABLE_EXTERNAL_ARCHIVE",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "historical AutoBot/nAgents index"
+    },
+    {
+      "source_id": "HANDOFFS_NAGENTS",
+      "source_root": "/home/ubuntu/handoffs",
+      "relative_path": "NAGENTS-INDEKS.md",
+      "record_id": "HANDOFFS_NAGENTS|/home/ubuntu/handoffs||NAGENTS-INDEKS.md",
+      "source_kind": "external_handoff_archive",
+      "source_scope": "IN_SCOPE_HISTORY_REFERENCE",
+      "repository": null,
+      "branch": null,
+      "ref": null,
+      "revision": null,
+      "sha256": "1d5957c2058ca976efb00de72ffff8d369a2830068b0a3e7d9989426e7062757",
+      "size_bytes": 1979,
+      "line_count": 33,
+      "freshness_status": "FRESH",
+      "presence_status": "NOT_APPLICABLE_EXTERNAL_ARCHIVE",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "older nAgents index"
+    },
+    {
+      "source_id": "HANDOFFS_NAGENTS",
+      "source_root": "/home/ubuntu/handoffs",
+      "relative_path": "INTEGRACJA-MICROSOFT365.md",
+      "record_id": "HANDOFFS_NAGENTS|/home/ubuntu/handoffs||INTEGRACJA-MICROSOFT365.md",
+      "source_kind": "external_handoff_archive",
+      "source_scope": "IN_SCOPE_HISTORY_REFERENCE",
+      "repository": null,
+      "branch": null,
+      "ref": null,
+      "revision": null,
+      "sha256": "d092769bada5ebebf53e121fce290937b640ba8579ef1eb6d5b2b1656ab132e0",
+      "size_bytes": 12428,
+      "line_count": 292,
+      "freshness_status": "FRESH",
+      "presence_status": "NOT_APPLICABLE_EXTERNAL_ARCHIVE",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "Microsoft 365 design handoff, not proven runtime"
+    },
+    {
+      "source_id": "HANDOFFS_NAGENTS",
+      "source_root": "/home/ubuntu/handoffs",
+      "relative_path": "RAPORT-nAgents-scenariusz-i-plan.md",
+      "record_id": "HANDOFFS_NAGENTS|/home/ubuntu/handoffs||RAPORT-nAgents-scenariusz-i-plan.md",
+      "source_kind": "external_handoff_archive",
+      "source_scope": "IN_SCOPE_HISTORY_REFERENCE",
+      "repository": null,
+      "branch": null,
+      "ref": null,
+      "revision": null,
+      "sha256": "31953e24a4f556c666e04635e23f707648a7538c4ab99ae67d8633aaf6ed5c7e",
+      "size_bytes": 39692,
+      "line_count": 496,
+      "freshness_status": "RECENT",
+      "presence_status": "NOT_APPLICABLE_EXTERNAL_ARCHIVE",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "dated plan/report history"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/pytania/2026-08-22-zestaw-1.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/pytania/2026-08-22-zestaw-1.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "b4f560b4f65f1074381b1b4dbfc59a99bb309443c0e7c1c1ab259d8219010ecf",
+      "size_bytes": 129439,
+      "line_count": 1442,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "older owner-question packet; history only"
+    },
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_root": "/home/ubuntu/projects/nAgents-readonly",
+      "relative_path": "docs/process/pytania/2026-08-22-warianty-c.md",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/process/pytania/2026-08-22-warianty-c.md",
+      "source_kind": "local_git_checkout",
+      "source_scope": "IN_SCOPE",
+      "repository": "maciejsieracki/nAgents",
+      "branch": "claude/git-connection-9sz6dg",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "80dbd006995368c93e019bf522dc6620473165dd464db45ea3949f2d84a7200c",
+      "size_bytes": 14009,
+      "line_count": 142,
+      "freshness_status": "FRESH",
+      "presence_status": "PRESENT_BOTH",
+      "inventory_observed_at_utc": "2026-09-14T13:56:47+00:00",
+      "role": "older question variants; history only"
+    }
+  ],
+  "safety": {
+    "secrets_read": false,
+    "pii_copied": false,
+    "raw_logs_read": false,
+    "state_db_read": false,
+    "source_files_modified": false,
+    "deleted_files": false,
+    "git_add_or_commit": false,
+    "push_or_deploy": false
+  },
+  "next_step": "NAG-DOCS-P4-STALE-DUPLICATES-Q1"
+}

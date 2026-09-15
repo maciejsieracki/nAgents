@@ -1,0 +1,1761 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "NAG-CONSOLIDATE-DECISIONS-Q1-coverage-v1",
+  "topic_id": "NAG-CONSOLIDATE-DECISIONS-Q1",
+  "phase": "operator",
+  "status": "PASS_WITH_EXPLICIT_OWNER_GATES",
+  "domain": "INFORMACYJNY",
+  "generated_at_utc": "2026-09-14T17:22:58Z",
+  "p6_observed_at_utc": "2026-09-14T15:13:12Z",
+  "p4_observed_at_utc": "2026-09-14T14:47:54+00:00",
+  "inputs": {
+    "p6_plan": {
+      "path": "NAGENTS-CONSOLIDATION-PLAN.md",
+      "sha256": "b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c",
+      "size_bytes": 130539,
+      "line_count": 665,
+      "status": "PLAN_ONLY / OWNER_HOLD_REQUIRED",
+      "readback": "local_checkout_bytes"
+    },
+    "p4_classification": {
+      "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json",
+      "sha256": "95d2a06fc80e4cf1c27d59959d84b8631e70acbb3e0b879b83df95c38bf382b8",
+      "size_bytes": 2655394,
+      "line_count": 54556,
+      "status": "PASS_WITH_EXPLICIT_OWNER_GATES",
+      "readback": "local_checkout_bytes"
+    }
+  },
+  "sections": [
+    {
+      "id": "DEC-01",
+      "scope": "D-001…D-013: opcje, status/wybór, uzasadnienie, konsekwencje",
+      "source_refs": [
+        "SRC-01"
+      ],
+      "p6_locator": "NAGENTS-CONSOLIDATION-PLAN.md §4.2 lines 110–115",
+      "source_statuses": [
+        "CANONICAL"
+      ],
+      "target_status": "STAGING_ONLY",
+      "acceptance": "13/13 decision IDs and literal ranges match docs/spec/decisions.md; no decision imported from history.",
+      "literal_block_count": 13
+    },
+    {
+      "id": "DEC-02",
+      "scope": "literalne ECHO, odpowiedź, autor i data",
+      "source_refs": [
+        "SRC-02"
+      ],
+      "p6_locator": "NAGENTS-CONSOLIDATION-PLAN.md §4.2 lines 115–116",
+      "source_statuses": [
+        "CANONICAL"
+      ],
+      "target_status": "STAGING_ONLY",
+      "acceptance": "Every ECHO section has literal answer, author, date, source status and locator; recommendation is not ECHO.",
+      "literal_block_count": 5
+    },
+    {
+      "id": "DEC-03",
+      "scope": "pytania właścicielskie, kolejność i rekonsyliacja",
+      "source_refs": [
+        "SRC-03",
+        "SRC-01",
+        "SRC-02"
+      ],
+      "p6_locator": "NAGENTS-CONSOLIDATION-PLAN.md §4.2 lines 116–117",
+      "source_statuses": [
+        "CANONICAL"
+      ],
+      "target_status": "STAGING_ONLY",
+      "acceptance": "Eight open questions are separate from decisions; D-010/D-011 and non-question statuses remain explicit.",
+      "literal_block_count": 9
+    },
+    {
+      "id": "DEC-04",
+      "scope": "historyczne warianty i korekty",
+      "source_refs": [
+        "SRC-04",
+        "SRC-01",
+        "SRC-03"
+      ],
+      "p6_locator": "NAGENTS-CONSOLIDATION-PLAN.md §4.2 lines 117–118",
+      "source_statuses": [
+        "HISTORY",
+        "CANONICAL"
+      ],
+      "target_status": "STAGING_ONLY",
+      "acceptance": "Historical text carries HISTORY and cannot change current decision/question status; source hash and correction locators retained.",
+      "literal_block_count": 13
+    }
+  ],
+  "source_ledger": [
+    {
+      "source_ref": "SRC-01",
+      "path": "docs/spec/decisions.md",
+      "sha256": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49",
+      "size_bytes": 10789,
+      "line_count": 264,
+      "readback": "local_checkout_bytes",
+      "status": "CANONICAL",
+      "source_of_truth": true,
+      "role": "Dziennik decyzji właścicielskich; źródło normatywne DEC-01.",
+      "locators": [
+        "D-001…D-013; §D-010 i §D-011 pozostają otwarte."
+      ],
+      "p4": {
+        "path_family_id": "PF-0241",
+        "group_id": "NAG-SPEC",
+        "status": "CANONICAL",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_AUX_WORKTREES",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49",
+        "p4_current_readback_sha256": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49",
+        "p4_current_readback_matches_preferred": true,
+        "p4_hash_variant_count": 2,
+        "p4_line_count": 264,
+        "p4_size_bytes": null,
+        "target_package": "docs/spec/ pozostaje; przyszły NAGENTS-SPEC.md tylko po macierzy pokrycia P6",
+        "source_of_truth": "docs/spec/README.md, 00-architektura.md, decisions.md, scenarios.md (P3)",
+        "p4_unique_content": "Architektura, MVP1–MVP4, dziennik decyzji i scenariusze odbioru mają rozdzielone role; lokalny checkout wnosi D-012/D-013 i sekcje web-first/helper.",
+        "p4_contradictions": [
+          "Dziewięć ścieżek ma lokalne zmiany względem nazwanego refu; zdalny snapshot nie zawiera tych nowych sekcji. `01-mvp1.md` ma lokalną korektę tabeli bez zmiany nagłówków."
+        ],
+        "p4_risk": "Kopiowanie zdalnego refu lub starej specyfikacji może cofnąć decyzje i zakres."
+      }
+    },
+    {
+      "source_ref": "SRC-02",
+      "path": "docs/process/echo.md",
+      "sha256": "e631fb90812066690a1c1a927abb885472157c2607f8c0ba4f2e6ad56996bbde",
+      "size_bytes": 5334,
+      "line_count": 146,
+      "readback": "local_checkout_bytes",
+      "status": "CANONICAL",
+      "source_of_truth": true,
+      "role": "Literalny rejestr ECHO; źródło normatywne wpisów właścicielskich DEC-02.",
+      "locators": [
+        "§Wpisy; pięć wpisów ###."
+      ],
+      "p4": {
+        "path_family_id": "PF-0219",
+        "group_id": "NAG-PROCESS",
+        "status": "CANONICAL",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_AUX_WORKTREES",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "e631fb90812066690a1c1a927abb885472157c2607f8c0ba4f2e6ad56996bbde",
+        "p4_current_readback_sha256": "e631fb90812066690a1c1a927abb885472157c2607f8c0ba4f2e6ad56996bbde",
+        "p4_current_readback_matches_preferred": true,
+        "p4_hash_variant_count": 3,
+        "p4_line_count": 146,
+        "p4_size_bytes": null,
+        "target_package": "NAGENTS-PROCESS.md jako przyszły pakiet; SKILL.md i źródło uniwersalne pozostają osobno",
+        "source_of_truth": ".claude/skills/nagents-autobot/SKILL.md + CLAUDE.md (P3 kat. 4)",
+        "p4_unique_content": "Projektowy skill zawiera szczegółową pętlę, bariery, ABC/ECHO, watchdog i raportowanie; źródło uniwersalne oddziela reguły przenośne od wiązań nAgents; SCHEMAT opisuje bezpieczny podział.",
+        "p4_contradictions": [
+          "Szkielet uniwersalny nie jest normą nAgents; pracownikowy opis jest uproszczeniem, a dispatchy są snapshotami zadań."
+        ],
+        "p4_risk": "Mechaniczne scalenie może usunąć wiązania projektu albo nadać materiałowi referencyjnemu rangę normy."
+      }
+    },
+    {
+      "source_ref": "SRC-03",
+      "path": "docs/process/pytania/2026-08-25-wybory.md",
+      "sha256": "3e0b66a6157ed159fc5c95a8a65e8b3ec006ad465b69c164573249286d9398e7",
+      "size_bytes": 38007,
+      "line_count": 743,
+      "readback": "local_checkout_bytes",
+      "status": "CANONICAL",
+      "source_of_truth": true,
+      "role": "Aktualny pakiet pytań właścicielskich oraz rozdział statusów DEC-03.",
+      "locators": [
+        "§Pytanie 1–8; §Sprawy, które nie trafiają…"
+      ],
+      "p4": {
+        "path_family_id": "PF-0225",
+        "group_id": "NAG-DECISIONS",
+        "status": "CANONICAL",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_AUX_WORKTREES",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "3e0b66a6157ed159fc5c95a8a65e8b3ec006ad465b69c164573249286d9398e7",
+        "p4_current_readback_sha256": "3e0b66a6157ed159fc5c95a8a65e8b3ec006ad465b69c164573249286d9398e7",
+        "p4_current_readback_matches_preferred": true,
+        "p4_hash_variant_count": 1,
+        "p4_line_count": 743,
+        "p4_size_bytes": null,
+        "target_package": "NAGENTS-DECISIONS.md jako przyszły pakiet; aktualne pliki pozostają źródłami",
+        "source_of_truth": "docs/spec/decisions.md + docs/process/echo.md + docs/process/pytania/2026-08-25-wybory.md (P3)",
+        "p4_unique_content": "Literalne decyzje D-001…D-013, ECHO oraz jawne pytania właścicielskie; stare zestawy pytań zawierają warianty i odpowiedzi, których nie wolno przepisać bez rekonsyliacji.",
+        "p4_contradictions": [
+          "Lokalne decisions/echo mają nowe wpisy względem refu; stare pytania mogą wyglądać na otwarte mimo późniejszych decyzji."
+        ],
+        "p4_risk": "Powtórzenie rozstrzygniętego pytania lub cicha zmiana decyzji właściciela."
+      }
+    },
+    {
+      "source_ref": "SRC-04",
+      "path": "docs/nota-08-wybory-otwarte.md",
+      "sha256": "b05ce062506e6ac5d50309c504a6bf0a32f5257e925c1b78ad27d3ccb86625d9",
+      "size_bytes": 19004,
+      "line_count": 347,
+      "readback": "local_checkout_bytes",
+      "status": "HISTORY",
+      "source_of_truth": false,
+      "role": "Datowane zaplecze merytoryczne; historia i rekomendacje, nigdy bieżąca norma.",
+      "locators": [
+        "§Co jest pracą Hermesa…; §Pytanie 1–8; §Informacja…D-010; §Uwagi redakcyjne."
+      ],
+      "p4": {
+        "path_family_id": "PF-0206",
+        "group_id": "NAG-RESEARCH",
+        "status": "HISTORY",
+        "primary_status": "HISTORY",
+        "record_count": 12,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_AUX_WORKTREES",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "b05ce062506e6ac5d50309c504a6bf0a32f5257e925c1b78ad27d3ccb86625d9",
+        "p4_current_readback_sha256": "b05ce062506e6ac5d50309c504a6bf0a32f5257e925c1b78ad27d3ccb86625d9",
+        "p4_current_readback_matches_preferred": true,
+        "p4_hash_variant_count": 1,
+        "p4_line_count": 347,
+        "p4_size_bytes": null,
+        "target_package": "NAGENTS-RESEARCH.md; decyzje tylko po wpisie w decisions/ECHO",
+        "source_of_truth": "docs/process/pamiec.md oraz właściwe źródła pierwotne; nie jest źródłem bieżącego routingu",
+        "p4_unique_content": "Porównania dróg, topologii, dostawców serwerów i modeli oraz uzasadnienia odrzuceń; noty zachowują tok rozumowania.",
+        "p4_contradictions": [
+          "Ceny, dostępne funkcje, topologia i status wdrożenia są zależne od daty; część hipotez została później skorygowana."
+        ],
+        "p4_risk": "Stara rekomendacja może zostać użyta jako decyzja lub bieżący fakt."
+      }
+    },
+    {
+      "source_ref": "SRC-05",
+      "path": "NAGENTS-CONSOLIDATION-PLAN.md",
+      "sha256": "b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c",
+      "size_bytes": 130539,
+      "line_count": 665,
+      "readback": "local_checkout_bytes",
+      "status": "PLAN_ONLY / OWNER_HOLD_REQUIRED",
+      "source_of_truth": false,
+      "role": "Plan P6 i kontrakt macierzy sekcja → źródło → status → bramka.",
+      "locators": [
+        "§3 wiersz NAGENTS-DECISIONS; §4.2 DEC-01…DEC-04; §6.4; §8–§9."
+      ],
+      "p4": null
+    },
+    {
+      "source_ref": "SRC-06",
+      "path": "NAGENTS-PROJECT.md",
+      "sha256": "84cc8a89c0e7bd53268fc78826938bec062f9223340aa2e0934d64719764a2fb",
+      "size_bytes": 53421,
+      "line_count": 819,
+      "snapshot_sha256": "bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae00236a",
+      "snapshot_size_bytes": 53403,
+      "snapshot_line_count": 819,
+      "readback": "local_checkout_bytes",
+      "status": "CONSOLIDATION_CANDIDATE",
+      "source_of_truth": false,
+      "role": "Indeks nawigacyjny; wskazuje źródła i kandydat pakietu, nie ustanawia decyzji.",
+      "locators": [
+        "§1; §2.1 wiersze o decyzjach; §4.4; §11; §12; dokładny drift NAGENTS-PROJECT.md:165."
+      ],
+      "drift": {
+        "status": "RECONCILED",
+        "delta_bytes": 18,
+        "snapshot_sha256": "bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae00236a",
+        "snapshot_size_bytes": 53403,
+        "snapshot_line_count": 819,
+        "current_readback_sha256": "84cc8a89c0e7bd53268fc78826938bec062f9223340aa2e0934d64719764a2fb",
+        "current_readback_size_bytes": 53421,
+        "current_readback_line_count": 819,
+        "locator": {
+          "path": "NAGENTS-PROJECT.md",
+          "line": 165,
+          "byte_offset_zero_based": 11051,
+          "current_byte_range_zero_based_inclusive": [11051, 11212],
+          "current_byte_range_one_based_inclusive": [11052, 11213],
+          "line_bytes_including_lf": {
+            "snapshot": 144,
+            "current": 162
+          }
+        },
+        "snapshot_line": "| NAgents project anchor | `nagents-docs / p_cb0f9def` | `hermes project show nagents-docs`; używać jako `project_id` na wspólnym boardzie |",
+        "current_line": "| NAgents project anchor | `nagents-docs / p_e90c30bc` | `hermes --profile default project show nagents-docs`; używać jako `project_id` na wspólnym boardzie |",
+        "effect": "Anchor przechodzi z p_cb0f9def i niekwalifikowanego odczytu na p_e90c30bc odczytywany jawnie w profilu default; treść decyzji, status indeksu i liczniki pakietu nie zmieniają się.",
+        "reconstruction": "Zastąpienie bieżącej linii 165 linią snapshotu odtwarza dokładnie SHA-256 bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae00236a, rozmiar 53403 B i 819 linii."
+      },
+      "p4": {
+        "path_family_id": "PF-0184",
+        "group_id": "NAG-INDEX",
+        "status": "CONSOLIDATION_CANDIDATE",
+        "primary_status": "CONSOLIDATION_CANDIDATE",
+        "record_count": 2,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "6da2750082316e205062cec6154b099740964250fab6b14e8829fb79e63fe143",
+        "p4_current_readback_sha256": "bd0637953c521b879c19ec87f663bcdf6c42e950cd471242697f953ad91f25d3",
+        "p4_current_readback_matches_preferred": false,
+        "p4_hash_variant_count": 1,
+        "p4_line_count": 576,
+        "p4_size_bytes": null,
+        "target_package": "NAGENTS-PROJECT.md; docelowo lekkie odnośniki do NAGENTS-HANDOFF.md",
+        "source_of_truth": "CLAUDE.md + docs/process/handoff.md (P3)",
+        "p4_unique_content": "NAGENTS-PROJECT.md mapuje pytanie → źródło → readback i granice projektów; starsze AUTOBOOT/NAGENTS-INDEKS zawierają kontekst historyczny, którego nie ma w CLAUDE.",
+        "p4_contradictions": [
+          "Nazwy „aktualny indeks” i stare kolejności czytania nie są dowodem live state; część starych wpisów opisuje inne fazy i profile."
+        ],
+        "p4_risk": "Duplikat punktu startowego może skierować pracę do nieistniejącego lub nieaktualnego stanu.",
+        "fresh_local_sha256": "84cc8a89c0e7bd53268fc78826938bec062f9223340aa2e0934d64719764a2fb",
+        "fresh_local_size_bytes": 53421,
+        "fresh_local_line_count": 819,
+        "recorded_snapshot_sha256": "bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae00236a",
+        "recorded_snapshot_size_bytes": 53403,
+        "recorded_snapshot_line_count": 819,
+        "drift_locator": "NAGENTS-PROJECT.md:165; byte offset 11051 zero-based",
+        "drift_effect": "Current index routes the nAgents anchor through profile default; decision content and package counts are unchanged.",
+        "fresh_local_differs_from_p4_recorded_current": true,
+        "note": "P4/P5 snapshot fields are historical; current local readback, prior operator snapshot and exact one-line drift are retained separately."
+      }
+    },
+    {
+      "source_ref": "SRC-07",
+      "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json",
+      "sha256": "95d2a06fc80e4cf1c27d59959d84b8631e70acbb3e0b879b83df95c38bf382b8",
+      "size_bytes": 2655394,
+      "line_count": 54556,
+      "readback": "local_checkout_bytes",
+      "status": "PASS_WITH_EXPLICIT_OWNER_GATES",
+      "source_of_truth": false,
+      "role": "Maszynowy audyt P4; proweniencja i statusy, nie norma właścicielska.",
+      "locators": [
+        "logical_group_rollups[NAG-DECISIONS]; path_family_classifications[PF-0241, PF-0219, PF-0225, PF-0206, PF-0184]."
+      ],
+      "p4": null
+    }
+  ],
+  "decision_index": [
+    {
+      "id": "D-001",
+      "title": "Budujemy, nie kupujemy",
+      "date": "2026-08-22",
+      "status_literal": "przyjęta",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          10,
+          27
+        ],
+        "heading": "## D-001 · Budujemy, nie kupujemy"
+      },
+      "literal_sha256": "b41d6c9a8c7ceb851d1341c914adfbc9cf3568a211edaa58e377aa86f2adc0b5",
+      "literal_size_bytes": 706,
+      "literal_line_count": 17
+    },
+    {
+      "id": "D-002",
+      "title": "Brama modeli jest nasza",
+      "date": "2026-08-22",
+      "status_literal": "przyjęta",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          28,
+          43
+        ],
+        "heading": "## D-002 · Brama modeli jest nasza"
+      },
+      "literal_sha256": "eaabbf94b5ef8d840a1456a0134904fa004b0858977bd1ea0b4bc4844c253c1d",
+      "literal_size_bytes": 582,
+      "literal_line_count": 15
+    },
+    {
+      "id": "D-003",
+      "title": "Agenci stanowiskowi bez własnych kluczy",
+      "date": "2026-08-22",
+      "status_literal": "przyjęta",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          44,
+          58
+        ],
+        "heading": "## D-003 · Agenci stanowiskowi bez własnych kluczy"
+      },
+      "literal_sha256": "7d16c896eae274dd32f5c7066b943c7fc0fc62a20939503ec5989e620c72c77c",
+      "literal_size_bytes": 603,
+      "literal_line_count": 14
+    },
+    {
+      "id": "D-004",
+      "title": "Brak dostępu zwraca 404, nie 403",
+      "date": "2026-08-22",
+      "status_literal": "przyjęta",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          59,
+          71
+        ],
+        "heading": "## D-004 · Brak dostępu zwraca 404, nie 403"
+      },
+      "literal_sha256": "77a01bac0f739aee9dba17f46172848d8b4161b9dbfed074319f72b43b0b3aaa",
+      "literal_size_bytes": 422,
+      "literal_line_count": 12
+    },
+    {
+      "id": "D-005",
+      "title": "Baza wiedzy w repozytorium, nie w bazie danych",
+      "date": "2026-08-22",
+      "status_literal": "przyjęta",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          72,
+          87
+        ],
+        "heading": "## D-005 · Baza wiedzy w repozytorium, nie w bazie danych"
+      },
+      "literal_sha256": "d0c265213cfb4364bd0ee0fde64880d12a034641a1fba8b36de12418f8e640b9",
+      "literal_size_bytes": 673,
+      "literal_line_count": 15
+    },
+    {
+      "id": "D-006",
+      "title": "Pamięć prywatna odcinana od agentów procesowych",
+      "date": "2026-08-22",
+      "status_literal": "przyjęta",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          88,
+          101
+        ],
+        "heading": "## D-006 · Pamięć prywatna odcinana od agentów procesowych"
+      },
+      "literal_sha256": "c25d43a885e1f1050c626be747965c2388740c7b6a90a6ec6a9b952a394e5488",
+      "literal_size_bytes": 500,
+      "literal_line_count": 13
+    },
+    {
+      "id": "D-007",
+      "title": "Wielonajemność przygotowana od pierwszego dnia",
+      "date": "2026-08-22",
+      "status_literal": "przyjęta",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          102,
+          114
+        ],
+        "heading": "## D-007 · Wielonajemność przygotowana od pierwszego dnia"
+      },
+      "literal_sha256": "8b3e4eceeea0d4bc43442de9ec60e3e145c72ad53c2c9d156da89ce106a3f10d",
+      "literal_size_bytes": 417,
+      "literal_line_count": 12
+    },
+    {
+      "id": "D-008",
+      "title": "Python i szablony serwerowe zamiast osobnego frontendu",
+      "date": "2026-08-22",
+      "status_literal": "przyjęta",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          115,
+          128
+        ],
+        "heading": "## D-008 · Python i szablony serwerowe zamiast osobnego frontendu"
+      },
+      "literal_sha256": "d010ce58daf24d83d55d0518ee97a4312bf8b2738c5026d0e52c6973a7711eb7",
+      "literal_size_bytes": 473,
+      "literal_line_count": 13
+    },
+    {
+      "id": "D-009",
+      "title": "Tokenizacja nie zwalnia z umowy powierzenia",
+      "date": "2026-08-22",
+      "status_literal": "przyjęta",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          129,
+          143
+        ],
+        "heading": "## D-009 · Tokenizacja nie zwalnia z umowy powierzenia"
+      },
+      "literal_sha256": "07bf2bbb16fe5bb7efa38fa073aa35a628d53794caf48ebda8a4b28c3361e3cd",
+      "literal_size_bytes": 607,
+      "literal_line_count": 14
+    },
+    {
+      "id": "D-010",
+      "title": "Topologia agentów — decyzja odroczona",
+      "date": "2026-08-22",
+      "status_literal": "otwarta",
+      "decision_state": "OPEN_DEFERRED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          144,
+          160
+        ],
+        "heading": "## D-010 · Topologia agentów — decyzja odroczona"
+      },
+      "literal_sha256": "1bf484cdfdf623dc8258e0e93f933cd59cd4f385ad31482b1c703778e9de56c2",
+      "literal_size_bytes": 629,
+      "literal_line_count": 16
+    },
+    {
+      "id": "D-011",
+      "title": "Rezydencja wspólnej pamięci — blokada",
+      "date": "2026-08-22",
+      "status_literal": "otwarta, blokująca",
+      "decision_state": "OPEN_BLOCKING_MVP3",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          161,
+          178
+        ],
+        "heading": "## D-011 · Rezydencja wspólnej pamięci — blokada"
+      },
+      "literal_sha256": "cc2b640cba5f7ae2b2b3f1fac9f0e59e33fa761a2db1b72a9b9d91950005d96e",
+      "literal_size_bytes": 703,
+      "literal_line_count": 17
+    },
+    {
+      "id": "D-012",
+      "title": "Web-first i serwerowa własność pracy",
+      "date": "2026-09-13",
+      "status_literal": "przyjęta dyrektywą właściciela",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          179,
+          220
+        ],
+        "heading": "## D-012 · Web-first i serwerowa własność pracy"
+      },
+      "literal_sha256": "2a3dd97dd3819b1df276cbfefa8108d07f15729aa1fa775325ee4dcda1fe5440",
+      "literal_size_bytes": 2036,
+      "literal_line_count": 41
+    },
+    {
+      "id": "D-013",
+      "title": "Serwerowy pomocnik procesu dla autonomicznej pętli",
+      "date": "2026-09-13",
+      "status_literal": "przyjęta wyborem właściciela wariantu A",
+      "decision_state": "ACCEPTED",
+      "source_ref": "SRC-01",
+      "source_path": "docs/spec/decisions.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-SPEC",
+      "p4_path_family_id": "PF-0241",
+      "source_locator": {
+        "lines": [
+          221,
+          264
+        ],
+        "heading": "## D-013 · Serwerowy pomocnik procesu dla autonomicznej pętli"
+      },
+      "literal_sha256": "59ac5f4dc5932ba06fe6b1653c1b28af4b39c18234a69e50e6d5e8fb556b88a6",
+      "literal_size_bytes": 2134,
+      "literal_line_count": 44
+    }
+  ],
+  "echo_index": [
+    {
+      "id": "NAG-MVP1-008-audyt-Q1",
+      "answer_literal": "B",
+      "date": "2026-09-11",
+      "author": "właściciel",
+      "source_ref": "SRC-02",
+      "source_path": "docs/process/echo.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-PROCESS",
+      "p4_path_family_id": "PF-0219",
+      "source_locator": {
+        "lines": [
+          32,
+          44
+        ],
+        "heading": "### NAG-MVP1-008-audyt-Q1 — trwałość i dostęp do audytu"
+      },
+      "literal_sha256": "a3dc2d9915e41d4bdf830c6b9ccd9479c21888d72e15dfeda4b55a6c5e0fb9ab",
+      "literal_size_bytes": 468,
+      "literal_line_count": 12,
+      "related_decision": "brak D-xxx; źródłowy skutek mówi wprost: bez zmiany decisions.md",
+      "classification": "OWNER_ECHO_LITERAL",
+      "date_literal": "2026-09-11",
+      "author_literal": "właściciel"
+    },
+    {
+      "id": "ECHO-001",
+      "answer_literal": "przyjęte",
+      "date": "2026-08-22",
+      "author": "właściciel",
+      "source_ref": "SRC-02",
+      "source_path": "docs/process/echo.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-PROCESS",
+      "p4_path_family_id": "PF-0219",
+      "source_locator": {
+        "lines": [
+          45,
+          72
+        ],
+        "heading": "### ECHO-001 — delegowanie i przydział modeli"
+      },
+      "literal_sha256": "446a57288beee647e50ee822ab37836278ffc55be1ee6c4a9210859fde7be58e",
+      "literal_size_bytes": 1029,
+      "literal_line_count": 27,
+      "related_decision": "zasady procesu; źródło nie przypisuje wpisu do D-xxx",
+      "classification": "OWNER_ECHO_LITERAL",
+      "date_literal": "2026-08-22",
+      "author_literal": "właściciel"
+    },
+    {
+      "id": "ECHO-002",
+      "answer_literal": "przyjęte",
+      "date": "2026-08-22",
+      "author": "właściciel",
+      "source_ref": "SRC-02",
+      "source_path": "docs/process/echo.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-PROCESS",
+      "p4_path_family_id": "PF-0219",
+      "source_locator": {
+        "lines": [
+          73,
+          99
+        ],
+        "heading": "### ECHO-002 — dispatch wyłącznie przez workflow"
+      },
+      "literal_sha256": "14c94e1a6e88774dbca956199fd2d6ea4913117ae2c3e6167fa23ce6d3d8ed50",
+      "literal_size_bytes": 870,
+      "literal_line_count": 26,
+      "related_decision": "zasady procesu; źródło nie przypisuje wpisu do D-xxx",
+      "classification": "OWNER_ECHO_LITERAL",
+      "date_literal": "2026-08-22",
+      "author_literal": "właściciel"
+    },
+    {
+      "id": "ECHO-003",
+      "answer_literal": "A",
+      "date": "2026-08-23",
+      "author": "właściciel",
+      "source_ref": "SRC-02",
+      "source_path": "docs/process/echo.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-PROCESS",
+      "p4_path_family_id": "PF-0219",
+      "source_locator": {
+        "lines": [
+          100,
+          136
+        ],
+        "heading": "### ECHO-003 — potwierdzenie ECHO-001 przy sprzeczności zapisów"
+      },
+      "literal_sha256": "460e00eadfa2f1d6fa643210ecddf07b25de4f6e0f23c3702ed86846e36c8076",
+      "literal_size_bytes": 1550,
+      "literal_line_count": 36,
+      "related_decision": "potwierdza ECHO-001; nie tworzy nowego D-xxx",
+      "classification": "OWNER_ECHO_LITERAL",
+      "date_literal": "2026-08-23",
+      "author_literal": "właściciel"
+    },
+    {
+      "id": "NAG-INFRA-002-pomocnik-serwerowy-Q1",
+      "answer_literal": "A",
+      "date": "2026-09-13",
+      "author": "właściciel",
+      "source_ref": "SRC-02",
+      "source_path": "docs/process/echo.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-PROCESS",
+      "p4_path_family_id": "PF-0219",
+      "source_locator": {
+        "lines": [
+          137,
+          146
+        ],
+        "heading": "### NAG-INFRA-002-pomocnik-serwerowy-Q1 — wybór trybu pomocnika"
+      },
+      "literal_sha256": "c7c0a874c160cceaa2ef58280ea0de9f43c5d821a4d7a70acf93477f97890460",
+      "literal_size_bytes": 497,
+      "literal_line_count": 10,
+      "related_decision": "D-013",
+      "classification": "OWNER_ECHO_LITERAL",
+      "date_literal": "2026-09-13",
+      "author_literal": "właściciel"
+    }
+  ],
+  "open_question_index": [
+    {
+      "id": "Q-01",
+      "number": 1,
+      "title": "Gdzie ma fizycznie stać komputer, na którym działa cały system",
+      "urgency_literal": "BLOKUJE TERAZ",
+      "status": "OPEN_OWNER_DECISION",
+      "linked_decision": null,
+      "recommendation_status": "NOT_A_DECISION",
+      "source_ref": "SRC-03",
+      "source_path": "docs/process/pytania/2026-08-25-wybory.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-DECISIONS",
+      "p4_path_family_id": "PF-0225",
+      "source_locator": {
+        "lines": [
+          34,
+          99
+        ],
+        "heading": "## Pytanie 1 — Gdzie ma fizycznie stać komputer, na którym działa cały system"
+      },
+      "literal_sha256": "d49a6bf58077d48e1dffd80f938bfdbd896282c2ebcd903d1b3f12741a0527c0",
+      "literal_size_bytes": 3095,
+      "literal_line_count": 65
+    },
+    {
+      "id": "Q-02",
+      "number": 2,
+      "title": "Czy potrzebujemy prawnika, zanim system zacznie pracować na prawdziwych danych",
+      "urgency_literal": "BLOKUJE TERAZ",
+      "status": "OPEN_OWNER_DECISION",
+      "linked_decision": null,
+      "recommendation_status": "NOT_A_DECISION",
+      "source_ref": "SRC-03",
+      "source_path": "docs/process/pytania/2026-08-25-wybory.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-DECISIONS",
+      "p4_path_family_id": "PF-0225",
+      "source_locator": {
+        "lines": [
+          100,
+          170
+        ],
+        "heading": "## Pytanie 2 — Czy potrzebujemy prawnika, zanim system zacznie pracować na prawdziwych danych"
+      },
+      "literal_sha256": "fbd6dce5a67fc44519f60b09ff19c4bf8ed7ed421e5e3c5ca3614902270823a0",
+      "literal_size_bytes": 3569,
+      "literal_line_count": 70
+    },
+    {
+      "id": "Q-03",
+      "number": 3,
+      "title": "Jak długo trzymamy zapisy rozmów pracowników z agentami",
+      "urgency_literal": "BLOKUJE TERAZ",
+      "status": "OPEN_OWNER_DECISION",
+      "linked_decision": null,
+      "recommendation_status": "NOT_A_DECISION",
+      "source_ref": "SRC-03",
+      "source_path": "docs/process/pytania/2026-08-25-wybory.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-DECISIONS",
+      "p4_path_family_id": "PF-0225",
+      "source_locator": {
+        "lines": [
+          171,
+          234
+        ],
+        "heading": "## Pytanie 3 — Jak długo trzymamy zapisy rozmów pracowników z agentami"
+      },
+      "literal_sha256": "c7d54f520909a2ebfab6926afe082536734c173407b1134fedc282d0870d5f9f",
+      "literal_size_bytes": 3001,
+      "literal_line_count": 63
+    },
+    {
+      "id": "Q-04",
+      "number": 4,
+      "title": "W jaki sposób agent ma się łączyć z programami firmy",
+      "urgency_literal": "POTRZEBNE PRZED ETAPEM MVP2",
+      "status": "OPEN_OWNER_DECISION",
+      "linked_decision": null,
+      "recommendation_status": "NOT_A_DECISION",
+      "source_ref": "SRC-03",
+      "source_path": "docs/process/pytania/2026-08-25-wybory.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-DECISIONS",
+      "p4_path_family_id": "PF-0225",
+      "source_locator": {
+        "lines": [
+          235,
+          394
+        ],
+        "heading": "## Pytanie 4 — W jaki sposób agent ma się łączyć z programami firmy"
+      },
+      "literal_sha256": "1d9a152322cc3070b983f4c309685f6688c30c289d703fed625fc48acfe79001",
+      "literal_size_bytes": 9351,
+      "literal_line_count": 159
+    },
+    {
+      "id": "Q-05",
+      "number": 5,
+      "title": "Ile programów firmowych planujemy naraz, a ile na zapas",
+      "urgency_literal": "POTRZEBNE PRZED ETAPEM MVP2",
+      "status": "OPEN_OWNER_DECISION",
+      "linked_decision": null,
+      "recommendation_status": "NOT_A_DECISION",
+      "source_ref": "SRC-03",
+      "source_path": "docs/process/pytania/2026-08-25-wybory.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-DECISIONS",
+      "p4_path_family_id": "PF-0225",
+      "source_locator": {
+        "lines": [
+          395,
+          470
+        ],
+        "heading": "## Pytanie 5 — Ile programów firmowych planujemy naraz, a ile na zapas"
+      },
+      "literal_sha256": "c2c40b71935b3cf376ff503a47f50a8680055f3846f9eabec3b8c59b8879a731",
+      "literal_size_bytes": 3726,
+      "literal_line_count": 75
+    },
+    {
+      "id": "Q-06",
+      "number": 6,
+      "title": "Kto formalnie potwierdza, że dany etap projektu jest skończony",
+      "urgency_literal": "POTRZEBNE PRZED ETAPEM MVP2",
+      "status": "OPEN_OWNER_DECISION",
+      "linked_decision": null,
+      "recommendation_status": "NOT_A_DECISION",
+      "source_ref": "SRC-03",
+      "source_path": "docs/process/pytania/2026-08-25-wybory.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-DECISIONS",
+      "p4_path_family_id": "PF-0225",
+      "source_locator": {
+        "lines": [
+          471,
+          539
+        ],
+        "heading": "## Pytanie 6 — Kto formalnie potwierdza, że dany etap projektu jest skończony"
+      },
+      "literal_sha256": "4f91446328a689d5efa9ddd72cd03f739d73eeaf648b9024f2c454d5e500c86d",
+      "literal_size_bytes": 3290,
+      "literal_line_count": 68
+    },
+    {
+      "id": "Q-07",
+      "number": 7,
+      "title": "Co się dzieje, gdy jedyna osoba techniczna w firmie jest niedostępna",
+      "urgency_literal": "POTRZEBNE PRZED ETAPEM MVP2",
+      "status": "OPEN_OWNER_DECISION",
+      "linked_decision": null,
+      "recommendation_status": "NOT_A_DECISION",
+      "source_ref": "SRC-03",
+      "source_path": "docs/process/pytania/2026-08-25-wybory.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-DECISIONS",
+      "p4_path_family_id": "PF-0225",
+      "source_locator": {
+        "lines": [
+          540,
+          603
+        ],
+        "heading": "## Pytanie 7 — Co się dzieje, gdy jedyna osoba techniczna w firmie jest niedostępna"
+      },
+      "literal_sha256": "1321a87143ddceaff31e86c23189b7c68e55556877fe979725f30877305e699d",
+      "literal_size_bytes": 2850,
+      "literal_line_count": 63
+    },
+    {
+      "id": "Q-08",
+      "number": 8,
+      "title": "Gdzie ma być przechowywana wspólna wiedza, którą agenci zapamiętują z rozmów",
+      "urgency_literal": "POTRZEBNE PRZED ETAPEM MVP3",
+      "status": "OPEN_OWNER_DECISION",
+      "linked_decision": "D-011",
+      "recommendation_status": "NOT_A_DECISION",
+      "source_ref": "SRC-03",
+      "source_path": "docs/process/pytania/2026-08-25-wybory.md",
+      "source_status": "CANONICAL",
+      "p4_group": "NAG-DECISIONS",
+      "p4_path_family_id": "PF-0225",
+      "source_locator": {
+        "lines": [
+          604,
+          676
+        ],
+        "heading": "## Pytanie 8 — Gdzie ma być przechowywana wspólna wiedza, którą agenci zapamiętują z rozmów"
+      },
+      "literal_sha256": "5a7447af9a3cf5105d75a68682665f61f5f15d14a2177d82e8a67ddbb0408c59",
+      "literal_size_bytes": 3679,
+      "literal_line_count": 72
+    }
+  ],
+  "non_question_status": {
+    "source_ref": "SRC-03",
+    "source_path": "docs/process/pytania/2026-08-25-wybory.md",
+    "source_status": "CANONICAL_SOURCE_BUT_NOT_DECISION",
+    "source_locator": {
+      "lines": [
+        677,
+        743
+      ],
+      "heading": "## Sprawy, które nie trafiają do Pana/Pani jako pytanie"
+    },
+    "literal_sha256": "3f1d0982016ea1d79c0f77ae36086a3f276c1eb4caaf1971bb7d15dac428b780",
+    "literal_size_bytes": 4077,
+    "literal_line_count": 67
+  },
+  "history_index": [
+    {
+      "id": "H-01",
+      "heading": "## Co jest pracą Hermesa, a co naszą — ustalenie dla pytań 4 i 5",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          15,
+          106
+        ],
+        "heading": "## Co jest pracą Hermesa, a co naszą — ustalenie dla pytań 4 i 5"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "6a0b6c30cdce4cd8ce7adc7716f2da017c71606e18c2c4054ec77621b39e9536",
+      "literal_size_bytes": 5547,
+      "literal_line_count": 91
+    },
+    {
+      "id": "H-02",
+      "heading": "## Pytanie 1 — Gdzie ma fizycznie stać komputer, na którym działa system",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          107,
+          126
+        ],
+        "heading": "## Pytanie 1 — Gdzie ma fizycznie stać komputer, na którym działa system"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "de7ebcc53016c1e78108f34abe118e9c497555bca02310d305d37df6c1f61de3",
+      "literal_size_bytes": 1004,
+      "literal_line_count": 19
+    },
+    {
+      "id": "H-03",
+      "heading": "## Pytanie 2 — Czy potrzebujemy prawnika przed testem na prawdziwych danych",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          127,
+          152
+        ],
+        "heading": "## Pytanie 2 — Czy potrzebujemy prawnika przed testem na prawdziwych danych"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "70755fac6745ab4d8ad0a7aba5b5f11eec97339d0f5fd57fe0b2cc6edae7f922",
+      "literal_size_bytes": 1421,
+      "literal_line_count": 25
+    },
+    {
+      "id": "H-04",
+      "heading": "## Pytanie 3 — Retencja rozmów pracowników z agentami",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          153,
+          175
+        ],
+        "heading": "## Pytanie 3 — Retencja rozmów pracowników z agentami"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "68c0a36a40c82309dd0f6f0f2345fad07d363b696f51f3308a16051124d1cb16",
+      "literal_size_bytes": 1248,
+      "literal_line_count": 22
+    },
+    {
+      "id": "H-05",
+      "heading": "## Pytanie 4 — Sposób łączenia agenta z programami firmy",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          176,
+          211
+        ],
+        "heading": "## Pytanie 4 — Sposób łączenia agenta z programami firmy"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "7c4102f2c53f1ef45ccc7925a635428b981d55e246a76e0fefc627c75d49d7aa",
+      "literal_size_bytes": 2039,
+      "literal_line_count": 35
+    },
+    {
+      "id": "H-06",
+      "heading": "## Pytanie 5 — Skala: ile programów planujemy naraz",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          212,
+          226
+        ],
+        "heading": "## Pytanie 5 — Skala: ile programów planujemy naraz"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "809f2ccaf06bba0393846954f07a9a28bb824d1550db52ca00b94ede29b11ae9",
+      "literal_size_bytes": 712,
+      "literal_line_count": 14
+    },
+    {
+      "id": "H-07",
+      "heading": "## Pytanie 6 — Kto potwierdza zamknięcie etapu",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          227,
+          242
+        ],
+        "heading": "## Pytanie 6 — Kto potwierdza zamknięcie etapu"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "06c3d6736e1134eb34e57fdbe272ef7973035adfb4bb0e4a5f5d8c98f1f02582",
+      "literal_size_bytes": 706,
+      "literal_line_count": 15
+    },
+    {
+      "id": "H-08",
+      "heading": "## Pytanie 7 — Ciągłość działania bez jedynej osoby technicznej",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          243,
+          258
+        ],
+        "heading": "## Pytanie 7 — Ciągłość działania bez jedynej osoby technicznej"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "decb4669c743727f8d3932adc90155c0a1c4a1da1f750ce899b2410f06de3b0d",
+      "literal_size_bytes": 786,
+      "literal_line_count": 15
+    },
+    {
+      "id": "H-09",
+      "heading": "## Pytanie 8 — Rezydencja wspólnej pamięci (D-011)",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          259,
+          277
+        ],
+        "heading": "## Pytanie 8 — Rezydencja wspólnej pamięci (D-011)"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "42341758ed7c3ddd3a239392248c6e5f0a1734d92520cdc642836f7df09929f3",
+      "literal_size_bytes": 874,
+      "literal_line_count": 18
+    },
+    {
+      "id": "H-10",
+      "heading": "## Informacja (nie pytanie) — D-010, topologia agentów",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          278,
+          298
+        ],
+        "heading": "## Informacja (nie pytanie) — D-010, topologia agentów"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "4838a197927bb5571a611971033bcc37c94a56a8adcc3c4cd42f8fef08bda677",
+      "literal_size_bytes": 1139,
+      "literal_line_count": 20
+    },
+    {
+      "id": "H-11",
+      "heading": "## Sprawy odłożone, odrzucone, rozstrzygane samodzielnie",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          299,
+          329
+        ],
+        "heading": "## Sprawy odłożone, odrzucone, rozstrzygane samodzielnie"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "1a0c614372a4aecd8bbb16d82243069e1e2e77688ed86a749636bd99272a1cbd",
+      "literal_size_bytes": 1816,
+      "literal_line_count": 30
+    },
+    {
+      "id": "H-12",
+      "heading": "## Uwagi redakcyjne — co poprawiono względem wersji roboczej",
+      "source_ref": "SRC-04",
+      "source_path": "docs/nota-08-wybory-otwarte.md",
+      "source_status": "HISTORY",
+      "normative": false,
+      "source_locator": {
+        "lines": [
+          330,
+          347
+        ],
+        "heading": "## Uwagi redakcyjne — co poprawiono względem wersji roboczej"
+      },
+      "treatment": "HISTORY_ONLY; nie zmienia statusu decyzji ani nie tworzy ECHO",
+      "literal_sha256": "a559d06f6446ecbaf0c9d844a2d2a2c52c2dce768f8a23ea3e7cdcbb89731de7",
+      "literal_size_bytes": 1076,
+      "literal_line_count": 18
+    }
+  ],
+  "p4_scope": {
+    "selected_groups": [
+      {
+        "group_id": "NAG-DECISIONS",
+        "status": "CANONICAL",
+        "path_family_count": 1,
+        "record_count": 12,
+        "project": "nAgents",
+        "relation": "decyzje, ECHO i aktualny pakiet pytań; stara numeracja jest kontekstem",
+        "members": [
+          "docs/process/pytania/2026-08-25-wybory.md"
+        ],
+        "source_of_truth": "docs/spec/decisions.md + docs/process/echo.md + docs/process/pytania/2026-08-25-wybory.md (P3)",
+        "target_package": "NAGENTS-DECISIONS.md jako przyszły pakiet; aktualne pliki pozostają źródłami",
+        "unique_content": "Literalne decyzje D-001…D-013, ECHO oraz jawne pytania właścicielskie; stare zestawy pytań zawierają warianty i odpowiedzi, których nie wolno przepisać bez rekonsyliacji.",
+        "contradictions": [
+          "Lokalne decisions/echo mają nowe wpisy względem refu; stare pytania mogą wyglądać na otwarte mimo późniejszych decyzji."
+        ],
+        "risk": "Powtórzenie rozstrzygniętego pytania lub cicha zmiana decyzji właściciela.",
+        "recommendation": "P6 ma zrobić macierz decyzja → źródło → status. Nie usuwać ani nie scalać starych pakietów przed ECHO/readbackiem."
+      },
+      {
+        "group_id": "NAG-SPEC",
+        "status": "CANONICAL",
+        "path_family_count": 8,
+        "record_count": 96,
+        "project": "nAgents",
+        "relation": "kanoniczny pakiet specyfikacji; dokumenty uzupełniają się sekcjami",
+        "members": [
+          "docs/spec/00-architektura.md",
+          "docs/spec/01-mvp1.md",
+          "docs/spec/02-mvp2.md",
+          "docs/spec/03-mvp3.md",
+          "docs/spec/04-mvp4.md",
+          "docs/spec/README.md",
+          "docs/spec/decisions.md",
+          "docs/spec/scenarios.md"
+        ],
+        "source_of_truth": "docs/spec/README.md, 00-architektura.md, decisions.md, scenarios.md (P3)",
+        "target_package": "docs/spec/ pozostaje; przyszły NAGENTS-SPEC.md tylko po macierzy pokrycia P6",
+        "unique_content": "Architektura, MVP1–MVP4, dziennik decyzji i scenariusze odbioru mają rozdzielone role; lokalny checkout wnosi D-012/D-013 i sekcje web-first/helper.",
+        "contradictions": [
+          "Dziewięć ścieżek ma lokalne zmiany względem nazwanego refu; zdalny snapshot nie zawiera tych nowych sekcji. `01-mvp1.md` ma lokalną korektę tabeli bez zmiany nagłówków."
+        ],
+        "risk": "Kopiowanie zdalnego refu lub starej specyfikacji może cofnąć decyzje i zakres.",
+        "recommendation": "Traktować checkout jako bieżący, ale nieopublikowany. P5/P6 muszą jawnie rozdzielić lokalny diff od publikacji i nie przepisywać specyfikacji automatycznie."
+      },
+      {
+        "group_id": "NAG-PROCESS",
+        "status": "CANONICAL",
+        "path_family_count": 7,
+        "record_count": 73,
+        "project": "nAgents",
+        "relation": "warstwy procesu: skill projektowy, szkielety źródłowe, reguły i pomocnicze materiały",
+        "members": [
+          ".claude/skills/nagents-autobot/README.md",
+          ".claude/skills/nagents-autobot/SKILL.md",
+          "SCHEMAT-PODZIALU-AUTOBOT.md",
+          "docs/process/echo.md",
+          "docs/process/tematy.md",
+          "docs/process/zmiana-procesu.md",
+          "docs/process/zrodla/autobots-szkielet-uniwersalny.md"
+        ],
+        "source_of_truth": ".claude/skills/nagents-autobot/SKILL.md + CLAUDE.md (P3 kat. 4)",
+        "target_package": "NAGENTS-PROCESS.md jako przyszły pakiet; SKILL.md i źródło uniwersalne pozostają osobno",
+        "unique_content": "Projektowy skill zawiera szczegółową pętlę, bariery, ABC/ECHO, watchdog i raportowanie; źródło uniwersalne oddziela reguły przenośne od wiązań nAgents; SCHEMAT opisuje bezpieczny podział.",
+        "contradictions": [
+          "Szkielet uniwersalny nie jest normą nAgents; pracownikowy opis jest uproszczeniem, a dispatchy są snapshotami zadań."
+        ],
+        "risk": "Mechaniczne scalenie może usunąć wiązania projektu albo nadać materiałowi referencyjnemu rangę normy.",
+        "recommendation": "Nie scalać skillu w P4. P6 ma wskazać sekcje do NAGENTS-PROCESS.md, zachowując SKILL.md jako wejście procesu i źródła pierwotne."
+      },
+      {
+        "group_id": "NAG-RESEARCH",
+        "status": "HISTORY",
+        "path_family_count": 11,
+        "record_count": 88,
+        "project": "nAgents",
+        "relation": "noty decyzyjne i materiały rozeznania; logiczny overlap nie oznacza duplikatu",
+        "members": [
+          "LLM-OPEN-SOURCE-nAgents-HANDOFF.md",
+          "SERWERY-nAgents-ustalenia.md",
+          "WLASNY-LLM-nAgents-porownanie.md",
+          "ZALACZNIK-B-serwer-OVH.md",
+          "docs/nota-01-trzy-drogi-do-agenta.md",
+          "docs/nota-02-uprzaz-dla-agentow.md",
+          "docs/nota-02a-aneks-profile-i-zakres-v1.md",
+          "docs/nota-03-topologia-27-agentow.md",
+          "docs/nota-04-korekty-i-nowe-materialy.md",
+          "docs/nota-05-kupic-czy-zbudowac.md",
+          "docs/nota-08-wybory-otwarte.md"
+        ],
+        "source_of_truth": "docs/process/pamiec.md oraz właściwe źródła pierwotne; nie jest źródłem bieżącego routingu",
+        "target_package": "NAGENTS-RESEARCH.md; decyzje tylko po wpisie w decisions/ECHO",
+        "unique_content": "Porównania dróg, topologii, dostawców serwerów i modeli oraz uzasadnienia odrzuceń; noty zachowują tok rozumowania.",
+        "contradictions": [
+          "Ceny, dostępne funkcje, topologia i status wdrożenia są zależne od daty; część hipotez została później skorygowana."
+        ],
+        "risk": "Stara rekomendacja może zostać użyta jako decyzja lub bieżący fakt.",
+        "recommendation": "Zachować jako HISTORY/EVIDENCE z datą i źródłem. P6 może wyciągnąć tylko unikalne wnioski do NAGENTS-RESEARCH.md; nie usuwać not."
+      },
+      {
+        "group_id": "NAG-INDEX",
+        "status": "CONSOLIDATION_CANDIDATE",
+        "path_family_count": 3,
+        "record_count": 4,
+        "project": "nAgents",
+        "relation": "logicznie nakładające się indeksy i archiwa przekazania",
+        "members": [
+          "AUTOBOOT-INDEKS.md",
+          "NAGENTS-INDEKS.md",
+          "NAGENTS-PROJECT.md"
+        ],
+        "source_of_truth": "CLAUDE.md + docs/process/handoff.md (P3)",
+        "target_package": "NAGENTS-PROJECT.md; docelowo lekkie odnośniki do NAGENTS-HANDOFF.md",
+        "unique_content": "NAGENTS-PROJECT.md mapuje pytanie → źródło → readback i granice projektów; starsze AUTOBOOT/NAGENTS-INDEKS zawierają kontekst historyczny, którego nie ma w CLAUDE.",
+        "contradictions": [
+          "Nazwy „aktualny indeks” i stare kolejności czytania nie są dowodem live state; część starych wpisów opisuje inne fazy i profile."
+        ],
+        "risk": "Duplikat punktu startowego może skierować pracę do nieistniejącego lub nieaktualnego stanu.",
+        "recommendation": "P5: ustalić jeden lekki indeks. Zachować stare indeksy jako HISTORY/read-only do czasu macierzy pokrycia P6."
+      }
+    ],
+    "selected_path_families": [
+      {
+        "path_family_id": "PF-0241",
+        "path": "docs/spec/decisions.md",
+        "project": "nAgents",
+        "group_id": "NAG-SPEC",
+        "status": "CANONICAL",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_AUX_WORKTREES",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49",
+        "p4_current_readback_sha256": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49",
+        "p4_current_readback_matches_preferred": true,
+        "p4_hash_variant_count": 2,
+        "fresh_local_sha256": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49",
+        "fresh_local_differs_from_p4_recorded_current": false,
+        "target_package": "docs/spec/ pozostaje; przyszły NAGENTS-SPEC.md tylko po macierzy pokrycia P6",
+        "source_of_truth": "docs/spec/README.md, 00-architektura.md, decisions.md, scenarios.md (P3)",
+        "unique_content": "Architektura, MVP1–MVP4, dziennik decyzji i scenariusze odbioru mają rozdzielone role; lokalny checkout wnosi D-012/D-013 i sekcje web-first/helper.",
+        "contradictions": [
+          "Dziewięć ścieżek ma lokalne zmiany względem nazwanego refu; zdalny snapshot nie zawiera tych nowych sekcji. `01-mvp1.md` ma lokalną korektę tabeli bez zmiany nagłówków."
+        ],
+        "risk": "Kopiowanie zdalnego refu lub starej specyfikacji może cofnąć decyzje i zakres."
+      },
+      {
+        "path_family_id": "PF-0219",
+        "path": "docs/process/echo.md",
+        "project": "nAgents",
+        "group_id": "NAG-PROCESS",
+        "status": "CANONICAL",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_AUX_WORKTREES",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "e631fb90812066690a1c1a927abb885472157c2607f8c0ba4f2e6ad56996bbde",
+        "p4_current_readback_sha256": "e631fb90812066690a1c1a927abb885472157c2607f8c0ba4f2e6ad56996bbde",
+        "p4_current_readback_matches_preferred": true,
+        "p4_hash_variant_count": 3,
+        "fresh_local_sha256": "e631fb90812066690a1c1a927abb885472157c2607f8c0ba4f2e6ad56996bbde",
+        "fresh_local_differs_from_p4_recorded_current": false,
+        "target_package": "NAGENTS-PROCESS.md jako przyszły pakiet; SKILL.md i źródło uniwersalne pozostają osobno",
+        "source_of_truth": ".claude/skills/nagents-autobot/SKILL.md + CLAUDE.md (P3 kat. 4)",
+        "unique_content": "Projektowy skill zawiera szczegółową pętlę, bariery, ABC/ECHO, watchdog i raportowanie; źródło uniwersalne oddziela reguły przenośne od wiązań nAgents; SCHEMAT opisuje bezpieczny podział.",
+        "contradictions": [
+          "Szkielet uniwersalny nie jest normą nAgents; pracownikowy opis jest uproszczeniem, a dispatchy są snapshotami zadań."
+        ],
+        "risk": "Mechaniczne scalenie może usunąć wiązania projektu albo nadać materiałowi referencyjnemu rangę normy."
+      },
+      {
+        "path_family_id": "PF-0225",
+        "path": "docs/process/pytania/2026-08-25-wybory.md",
+        "project": "nAgents",
+        "group_id": "NAG-DECISIONS",
+        "status": "CANONICAL",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_AUX_WORKTREES",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "3e0b66a6157ed159fc5c95a8a65e8b3ec006ad465b69c164573249286d9398e7",
+        "p4_current_readback_sha256": "3e0b66a6157ed159fc5c95a8a65e8b3ec006ad465b69c164573249286d9398e7",
+        "p4_current_readback_matches_preferred": true,
+        "p4_hash_variant_count": 1,
+        "fresh_local_sha256": "3e0b66a6157ed159fc5c95a8a65e8b3ec006ad465b69c164573249286d9398e7",
+        "fresh_local_differs_from_p4_recorded_current": false,
+        "target_package": "NAGENTS-DECISIONS.md jako przyszły pakiet; aktualne pliki pozostają źródłami",
+        "source_of_truth": "docs/spec/decisions.md + docs/process/echo.md + docs/process/pytania/2026-08-25-wybory.md (P3)",
+        "unique_content": "Literalne decyzje D-001…D-013, ECHO oraz jawne pytania właścicielskie; stare zestawy pytań zawierają warianty i odpowiedzi, których nie wolno przepisać bez rekonsyliacji.",
+        "contradictions": [
+          "Lokalne decisions/echo mają nowe wpisy względem refu; stare pytania mogą wyglądać na otwarte mimo późniejszych decyzji."
+        ],
+        "risk": "Powtórzenie rozstrzygniętego pytania lub cicha zmiana decyzji właściciela."
+      },
+      {
+        "path_family_id": "PF-0206",
+        "path": "docs/nota-08-wybory-otwarte.md",
+        "project": "nAgents",
+        "group_id": "NAG-RESEARCH",
+        "status": "HISTORY",
+        "primary_status": "HISTORY",
+        "record_count": 12,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_AUX_WORKTREES",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "b05ce062506e6ac5d50309c504a6bf0a32f5257e925c1b78ad27d3ccb86625d9",
+        "p4_current_readback_sha256": "b05ce062506e6ac5d50309c504a6bf0a32f5257e925c1b78ad27d3ccb86625d9",
+        "p4_current_readback_matches_preferred": true,
+        "p4_hash_variant_count": 1,
+        "fresh_local_sha256": "b05ce062506e6ac5d50309c504a6bf0a32f5257e925c1b78ad27d3ccb86625d9",
+        "fresh_local_differs_from_p4_recorded_current": false,
+        "target_package": "NAGENTS-RESEARCH.md; decyzje tylko po wpisie w decisions/ECHO",
+        "source_of_truth": "docs/process/pamiec.md oraz właściwe źródła pierwotne; nie jest źródłem bieżącego routingu",
+        "unique_content": "Porównania dróg, topologii, dostawców serwerów i modeli oraz uzasadnienia odrzuceń; noty zachowują tok rozumowania.",
+        "contradictions": [
+          "Ceny, dostępne funkcje, topologia i status wdrożenia są zależne od daty; część hipotez została później skorygowana."
+        ],
+        "risk": "Stara rekomendacja może zostać użyta jako decyzja lub bieżący fakt."
+      },
+      {
+        "path_family_id": "PF-0184",
+        "path": "NAGENTS-PROJECT.md",
+        "project": "nAgents",
+        "group_id": "NAG-INDEX",
+        "status": "CONSOLIDATION_CANDIDATE",
+        "primary_status": "CONSOLIDATION_CANDIDATE",
+        "record_count": 2,
+        "source_ids": [
+          "GITHUB_NAGENTS_WORK_REF",
+          "NAGENTS_CHECKOUT"
+        ],
+        "preferred_sha256": "6da2750082316e205062cec6154b099740964250fab6b14e8829fb79e63fe143",
+        "p4_current_readback_sha256": "bd0637953c521b879c19ec87f663bcdf6c42e950cd471242697f953ad91f25d3",
+        "p4_current_readback_matches_preferred": false,
+        "p4_hash_variant_count": 1,
+        "fresh_local_sha256": "84cc8a89c0e7bd53268fc78826938bec062f9223340aa2e0934d64719764a2fb",
+        "fresh_local_size_bytes": 53421,
+        "fresh_local_line_count": 819,
+        "recorded_snapshot_sha256": "bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae00236a",
+        "recorded_snapshot_size_bytes": 53403,
+        "recorded_snapshot_line_count": 819,
+        "drift_locator": "NAGENTS-PROJECT.md:165; byte offset 11051 zero-based",
+        "drift_effect": "Current index routes the nAgents anchor through profile default; decision content and package counts are unchanged.",
+        "fresh_local_differs_from_p4_recorded_current": true,
+        "target_package": "NAGENTS-PROJECT.md; docelowo lekkie odnośniki do NAGENTS-HANDOFF.md",
+        "source_of_truth": "CLAUDE.md + docs/process/handoff.md (P3)",
+        "unique_content": "NAGENTS-PROJECT.md mapuje pytanie → źródło → readback i granice projektów; starsze AUTOBOOT/NAGENTS-INDEKS zawierają kontekst historyczny, którego nie ma w CLAUDE.",
+        "contradictions": [
+          "Nazwy „aktualny indeks” i stare kolejności czytania nie są dowodem live state; część starych wpisów opisuje inne fazy i profile."
+        ],
+        "risk": "Duplikat punktu startowego może skierować pracę do nieistniejącego lub nieaktualnego stanu."
+      }
+    ],
+    "selected_family_count": 5,
+    "selected_record_count": 50,
+    "unread_nag_history_note": "NAG-HISTORY raw files are outside this card allowlist; SRC-04 is the explicitly allowed HISTORY source."
+  },
+  "owner_gates": [
+    {
+      "id": "OWNER-01",
+      "status": "OPEN",
+      "effect": "Owner remains authority for package scope/names and decision content."
+    },
+    {
+      "id": "OWNER-02",
+      "status": "OPEN",
+      "effect": "Integration choices are not created by this package."
+    },
+    {
+      "id": "OWNER-04",
+      "status": "OPEN",
+      "effect": "No source deletion or move is authorized."
+    },
+    {
+      "id": "OWNER-05",
+      "status": "OPEN",
+      "effect": "Publication/push/merge/deploy remain separate gates."
+    }
+  ],
+  "preservation": {
+    "source_hashes_before": {
+      "SRC-01": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49",
+      "SRC-02": "e631fb90812066690a1c1a927abb885472157c2607f8c0ba4f2e6ad56996bbde",
+      "SRC-03": "3e0b66a6157ed159fc5c95a8a65e8b3ec006ad465b69c164573249286d9398e7",
+      "SRC-04": "b05ce062506e6ac5d50309c504a6bf0a32f5257e925c1b78ad27d3ccb86625d9",
+      "SRC-05": "b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c",
+      "SRC-06": "bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae00236a",
+      "SRC-07": "95d2a06fc80e4cf1c27d59959d84b8631e70acbb3e0b879b83df95c38bf382b8"
+    },
+    "source_edits": false,
+    "deletions": false,
+    "moves": false,
+    "publication": false,
+    "git_add_commit_push_merge_deploy_restart": false,
+    "allowed_output_directory_only": "docs/process/staging/NAG-CONSOLIDATE-DECISIONS-Q1"
+  },
+  "quality_checks": {
+    "decision_id_count": {
+      "expected": 13,
+      "actual": 13,
+      "status": "PASS"
+    },
+    "decision_ids_exact_sequence": {
+      "expected": [
+        "D-001",
+        "D-002",
+        "D-003",
+        "D-004",
+        "D-005",
+        "D-006",
+        "D-007",
+        "D-008",
+        "D-009",
+        "D-010",
+        "D-011",
+        "D-012",
+        "D-013"
+      ],
+      "actual": [
+        "D-001",
+        "D-002",
+        "D-003",
+        "D-004",
+        "D-005",
+        "D-006",
+        "D-007",
+        "D-008",
+        "D-009",
+        "D-010",
+        "D-011",
+        "D-012",
+        "D-013"
+      ],
+      "status": "PASS"
+    },
+    "decision_literal_ranges": {
+      "status": "PASS",
+      "checked": "coverage decision_index and 13 document literal markers match SRC-01"
+    },
+    "echo_count": {
+      "expected": 5,
+      "actual": 5,
+      "status": "PASS"
+    },
+    "echo_required_fields": {
+      "status": "PASS",
+      "checked_fields": [
+        "answer_literal",
+        "date",
+        "author",
+        "source_status",
+        "source_locator"
+      ],
+      "actual": 5
+    },
+    "open_question_count": {
+      "expected": 8,
+      "actual": 8,
+      "status": "PASS"
+    },
+    "open_question_statuses_separate": {
+      "status": "PASS"
+    },
+    "d010_d011_reconciliation": {
+      "status": "PASS"
+    },
+    "history_not_normative": {
+      "status": "PASS"
+    },
+    "provenance_complete": {
+      "status": "PASS"
+    },
+    "source_hashes_current": {
+      "status": "PASS",
+      "entries": {
+        "SRC-06": {
+          "path": "NAGENTS-PROJECT.md",
+          "sha256": "84cc8a89c0e7bd53268fc78826938bec062f9223340aa2e0934d64719764a2fb",
+          "size_bytes": 53421,
+          "line_count": 819,
+          "snapshot_sha256": "bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae00236a",
+          "snapshot_size_bytes": 53403,
+          "snapshot_line_count": 819,
+          "drift_locator": "NAGENTS-PROJECT.md:165",
+          "drift_delta_bytes": 18
+        }
+      }
+    },
+    "relative_links": {
+      "expected": 14,
+      "actual_pass": 14,
+      "status": "PASS",
+      "links": [
+        {
+          "link": "../../../spec/decisions.md",
+          "exists": true
+        },
+        {
+          "link": "../../echo.md",
+          "exists": true
+        },
+        {
+          "link": "../../pytania/2026-08-25-wybory.md",
+          "exists": true
+        },
+        {
+          "link": "../../../nota-08-wybory-otwarte.md",
+          "exists": true
+        },
+        {
+          "link": "../../../../NAGENTS-CONSOLIDATION-PLAN.md",
+          "exists": true
+        },
+        {
+          "link": "../../../../NAGENTS-PROJECT.md",
+          "exists": true
+        },
+        {
+          "link": "../../../process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json",
+          "exists": true
+        },
+        {
+          "link": "../../../spec/decisions.md",
+          "exists": true
+        },
+        {
+          "link": "../../echo.md",
+          "exists": true
+        },
+        {
+          "link": "../../pytania/2026-08-25-wybory.md",
+          "exists": true
+        },
+        {
+          "link": "../../../nota-08-wybory-otwarte.md",
+          "exists": true
+        },
+        {
+          "link": "../../../../NAGENTS-CONSOLIDATION-PLAN.md",
+          "exists": true
+        },
+        {
+          "link": "../../../../NAGENTS-PROJECT.md",
+          "exists": true
+        },
+        {
+          "link": "../../../process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json",
+          "exists": true
+        }
+      ]
+    },
+    "sensitive_scan": {
+      "status": "PASS",
+      "counts": {
+        "private_key": 0,
+        "bearer": 0,
+        "jwt": 0,
+        "ipv4": 0,
+        "email": 0,
+        "secret_assignment": 0
+      },
+      "scope": "NAGENTS-DECISIONS.md before coverage/report metadata"
+    },
+    "output_file_allowlist": {
+      "expected": [
+        "NAGENTS-DECISIONS.md",
+        "coverage.json",
+        "operator-report.md"
+      ],
+      "status": "PASS"
+    },
+    "history_archive_literal": {
+      "status": "PASS",
+      "source_ref": "SRC-04",
+      "marker": "HISTORY_NOTE_FULL",
+      "source_hash": "b05ce062506e6ac5d50309c504a6bf0a32f5257e925c1b78ad27d3ccb86625d9",
+      "literal_hash": "d6d9d05241d6babdef65739514830a41538b77c4a4de4de70cfd40105e2c546b"
+    },
+    "declared_contract_gap": {
+      "status": "RECORDED",
+      "expected": "AUTOBOT-KANBAN.md",
+      "matches": 0,
+      "fallback_used": false
+    },
+    "next_phase_routing": {
+      "status": "INFRA",
+      "project_id": "p_cb0f9def",
+      "qualified_in_profile": "default",
+      "result": "missing project; successor creation correctly withheld"
+    }
+  },
+  "history_archive": {
+    "source_ref": "SRC-04",
+    "source_path": "docs/nota-08-wybory-otwarte.md",
+    "source_status": "HISTORY",
+    "source_locator": {
+      "lines": [
+        1,
+        347
+      ],
+      "heading": "# Nota 08 — wybory otwarte: zaplecze merytoryczne"
+    },
+    "source_sha256": "b05ce062506e6ac5d50309c504a6bf0a32f5257e925c1b78ad27d3ccb86625d9",
+    "literal_sha256": "d6d9d05241d6babdef65739514830a41538b77c4a4de4de70cfd40105e2c546b",
+    "literal_size_bytes": 19003,
+    "literal_line_count": 347,
+    "normative": false,
+    "treatment": "HISTORY_ONLY; pełny archiwalny zakres nie nadpisuje DEC-01…DEC-03"
+  },
+  "infrastructure_contract": {
+    "expected_path": "AUTOBOT-KANBAN.md",
+    "found": false,
+    "readback_matches": 0,
+    "status": "INFRA_RECORDED_NOT_BLOCKING",
+    "applied_declared_contract": [
+      "CLAUDE.md",
+      ".claude/skills/autobots/SKILL.md",
+      ".claude/skills/nagents-autobot/SKILL.md"
+    ],
+    "rule": "brak generycznego pliku nie jest cichym spełnieniem; nie wymyślono fallbacku ani nie zmieniono źródeł"
+  },
+  "next_phase": {
+    "name": "Evaluator",
+    "status": "BLOCKED_INFRA",
+    "required_action": "utworzyć/kwalifikować projekt nAgents `p_cb0f9def` w profilu `default`, następnie utworzyć niezależny card z jawnym board/tenant/assignee/model/provider/workspace",
+    "readback": {
+      "command": "hermes -p default project show p_cb0f9def",
+      "result": "project: no such project"
+    },
+    "non_substitutable_candidate": {
+      "project": "hermes-autobot-monitor",
+      "project_id": "p_5b69c631",
+      "primary": "/home/ubuntu/projects/Autoboot-Monitor",
+      "reason": "inny projekt; nie użyto jako fallback"
+    },
+    "created": false,
+    "dispatched": false
+  }
+}
