@@ -1,0 +1,1429 @@
+{
+  "schema": "NAG-DOCS-CONSOLIDATION-Q1/P1-sources/v1",
+  "topic": "NAG-DOCS-CONSOLIDATION-Q1",
+  "phase": "P1-SCOPE",
+  "stable_phase_id": "NAG-DOCS-P1-SCOPE-Q1",
+  "generated_at_utc": "2026-09-14T13:39:16.409760+00:00",
+  "workspace": {
+    "path": "/home/ubuntu/projects/nAgents-readonly",
+    "git_top_level": "/home/ubuntu/projects/nAgents-readonly",
+    "branch": "claude/git-connection-9sz6dg",
+    "head": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+    "status_before_p1_outputs": {
+      "tracked_or_staged": 8,
+      "untracked": 3,
+      "total": 11
+    },
+    "no_existing_source_modified": true,
+    "push_fetch_pull_performed": false
+  },
+  "audit_unit": {
+    "identity": "source_id + physical_root_or_repository_ref + relative_path + readback_timestamp",
+    "one_source_exactly": true,
+    "partition_rule": "Logical source boundaries are disjoint: nested physical roots are removed from the parent by explicit excludes (ABM .worktrees, the separate The-Game handoff, and P1 outputs); remote files are keyed by repository+ref and never alias local files.",
+    "basename_is_not_identity": true,
+    "unknown_provenance": "INFRA/DECISION_REQUIRED; do not assign by filename similarity."
+  },
+  "source_precedence_for_conflicts": [
+    "fresh local Git/worktree/readback or remote tree readback at the named ref",
+    "owner decision in docs/process/echo.md or current docs/spec/decisions.md",
+    "current nAgents specification and CLAUDE.md",
+    "current AutoBot Monitor AUTOBOT-KANBAN.md and operational docs",
+    "handoffs, reports and historical notes as dated context only"
+  ],
+  "source_roots": [
+    {
+      "source_id": "NAGENTS_CHECKOUT",
+      "project": "nAgents",
+      "kind": "local_git_checkout",
+      "root": "/home/ubuntu/projects/nAgents-readonly",
+      "scope": "IN_SCOPE",
+      "role": "primary nAgents documentation and supporting context; local dirty state is not publication",
+      "boundary": {
+        "documentation_include": [
+          "*.md",
+          "*.markdown"
+        ],
+        "context_only_include": [
+          "app/**",
+          "migrations/**",
+          "registry/**",
+          "tests/**",
+          "Dockerfile",
+          "docker-compose.yml",
+          "requirements.txt"
+        ],
+        "exclude": [
+          "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/** (P1 outputs)",
+          ".git/**",
+          ".venv/**",
+          ".pytest_cache/**",
+          "__pycache__/**",
+          "*.pyc",
+          ".env*",
+          "state.db",
+          "sessions/**",
+          "raw logs/**"
+        ]
+      },
+      "git_readback": {
+        "branch": "claude/git-connection-9sz6dg",
+        "head": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+        "status": {
+          "tracked_or_staged": 8,
+          "untracked": 3,
+          "total": 11
+        },
+        "markdown": {
+          "tracked": 48,
+          "filesystem": 51
+        }
+      }
+    },
+    {
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "project": "nAgents",
+      "kind": "registered_git_worktree_set",
+      "physical_roots": [
+        "/home/ubuntu/projects/wt-NAG-INFRA-001-interfejs-hermesa",
+        "/home/ubuntu/projects/wt-NAG-INFRA-002-entra-instrukcja",
+        "/home/ubuntu/projects/wt-NAG-MVP1-001-szkielet",
+        "/home/ubuntu/projects/wt-NAG-MVP1-003-uprawnienia",
+        "/home/ubuntu/projects/wt-NAG-MVP1-004-rejestr",
+        "/home/ubuntu/projects/wt-NAG-MVP1-005-rozmowa",
+        "/home/ubuntu/projects/wt-NAG-MVP1-006-proxy-hermes",
+        "/home/ubuntu/projects/wt-NAG-MVP1-007-brama-modeli",
+        "/home/ubuntu/projects/wt-NAG-MVP1-008-audyt",
+        "/home/ubuntu/projects/wt-NAG-MVP1-009-wdrozenie"
+      ],
+      "scope": "IN_SCOPE_SNAPSHOT",
+      "role": "read-only candidate snapshots for branch/worktree provenance; never merge content at P1",
+      "boundary": {
+        "documentation_include": [
+          "*.md",
+          "*.markdown"
+        ],
+        "context_only": true,
+        "exclude": [
+          ".git/**",
+          "standard artifact dirs/**",
+          "secrets/runtime/raw logs"
+        ]
+      },
+      "worktrees": [
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-INFRA-001-interfejs-hermesa",
+          "head": "10e80f4901846b579fd176a417a3ee6b6acbf92d",
+          "branch": "auto/NAG-INFRA-001-interfejs-hermesa",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 47,
+            "filesystem": 47
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-INFRA-002-entra-instrukcja",
+          "head": "4fc11394fb9808dd40c366cfc25f8419bb0271c8",
+          "branch": "auto/NAG-INFRA-002-entra-instrukcja",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 47,
+            "filesystem": 47
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-MVP1-001-szkielet",
+          "head": "365ac750aa8e39b7baebaf3b5e094966c6404eec",
+          "branch": "auto/NAG-MVP1-001-szkielet",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 46,
+            "filesystem": 46
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-MVP1-003-uprawnienia",
+          "head": "51f657fdc342618e09c3db773ba93194eba9a9b1",
+          "branch": "auto/NAG-MVP1-003-uprawnienia",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 48,
+            "filesystem": 48
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-MVP1-004-rejestr",
+          "head": "d57d10dad65b8a3ff9ad7321d50ffec4fa85547e",
+          "branch": "auto/NAG-MVP1-004-rejestr",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 46,
+            "filesystem": 46
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-MVP1-005-rozmowa",
+          "head": "dadc5dec9068dcddcf9be62d4ace7c7b126a8953",
+          "branch": "auto/NAG-MVP1-005-rozmowa",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 48,
+            "filesystem": 48
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-MVP1-006-proxy-hermes",
+          "head": "b7ae8051e767a5e103e9904b1b2b043e81d9a4d8",
+          "branch": "auto/NAG-MVP1-006-proxy-hermes",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 48,
+            "filesystem": 48
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-MVP1-007-brama-modeli",
+          "head": "40b83694625dd65cfb2e03216e55734986e58116",
+          "branch": "auto/NAG-MVP1-007-brama-modeli",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 48,
+            "filesystem": 48
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-MVP1-008-audyt",
+          "head": "6b93e2572110b0b93af8dfd14437daf9792ba1d7",
+          "branch": "auto/NAG-MVP1-008-audyt",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 48,
+            "filesystem": 48
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-NAG-MVP1-009-wdrozenie",
+          "head": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+          "branch": "auto/NAG-MVP1-009-wdrozenie",
+          "source_id": "NAGENTS_AUX_WORKTREES",
+          "status": {
+            "tracked_or_staged": 3,
+            "untracked": 7,
+            "total": 10
+          },
+          "markdown": {
+            "tracked": 48,
+            "filesystem": 48
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "HANDOFFS_NAGENTS",
+      "project": "nAgents",
+      "kind": "external_handoff_archive",
+      "root": "/home/ubuntu/handoffs",
+      "scope": "IN_SCOPE_HISTORY_REFERENCE",
+      "role": "dated handoffs and structured source/evidence metadata; never current routing without live readback",
+      "boundary": {
+        "include": [
+          "**/*.md",
+          "**/*.markdown",
+          "nagents-2026-09-10/*.json"
+        ],
+        "exclude": [
+          "KONTYNUACJA-PO-MIGRACJI.md",
+          "THE-GAME-INTEGRATION-HANDOFF.md",
+          "credentials/auth/state/raw logs"
+        ]
+      },
+      "files": [
+        {
+          "relative_path": "AUTOBOOT-INDEKS.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "DOKUMENTACJA-MVP1.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "HANDOFF-centrum-projektow.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "HANDOFF-kolejne-kroki.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "HANDOFF-serwer.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "HANDOFF-zespol-agentow.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "INTEGRACJA-MICROSOFT365.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "LLM-OPEN-SOURCE-nAgents-HANDOFF.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "MIGRACJA-OVH-STATUS.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "NAGENTS-INDEKS.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "PLAN-WDROZENIA-nAgents.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "PYTANIA-DO-ODPOWIEDZI-28-08.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "PYTANIA-I-ODPOWIEDZI-nAgents.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "RAPORT-nAgents-scenariusz-i-plan.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "RAPORTY-Z-HETZNERA-README.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "ROLE-I-UPRAWNIENIA-nAgents.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "SCHEMAT-PODZIALU-AUTOBOT.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "SERWERY-nAgents-ustalenia.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "SPECYFIKACJA-nAgents.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "UZUPELNIENIE-MIGRACJI.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "WLASNY-LLM-nAgents-porownanie.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "ZALACZNIK-B-serwer-OVH.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/00-NAGENTS-DOKUMENTACJA-GLOWNA.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/01-STAN-I-KOREKTY.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/02-PLAN-ETAPOW.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/03-ROLE-I-ADMINISTRACJA.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/04-MICROSOFT365.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/05-PYTANIA-I-DECYZJE.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/06-CO-MOGE-REALIZOWAC.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/WERYFIKACJA.json",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/sources/10.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/sources/6.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/sources/7.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/sources/8.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/sources/9.md",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/sources.json",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        },
+        {
+          "relative_path": "nagents-2026-09-10/stan-techniczny.json",
+          "classification": "NAGENTS_HANDOFF_HISTORY_OR_REFERENCE"
+        }
+      ]
+    },
+    {
+      "source_id": "HANDOFF_THE_GAME_SEPARATE",
+      "project": "The-Game",
+      "kind": "external_handoff",
+      "root": "/home/ubuntu/handoffs/THE-GAME-INTEGRATION-HANDOFF.md",
+      "scope": "SEPARATE_PROJECT_METADATA_ONLY",
+      "role": "recorded to prevent accidental nAgents provenance; not a source of truth for nAgents",
+      "boundary": {
+        "include": [
+          "exact file metadata only"
+        ],
+        "exclude": [
+          "content consolidation into nAgents"
+        ]
+      }
+    },
+    {
+      "source_id": "ABM_CHECKOUT",
+      "project": "AutoBot Monitor",
+      "kind": "local_git_checkout",
+      "root": "/home/ubuntu/projects/Autoboot-Monitor",
+      "scope": "IN_SCOPE_COMPANION",
+      "role": "separate companion documentation, operational policy and selected sanitized evidence",
+      "boundary": {
+        "documentation_include": [
+          "root *.md",
+          "docs/**/*.md",
+          "package/README.md",
+          "runs/README.md",
+          "hermes-patches/**/*.md",
+          "runs/**/00-*.md",
+          "runs/**/01-*.md",
+          "runs/**/02-*.md",
+          "runs/**/03-*.md",
+          "runs/**/04-*.md"
+        ],
+        "structured_evidence_include": [
+          "selected sanitized evidence/**/*.json",
+          "selected bounded evidence/**/*.txt"
+        ],
+        "context_only_include": [
+          "backend/**",
+          "server/**",
+          "desktop_plugin/**",
+          "tests/**"
+        ],
+        "exclude": [
+          ".worktrees/** (partitioned below)",
+          ".git/**",
+          ".venv/**",
+          ".pytest_cache/**",
+          "__pycache__/**",
+          "node_modules/**",
+          "runs/**/*-tmp/**",
+          "logs/**",
+          "*.log",
+          "*.out",
+          "state.db",
+          "auth.json",
+          "sessions/**",
+          "unbounded fixtures/generated artifacts"
+        ]
+      },
+      "git_readback": {
+        "branch": "main",
+        "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+        "status": {
+          "tracked_or_staged": 11,
+          "untracked": 3266,
+          "total": 3277
+        },
+        "markdown_excluding_worktrees_standard_and_tmp": 160,
+        "markdown_excluding_worktrees_and_standard": 198,
+        "raw_log_files_excluded_in_normal_boundary": 53
+      }
+    },
+    {
+      "source_id": "ABM_ACTIVE_RELAY_WORKTREE",
+      "project": "AutoBot Monitor",
+      "kind": "registered_git_worktree",
+      "root": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_771608cd",
+      "scope": "IN_SCOPE_READ_ONLY",
+      "role": "relevant receiver/owner-relay snapshot; dirty/shared worktree, never modify during P1",
+      "boundary": {
+        "documentation_include": [
+          "docs/OWNER-CHAT-RELAY.md",
+          "docs/CRON-DIRECTIVE-LOOP.md",
+          "runs/ABM-OWNER-CHAT-RELAY-001/**/*.md"
+        ],
+        "structured_evidence_include": [
+          "evidence/ABM-OWNER-CHAT-RELAY-001/**/*.json",
+          "evidence/ABM-OWNER-CHAT-RELAY-001/**/*.txt"
+        ],
+        "context_only_include": [
+          "backend/monitor/owner_relay.py",
+          "backend/monitor/cron_receiver.py",
+          "tests/test_owner_relay.py"
+        ],
+        "exclude": [
+          "raw logs",
+          "*-tmp fixtures",
+          "secrets/state.db",
+          "unrelated dirty paths"
+        ]
+      },
+      "worktree": {
+        "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_771608cd",
+        "head": "b358eeb8ea95c4b77fdb3344c103a15e61c125b0",
+        "branch": "wt/abm-cron-001-operator",
+        "source_id": "ABM_ACTIVE_RELAY_WORKTREE",
+        "status": {
+          "tracked_or_staged": 14,
+          "untracked": 74,
+          "total": 88
+        },
+        "markdown": {
+          "tracked": 129,
+          "filesystem": 145
+        }
+      }
+    },
+    {
+      "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+      "project": "AutoBot Monitor",
+      "kind": "registered_git_worktree_set",
+      "physical_roots": [
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_0840211d",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_11b10d7c",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_12f9e589",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_13fa0bf1",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_19bc4696",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_1b3e1a8c",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_36a8740b",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_4b32acdf",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_56cb64e9",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_6307913f",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_7a40116c",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_7bbcfc53",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_9863ba54",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_9998fc59",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_9ad95e44",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_b5edca95",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_c5f5ba52",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_c9d8cae2",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_cbc3e9cd",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_dd1ecfab",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_eb87e396",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_ee0b1416",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_eebe686c",
+        "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_f9983082",
+        "/home/ubuntu/projects/wt-ABM-V2-EVAL-001",
+        "/home/ubuntu/projects/wt-ABM-V2-F-001",
+        "/home/ubuntu/projects/wt-ABM-V2-FC-001",
+        "/home/ubuntu/projects/wt-ABM-V2-G-001",
+        "/home/ubuntu/projects/wt-ABM-V2-H-001",
+        "/home/ubuntu/projects/wt-ABM-V2-P0-EVAL-R2",
+        "/home/ubuntu/projects/wt-ABM-V2-P0-EVAL-R3",
+        "/home/ubuntu/projects/wt-ABM-V2-P0-FC-R2",
+        "/home/ubuntu/projects/wt-ABM-V2-P0-R2",
+        "/home/ubuntu/projects/wt-ABM-V21-GPU-001",
+        "/home/ubuntu/projects/wt-ABM-V21-READONLY-001"
+      ],
+      "scope": "METADATA_ONLY",
+      "role": "historical/parallel worktree registry; no content enters the P1 documentation set without a later phase selection",
+      "boundary": {
+        "include": [
+          "path, branch, HEAD, status and Markdown count only"
+        ],
+        "exclude": [
+          "all file contents, raw logs, fixtures, runtime state"
+        ]
+      },
+      "worktrees": [
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_0840211d",
+          "head": "b0158e859f5cd495642c4348448294eb2743a4c3",
+          "branch": "autobot/ABM-V2-H-001-a",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 1,
+            "untracked": 8,
+            "total": 9
+          },
+          "markdown": {
+            "tracked": 84,
+            "filesystem": 92
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_11b10d7c",
+          "head": "3bec3c8b2a8dae203e39177f9f9f0169eb410eb2",
+          "branch": "autobot/ABM-PLUGIN-001-evaluator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 1,
+            "total": 1
+          },
+          "markdown": {
+            "tracked": 106,
+            "filesystem": 107
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_12f9e589",
+          "head": "3bec3c8b2a8dae203e39177f9f9f0169eb410eb2",
+          "branch": "wt/t_12f9e589",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 916,
+            "total": 916
+          },
+          "markdown": {
+            "tracked": 106,
+            "filesystem": 756
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_13fa0bf1",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-model-002-audit",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 12,
+            "total": 12
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 118
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_19bc4696",
+          "head": "4687d8fee3c05338a99503925fd7bbce600a4f85",
+          "branch": "wt/abm-model-003-repair",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 122,
+            "filesystem": 122
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_1b3e1a8c",
+          "head": "3bec3c8b2a8dae203e39177f9f9f0169eb410eb2",
+          "branch": "autobot/ABM-PLUGIN-001-release-audit",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 6,
+            "untracked": 7,
+            "total": 13
+          },
+          "markdown": {
+            "tracked": 106,
+            "filesystem": 111
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_36a8740b",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-arch-001-evaluator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 4,
+            "total": 4
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 119
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_4b32acdf",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-arch-001-operator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 4,
+            "total": 4
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 118
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_56cb64e9",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-web-001-operator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 10,
+            "total": 10
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 121
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_6307913f",
+          "head": "3bec3c8b2a8dae203e39177f9f9f0169eb410eb2",
+          "branch": "autobot/ABM-PLUGIN-001-docs-evaluator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 1,
+            "total": 1
+          },
+          "markdown": {
+            "tracked": 106,
+            "filesystem": 107
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_7a40116c",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-arch-001-final-control",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 3,
+            "total": 3
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 118
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_7bbcfc53",
+          "head": "b0158e859f5cd495642c4348448294eb2743a4c3",
+          "branch": "autobot/ABM-V2-H-001-b",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 3,
+            "untracked": 6,
+            "total": 9
+          },
+          "markdown": {
+            "tracked": 84,
+            "filesystem": 90
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_9863ba54",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "autoboot-monitor/t_9863ba54-abm-cron-001-stale-ready-race-canary-r5",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 115
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_9998fc59",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/t_e9584658-watchdog-repair",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 2,
+            "untracked": 37,
+            "total": 39
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 133
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_9ad95e44",
+          "head": "3bec3c8b2a8dae203e39177f9f9f0169eb410eb2",
+          "branch": "wt/t_9ad95e44",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 1,
+            "total": 1
+          },
+          "markdown": {
+            "tracked": 106,
+            "filesystem": 107
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_b5edca95",
+          "head": "3bec3c8b2a8dae203e39177f9f9f0169eb410eb2",
+          "branch": "autobot/ABM-PLUGIN-001-docs",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 3,
+            "untracked": 4,
+            "total": 7
+          },
+          "markdown": {
+            "tracked": 106,
+            "filesystem": 110
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_c5f5ba52",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-cron-001-operator-r2",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 5,
+            "total": 5
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 117
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_c9d8cae2",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-arch-001-defense",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 5,
+            "total": 5
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 120
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_cbc3e9cd",
+          "head": "3bec3c8b2a8dae203e39177f9f9f0169eb410eb2",
+          "branch": "autobot/ABM-PLUGIN-001-operator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 11,
+            "untracked": 4,
+            "total": 15
+          },
+          "markdown": {
+            "tracked": 106,
+            "filesystem": 109
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_dd1ecfab",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-web-001-evaluator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 10,
+            "total": 10
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 121
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_eb87e396",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-model-001-operator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 0,
+            "total": 0
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 115
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_ee0b1416",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-web-001-final-control",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 5,
+            "total": 5
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 118
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_eebe686c",
+          "head": "3bec3c8b2a8dae203e39177f9f9f0169eb410eb2",
+          "branch": "autobot/ABM-PLUGIN-001-release-evaluator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 1,
+            "total": 1
+          },
+          "markdown": {
+            "tracked": 106,
+            "filesystem": 107
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/Autoboot-Monitor/.worktrees/t_f9983082",
+          "head": "c44c381c2deaabccec15686494eb4c63bf54394d",
+          "branch": "wt/abm-model-002-evaluator",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 3,
+            "total": 3
+          },
+          "markdown": {
+            "tracked": 115,
+            "filesystem": 116
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V2-EVAL-001",
+          "head": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+          "branch": "auto/ABM-V2-EVAL-001",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 2,
+            "total": 2
+          },
+          "markdown": {
+            "tracked": 56,
+            "filesystem": 58
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V2-F-001",
+          "head": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+          "branch": "auto/ABM-V2-F-001",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 4,
+            "total": 4
+          },
+          "markdown": {
+            "tracked": 56,
+            "filesystem": 60
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V2-FC-001",
+          "head": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+          "branch": "auto/ABM-V2-FC-001",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 2,
+            "total": 2
+          },
+          "markdown": {
+            "tracked": 56,
+            "filesystem": 58
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V2-G-001",
+          "head": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+          "branch": "auto/ABM-V2-G-001",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 4,
+            "total": 4
+          },
+          "markdown": {
+            "tracked": 56,
+            "filesystem": 60
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V2-H-001",
+          "head": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+          "branch": "auto/ABM-V2-H-001",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 4,
+            "total": 4
+          },
+          "markdown": {
+            "tracked": 56,
+            "filesystem": 60
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V2-P0-EVAL-R2",
+          "head": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+          "branch": "auto/ABM-V2-P0-EVAL-R2",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 2,
+            "total": 2
+          },
+          "markdown": {
+            "tracked": 56,
+            "filesystem": 58
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V2-P0-EVAL-R3",
+          "head": "e405e42d2a5e2f73ff1d95a3618a97a2380c9c26",
+          "branch": "auto/ABM-V2-P0-EVAL-R3",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 2,
+            "total": 2
+          },
+          "markdown": {
+            "tracked": 58,
+            "filesystem": 60
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V2-P0-FC-R2",
+          "head": "c4f837b778f18e276bd14d2aa8126c9b9f07fd5a",
+          "branch": "auto/ABM-V2-P0-FC-R2",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 2,
+            "total": 2
+          },
+          "markdown": {
+            "tracked": 57,
+            "filesystem": 59
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V2-P0-R2",
+          "head": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+          "branch": "auto/ABM-V2-P0-R2",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 8,
+            "untracked": 4,
+            "total": 12
+          },
+          "markdown": {
+            "tracked": 56,
+            "filesystem": 60
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V21-GPU-001",
+          "head": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+          "branch": "auto/ABM-V21-GPU-001",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 0,
+            "untracked": 3,
+            "total": 3
+          },
+          "markdown": {
+            "tracked": 56,
+            "filesystem": 56
+          }
+        },
+        {
+          "path": "/home/ubuntu/projects/wt-ABM-V21-READONLY-001",
+          "head": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+          "branch": "auto/ABM-V21-READONLY-001",
+          "source_id": "ABM_AUX_WORKTREES_METADATA_ONLY",
+          "status": {
+            "tracked_or_staged": 1,
+            "untracked": 18,
+            "total": 19
+          },
+          "markdown": {
+            "tracked": 56,
+            "filesystem": 58
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "GITHUB_NAGENTS_WORK_REF",
+      "project": "nAgents",
+      "kind": "github_remote_tree",
+      "repository": "maciejsieracki/nAgents",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "sha": "fad6f26c48d31ea7cb5a3e4aa8ad53b5da14ab81",
+      "scope": "IN_SCOPE_REMOTE_REFERENCE",
+      "role": "named GitHub working branch; remote snapshot only, no fetch/pull",
+      "boundary": {
+        "tree_entries": 56,
+        "blobs": 47,
+        "markdown_blobs": 47,
+        "api_truncated": false,
+        "identity": "repository + ref + blob path"
+      }
+    },
+    {
+      "source_id": "GITHUB_NAGENTS_MAIN_REF",
+      "project": "nAgents",
+      "kind": "github_remote_tree",
+      "repository": "maciejsieracki/nAgents",
+      "ref": "refs/heads/main",
+      "sha": "9522836d79679f5296ad23822c9a8efba9f949fb",
+      "scope": "IN_SCOPE_REMOTE_REFERENCE",
+      "role": "named GitHub main comparison point; not local working branch",
+      "boundary": {
+        "tree_entries": 1,
+        "blobs": 1,
+        "markdown_blobs": 1,
+        "api_truncated": false,
+        "identity": "repository + ref + blob path"
+      }
+    },
+    {
+      "source_id": "GITHUB_ABM_MAIN_REF",
+      "project": "AutoBot Monitor",
+      "kind": "github_remote_tree",
+      "repository": "maciejsieracki/Autoboot-Monitor",
+      "ref": "refs/heads/main",
+      "sha": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a",
+      "scope": "IN_SCOPE_REMOTE_REFERENCE",
+      "role": "named GitHub companion baseline; local checkout is newer/dirty and separate",
+      "boundary": {
+        "tree_entries": 228,
+        "blobs": 193,
+        "markdown_blobs": 56,
+        "api_truncated": false,
+        "identity": "repository + ref + blob path"
+      }
+    },
+    {
+      "source_id": "P1_OUTPUTS",
+      "project": "nAgents documentation audit",
+      "kind": "audit_output",
+      "root": "/home/ubuntu/projects/nAgents-readonly/docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1",
+      "scope": "OUTPUT_NOT_INPUT",
+      "role": "this phase outputs; excluded from the input scan and uniquely owned by this task",
+      "boundary": {
+        "exact_files": [
+          "P1-scope.md",
+          "P1-sources.json",
+          "P1-exclusions.md"
+        ]
+      }
+    }
+  ],
+  "github_remote_heads_observed": {
+    "nAgents": {
+      "remote": "https://github.com/maciejsieracki/nAgents.git",
+      "heads": [
+        {
+          "ref": "refs/heads/claude/git-connection-9sz6dg",
+          "sha": "fad6f26c48d31ea7cb5a3e4aa8ad53b5da14ab81"
+        },
+        {
+          "ref": "refs/heads/main",
+          "sha": "9522836d79679f5296ad23822c9a8efba9f949fb"
+        }
+      ],
+      "tag_ref_count": 0,
+      "selection": "only claude/git-connection-9sz6dg and main are named audit refs"
+    },
+    "AutoBot Monitor": {
+      "remote": "https://github.com/maciejsieracki/Autoboot-Monitor.git",
+      "heads": [
+        {
+          "ref": "refs/heads/backup/autobot-working-tree-20260912",
+          "sha": "c44c381c2deaabccec15686494eb4c63bf54394d"
+        },
+        {
+          "ref": "refs/heads/backup/upgrade-policy-20260912",
+          "sha": "9f6634569511f3de3e1526b622de0d9cb0997bce"
+        },
+        {
+          "ref": "refs/heads/main",
+          "sha": "6b057bad349ccda4c4b8ec5c26ae03eea81b635a"
+        },
+        {
+          "ref": "refs/heads/wt/abm-model-003-repair",
+          "sha": "4687d8fee3c05338a99503925fd7bbce600a4f85"
+        }
+      ],
+      "tag_ref_count": 0,
+      "selection": "main is the named audit ref; additional heads are metadata-only candidates pending P2 selection"
+    }
+  },
+  "external_candidates": [
+    {
+      "path": "/home/ubuntu/projects/Hermes-AutoBot-Monitor",
+      "classification": "INFRA/DECISION_REQUIRED",
+      "metadata": {
+        "exists": true,
+        "is_dir": true,
+        "git_top": "/home/ubuntu/projects/Hermes-AutoBot-Monitor",
+        "head": "eaf77f62664e05889510db9c5c7ff18478b76b0c",
+        "branch": "main",
+        "remote_origin": "https://github.com/maciejsieracki/Autoboot-Monitor.git",
+        "status": {
+          "tracked_or_staged": 0,
+          "untracked": 0,
+          "total": 0
+        },
+        "markdown_excluding_standard_artifacts": 756
+      }
+    },
+    {
+      "path": "/home/ubuntu/projects/Hermes-AutoBot-Execution-Router",
+      "classification": "INFRA/DECISION_REQUIRED",
+      "metadata": {
+        "exists": true,
+        "is_dir": true,
+        "git_top": "/home/ubuntu/projects/Hermes-AutoBot-Execution-Router",
+        "head": "9ccf8b5851d9c3222ab256d24723a9564624685b",
+        "branch": "main",
+        "remote_origin": "https://github.com/maciejsieracki/Hermes-AutoBot-Execution-Router.git",
+        "status": {
+          "tracked_or_staged": 0,
+          "untracked": 6,
+          "total": 6
+        },
+        "markdown_excluding_standard_artifacts": 25
+      }
+    },
+    {
+      "path": "/home/ubuntu/projects/The-Game",
+      "classification": "SEPARATE_PROJECT_OR_RUNTIME_EXCLUDED",
+      "metadata": {
+        "exists": true,
+        "is_dir": true,
+        "git_top": "/home/ubuntu/projects/The-Game",
+        "head": "a99f7de59ce643441b641d3b7b11404b6cbdcd82",
+        "branch": "main",
+        "remote_origin": "https://github.com/maciejsieracki/The-Game.git",
+        "status": {
+          "tracked_or_staged": 15,
+          "untracked": 52,
+          "total": 67
+        },
+        "markdown_excluding_standard_artifacts": 5447
+      }
+    },
+    {
+      "path": "/home/ubuntu/projects/The-Game-Autobot",
+      "classification": "SEPARATE_PROJECT_OR_RUNTIME_EXCLUDED",
+      "metadata": {
+        "exists": true,
+        "is_dir": true,
+        "git_top": "/home/ubuntu/projects/The-Game-Autobot",
+        "head": "70f1c639d4cc6fd4a3f5eb95b4484bc007f8f9b0",
+        "branch": "main",
+        "remote_origin": "https://github.com/maciejsieracki/The-Game-Autobot.git",
+        "status": {
+          "tracked_or_staged": 0,
+          "untracked": 0,
+          "total": 0
+        },
+        "markdown_excluding_standard_artifacts": 8
+      }
+    },
+    {
+      "path": "/home/ubuntu/projects/The-Game-autobot-kanban-rule-20260912",
+      "classification": "SEPARATE_PROJECT_OR_RUNTIME_EXCLUDED",
+      "metadata": {
+        "exists": true,
+        "is_dir": true,
+        "git_top": "/home/ubuntu/projects/The-Game-autobot-kanban-rule-20260912",
+        "head": "211ee9af1557a7342cbd929feb5141d21d399c75",
+        "branch": "hermes/R-AUTOBOT-KANBAN-PLAN-REQUIRED-Q1",
+        "remote_origin": "https://github.com/maciejsieracki/The-Game.git",
+        "status": {
+          "tracked_or_staged": 0,
+          "untracked": 0,
+          "total": 0
+        },
+        "markdown_excluding_standard_artifacts": 2727
+      }
+    },
+    {
+      "path": "/home/ubuntu/autobot-loadtest-20260911",
+      "classification": "SEPARATE_PROJECT_OR_RUNTIME_EXCLUDED",
+      "metadata": {
+        "exists": true,
+        "is_dir": true,
+        "git_top": null,
+        "markdown_excluding_standard_artifacts": 25
+      }
+    },
+    {
+      "path": "/home/ubuntu/autobot-real24-20260911",
+      "classification": "SEPARATE_PROJECT_OR_RUNTIME_EXCLUDED",
+      "metadata": {
+        "exists": true,
+        "is_dir": true,
+        "git_top": null,
+        "markdown_excluding_standard_artifacts": 13
+      }
+    },
+    {
+      "path": "/home/ubuntu/autobot-real24-20260913",
+      "classification": "SEPARATE_PROJECT_OR_RUNTIME_EXCLUDED",
+      "metadata": {
+        "exists": true,
+        "is_dir": true,
+        "git_top": null,
+        "markdown_excluding_standard_artifacts": 0
+      }
+    }
+  ],
+  "observed_counts": {
+    "nAgents_checkout": {
+      "markdown_files": 51,
+      "tracked_markdown": 48,
+      "status_before_outputs": {
+        "tracked_or_staged": 8,
+        "untracked": 3,
+        "total": 11
+      }
+    },
+    "nAgents_registered_worktrees": {
+      "total_including_checkout": 11,
+      "auxiliary": 10,
+      "dirty_auxiliary": 1
+    },
+    "handoffs": {
+      "all_supported_files": 39,
+      "nAgents_history_reference": 37,
+      "private_excluded": 1,
+      "separate_project": 1
+    },
+    "AutoBot_Monitor_checkout": {
+      "markdown_normal_boundary": 160,
+      "markdown_before_run_tmp_exclusion": 198,
+      "raw_log_files_normal_boundary_excluded": 53,
+      "status_before_outputs": {
+        "tracked_or_staged": 11,
+        "untracked": 3266,
+        "total": 3277
+      }
+    },
+    "AutoBot_Monitor_registered_worktrees": {
+      "total_including_checkout": 37,
+      "auxiliary": 36,
+      "active_content_worktrees": 1,
+      "metadata_only_auxiliary": 35
+    },
+    "GitHub_named_refs": {
+      "nAgents_work": {
+        "tree_entries": 56,
+        "markdown_blobs": 47
+      },
+      "nAgents_main": {
+        "tree_entries": 1,
+        "markdown_blobs": 1
+      },
+      "AutoBot_Monitor_main": {
+        "tree_entries": 228,
+        "markdown_blobs": 56
+      }
+    }
+  },
+  "exclusions_document": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P1-exclusions.md",
+  "scope_document": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P1-scope.md",
+  "safety": {
+    "secrets_read": false,
+    "pii_copied": false,
+    "raw_logs_read": false,
+    "state_db_read": false,
+    "source_files_modified": false,
+    "deleted_files": false,
+    "git_add_or_commit": false,
+    "push_or_deploy": false
+  }
+}

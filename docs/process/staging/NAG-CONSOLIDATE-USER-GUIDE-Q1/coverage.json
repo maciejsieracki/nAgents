@@ -1,0 +1,693 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "NAG-CONSOLIDATE-USER-GUIDE-Q1-coverage-v1",
+  "topic_id": "NAG-CONSOLIDATE-USER-GUIDE-Q1",
+  "task_id": "t_9e8f68de",
+  "phase": "operator",
+  "round": 1,
+  "status": "PASS",
+  "domain": "INFORMACYJNY",
+  "target_status": "STAGING_ONLY",
+  "source_of_truth": false,
+  "currentness": "not_live_state",
+  "generated_at_utc": "2026-09-14T21:41:03Z",
+  "p6_plan": {
+    "path": "NAGENTS-CONSOLIDATION-PLAN.md",
+    "sha256": "b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c",
+    "size_bytes": 130539,
+    "line_count": 665,
+    "status": "PLAN_ONLY / OWNER_HOLD_REQUIRED",
+    "locator": "§4.7 lines 160–167"
+  },
+  "p4": {
+    "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json",
+    "sha256": "95d2a06fc80e4cf1c27d59959d84b8631e70acbb3e0b879b83df95c38bf382b8",
+    "size_bytes": 2655394,
+    "line_count": 54556,
+    "observed_at_utc": "2026-09-14T14:47:54+00:00",
+    "status": "PASS_WITH_EXPLICIT_OWNER_GATES",
+    "inventory": {
+      "records_total": 833,
+      "unique_path_families": 254,
+      "unique_sha256": 272,
+      "same_path_hash_variant_families": 12,
+      "current_local_readback_drift_files": 3,
+      "remote_readback_records": 104,
+      "remote_current_equal_records": 92,
+      "remote_current_different_records": 12
+    },
+    "selected_groups": [
+      {
+        "group_id": "NAG-USER",
+        "project": "nAgents",
+        "status": "CONSOLIDATION_CANDIDATE",
+        "path_families": 1,
+        "records": 12,
+        "target_sections": ["USER-01", "USER-02", "USER-03", "USER-04"],
+        "path_family_ids": ["PF-0209"]
+      },
+      {
+        "group_id": "NAG-RBAC",
+        "project": "nAgents",
+        "status": "CONSOLIDATION_CANDIDATE",
+        "path_families": 1,
+        "records": 1,
+        "target_sections": ["USER-04"],
+        "path_family_ids": ["PF-0191"],
+        "content_handling": "P4 metadata only; external archive content not read or copied"
+      }
+    ]
+  },
+  "inputs": {
+    "read_scope": "Wskazane źródła lokalnego checkoutu oraz bezpieczne metadane P4; bez sekretów, .env, state.db, sesji, surowych logów, credentiali, zewnętrznej treści archiwalnej i PII.",
+    "required_source_paths": [
+      "docs/proces-dla-pracownikow.md",
+      "docs/spec/scenarios.md",
+      "CLAUDE.md",
+      "NAGENTS-PROJECT.md",
+      "NAGENTS-CONSOLIDATION-PLAN.md",
+      "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json"
+    ],
+    "supporting_canonical_source_paths": [
+      "docs/spec/decisions.md",
+      "docs/spec/00-architektura.md",
+      "docs/spec/02-mvp2.md"
+    ],
+    "no_source_edits": true,
+    "no_external_archive_content_copied": true,
+    "no_live_runtime_claims": true
+  },
+  "sections": [
+    {
+      "id": "USER-01",
+      "scope": "jak pracownik otwiera gotowy profil i czat",
+      "source_refs": ["SRC-01", "SRC-03", "SRC-04", "SRC-06"],
+      "source_statuses": [
+        "CONSOLIDATION_CANDIDATE",
+        "CANONICAL",
+        "CONSOLIDATION_CANDIDATE",
+        "CANONICAL_DECISION"
+      ],
+      "p6_locator": "NAGENTS-CONSOLIDATION-PLAN.md §4.7 line 164",
+      "artifact_locator": "NAGENTS-USER-GUIDE.md §USER-01",
+      "source_locators": [
+        "docs/proces-dla-pracownikow.md §Czym jest ta zasada",
+        "CLAUDE.md §Główny kierunek produktu: web-first; §Podział ról użytkowników",
+        "docs/spec/decisions.md §D-012"
+      ],
+      "unique_fragments": [
+        "F-USER-01A: firmowe logowanie i gotowy profil/czat",
+        "F-USER-01B: pracownik nie konfiguruje zaplecza technicznego",
+        "F-USER-01C: web jako pierwszy klient, Desktop jako dodatek"
+      ],
+      "coverage_criterion": "Pracownik ma opisaną ścieżkę logowanie → gotowy profil → wyłącznie przydzielony czat; tekst nie przenosi konfiguracji gatewaya, serwera, modelu, poświadczeń ani routingu na pracownika.",
+      "scenario_ids": ["U1", "U2"],
+      "result": "COVERED"
+    },
+    {
+      "id": "USER-02",
+      "scope": "pięć sytuacji pracy i minimalne zasady odbioru",
+      "source_refs": ["SRC-01"],
+      "source_statuses": ["CONSOLIDATION_CANDIDATE"],
+      "p6_locator": "NAGENTS-CONSOLIDATION-PLAN.md §4.7 line 165",
+      "artifact_locator": "NAGENTS-USER-GUIDE.md §USER-02",
+      "source_locators": [
+        "docs/proces-dla-pracownikow.md §Pięć sytuacji, które znasz",
+        "docs/proces-dla-pracownikow.md §Co to daje",
+        "docs/proces-dla-pracownikow.md §Wersja minimalna — do zastosowania od jutra",
+        "docs/proces-dla-pracownikow.md §Ile to kosztuje",
+        "docs/proces-dla-pracownikow.md §Kiedy tego nie stosować"
+      ],
+      "unique_fragments": [
+        "F-USER-02A: rozliczenia i sprawdzanie wyniku przez inną osobę",
+        "F-USER-02B: oferta handlowa i druga para oczu",
+        "F-USER-02C: zapisanie ustalenia z obsługi klienta",
+        "F-USER-02D: zakres zadania administracyjnego zapisany na starcie",
+        "F-USER-02E: powód nietypowej obsługi klienta zapisany obok decyzji",
+        "F-USER-02F: koszt czasowy i przypadki, w których zasady nie stosować"
+      ],
+      "coverage_criterion": "Wszystkie pięć sytuacji, skutki ich zaniedbania, cztery czynności minimalne, koszt 20–30 minut oraz przypadki wyłączenia są zachowane w języku skutków.",
+      "scenario_ids": [],
+      "result": "COVERED"
+    },
+    {
+      "id": "USER-03",
+      "scope": "ciągłość po zamknięciu klienta, odbiór i eskalacja",
+      "source_refs": ["SRC-02", "SRC-03", "SRC-04", "SRC-06"],
+      "source_statuses": ["CANONICAL", "CANONICAL", "CONSOLIDATION_CANDIDATE", "CANONICAL_DECISION"],
+      "p6_locator": "NAGENTS-CONSOLIDATION-PLAN.md §4.7 line 166",
+      "artifact_locator": "NAGENTS-USER-GUIDE.md §USER-03",
+      "source_locators": [
+        "docs/spec/scenarios.md U1–U4, U7–U11",
+        "docs/spec/decisions.md §D-012; §D-013",
+        "CLAUDE.md §Pomocnik procesu podczas nieobecności właściciela"
+      ],
+      "unique_fragments": [
+        "F-USER-03A: zapis zakresu, dobrego wyniku i rzeczy zakazanej przed startem",
+        "F-USER-03B: niezależne sprawdzenie faktycznego wyniku przed przekazaniem",
+        "F-USER-03C: zamknięcie przeglądarki odłącza widok, nie właściciela pracy",
+        "F-USER-03D: brak danych lub niejasność zatrzymuje i eskaluje tylko właściwą sprawę",
+        "F-USER-03E: wcześniej zatwierdzony kolejny krok bez nowego zakresu i bez duplikatu"
+      ],
+      "coverage_criterion": "Zachowane są U3 oraz U7–U11: ciągłość po zamknięciu klienta, ponowny odczyt stanu, zatrzymanie niejasności, brak samowolnego zakresu/pustego sprawdzania i brak duplikatu po replayu; U1–U2 są pokryte przez USER-01.",
+      "scenario_ids": ["U3", "U7", "U8", "U9", "U10", "U11"],
+      "result": "COVERED"
+    },
+    {
+      "id": "USER-04",
+      "scope": "granica pracownik–administrator i RBAC dla odbiorcy",
+      "source_refs": ["SRC-03", "SRC-06", "SRC-07", "SRC-08", "SRC-10"],
+      "source_statuses": [
+        "CANONICAL",
+        "CANONICAL_DECISION",
+        "CANONICAL",
+        "CANONICAL",
+        "CONSOLIDATION_CANDIDATE / P4_METADATA_ONLY"
+      ],
+      "p6_locator": "NAGENTS-CONSOLIDATION-PLAN.md §4.7 line 167",
+      "artifact_locator": "NAGENTS-USER-GUIDE.md §USER-04",
+      "source_locators": [
+        "P4 PF-0191 / NAG-RBAC / ROLE-I-UPRAWNIENIA-nAgents.md — metadata only",
+        "docs/spec/00-architektura.md §6.1–§6.5",
+        "docs/spec/02-mvp2.md §1, §5, §7",
+        "CLAUDE.md §Podział ról użytkowników",
+        "docs/spec/scenarios.md U4"
+      ],
+      "unique_fragments": [
+        "F-USER-04A: pracownik korzysta wyłącznie z przydzielonego profilu i czatu",
+        "F-USER-04B: administrator zarządza dostępem, profilami, limitami, zgodami i ustawieniami",
+        "F-USER-04C: ustawienia zaawansowane nie są obowiązkiem pracownika",
+        "F-USER-04D: czynność nieodwracalna wymaga zatwierdzenia upoważnionej osoby",
+        "F-USER-04E: przewodnik nie nadaje ról ani nie zastępuje bieżącego źródła uprawnień"
+      ],
+      "coverage_criterion": "Opis rozdziela użycie przydzielonego czatu od administracji, zachowuje U4 i nie nadaje ról; bieżąca architektura/MVP2 wygrywa ze starą macierzą RBAC.",
+      "scenario_ids": ["U4"],
+      "result": "COVERED"
+    }
+  ],
+  "scenario_coverage": {
+    "required_ids": ["U1", "U2", "U3", "U4", "U7", "U8", "U9", "U10", "U11"],
+    "covered_ids": ["U1", "U2", "U3", "U4", "U7", "U8", "U9", "U10", "U11"],
+    "coverage_status": "9/9"
+  },
+  "claim_index": [
+    {
+      "claim_id": "USER-01",
+      "artifact_heading": "§USER-01",
+      "source_refs": ["SRC-01", "SRC-03", "SRC-04", "SRC-06"],
+      "status": "COVERED"
+    },
+    {
+      "claim_id": "USER-02",
+      "artifact_heading": "§USER-02",
+      "source_refs": ["SRC-01"],
+      "status": "COVERED"
+    },
+    {
+      "claim_id": "USER-03",
+      "artifact_heading": "§USER-03",
+      "source_refs": ["SRC-02", "SRC-03", "SRC-04", "SRC-06"],
+      "status": "COVERED"
+    },
+    {
+      "claim_id": "USER-04",
+      "artifact_heading": "§USER-04",
+      "source_refs": ["SRC-03", "SRC-06", "SRC-07", "SRC-08", "SRC-10"],
+      "status": "COVERED"
+    }
+  ],
+  "source_ledger": [
+    {
+      "source_ref": "SRC-01",
+      "path": "docs/proces-dla-pracownikow.md",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "readback": "local_checkout_bytes",
+      "status": "CONSOLIDATION_CANDIDATE",
+      "source_of_truth": false,
+      "p4": {
+        "path_family_id": "PF-0209",
+        "group_id": "NAG-USER",
+        "primary_status": "CONSOLIDATION_CANDIDATE",
+        "record_count": 12,
+        "preferred_sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+        "current_readback_sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+        "hash_variant_count": 1
+      },
+      "locators": ["§Pięć sytuacji, które znasz", "§Wersja minimalna — do zastosowania od jutra", "§Kiedy tego nie stosować"]
+    },
+    {
+      "source_ref": "SRC-02",
+      "path": "docs/spec/scenarios.md",
+      "sha256": "8b8be2a4e631fa92306dca1779a858d0c95803bc6623b0fc60a84c5b55dd570d",
+      "size_bytes": 5324,
+      "line_count": 92,
+      "readback": "local_checkout_bytes",
+      "status": "CANONICAL",
+      "source_of_truth": true,
+      "p4": {
+        "path_family_id": "PF-0242",
+        "group_id": "NAG-SPEC",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "preferred_sha256": "8b8be2a4e631fa92306dca1779a858d0c95803bc6623b0fc60a84c5b55dd570d"
+      },
+      "locators": ["§Interfejs pracownika i administracja", "U1–U4", "U7–U11"]
+    },
+    {
+      "source_ref": "SRC-03",
+      "path": "CLAUDE.md",
+      "sha256": "8de583cc4fece98c55c49b5fac9f1562669040204f571ee2daacc9905e9390d2",
+      "size_bytes": 6521,
+      "line_count": 121,
+      "readback": "local_checkout_bytes",
+      "status": "CANONICAL",
+      "source_of_truth": true,
+      "p4": {
+        "path_family_id": "PF-0173",
+        "group_id": "NAG-ENTRY",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "preferred_sha256": "8de583cc4fece98c55c49b5fac9f1562669040204f571ee2daacc9905e9390d2"
+      },
+      "locators": ["§Główny kierunek produktu: web-first", "§Podział ról użytkowników", "§Pomocnik procesu podczas nieobecności właściciela", "§Siedem barier"]
+    },
+    {
+      "source_ref": "SRC-04",
+      "path": "NAGENTS-PROJECT.md",
+      "sha256": "84cc8a89c0e7bd53268fc78826938bec062f9223340aa2e0934d64719764a2fb",
+      "size_bytes": 53421,
+      "line_count": 819,
+      "readback": "local_checkout_bytes",
+      "status": "CONSOLIDATION_CANDIDATE / CURRENT_READBACK",
+      "source_of_truth": false,
+      "p4": {
+        "path_family_id": "PF-0184",
+        "group_id": "NAG-INDEX",
+        "primary_status": "CONSOLIDATION_CANDIDATE",
+        "record_count": 2,
+        "preferred_sha256": "6da2750082316e205062cec6154b099740964250fab6b14e8829fb79e63fe143",
+        "p4_current_readback_sha256": "bd0637953c521b879c19ec87f663bcdf6c42e950cd471242697f953ad91f25d3",
+        "current_readback_matches_p4_snapshot": false,
+        "drift_handling": "użyto świeżego lokalnego readbacku; nie wybierano snapshotu przez podobieństwo"
+      },
+      "locators": ["§Web-first i serwerowa własność pracy", "§Podział ról użytkowników", "§Pomocnik procesu podczas nieobecności właściciela"]
+    },
+    {
+      "source_ref": "SRC-05",
+      "path": "NAGENTS-CONSOLIDATION-PLAN.md",
+      "sha256": "b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c",
+      "size_bytes": 130539,
+      "line_count": 665,
+      "readback": "local_checkout_bytes",
+      "status": "PLAN_ONLY / OWNER_HOLD_REQUIRED",
+      "source_of_truth": false,
+      "locators": ["§3 lines 79–90", "§4.7 lines 160–167", "§5 NAG-USER/NAG-RBAC"]
+    },
+    {
+      "source_ref": "SRC-06",
+      "path": "docs/spec/decisions.md",
+      "sha256": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49",
+      "size_bytes": 10789,
+      "line_count": 264,
+      "readback": "local_checkout_bytes",
+      "status": "CANONICAL",
+      "source_of_truth": true,
+      "p4": {
+        "path_family_id": "PF-0241",
+        "group_id": "NAG-SPEC",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "preferred_sha256": "57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49"
+      },
+      "locators": ["§D-012", "§D-013"]
+    },
+    {
+      "source_ref": "SRC-07",
+      "path": "docs/spec/00-architektura.md",
+      "sha256": "322a6c2a76dc4c6bee53c7c1569c306767eb29cd05420bf298e34672aca133cc",
+      "size_bytes": 15112,
+      "line_count": 283,
+      "readback": "local_checkout_bytes",
+      "status": "CANONICAL",
+      "source_of_truth": true,
+      "p4": {
+        "path_family_id": "PF-0235",
+        "group_id": "NAG-SPEC",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "preferred_sha256": "322a6c2a76dc4c6bee53c7c1569c306767eb29cd05420bf298e34672aca133cc"
+      },
+      "locators": ["§6.1–§6.5", "§8", "§9"]
+    },
+    {
+      "source_ref": "SRC-08",
+      "path": "docs/spec/02-mvp2.md",
+      "sha256": "10cbba06ac5179dee6ff97107fb9f1a109f91419cca7d803412eba25faaddd48",
+      "size_bytes": 6915,
+      "line_count": 153,
+      "readback": "local_checkout_bytes",
+      "status": "CANONICAL",
+      "source_of_truth": true,
+      "p4": {
+        "path_family_id": "PF-0237",
+        "group_id": "NAG-SPEC",
+        "primary_status": "CANONICAL",
+        "record_count": 12,
+        "preferred_sha256": "10cbba06ac5179dee6ff97107fb9f1a109f91419cca7d803412eba25faaddd48"
+      },
+      "locators": ["§1 Zakres", "§5 Zatwierdzenia", "§7 Panel administracyjny"]
+    },
+    {
+      "source_ref": "SRC-09",
+      "path": "docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json",
+      "sha256": "95d2a06fc80e4cf1c27d59959d84b8631e70acbb3e0b879b83df95c38bf382b8",
+      "size_bytes": 2655394,
+      "line_count": 54556,
+      "readback": "local_checkout_bytes",
+      "status": "PASS_WITH_EXPLICIT_OWNER_GATES",
+      "source_of_truth": false,
+      "locators": ["path_family_classifications PF-0209/PF-0191", "logical_group_rollups NAG-USER/NAG-RBAC", "record_classifications selected records"]
+    },
+    {
+      "source_ref": "SRC-10",
+      "path": "ROLE-I-UPRAWNIENIA-nAgents.md",
+      "sha256": "1485fdfafd1441fa27a5706789da016c621bc1ce81835c7e302071a0712b607d",
+      "size_bytes": 8617,
+      "line_count": 187,
+      "readback": "P4_record_metadata_only; external archive content not read",
+      "status": "CONSOLIDATION_CANDIDATE / P4_METADATA_ONLY",
+      "source_of_truth": false,
+      "p4": {
+        "path_family_id": "PF-0191",
+        "group_id": "NAG-RBAC",
+        "primary_status": "CONSOLIDATION_CANDIDATE",
+        "record_count": 1,
+        "preferred_record_id": "HANDOFFS_NAGENTS|/home/ubuntu/handoffs||ROLE-I-UPRAWNIENIA-nAgents.md",
+        "preferred_sha256": "1485fdfafd1441fa27a5706789da016c621bc1ce81835c7e302071a0712b607d",
+        "presence_status": "NOT_APPLICABLE_EXTERNAL_ARCHIVE",
+        "content_status": "NOT_COMPARED",
+        "freshness_status": "FRESH",
+        "source_of_truth": "docs/spec/00-architektura.md + docs/spec/02-mvp2.md; stary plik jako materiał"
+      },
+      "locators": ["P4 PF-0191", "P4 logical_group_rollups NAG-RBAC"]
+    }
+  ],
+  "p4_selected_families": [
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "path": "docs/proces-dla-pracownikow.md",
+      "primary_status": "CONSOLIDATION_CANDIDATE",
+      "relation": "upraszczający przewodnik pracownika kontra techniczny proces AutoBot",
+      "record_count": 12,
+      "source_ids": ["GITHUB_NAGENTS_WORK_REF", "NAGENTS_AUX_WORKTREES", "NAGENTS_CHECKOUT"],
+      "preferred_record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/proces-dla-pracownikow.md",
+      "preferred_sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "current_readback_sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "current_readback_line_count": 130,
+      "current_readback_heading_count": 9,
+      "current_readback_link_count": 0,
+      "current_readback_matches_preferred_p2": true,
+      "p2_freshness_statuses": ["FRESH", "RECENT"],
+      "p2_content_statuses": ["IDENTICAL_TO_LOCAL_SNAPSHOT", "IDENTICAL_TO_NAMED_REMOTE"],
+      "p2_hash_variant_count": 1,
+      "unique_content": "Język nietechniczny, pięć sytuacji pracy i minimalna zasada przekazania/odbioru.",
+      "contradictions": ["Nie zawiera pełnych bram bezpieczeństwa, statusów i live readbacków; dispatch NAG-PROC-006 jest dowodem procesu, nie instrukcją dla użytkownika."],
+      "risk": "Pracownik otrzyma zbyt uproszczone reguły albo przewodnik zostanie użyty jako norma techniczna.",
+      "recommendation": "Kandydat do NAGENTS-USER-GUIDE.md po przeglądzie właściciela; zachować ograniczenia techniczne jako odnośniki, nie mieszać ról."
+    },
+    {
+      "group_id": "NAG-RBAC",
+      "path_family_id": "PF-0191",
+      "path": "ROLE-I-UPRAWNIENIA-nAgents.md",
+      "primary_status": "CONSOLIDATION_CANDIDATE",
+      "relation": "historyczny opis ról/uprawnień z overlapem do architektury i MVP2",
+      "record_count": 1,
+      "source_ids": ["HANDOFFS_NAGENTS"],
+      "preferred_record_id": "HANDOFFS_NAGENTS|/home/ubuntu/handoffs||ROLE-I-UPRAWNIENIA-nAgents.md",
+      "preferred_sha256": "1485fdfafd1441fa27a5706789da016c621bc1ce81835c7e302071a0712b607d",
+      "current_readback_sha256": "1485fdfafd1441fa27a5706789da016c621bc1ce81835c7e302071a0712b607d",
+      "current_readback_line_count": 187,
+      "current_readback_heading_count": 15,
+      "current_readback_link_count": 1,
+      "current_readback_matches_preferred_p2": true,
+      "p2_freshness_statuses": ["FRESH"],
+      "p2_content_statuses": ["NOT_COMPARED"],
+      "p2_hash_variant_count": 1,
+      "unique_content": "Macierz ról, akceptacji i operacji w języku właściciela; uzupełnia skrótową specyfikację.",
+      "contradictions": ["Stary dokument może nie zawierać późniejszych D-012/D-013 i aktualnych granic web-first; statusy wymagają porównania z decisions."],
+      "risk": "Nadanie uprawnień na podstawie starej macierzy.",
+      "recommendation": "P6: pokryć każdą operację bieżącą architekturą/decisions; nie przenosić starego pliku bez owner/readback."
+    }
+  ],
+  "p4_selected_records": [
+    {
+      "group_id": "NAG-RBAC",
+      "path_family_id": "PF-0191",
+      "record_id": "HANDOFFS_NAGENTS|/home/ubuntu/handoffs||ROLE-I-UPRAWNIENIA-nAgents.md",
+      "source_id": "HANDOFFS_NAGENTS",
+      "source_instance": "",
+      "ref": null,
+      "revision": null,
+      "sha256": "1485fdfafd1441fa27a5706789da016c621bc1ce81835c7e302071a0712b607d",
+      "size_bytes": 8617,
+      "line_count": 187,
+      "status": "HISTORY",
+      "presence_status": "NOT_APPLICABLE_EXTERNAL_ARCHIVE",
+      "content_status": "NOT_COMPARED",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0191; metadata only"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "GITHUB_NAGENTS_WORK_REF|github://maciejsieracki/nAgents/refs/heads/claude/git-connection-9sz6dg|refs/heads/claude/git-connection-9sz6dg|docs/proces-dla-pracownikow.md",
+      "source_id": "GITHUB_NAGENTS_WORK_REF",
+      "source_instance": "",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "fad6f26c48d31ea7cb5a3e4aa8ad53b5da14ab81",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_LOCAL_SNAPSHOT",
+      "freshness_status": "RECENT",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-INFRA-001-interfejs-hermesa|refs/heads/auto/NAG-INFRA-001-interfejs-hermesa|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-INFRA-001-interfejs-hermesa",
+      "ref": "refs/heads/auto/NAG-INFRA-001-interfejs-hermesa",
+      "revision": "10e80f4901846b579fd176a417a3ee6b6acbf92d",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-INFRA-002-entra-instrukcja|refs/heads/auto/NAG-INFRA-002-entra-instrukcja|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-INFRA-002-entra-instrukcja",
+      "ref": "refs/heads/auto/NAG-INFRA-002-entra-instrukcja",
+      "revision": "4fc11394fb9808dd40c366cfc25f8419bb0271c8",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-MVP1-001-szkielet|refs/heads/auto/NAG-MVP1-001-szkielet|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-MVP1-001-szkielet",
+      "ref": "refs/heads/auto/NAG-MVP1-001-szkielet",
+      "revision": "365ac750aa8e39b7baebaf3b5e094966c6404eec",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-MVP1-003-uprawnienia|refs/heads/auto/NAG-MVP1-003-uprawnienia|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-MVP1-003-uprawnienia",
+      "ref": "refs/heads/auto/NAG-MVP1-003-uprawnienia",
+      "revision": "51f657fdc342618e09c3db773ba93194eba9a9b1",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-MVP1-004-rejestr|refs/heads/auto/NAG-MVP1-004-rejestr|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-MVP1-004-rejestr",
+      "ref": "refs/heads/auto/NAG-MVP1-004-rejestr",
+      "revision": "d57d10dad65b8a3ff9ad7321d50ffec4fa85547e",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-MVP1-005-rozmowa|refs/heads/auto/NAG-MVP1-005-rozmowa|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-MVP1-005-rozmowa",
+      "ref": "refs/heads/auto/NAG-MVP1-005-rozmowa",
+      "revision": "dadc5dec9068dcddcf9be62d4ace7c7b126a8953",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-MVP1-006-proxy-hermes|refs/heads/auto/NAG-MVP1-006-proxy-hermes|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-MVP1-006-proxy-hermes",
+      "ref": "refs/heads/auto/NAG-MVP1-006-proxy-hermes",
+      "revision": "b7ae8051e767a5e103e9904b1b2b043e81d9a4d8",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-MVP1-007-brama-modeli|refs/heads/auto/NAG-MVP1-007-brama-modeli|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-MVP1-007-brama-modeli",
+      "ref": "refs/heads/auto/NAG-MVP1-007-brama-modeli",
+      "revision": "40b83694625dd65cfb2e03216e55734986e58116",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-MVP1-008-audyt|refs/heads/auto/NAG-MVP1-008-audyt|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-MVP1-008-audyt",
+      "ref": "refs/heads/auto/NAG-MVP1-008-audyt",
+      "revision": "6b93e2572110b0b93af8dfd14437daf9792ba1d7",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_AUX_WORKTREES|/home/ubuntu/projects/wt-NAG-MVP1-009-wdrozenie|refs/heads/auto/NAG-MVP1-009-wdrozenie|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_AUX_WORKTREES",
+      "source_instance": "wt-NAG-MVP1-009-wdrozenie",
+      "ref": "refs/heads/auto/NAG-MVP1-009-wdrozenie",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "DUPLICATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    },
+    {
+      "group_id": "NAG-USER",
+      "path_family_id": "PF-0209",
+      "record_id": "NAGENTS_CHECKOUT|/home/ubuntu/projects/nAgents-readonly|refs/heads/claude/git-connection-9sz6dg|docs/proces-dla-pracownikow.md",
+      "source_id": "NAGENTS_CHECKOUT",
+      "source_instance": "",
+      "ref": "refs/heads/claude/git-connection-9sz6dg",
+      "revision": "f5a91010f3c4655bd85e8a2c0c536922a937935b",
+      "sha256": "09f3a374b861e6ca2171bdded8a6af909f703c66f1c04f57610fbc7a233d6f20",
+      "size_bytes": 6307,
+      "line_count": 130,
+      "status": "CONSOLIDATION_CANDIDATE",
+      "presence_status": "PRESENT_BOTH",
+      "content_status": "IDENTICAL_TO_NAMED_REMOTE",
+      "freshness_status": "FRESH",
+      "source_locator": "P4 record_classifications / PF-0209; record_id exact"
+    }
+  ],
+  "coverage_summary": {
+    "sections_total": 4,
+    "sections_covered": 4,
+    "sections_uncovered": 0,
+    "selected_p4_groups": 2,
+    "selected_p4_path_families": 2,
+    "selected_p4_records": 13,
+    "artifact_files_expected": 3,
+    "artifact_boundary": "docs/process/staging/NAG-CONSOLIDATE-USER-GUIDE-Q1/ only"
+  },
+  "safety_and_boundaries": {
+    "source_files_modified": false,
+    "canonical_decisions_modified": false,
+    "permissions_granted_by_guide": false,
+    "technical_process_norm_created": false,
+    "external_archive_content_copied": false,
+    "secrets_or_credentials_added": false,
+    "pii_added": false,
+    "publish_push_merge_deploy": false,
+    "owner_gates_remaining": [
+      "właścicielski przegląd języka i zakresu pracownika",
+      "publikacja lub zastąpienie źródeł",
+      "integracja, merge, push i deploy"
+    ]
+  }
+}
