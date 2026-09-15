@@ -52,11 +52,11 @@ STATUS: `CANONICAL_INPUT` → ekstrakcja `STAGING_ONLY`
 SOURCE_OF_TRUTH: `docs/spec/00-architektura.md` §1; `CLAUDE.md`; `NAGENTS-PROJECT.md`
 P4: `NAG-SPEC/CANONICAL`, `NAG-ENTRY/CANONICAL`, `NAG-INDEX/CONSOLIDATION_CANDIDATE`
 
-### Czym jest nAgents
+### Czym jest 8gent
 
-nAgents to warstwa zarządzania nad flotą instancji Hermesa. Hermes pozostaje
+8gent to warstwa zarządzania nad flotą instancji Hermesa. Hermes pozostaje
 silnikiem agenta: wykonuje rozmowę, narzędzia, piaskownicę, pamięć, kanały i
-wybór modelu. nAgents odpowiada za cztery pytania, których sam Hermes nie
+wybór modelu. 8gent odpowiada za cztery pytania, których sam Hermes nie
 rozstrzyga:
 
 1. kto to jest — tożsamość pracownika z firmowego katalogu;
@@ -64,7 +64,7 @@ rozstrzyga:
 3. ile wolno wydać — limity kosztowe egzekwowane, nie tylko obserwowane;
 4. co zostało po operacji — audyt operacji dozwolonych i odrzuconych.
 
-Budujemy wyłącznie własną warstwę zarządzania. nAgents nie jest silnikiem
+Budujemy wyłącznie własną warstwę zarządzania. 8gent nie jest silnikiem
 agenta, komunikatorem, hostem modeli ani magazynem pamięci Hermesa. Teams,
 Hermes i dostawcy modeli są zależnościami o odrębnej randze i granicy.
 The-Game jest osobnym projektem i nie należy do tej specyfikacji.
@@ -121,7 +121,7 @@ P4: `NAG-SPEC/CANONICAL`, rodzina `PF-0235`
 4. **Brama modeli:** LiteLLM — klucze wirtualne, budżety, limity i routing.
 5. **Dostawcy modeli:** wymienni bez zmiany warstw uprzęży i floty.
 
-nAgents buduje warstwę 2; warstwy 3–4 są wdrażanymi komponentami otwartymi.
+8gent buduje warstwę 2; warstwy 3–4 są wdrażanymi komponentami otwartymi.
 
 ### Słownik
 

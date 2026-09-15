@@ -12,14 +12,14 @@ boardu pozostaje niżej jako wariant historyczny. Plik nie wykonuje migracji.
 > bezpiecznego rozdzielenia.
 >
 > **Ważne:** sam plik nie tworzy jeszcze boardu ani profilu. Dla kart
-> nAgents bieżąca decyzja właściciela wskazuje assignee `default`; nazwa
+> 8gent bieżąca decyzja właściciela wskazuje assignee `default`; nazwa
 > `nagents-coder` z historycznego wariantu nie jest wymagana. Nie przypisuj
 > kart do `autobotmonitor`.
 
 ## Bieżąca decyzja właściciela — wspólny board
 
 N‑Agents może korzystać ze wspólnego boardu projektu `autobot-monitor`. Nowe
-lub odtwarzane karty nAgents muszą mieć komplet:
+lub odtwarzane karty 8gent muszą mieć komplet:
 
 ```text
 board:              autobot-monitor
@@ -38,7 +38,7 @@ workspace:          /home/ubuntu/projects/nAgents-readonly
 aktualną decyzją. `autobotmonitor` pozostaje assignee kart AutoBot Monitor
 z prefiksem `ABM-`; nie używaj go dla nowych kart `NAG-`.
 
-Jeżeli karta nAgents nie spełnia powyższych pól, zatrzymaj jej dispatch na
+Jeżeli karta 8gent nie spełnia powyższych pól, zatrzymaj jej dispatch na
 `INFRA/DECISION_REQUIRED`. Nie twórz boardu `nagents-docs` na podstawie
 historycznego wariantu poniżej bez nowej zgody właściciela.
 
@@ -73,7 +73,7 @@ zadań dokumentacyjnych na wspólnym boardzie.
 
 ## 3. Profil / assignee
 
-Bieżący model właściciela używa profilu `default` jako assignee kart nAgents.
+Bieżący model właściciela używa profilu `default` jako assignee kart 8gent.
 Anchor projektu w tym profilu to `nagents-docs / p_e90c30bc`; profil
 `autobotmonitor` i wcześniejszy `p_cb0f9def` pozostają historycznym execution
 path. `nagents-coder` jest nazwą historycznej rekomendacji, nie wymaganym

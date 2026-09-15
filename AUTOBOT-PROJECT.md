@@ -8,7 +8,7 @@ OBSERVED_AT_UTC: 2026-09-15T00:14:12Z
 P4_STATUS: PASS_WITH_EXPLICIT_OWNER_GATES
 
 Ten plik jest addytywną, stagingową ekstrakcją kontraktu AutoBot Monitor dla
-pakietu nAgents. Nie jest publikacją, instalacją, live contractem ani zgodą na
+pakietu 8gent. Nie jest publikacją, instalacją, live contractem ani zgodą na
 zmianę. `AUTOBOT-KANBAN.md` pozostaje kanonicznym źródłem ABM; źródła supporting
 oraz runbooki nie podnoszą rangi ponad ten kontrakt. Statusy runtime są tylko
 snapshotami opisanymi w źródłach i wymagają świeżego readbacku.
@@ -20,13 +20,14 @@ snapshotami opisanymi w źródłach i wymagają świeżego readbacku.
   zamknięty w tym artefakcie.
 - Staging dotyczy dokumentacji kontraktu ABM, nie implementacji. Nie zmienia
   repozytorium `/home/ubuntu/projects/Autoboot-Monitor`, kart, runów, profili,
-  boardów, Crona, receivera, gatewaya ani źródeł nAgents.
+  boardów, Crona, receivera, gatewaya ani źródeł 8gent.
 - Precedencja: (1) jawna decyzja właściciela i świeży readback, (2)
   `AUTOBOT-KANBAN.md`, (3) `AGENTS.md` i supporting runbooki, (4) ten staging
   pakiet jako mapa/ekstrakcja. P4 jest rejestrem proweniencji, nie instrukcją
   runtime.
-- `nAgents Documentation` jest projektem, w którym powstał ten staging task;
-  AutoBot Monitor jest osobnym projektem. The-Game pozostaje osobnym projektem
+- Techniczny projekt Hermes `nAgents Documentation` (marka: `8gent`) jest
+  miejscem, w którym powstał ten staging task; AutoBot Monitor jest osobnym
+  projektem. The-Game pozostaje osobnym projektem
   i boardem (`the-game-real24`, `the-game-bugs`). Nie tworzymy wspólnej grafy,
   fallbacku ani wspólnego namespace'u.
 - Żadne sekcje nie kopiują sekretów, tokenów, haseł, PII, `.env`, `auth.json`,
@@ -65,7 +66,7 @@ Pełna maszyna P4 znajduje się w `coverage.json`.
 | SRC-ABM-CRON-RUNBOOK | `docs/ABM-CRON-HELPER-OPERATING-RUNBOOK.md` | `5252f9150e94261e50535e8b6f7f985082fef534f4573258cfe2b4632598c98d` | 21733 / 557 | `?? docs/ABM-CRON-HELPER-OPERATING-RUNBOOK.md` | PF-0012 / SOURCE |
 | SRC-ABM-MODEL-POLICY | `docs/AUTOBOT-MODEL-EFFORT-FAST-POLICY.md` | `86d0e4ea372620a179ab2d347186e3ecb89986d0c316d8059fb48f7aba813e18` | 3755 / 96 | `?? docs/AUTOBOT-MODEL-EFFORT-FAST-POLICY.md` | PF-0016 / SOURCE |
 | SRC-ABM-SAME-PROFILE | `docs/ABM-SAME-PROFILE-CRON-MIGRATION.md` | `27b8f8e63dcdf3aab1eac8bfd85bd5ee7a88c5c236a23fdd1dfd7d3359c884d6` | 24924 / 499 | `?? docs/ABM-SAME-PROFILE-CRON-MIGRATION.md` | PF-0015 / SOURCE |
-| SRC-NAG-PLAN | `NAGENTS-CONSOLIDATION-PLAN.md` | `b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c` | 130539 / 665 | `?? NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the nAgents consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. |
+| SRC-NAG-PLAN | `NAGENTS-CONSOLIDATION-PLAN.md` | `b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c` | 130539 / 665 | `?? NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the 8gent consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. |
 | SRC-P4 | `docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json` | `95d2a06fc80e4cf1c27d59959d84b8631e70acbb3e0b879b83df95c38bf382b8` | 2655394 / 54556 | `?? docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json` | P4_AUDIT_ARTIFACT: this JSON is the classification input itself, not a product-contract path family. |
 
 Dwa źródła są jawnie obecne w bieżącym checkoutcie, ale nie mają dokładnego
@@ -80,7 +81,7 @@ jego hashy z bieżącym plikiem `-3`.
 Poniższe sekcje zachowują identyfikatory i bramki z `NAGENTS-CONSOLIDATION-PLAN.md`.
 Każda ma źródło, status i exact locator; streszczenie nie udaje dowodu live.
 
-## ABM-01 — Projekt, namespace, kontrakt i granica względem nAgents/The-Game
+## ABM-01 — Projekt, namespace, kontrakt i granica względem 8gent/The-Game
 
 Status: `CANONICAL_SOURCE + STAGING_ONLY; live identity requires readback`
 P4 groups: `ABM-CONTRACT`
@@ -93,14 +94,16 @@ P4 groups: `ABM-CONTRACT`
 | `SRC-ABM-AGENTS` | `AGENTS.md` | PF-0001 / CANONICAL | §Goal, lines 3–5: durable read-only monitor objective; §Architecture constraints, lines 30–39: server execution, independent roles and dispatch contract; §Safety, lines 50–61: read-only/security/no-live-install boundary; §Acceptance criteria D–E, lines 87–96: package and verification gates |
 | `SRC-ABM-CARD-INDEX` | `docs/ABM-CARD-INDEX.md` | NOT_INDEXED_IN_P4: current -3-era index was read after the P4 snapshot; no P4 row is invented. | lines 1–22: precedence, map-not-copy rule and readback boundary; §1–2, lines 26–66: ABM scope, project identity and required documents; §4–5, lines 137–184: no-touch classes, safe reconciliation and readback; §6, lines 195–202: source-of-truth and live-status rule |
 | `SRC-ABM-TAGGING-3` | `docs/ABM-CARD-TAGGING-GUIDE-3.md` | PF-0011 / SOURCE | lines 1–12: precedence over attachments and current operational scope; §0–2, lines 10–94: owner scope, hierarchy and project separation; §4, lines 125–264: board/project/tenant/assignee/phase/topic/idempotency/model fields; §6–9, lines 307–455: phase cards, UI limits and historical reconciliation; §11–14, lines 495–568: dispatch checklist, prohibitions and source list |
-| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the nAgents consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
+| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the 8gent consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
 
 Zachowane reguły:
 
 - AUTOBOT-KANBAN.md pozostaje jedynym kanonicznym kontraktem ABM; ten plik jest tylko stagingową ekstrakcją.
 - Dokumentowana tożsamość ABM to board `autobot-monitor`, projekt `autoboot-monitor`/`p_ffb5c6ad` i profil `autobotmonitor`; przed użyciem operacyjnym trzeba wykonać świeży readback.
 - `project_id`, board, tenant i assignee/profile są odrębnymi polami. Nazwa profilu nie jest nazwą projektu ani zgodą do jego danych.
-- nAgents Documentation (w tym ten staging task) i The-Game pozostają osobnymi projektami/strumieniami; nie wolno tworzyć cross-board zależności ani używać profilu The-Game jako fallbacku.
+- Techniczny projekt `nAgents Documentation` (marka: `8gent`, w tym ten staging
+  task) i The-Game pozostają osobnymi projektami/strumieniami; nie wolno tworzyć
+  cross-board zależności ani używać profilu The-Game jako fallbacku.
 - Dla jednego użytkownika/projektu główny chat, Kanban, Cron, receiver/helper i worker sessions mają wspólny profil `autobotmonitor`; wspólny profil nie scala rozmów workerów.
 
 Granica dowodu: ten staging package nie potwierdza `live board/profile/project registration`, `current owner decision beyond the cited static snapshot`, `any mutation or publication`. Każdy taki fakt wymaga świeżego, task-scoped readbacku; statyczny dokument, `queued`, `delivered`, UI lub raport nie zastępuje dowodu.
@@ -118,7 +121,7 @@ P4 groups: `ABM-CONTRACT`, `ABM-OPS`
 | `SRC-ABM-CARD-INDEX` | `docs/ABM-CARD-INDEX.md` | NOT_INDEXED_IN_P4: current -3-era index was read after the P4 snapshot; no P4 row is invented. | lines 1–22: precedence, map-not-copy rule and readback boundary; §1–2, lines 26–66: ABM scope, project identity and required documents; §4–5, lines 137–184: no-touch classes, safe reconciliation and readback; §6, lines 195–202: source-of-truth and live-status rule |
 | `SRC-ABM-TAGGING-3` | `docs/ABM-CARD-TAGGING-GUIDE-3.md` | PF-0011 / SOURCE | lines 1–12: precedence over attachments and current operational scope; §0–2, lines 10–94: owner scope, hierarchy and project separation; §4, lines 125–264: board/project/tenant/assignee/phase/topic/idempotency/model fields; §6–9, lines 307–455: phase cards, UI limits and historical reconciliation; §11–14, lines 495–568: dispatch checklist, prohibitions and source list |
 | `SRC-ABM-CRON-RUNBOOK` | `docs/ABM-CRON-HELPER-OPERATING-RUNBOOK.md` | PF-0012 / SOURCE | §1, lines 12–48: one profile and visible/canonical/worker chat distinction; §5, lines 211–320: Cron → spool → receiver/helper → worker contract; §6, lines 324–377: owner-chat delivery boundary and Desktop/server distinction; §7–8, lines 381–471: handoff, technical/contextual readback and canary; §9, lines 475–491: prohibited shortcuts; §11, lines 543–557: next step remains gated by visible-owner canary |
-| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the nAgents consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
+| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the 8gent consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
 
 Zachowane reguły:
 
@@ -143,7 +146,7 @@ P4 groups: `ABM-OPS`, `ABM-RELAY`
 | `SRC-ABM-CRON-RUNBOOK` | `docs/ABM-CRON-HELPER-OPERATING-RUNBOOK.md` | PF-0012 / SOURCE | §1, lines 12–48: one profile and visible/canonical/worker chat distinction; §5, lines 211–320: Cron → spool → receiver/helper → worker contract; §6, lines 324–377: owner-chat delivery boundary and Desktop/server distinction; §7–8, lines 381–471: handoff, technical/contextual readback and canary; §9, lines 475–491: prohibited shortcuts; §11, lines 543–557: next step remains gated by visible-owner canary |
 | `SRC-ABM-SAME-PROFILE` | `docs/ABM-SAME-PROFILE-CRON-MIGRATION.md` | PF-0015 / SOURCE | §1–2, lines 1–73: one-project/one-profile decision and no manual state.db migration; §5, lines 322–367: one canonical Cron, receiver and visible owner target; §6, lines 368–394: server-only cutover and replay checks; §7–8, lines 419–464: acceptance status, owner hold and rollback; §9–10, lines 466–500: agent handoff and next gated step |
 | `SRC-ABM-TAGGING-3` | `docs/ABM-CARD-TAGGING-GUIDE-3.md` | PF-0011 / SOURCE | lines 1–12: precedence over attachments and current operational scope; §0–2, lines 10–94: owner scope, hierarchy and project separation; §4, lines 125–264: board/project/tenant/assignee/phase/topic/idempotency/model fields; §6–9, lines 307–455: phase cards, UI limits and historical reconciliation; §11–14, lines 495–568: dispatch checklist, prohibitions and source list |
-| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the nAgents consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
+| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the 8gent consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
 | `SRC-P4` | `docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json` | P4_AUDIT_ARTIFACT: this JSON is the classification input itself, not a product-contract path family. | top-level keys: inventory, path_family_classifications, logical_group_rollups, current_local_readback_drift, quality_checks; inventory: 254 path families / 833 records / 272 unique SHA-256 values; ABM logical groups and selected path-family rows used for this package |
 
 Zachowane reguły:
@@ -194,7 +197,7 @@ P4 groups: `ABM-PACKAGE`, `ABM-INTEGRATION`
 | `SRC-ABM-AGENTS` | `AGENTS.md` | PF-0001 / CANONICAL | §Goal, lines 3–5: durable read-only monitor objective; §Architecture constraints, lines 30–39: server execution, independent roles and dispatch contract; §Safety, lines 50–61: read-only/security/no-live-install boundary; §Acceptance criteria D–E, lines 87–96: package and verification gates |
 | `SRC-ABM-KANBAN` | `AUTOBOT-KANBAN.md` | PF-0002 / CANONICAL; drift vs P2 87c426598b7d | §1–2, lines 44–90: source of truth, project/profile/board namespace and fallback prohibition; §3–4, lines 92–177: native_status/process_phase and dispatch preflight; §5, lines 179–338: phase graph, Cron → receiver → worker and owner target; §6–7, lines 340–490: receipts, readbacks, terminal events, watchdog and recovery; §10, lines 536–558: owner-chat bridge and selective delivery |
 | `SRC-ABM-CRON-RUNBOOK` | `docs/ABM-CRON-HELPER-OPERATING-RUNBOOK.md` | PF-0012 / SOURCE | §1, lines 12–48: one profile and visible/canonical/worker chat distinction; §5, lines 211–320: Cron → spool → receiver/helper → worker contract; §6, lines 324–377: owner-chat delivery boundary and Desktop/server distinction; §7–8, lines 381–471: handoff, technical/contextual readback and canary; §9, lines 475–491: prohibited shortcuts; §11, lines 543–557: next step remains gated by visible-owner canary |
-| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the nAgents consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
+| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the 8gent consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
 | `SRC-P4` | `docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json` | P4_AUDIT_ARTIFACT: this JSON is the classification input itself, not a product-contract path family. | top-level keys: inventory, path_family_classifications, logical_group_rollups, current_local_readback_drift, quality_checks; inventory: 254 path families / 833 records / 272 unique SHA-256 values; ABM logical groups and selected path-family rows used for this package |
 
 Zachowane reguły:
@@ -203,7 +206,7 @@ Zachowane reguły:
 - Docelowy pakiet rozdziela server Python backend i native Desktop plugin; plugin, API i UI nie mogą rozszerzać dostępu ani ujawniać tokenów, env, arbitralnych ścieżek/komend lub niesanitizowanego terminala.
 - Instalacja, restart gatewaya, publikacja i release wymagają osobnej zgody właściciela. Ten staging package nie jest instalacją, nie jest live contractem i nie nadaje zgody.
 - P4 `ABM-PACKAGE` (1/2) pozostaje `CONSOLIDATION_CANDIDATE`, a `ABM-INTEGRATION` (1/1) pozostaje `SOURCE`; wariant lokalny/remote wymaga release review z manifestem, base SHA i testami.
-- Nie zmieniać nAgents, The-Game, Hermes core ani repozytorium ABM w ramach tego pakietu; nie publikować z samego README lub raportu.
+- Nie zmieniać 8gent, The-Game, Hermes core ani repozytorium ABM w ramach tego pakietu; nie publikować z samego README lub raportu.
 
 Granica dowodu: ten staging package nie potwierdza `package build/tests`, `upstream acceptance`, `live install/gateway restart`, `publication or merge`. Każdy taki fakt wymaga świeżego, task-scoped readbacku; statyczny dokument, `queued`, `delivered`, UI lub raport nie zastępuje dowodu.
 
@@ -220,7 +223,7 @@ P4 groups: `ABM-RELAY`, `ABM-EVIDENCE`, `ABM-REPORTS`, `ABM-CONTRACT`
 | `SRC-ABM-CRON-RUNBOOK` | `docs/ABM-CRON-HELPER-OPERATING-RUNBOOK.md` | PF-0012 / SOURCE | §1, lines 12–48: one profile and visible/canonical/worker chat distinction; §5, lines 211–320: Cron → spool → receiver/helper → worker contract; §6, lines 324–377: owner-chat delivery boundary and Desktop/server distinction; §7–8, lines 381–471: handoff, technical/contextual readback and canary; §9, lines 475–491: prohibited shortcuts; §11, lines 543–557: next step remains gated by visible-owner canary |
 | `SRC-ABM-SAME-PROFILE` | `docs/ABM-SAME-PROFILE-CRON-MIGRATION.md` | PF-0015 / SOURCE | §1–2, lines 1–73: one-project/one-profile decision and no manual state.db migration; §5, lines 322–367: one canonical Cron, receiver and visible owner target; §6, lines 368–394: server-only cutover and replay checks; §7–8, lines 419–464: acceptance status, owner hold and rollback; §9–10, lines 466–500: agent handoff and next gated step |
 | `SRC-ABM-CARD-INDEX` | `docs/ABM-CARD-INDEX.md` | NOT_INDEXED_IN_P4: current -3-era index was read after the P4 snapshot; no P4 row is invented. | lines 1–22: precedence, map-not-copy rule and readback boundary; §1–2, lines 26–66: ABM scope, project identity and required documents; §4–5, lines 137–184: no-touch classes, safe reconciliation and readback; §6, lines 195–202: source-of-truth and live-status rule |
-| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the nAgents consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
+| `SRC-NAG-PLAN` | `NAGENTS-CONSOLIDATION-PLAN.md` | NOT_A_P4_PATH_FAMILY: this is the 8gent consolidation plan that defines the target package and ABM section matrix; P4 JSON is cited separately as the audit artifact. | §4.8, lines 169–179: target package and ABM-01..07 matrix; §5, lines 201–234: P4 group ledger and ABM group counts; §6.2–6.4, lines 247–277: variants, drift and owner gates; §7–8, lines 279–327: completeness and safe additive execution |
 | `SRC-P4` | `docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json` | P4_AUDIT_ARTIFACT: this JSON is the classification input itself, not a product-contract path family. | top-level keys: inventory, path_family_classifications, logical_group_rollups, current_local_readback_drift, quality_checks; inventory: 254 path families / 833 records / 272 unique SHA-256 values; ABM logical groups and selected path-family rows used for this package |
 
 Zachowane reguły:
@@ -250,7 +253,7 @@ pozostaje w `P4-classification.json`.
 | `ABM-EVIDENCE` | `EVIDENCE` | 136 / 180 | docs/ABM-HISTORY.md index; runs remain separate | immutable run/task evidence; similar templates are not logical duplicates |
 | `ABM-HANDOFF` | `HISTORY` | 1 / 1 | AUTOBOT-PROJECT.md or docs/ABM-HISTORY.md | dated owner handoff, not canonical runtime truth |
 | `ABM-HISTORY` | `HISTORY` | 5 / 9 | docs/ABM-HISTORY.md | old plans, requirements and ledgers superseded by current contract/evidence |
-| `ABM-INTEGRATION` | `SOURCE` | 1 / 1 | AUTOBOT-PROJECT.md / docs/ABM-LIFECYCLE.md | Hermes patch/provenance material, not nAgents documentation |
+| `ABM-INTEGRATION` | `SOURCE` | 1 / 1 | AUTOBOT-PROJECT.md / docs/ABM-LIFECYCLE.md | Hermes patch/provenance material, not 8gent documentation |
 | `ABM-LIFECYCLE` | `SOURCE` | 4 / 7 | docs/ABM-LIFECYCLE.md | install/upgrade/uninstall/backup policy separate from runtime evidence |
 | `ABM-OPS` | `SOURCE` | 7 / 7 | AUTOBOT-PROJECT.md / docs/ABM-LIFECYCLE.md | warstwowe runbooki operacyjne; część jest dynamicznym readbackiem |
 | `ABM-PACKAGE` | `CONSOLIDATION_CANDIDATE` | 1 / 2 | AUTOBOT-PROJECT.md / package/README.md after release review | same path present local/remote with content divergence |

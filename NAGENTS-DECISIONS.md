@@ -352,14 +352,14 @@ BEGIN_LITERAL_SOURCE:D-012
 ## D-012 · Web-first i serwerowa własność pracy
 **2026-09-13 · przyjęta dyrektywą właściciela**
 
-**Decyzja:** NAgents dostarcza najpierw bezpieczny, prosty dostęp webowy do
+**Decyzja:** 8gent dostarcza najpierw bezpieczny, prosty dostęp webowy do
 gotowych profili i czatów. Pracownik nie konfiguruje gatewaya, serwera, profilu
 technicznego, modeli ani poświadczeń. Serwer jest właścicielem sesji, kolejki,
 workerów, pamięci i audytu; przeglądarka oraz Desktop są klientami.
 
 Nakładka na Desktop albo dostosowanie Desktopu wchodzi dopiero jako drugi etap,
 po potwierdzeniu scenariusza webowego. AutoBot Router i AutoBot Monitor pozostają
-modułami NAgents, a nie osobnymi projektami nadrzędnymi.
+modułami 8gent, a nie osobnymi projektami nadrzędnymi.
 
 **Rozważane opcje:**
 
@@ -380,12 +380,12 @@ serwerową ścieżkę wykonania.
 **Konsekwencje:**
 
 1. Pierwszym zadaniem jest potwierdzenie bezpiecznego, łatwego dostępu przez
-   istniejącą webową powierzchnię Hermesa albo web NAgents.
+   istniejącą webową powierzchnię Hermesa albo web 8gent.
 2. Zamknięcie przeglądarki musi zostać sprawdzone jako scenariusz ciągłości;
    sam status „połączono" nie jest dowodem.
-3. Ustawienia zaawansowane trafiają do powierzchni administratora NAgents/Hermesa
+3. Ustawienia zaawansowane trafiają do powierzchni administratora 8gent/Hermesa
    albo terminala; pracownik widzi przydzielony profil i czat.
-4. Desktop nie może być wymagany do działania NAgents ani do utrzymania workerów.
+4. Desktop nie może być wymagany do działania 8gent ani do utrzymania workerów.
 5. Dokładny wybór hosta, uwierzytelniania, TLS i rezydencji danych pozostaje
    osobnymi decyzjami, jeśli zmieni koszt, dostęp, dane lub odwracalność.
 
@@ -403,7 +403,7 @@ BEGIN_LITERAL_SOURCE:D-013
 ## D-013 · Serwerowy pomocnik procesu dla autonomicznej pętli
 **2026-09-13 · przyjęta wyborem właściciela wariantu A**
 
-**Decyzja:** NAgents używa serwerowego pomocnika procesu z trwałą instrukcją,
+**Decyzja:** 8gent używa serwerowego pomocnika procesu z trwałą instrukcją,
 który odbiera dyspozycje Crona i prowadzi wyłącznie kwalifikowane przejścia
 istniejącego grafu Kanbana. Pomocnik nie jest dzieckiem bieżącego czatu ani
 Desktopu. Działa jako niezależny profil/sesja procesu pod nadzorem serwera.
@@ -436,7 +436,7 @@ strumienia i eskalację.
 **Konsekwencje:**
 
 1. Kanban, eventy, rodzice, runy i durable receipts pozostają źródłem prawdy.
-2. Reguły nAgents i AutoBot są ładowane z wersjonowanych dokumentów, a krytyczne
+2. Reguły 8gent i AutoBot są ładowane z wersjonowanych dokumentów, a krytyczne
    przejścia są dodatkowo wymuszane przez kod; sama instrukcja językowa nie jest
    kontrolą bezpieczeństwa.
 3. Pomocnik może działać bez obecności właściciela przy przejściach
@@ -583,7 +583,7 @@ kto:  właściciel
 ```
 
 **Skąd wzięło się pytanie.** Właściciel zapisał poza tym repozytorium: „ten
-proces obowiązuje w projekcie nAgents, orkiestracja wieloagentowa domyślnie OFF
+proces obowiązuje w projekcie 8gent, orkiestracja wieloagentowa domyślnie OFF
 do jawnej zgody". To stało w sprzeczności z **ECHO-001**, gdzie zgoda została
 udzielona bezterminowo, oraz z całą pracą wykonaną 2026-08-23, która na tej
 zgodzie się opierała. Orkiestrator nie rozstrzygnął sprzeczności sam — zadał
@@ -1506,7 +1506,7 @@ LITERAL_SHA256: `d6d9d05241d6babdef65739514830a41538b77c4a4de4de70cfd40105e2c546
 BEGIN_LITERAL_SOURCE:HISTORY_NOTE_FULL
 # Nota 08 — wybory otwarte: zaplecze merytoryczne
 
-NASTER · projekt nAgents · temat `NAG-DEC-001-wybory-otwarte` · 25 sierpnia 2026
+NASTER · projekt 8gent · temat `NAG-DEC-001-wybory-otwarte` · 25 sierpnia 2026
 
 Ten dokument jest zapleczem dla `docs/process/pytania/2026-08-25-wybory.md`
 — zestawu ośmiu pytań, które trafiają do właściciela. Tu jest to samo, ale
@@ -1530,7 +1530,7 @@ warianty podejścia do 956 narzędzi); `docs/spec/01-mvp1.md` §7 (rejestr
 agentów, pole `secrets`/`vault_ref`); `docs/spec/04-mvp4.md` §1 (konektory);
 `docs/spec/scenarios.md` (scenariusze R1–R7).
 
-**Ustalenie:** `00-architektura.md` §1 mówi wprost — „nAgents to warstwa
+**Ustalenie:** `00-architektura.md` §1 mówi wprost — „8gent to warstwa
 zarządzania nad flotą instancji Hermesa. Nie jest silnikiem agenta — Hermes
 nim jest (…) wykonuje całą pracę: rozmowę, narzędzia, piaskownicę, pamięć,
 kanały, wybór modelu." Samo łączenie się z programem firmowym i wykonywanie
@@ -1541,7 +1541,7 @@ czyli traktuje to jako osobną warstwę wykonawczą, nie jako część własnej
 warstwy zarządzania.
 
 **Nasza praca jest węższa, ale realna i dziś nierozstrzygnięta.** Cztery
-rzeczy, wszystkie mieszczące się w czterech pytaniach nAgents z
+rzeczy, wszystkie mieszczące się w czterech pytaniach 8gent z
 `00-architektura.md` §1 („kto to jest", „do czego ma prawo", „ile mu wolno
 wydać", „co po sobie zostawił"):
 
@@ -1737,7 +1737,7 @@ całego etapu"), `.claude/skills/nagents-autobot/SKILL.md` §6 (Kryteria
 końca) — proces AutoBot rozróżnia zamknięcie techniczne (testy) od
 zamknięcia biznesowego, ale nie mówi, kto reprezentuje stronę biznesową przy
 tym konkretnym projekcie z jedną osobą decyzyjną. To pytanie wypełnia tę
-lukę dla nAgents.
+lukę dla 8gent.
 
 Warianty A–C, ceny, ryzyka — jak w dokumencie dla właściciela. Rekomendacja:
 wariant A dla testu kluczowego (R1–R4/R8), reszta testów technicznych
@@ -1880,8 +1880,8 @@ SOURCE_LOCATOR: §1 (linie 63–80); §2.1 wiersze decyzji (linie 122–123); §
 PROVENANCE_STATUS: `DRIFT_RECONCILED / CURRENT_READBACK`
 DRIFT_DELTA_BYTES: `+18`
 DRIFT_BYTE_LOCATOR: offset `11051` zero-based; bieżący zakres `11051–11212` zero-based inclusive (`11052–11213` one-based inclusive)
-DRIFT_SNAPSHOT_LINE: "| NAgents project anchor | `nagents-docs / p_cb0f9def` | `hermes project show nagents-docs`; używać jako `project_id` na wspólnym boardzie |"
-DRIFT_CURRENT_LINE: "| NAgents project anchor | `nagents-docs / p_e90c30bc` | `hermes --profile default project show nagents-docs`; używać jako `project_id` na wspólnym boardzie |"
+DRIFT_SNAPSHOT_LINE: "| 8gent project anchor | `nagents-docs / p_cb0f9def` | `hermes project show nagents-docs`; używać jako `project_id` na wspólnym boardzie |"
+DRIFT_CURRENT_LINE: "| 8gent project anchor | `nagents-docs / p_e90c30bc` | `hermes --profile default project show nagents-docs`; używać jako `project_id` na wspólnym boardzie |"
 DRIFT_EFFECT: Anchor przechodzi z `p_cb0f9def` i niekwalifikowanego odczytu na `p_e90c30bc` odczytywany jawnie w profilu `default`; treść decyzji, status indeksu i liczniki pakietu nie zmieniają się.
 DRIFT_RECONSTRUCTION: Zastąpienie bieżącej linii 165 linią snapshotu odtwarza dokładnie SHA-256 `bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae00236a`, rozmiar `53403` B i `819` linii.
 SOURCE_LINK: [`NAGENTS-PROJECT.md`](../../../../NAGENTS-PROJECT.md)
@@ -1985,7 +1985,7 @@ P4: P4 `PF-0184` / `NAG-INDEX` / `CONSOLIDATION_CANDIDATE`; rekordów: 2
 SOURCE_OF_TRUTH: `false`
 LOCATOR: §1; §2.1 wiersze o decyzjach; §4.4; §11; §12; drift dokładnie `NAGENTS-PROJECT.md:165`, offset `11051` zero-based.
 DRIFT: snapshot → current, `+18` B; stara linia ma `p_cb0f9def` i `hermes project show`, bieżąca ma `p_e90c30bc` i `hermes --profile default project show`.
-DRIFT_EFFECT: Bieżący indeks jawnie czyta anchor nAgents w profilu `default`; decyzje, status `CONSOLIDATION_CANDIDATE` i liczniki stagingu pozostają bez zmian.
+DRIFT_EFFECT: Bieżący indeks jawnie czyta anchor 8gent w profilu `default`; decyzje, status `CONSOLIDATION_CANDIDATE` i liczniki stagingu pozostają bez zmian.
 LINK: [NAGENTS-PROJECT.md](../../../../NAGENTS-PROJECT.md)
 
 ### SRC-07 — `docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4-classification.json`

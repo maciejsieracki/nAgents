@@ -1,4 +1,4 @@
-# nAgents — manifest sprzątania dokumentacji
+# 8gent — manifest sprzątania dokumentacji
 
 Status: audyt wykonany; lista usunięć: **pusta**.
 
@@ -9,7 +9,7 @@ Sprzątanie oceniono na podstawie:
 - P4 dla 833 rekordów i 254 rodzin ścieżek;
 - macierzy `NAGENTS-CONSOLIDATION-PLAN.md`;
 - raportów Operatora, Evaluatora, Defense, Final Control i P7;
-- aktualnego katalogu checkoutu nAgents;
+- aktualnego katalogu checkoutu 8gent;
 - rozdzielenia źródeł kanonicznych, historii, evidence i projektów towarzyszących.
 
 ## Dlaczego niczego nie usunięto

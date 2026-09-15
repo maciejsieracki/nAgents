@@ -1,4 +1,4 @@
-# nAgents — NAGENTS-PROJECT
+# 8gent — NAGENTS-PROJECT
 
 > **Kanoniczny indeks nawigacyjny dokumentacji projektu.** Ten plik mówi
 > agentowi, gdzie szukać informacji i jak odróżniać źródło prawdy od historii,
@@ -8,7 +8,7 @@
 > **Audyt źródłowy:** P1 `2026-09-14T13:39:16Z`, P2 `13:56:47Z`, P3
 > `14:05:37Z`, P4 `14:47:54Z`; wynik P5 i jego końcowy hash są w raporcie
 > [`P5-index.md`](docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P5-index.md).
-> **Zakres audytu:** checkout nAgents, checkout AutoBot Monitor, aktywne
+> **Zakres audytu:** checkout 8gent, checkout AutoBot Monitor, aktywne
 > worktree, `/home/ubuntu/handoffs/`, znane pliki koordynacji oraz nazwane
 > drzewa GitHuba dla `maciejsieracki/nAgents` i
 > `maciejsieracki/Autoboot-Monitor`.
@@ -46,7 +46,7 @@ etapy.
 ### Czym jest projekt
 
 ```text
-nAgents
+8gent
 ├── aplikacja i warstwa zarządzania użytkownikiem, rolami, kosztami i audytem
 ├── dokumentacja architektury, decyzji i scenariuszy
 ├── AutoBot jako proces pracy i kontrola faz
@@ -54,9 +54,14 @@ nAgents
 └── Hermes jako zewnętrzny silnik agentów i runtime
 ```
 
+Zasada marki i identyfikatorów technicznych jest opisana w
+[`docs/N8GENT-BRAND-NAMING.md`](docs/N8GENT-BRAND-NAMING.md). W nowych tekstach
+używaj marki `8gent`; literalnych nazw repozytorium, plików, ścieżek i locatorów
+nie zmieniaj.
+
 `The-Game` jest osobnym projektem, boardem i profilem. Może być opisany w
 indeksie jako zależność lub przykład działania AutoBot, ale jego kodu,
-branchy i dokumentacji nie wolno mieszać z nAgents.
+branchy i dokumentacji nie wolno mieszać z 8gent.
 
 ## 0A. Pakiet dokumentacji po konsolidacji tematycznej
 
@@ -128,7 +133,7 @@ snapshot nie oznaczają samodzielnie integracji, publikacji ani wdrożenia.
 
 | Potrzebna informacja | Czytaj najpierw | Potem, jeśli potrzebne |
 |---|---|---|
-| Czym jest nAgents i jaki ma zakres | [`docs/spec/00-architektura.md`](docs/spec/00-architektura.md) | `docs/spec/01-mvp1.md` … `04-mvp4.md` |
+| Czym jest 8gent i jaki ma zakres | [`docs/spec/00-architektura.md`](docs/spec/00-architektura.md) | `docs/spec/01-mvp1.md` … `04-mvp4.md` |
 | Co jest decyzją właściciela | [`docs/process/echo.md`](docs/process/echo.md) | [`docs/spec/decisions.md`](docs/spec/decisions.md) |
 | Jakie decyzje są otwarte | `docs/spec/decisions.md` | `docs/process/pytania/2026-08-25-wybory.md`, `docs/nota-08-wybory-otwarte.md` |
 | Jakie sytuacje muszą działać | [`docs/spec/scenarios.md`](docs/spec/scenarios.md) | testy wskazane w dispatchu |
@@ -170,16 +175,16 @@ stanu, nie lektury kolejnego snapshotu.
 | Skąd wzięły się wcześniejsze ustalenia? | `NAGENTS-RESEARCH.md` / `NAGENTS-HANDOFF.md` (kandydaci P6) | `docs/process/pamiec.md` oraz `docs/nota-*.md`; historia wyjaśnia „dlaczego”, nie steruje routingiem |
 | Czy zmiana jest opublikowana i na jakim refie? | `NAGENTS-PROCESS.md` / przyszła paczka publikacyjna | indeks §8; `LIVE_READBACK_REQUIRED`: `git ls-remote` nazwanego refu i odczyt drzewa po jawnej bramce publikacji |
 | Jak działa AutoBot Monitor jako projekt towarzyszący? | `AUTOBOT-PROJECT.md` (kandydat P6); kontrakt ABM pozostaje osobno | `/home/ubuntu/projects/Autoboot-Monitor/AUTOBOT-KANBAN.md`, runbooki i live board/usługa — indeks §3.1, §7 |
-| Czy materiał The-Game należy do nAgents? | brak pakietu nAgents; `SEPARATE_PROJECT` | indeks §3 i §4.3; tylko zadanie jawnie przypisane do The-Game, jego własny board/runtime |
+| Czy materiał The-Game należy do 8gent? | brak pakietu 8gent; `SEPARATE_PROJECT` | indeks §3 i §4.3; tylko zadanie jawnie przypisane do The-Game, jego własny board/runtime |
 
 ---
 
 ## 3. Routing projektu
 
-### 3.1. nAgents → AutoBot Monitor → Hermes
+### 3.1. 8gent → AutoBot Monitor → Hermes
 
 ```text
-nAgents
+8gent
   → repozytorium dokumentacji, aplikacji i decyzji
   → AutoBot Monitor / board autobot-monitor
   → profile: autobotmonitor
@@ -205,12 +210,12 @@ rodzicem serwerowego procesu.
 |---|---|---|
 | AutoBot profile | `autobotmonitor` | `hermes profile list/show`, karta Kanbana |
 | AutoBot board | `autobot-monitor` | `hermes kanban boards list`, każda komenda z `--board` |
-| NAgents project anchor | `nagents-docs / p_e90c30bc` | `hermes --profile default project show nagents-docs`; używać jako `project_id` na wspólnym boardzie |
-| NAgents card assignee | `default` (właściciel/orkiestrator) | decyzja właściciela; nie zmieniać na `autobotmonitor` |
-| NAgents card tenant | `nagents-docs` | karta/body i readback |
-| NAgents card prefix | `NAG-` | stabilny topic/title |
-| NAgents card contract | `process_phase`, stabilny `topic`, unikalny `idempotency_key` | create/show/readback; nie tworzyć duplikatu aktywnego P5 |
-| The-Game profile | `the-game` | osobny projekt, nie fallback dla nAgents |
+| 8gent project anchor | `nagents-docs / p_e90c30bc` | `hermes --profile default project show nagents-docs`; używać jako `project_id` na wspólnym boardzie |
+| 8gent card assignee | `default` (właściciel/orkiestrator) | decyzja właściciela; nie zmieniać na `autobotmonitor` |
+| 8gent card tenant | `nagents-docs` | karta/body i readback |
+| 8gent card prefix | `NAG-` | stabilny topic/title |
+| 8gent card contract | `process_phase`, stabilny `topic`, unikalny `idempotency_key` | create/show/readback; nie tworzyć duplikatu aktywnego P5 |
+| The-Game profile | `the-game` | osobny projekt, nie fallback dla 8gent |
 | The-Game board | `the-game-real24` | osobny board |
 | AutoBot Cron | `LIVE_READBACK_REQUIRED`; statyczne materiały podają historyczne ID `83e4098a9f87` i `6911e5eac7d3`, nominalnie every 5m, `no_agent=true`, `deliver=local` | `hermes --profile autobotmonitor cron list --all` + status receivera |
 | Worker completion | native `kanban_complete` albo `kanban_block` | karta, event, run, raport |
@@ -220,7 +225,7 @@ rodzicem serwerowego procesu.
 ### 3.3. Live readback — komendy
 
 ```bash
-# nAgents: wersja lokalna i różnice; bez pull/reset/stash/clean
+# 8gent: wersja lokalna i różnice; bez pull/reset/stash/clean
 cd /home/ubuntu/projects/nAgents-readonly
 git status --short --branch
 git log -5 --oneline --decorate
@@ -241,7 +246,7 @@ git ls-remote origin refs/heads/main refs/heads/claude/git-connection-9sz6dg
 
 ## 4. Stan audytu — OVH kontra GitHub
 
-### 4.1. nAgents
+### 4.1. 8gent
 
 | Miejsce | Stan odczytany 2026-09-14 | Znaczenie |
 |---|---|---|
@@ -250,7 +255,7 @@ git ls-remote origin refs/heads/main refs/heads/claude/git-connection-9sz6dg
 | GitHub `main` | HEAD `9522836d79679f5296ad23822c9a8efba9f949fb` | drzewo ma 1 wpis i 1 Markdown; nie jest bieżącym branchem pracy |
 | testy lokalne | `git diff --check` przechodzi; `python3 -m pytest` nie działa, bo brak modułu `pytest` | testy aplikacji są `N/D/INFRA`, nie `PASS` |
 
-Nazwane ścieżki checkoutu nAgents występujące lokalnie, ale nie na zdalnej
+Nazwane ścieżki checkoutu 8gent występujące lokalnie, ale nie na zdalnej
 gałęzi roboczej (P2; pełna lista wszystkich lokalnych-only jest w
 [`P2-inventory-summary.md`](docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P2-inventory-summary.md)):
 
@@ -261,7 +266,7 @@ docs/process/NAGENTS-DOCS-CONSOLIDATION-PLAN.md
 docs/process/dispatch/NAG-INFRA-002-pomocnik-serwerowy.md
 ```
 
-P2 policzył 695 rekordów lokalnych (nAgents checkout/worktree i AutoBot
+P2 policzył 695 rekordów lokalnych (8gent checkout/worktree i AutoBot
 Monitor), 104 rekordy z trzech nazwanych refów GitHuba oraz 34 rekordy
 zewnętrznego archiwum handoffów — razem 833. W tej unii `LOCAL_ONLY` = 132,
 `REMOTE_ONLY` = 0. Te liczniki są rekordami snapshotów, nie liczbą unikalnych
@@ -286,7 +291,7 @@ plików.
   zakończyli się `PASS`, bez merge/push/deploy. To osobny projekt i osobna
   bramka Final Control.
 - Historyczne handoffy z `/home/ubuntu/autobot-real24-20260911/` nie są
-  bieżącym źródłem prawdy dla nAgents.
+  bieżącym źródłem prawdy dla 8gent.
 
 ### 4.4. P4 — klasyfikacja i granice konsolidacji
 
@@ -298,13 +303,13 @@ scaleniu.
 | Metryka P4 | Wynik |
 |---|---:|
 | Rekordy P2 łącznie | 833 |
-| Rekordy: nAgents / AutoBot Monitor | 607 / 226 |
-| Rodziny ścieżek: nAgents / AutoBot Monitor | 85 / 169 (łącznie 254) |
+| Rekordy: 8gent / AutoBot Monitor | 607 / 226 |
+| Rodziny ścieżek: 8gent / AutoBot Monitor | 85 / 169 (łącznie 254) |
 | Unikalne SHA-256 | 272 |
 | Rodziny identycznego raw SHA-256 | 105 |
 | Nadmiarowe rekordy po jednym reprezentancie rodziny hash | 561 |
 | Rodziny identyczne pod różnymi ścieżkami | 0 |
-| Rodziny tej samej ścieżki z różnymi hashami | 12 (9 nAgents, 3 AutoBot Monitor) |
+| Rodziny tej samej ścieżki z różnymi hashami | 12 (9 8gent, 3 AutoBot Monitor) |
 | `LOCAL_ONLY` / `REMOTE_ONLY` | 132 / 0 |
 | Remote readback / zgodny z bieżącym lokalnym | 104 / 92 |
 | Remote różny od bieżącego lokalnego / różne zbiory linków | 12 / 0 |
@@ -354,7 +359,7 @@ który P5 może zmienić, więc jego nowy hash po tej fazie jest oczekiwany.
 |---|---|---|---|---:|
 | AutoBot Monitor checkout | `AUTOBOT-KANBAN.md` | `87c426598b7d` | `64b99a0fbf76` | 25883→26296 / 592→601 |
 | AutoBot Monitor checkout | `docs/ABM-CARD-TAGGING-GUIDE.md` | `2bfddbac9e47` | `c109d5f6015c` | 9306→15586 / 171→568 |
-| nAgents checkout | `NAGENTS-PROJECT.md` | `6da275008231` | `bd0637953c52` (przed P5) | 32249→33293 / 568→576 |
+| 8gent checkout | `NAGENTS-PROJECT.md` | `6da275008231` | `bd0637953c52` (przed P5) | 32249→33293 / 568→576 |
 
 Warianty P4 tej samej ścieżki są zachowane jako snapshoty. Zapis `hash-12 / linii
 (rekordy)` nie wybiera zwycięzcy ani nie pozwala na usunięcie wariantu.
@@ -364,19 +369,19 @@ Warianty P4 tej samej ścieżki są zachowane jako snapshoty. Zapis `hash-12 / l
 | AutoBot Monitor / `AGENTS.md` | `a8c147f5a7b5 / 118 (1)`; `b3f05aa330fa / 127 (1)` | 127 linii |
 | AutoBot Monitor / `docs/CRON-DIRECTIVE-LOOP.md` | `b64ed49d5d60 / 151 (1)`; `cbe44f709567 / 180 (1)` | checkout 151; relay worktree 180 |
 | AutoBot Monitor / `package/README.md` | `3e4ea56b8c60 / 84 (1)`; `d66fbd771952 / 40 (1)` | 84 linii |
-| nAgents / `CLAUDE.md` | `83fcb63c4e32 / 81 (11)`; `8de583cc4fec / 121 (1)` | 121 linii |
-| nAgents / `HANDOFF-nagents.md` | `2e9ccd808e81 / 421 (1)`; `50395ae262e7 / 371 (11)` | 421 linii |
-| nAgents / `docs/process/echo.md` | `24c4e6bb92ed / 133 (2)`; `9928ebc85dde / 120 (9)`; `e631fb908120 / 146 (1)` | 146 linii |
-| nAgents / `docs/process/tematy.md` | `34e675e6a834 / 59 (1)`; `3b4f72fe7ecf / 62 (1)`; `56dfb5d451e5 / 51 (6)`; `9257a6cd1c08 / 63 (1)`; `ac99b0371347 / 61 (1)`; `beac7256c93e / 56 (1)`; `c26e7a441689 / 60 (1)` | 63 linie |
-| nAgents / `docs/spec/00-architektura.md` | `17318e9014ca / 233 (11)`; `322a6c2a76dc / 283 (1)` | 283 linie |
-| nAgents / `docs/spec/01-mvp1.md` | `cc2687413e02 / 214 (10)`; `e2dfb80d1980 / 214 (2)` | 214 linii |
-| nAgents / `docs/spec/README.md` | `2f5719a2a41e / 54 (1)`; `d075b08f5f14 / 38 (11)` | 54 linie |
-| nAgents / `docs/spec/decisions.md` | `57264a14bcf3 / 264 (1)`; `ee793c30d8a2 / 175 (11)` | 264 linie |
-| nAgents / `docs/spec/scenarios.md` | `7084dc99b657 / 71 (11)`; `8b8be2a4e631 / 92 (1)` | 92 linie |
+| 8gent / `CLAUDE.md` | `83fcb63c4e32 / 81 (11)`; `8de583cc4fec / 121 (1)` | 121 linii |
+| 8gent / `HANDOFF-nagents.md` | `2e9ccd808e81 / 421 (1)`; `50395ae262e7 / 371 (11)` | 421 linii |
+| 8gent / `docs/process/echo.md` | `24c4e6bb92ed / 133 (2)`; `9928ebc85dde / 120 (9)`; `e631fb908120 / 146 (1)` | 146 linii |
+| 8gent / `docs/process/tematy.md` | `34e675e6a834 / 59 (1)`; `3b4f72fe7ecf / 62 (1)`; `56dfb5d451e5 / 51 (6)`; `9257a6cd1c08 / 63 (1)`; `ac99b0371347 / 61 (1)`; `beac7256c93e / 56 (1)`; `c26e7a441689 / 60 (1)` | 63 linie |
+| 8gent / `docs/spec/00-architektura.md` | `17318e9014ca / 233 (11)`; `322a6c2a76dc / 283 (1)` | 283 linie |
+| 8gent / `docs/spec/01-mvp1.md` | `cc2687413e02 / 214 (10)`; `e2dfb80d1980 / 214 (2)` | 214 linii |
+| 8gent / `docs/spec/README.md` | `2f5719a2a41e / 54 (1)`; `d075b08f5f14 / 38 (11)` | 54 linie |
+| 8gent / `docs/spec/decisions.md` | `57264a14bcf3 / 264 (1)`; `ee793c30d8a2 / 175 (11)` | 264 linie |
+| 8gent / `docs/spec/scenarios.md` | `7084dc99b657 / 71 (11)`; `8b8be2a4e631 / 92 (1)` | 92 linie |
 
 Remote readback 104 rekordów wykazał 12 różnic względem bieżącego lokalnego
 reprezentanta, przy równym zbiorze linków dla wszystkich 104: AutoBot Monitor
-`AGENTS.md`, `package/README.md`; nAgents `CLAUDE.md`, `HANDOFF-nagents.md`,
+`AGENTS.md`, `package/README.md`; 8gent `CLAUDE.md`, `HANDOFF-nagents.md`,
 `NAGENTS-PROJECT.md`, `docs/process/echo.md`, `docs/process/tematy.md`,
 `docs/spec/00-architektura.md`, `docs/spec/01-mvp1.md`, `docs/spec/README.md`,
 `docs/spec/decisions.md`, `docs/spec/scenarios.md`. Pełne hashe i line deltas
@@ -384,7 +389,7 @@ są w [`P4-duplicates-stale.md`](docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/P4
 
 ---
 
-## 5. Katalog Markdownów repozytorium nAgents — 51 plików lokalnie
+## 5. Katalog Markdownów repozytorium 8gent — 51 plików lokalnie
 
 Statusy w tabeli:
 
@@ -399,7 +404,7 @@ Statusy w tabeli:
 - **CONSOLIDATION-CANDIDATE** — wymaga macierzy pokrycia, nie jest poleceniem scalania;
 - **OWNER-DECISION-REQUIRED** — wymaga jednoznacznej decyzji właściciela;
 - **PRIVATE-RUNTIME** — runtime/prywatny materiał poza normalnym katalogiem;
-- **SEPARATE-PROJECT** — obcy projekt, nie źródło prawdy nAgents.
+- **SEPARATE-PROJECT** — obcy projekt, nie źródło prawdy 8gent.
 
 P4 używa w danych maszynowych nazw z podkreśleniami: `LOCAL_ONLY`,
 `REMOTE_ONLY`, `CONSOLIDATION_CANDIDATE`, `OWNER_DECISION_REQUIRED`,
@@ -422,13 +427,13 @@ i status proweniencji nie są zamienne. `LIVE_READBACK_REQUIRED` oraz
 | `docs/nota-04-korekty-i-nowe-materialy.md` | korekty wcześniejszych materiałów | HISTORY |
 | `docs/nota-05-kupic-czy-zbudowac.md` | analiza kupić czy budować | HISTORY; decyzje czytać z `decisions.md` |
 | `docs/nota-06-appto-research.md` | research dostawcy appto.ai | HISTORY/RESEARCH |
-| `docs/nota-07-katalog-funkcji.md` | katalog funkcji appto i mapowanie na nAgents | HISTORY/RESEARCH |
+| `docs/nota-07-katalog-funkcji.md` | katalog funkcji appto i mapowanie na 8gent | HISTORY/RESEARCH |
 | `docs/nota-08-wybory-otwarte.md` | rozwinięte tło pytań właścicielskich | HISTORY; porównywać z pakietem pytań |
 | `docs/nota-09-interfejs-hermesa.md` | ustalenia o interfejsie Hermesa | LOCAL-ONLY/REFERENCE |
 | `docs/nota-10-entra-instrukcja-dla-administratora.md` | instrukcja Entra/Microsoft dla administratora | LOCAL-ONLY/TECHNICAL; brak testu realną rejestracją |
 | `docs/proces-dla-pracownikow.md` | nietechniczny opis zasady AutoBot dla pracowników | CANONICAL dla odbiorcy nietechnicznego |
 | `docs/process/NAGENTS-DOCS-CONSOLIDATION-PLAN.md` | playbook i graf faz P1–P7 | EVIDENCE/SOURCE; plan nie dowodzi wykonania |
-| `docs/process/NAGENTS-BOARD-SEPARATION-HANDOFF.md` | instrukcja rozdzielenia boardu nAgents od AutoBot Monitor; wymagany preflight i stop conditions | OWNER HANDOFF/INFRA GATE; nie tworzy boardu ani profilu |
+| `docs/process/NAGENTS-BOARD-SEPARATION-HANDOFF.md` | instrukcja rozdzielenia boardu 8gent od AutoBot Monitor; wymagany preflight i stop conditions | OWNER HANDOFF/INFRA GATE; nie tworzy boardu ani profilu |
 | `docs/process/dispatch/NAG-DEC-001-wybory-otwarte.md` | dispatch analizy pytań otwartych | EVIDENCE |
 | `docs/process/dispatch/NAG-INFO-001-appto-research.md` | dispatch research appto | EVIDENCE |
 | `docs/process/dispatch/NAG-INFO-002-katalog-funkcji.md` | dispatch katalogu funkcji | EVIDENCE |
@@ -471,7 +476,7 @@ historyczne lub migracyjne; nie wszystkie są aktualnym routingiem.
 
 | Plik | Przeznaczenie | Ocena aktualności |
 |---|---|---|
-| `AUTOBOOT-INDEKS.md` | starszy indeks warstwy Autoboot/nAgents | STALE częściowo; odsyła do nowszego pakietu, ale zawiera stare ścieżki i statusy |
+| `AUTOBOOT-INDEKS.md` | starszy indeks warstwy Autoboot/8gent | STALE częściowo; odsyła do nowszego pakietu, ale zawiera stare ścieżki i statusy |
 | `DOKUMENTACJA-MVP1.md` | wcześniejsza dokumentacja funkcjonalna MVP1 | HISTORY; porównać z `docs/spec/01-mvp1.md` |
 | `HANDOFF-centrum-projektow.md` | historyczny handoff centrum projektów | HISTORY |
 | `HANDOFF-kolejne-kroki.md` | historyczny handoff następnych kroków | HISTORY |
@@ -481,7 +486,7 @@ historyczne lub migracyjne; nie wszystkie są aktualnym routingiem.
 | `KONTYNUACJA-PO-MIGRACJI.md` | przekazanie po migracji z dawnymi ścieżkami/runtime | PRIVATE/STALE; nie publikować, nie kopiować wartości wrażliwych |
 | `LLM-OPEN-SOURCE-nAgents-HANDOFF.md` | research własnego LLM/open source | RESEARCH/OPEN QUESTIONS |
 | `MIGRACJA-OVH-STATUS.md` | status migracji OVH | HISTORY; live stan z usług i repozytoriów |
-| `NAGENTS-INDEKS.md` | starszy indeks nAgents z pakietem 10.09 | STALE/REPLACED przez ten plik; zachowany jako historia |
+| `NAGENTS-INDEKS.md` | starszy indeks 8gent z pakietem 10.09 | STALE/REPLACED przez ten plik; zachowany jako historia |
 | `PLAN-WDROZENIA-nAgents.md` | plan z 27.08 | HISTORY; część założeń została zmieniona |
 | `PYTANIA-DO-ODPOWIEDZI-28-08.md` | historyczny pakiet pytań | HISTORY; nie zadawać ponownie bez rejestru decyzji |
 | `PYTANIA-I-ODPOWIEDZI-nAgents.md` | historyczny rejestr odpowiedzi | HISTORY; porównywać z `echo.md`/`decisions.md` |
@@ -491,7 +496,7 @@ historyczne lub migracyjne; nie wszystkie są aktualnym routingiem.
 | `SCHEMAT-PODZIALU-AUTOBOT.md` | schemat dzielenia pracy AutoBot | REFERENCE; kontrakt boardu ma pierwszeństwo |
 | `SERWERY-nAgents-ustalenia.md` | historyczne rozeznanie VPS/OVH | STALE dla parametrów zakupu; zachować jako historię |
 | `SPECYFIKACJA-nAgents.md` | duża specyfikacja historyczna | STALE/HISTORY; sama oznacza się jako historyczna |
-| `THE-GAME-INTEGRATION-HANDOFF.md` | handoff osobnego projektu The-Game | SEPARATE PROJECT; nie używać jako nAgents routing |
+| `THE-GAME-INTEGRATION-HANDOFF.md` | handoff osobnego projektu The-Game | SEPARATE PROJECT; nie używać jako 8gent routing |
 | `UZUPELNIENIE-MIGRACJI.md` | uzupełnienie migracji | MIGRATION HISTORY |
 | `WLASNY-LLM-nAgents-porownanie.md` | porównanie własnego LLM | RESEARCH/OPEN DECISION |
 | `ZALACZNIK-B-serwer-OVH.md` | załącznik do dawnego wyboru serwera | HISTORY; nie traktować jako aktualnego planu |
@@ -512,7 +517,7 @@ snapshotem audytu z 10.09, ale nie zastępuje obecnego checkoutu:
 
 ### `/home/ubuntu/autobot-real24-20260911/` — osobna koordynacja The-Game
 
-Ten katalog ma 13 Markdownów. Nie jest źródłem prawdy nAgents, ale nowy agent
+Ten katalog ma 13 Markdownów. Nie jest źródłem prawdy 8gent, ale nowy agent
 na OVH może go napotkać przy audycie procesów. Czytaj tylko przy zadaniu
 The-Game/telemetria:
 
@@ -535,7 +540,7 @@ Kanbana The-Game.
 ## 7. AutoBot Monitor — dokumenty główne na OVH
 
 Repozytorium: `/home/ubuntu/projects/Autoboot-Monitor`. Kontrakt projektu i
-runy są oddzielone od nAgents, ale nAgents musi wiedzieć, gdzie ich szukać.
+runy są oddzielone od 8gent, ale 8gent musi wiedzieć, gdzie ich szukać.
 
 | Plik | Funkcja | Status |
 |---|---|---|
@@ -635,7 +640,7 @@ hotspot `backend/monitor/owner_relay.py`.
 
 ## 8. GitHub — co jest opublikowane, a czego nie ma
 
-### nAgents
+### 8gent
 
 ```text
 GitHub main:                         9522836d79679f5296ad23822c9a8efba9f949fb — 1 Markdown
@@ -678,7 +683,7 @@ checkoutcie nie oznacza jeszcze publikacji.
 | Materiał / twierdzenie | Problem | Jak postąpić |
 |---|---|---|
 | stare handoffy z `/root/...` | dotyczą poprzedniej maszyny i ścieżek | na OVH używać `/home/ubuntu/...`; nie kopiować ścieżek |
-| „kod nAgents nie istnieje” z pakietu 10.09 | późniejszy checkout nAgents istnieje i ma kod/commity | sprawdzać lokalny repozytorium i GitHub, nie stary snapshot |
+| „kod 8gent nie istnieje” z pakietu 10.09 | późniejszy checkout 8gent istnieje i ma kod/commity | sprawdzać lokalny repozytorium i GitHub, nie stary snapshot |
 | „trzeba kupić VPS-4” | OVH KS-7 już działa | traktować jako historię zakupu |
 | stare ceny/parametry VPS | opis decyzji z 27.08, nie live infrastruktura | sprawdzać system i usługę, nie plan zakupu |
 | `HANDOFF-nagents.md` „przed MVP1, kod nie istnieje” | datowany snapshot nie odpowiada obecnemu checkoutowi | użyć jako historii, potem `git status/log` |
@@ -702,7 +707,7 @@ nie pomylił historii z aktualnym źródłem prawdy.
 
 ## 10. Jak przejąć pracę bez przepełnienia kontekstu
 
-### Wariant A — dokumentacja/specyfikacja nAgents
+### Wariant A — dokumentacja/specyfikacja 8gent
 
 1. Przeczytaj ten indeks.
 2. Przeczytaj `CLAUDE.md`.
@@ -777,7 +782,7 @@ Nie przechowuj wyników tych komend razem z sekretami, tokenami, auth.json,
 ## 11. Uzupełnienia wykonane przez ten indeks
 
 - dodano jeden punkt wejścia dla przyszłego agenta;
-- rozpisano katalog nAgents, handoffów OVH, pakietu 10.09 i AutoBot Monitor;
+- rozpisano katalog 8gent, handoffów OVH, pakietu 10.09 i AutoBot Monitor;
 - wskazano osobno normę, decyzję, scenariusz, rejestr, handoff, historię,
   źródło pierwotne i evidence;
 - porównano lokalny checkout z aktualnie znanymi gałęziami GitHuba;
@@ -805,7 +810,7 @@ Nie przechowuj wyników tych komend razem z sekretami, tokenami, auth.json,
 Artefakty są dowodem konkretnej fazy, nie nowym źródłem prawdy projektu.
 Zachowują proweniencję i pełne dane maszynowe, ale do kontekstu należy ładować
 tylko potrzebny fragment. Linki poniżej są względne względem katalogu repozytorium
-nAgents.
+8gent.
 
 | Faza / status | Artefakt | Rola |
 |---|---|---|

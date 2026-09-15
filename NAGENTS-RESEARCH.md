@@ -29,7 +29,7 @@ Ranga nie zastępuje dowodu: `PRIMARY_LEGAL_SNAPSHOT` ma większą wagę dla zob
 
 | Sekcja | Zakres | Główne źródła | Wymóg proweniencji | Stan |
 |---|---|---|---|---|
-| `RESEARCH-01` | historyczne rozeznanie i warianty nAgents | NAG-RESEARCH, `docs/process/pamiec.md` | 11 families / 88 records, dated locators | `PASS` |
+| `RESEARCH-01` | historyczne rozeznanie i warianty 8gent | NAG-RESEARCH, `docs/process/pamiec.md` | 11 families / 88 records, dated locators | `PASS` |
 | `RESEARCH-02` | appto: funkcje, ceny, legal, wnioski | NAG-APPT0, `docs/nota-06`, `docs/nota-07`, `appto-*` | 8 families / 96 records, source vs analysis | `PASS` |
 | `RESEARCH-03` | OAuth/Entra/Graph/Hermes snapshots | NAG-SOURCES, P4 | 5 / 5 exact records, hash/link/status | `PASS` |
 | `RESEARCH-04` | korekty, lekcje, pewność i currentness | `pamiec.md`, dated notes, P4 | correction trail, no history→live promotion | `PASS` |
@@ -43,7 +43,7 @@ P6 locator: `NAGENTS-CONSOLIDATION-PLAN.md`, §4.5, lines 140–148. P4 locator:
 |---|---|---:|---:|---|---|
 | NAG-RESEARCH | HISTORY | 11 | 88 | docs/process/pamiec.md oraz właściwe źródła pierwotne; nie jest źródłem bieżącego routingu | NAGENTS-RESEARCH.md; decyzje tylko po wpisie w decisions/ECHO |
 | NAG-APPT0 | SOURCE | 8 | 96 | P3 kat. 13/history + jawne źródła appto w docs/process/zrodla/ | NAGENTS-RESEARCH.md; ewentualne integracje tylko po decyzji |
-| NAG-SOURCES | SOURCE | 5 | 5 | źródła pierwotne z datą, nie bieżący routing nAgents | NAGENTS-INTEGRATIONS.md / NAGENTS-RESEARCH.md jako cytowane odnośniki |
+| NAG-SOURCES | SOURCE | 5 | 5 | źródła pierwotne z datą, nie bieżący routing 8gent | NAGENTS-INTEGRATIONS.md / NAGENTS-RESEARCH.md jako cytowane odnośniki |
 
 Wymagane liczniki zostały zachowane bez deduplikacji: `NAG-RESEARCH = 11/88`, `NAG-APPT0 = 8/96`, `NAG-SOURCES = 5/5`. Rekord P4 pozostaje jednostką proweniencji; wspólny hash z wielu checkoutów nie jest powodem do usunięcia rekordów.
 
@@ -89,7 +89,7 @@ Wymagane liczniki zostały zachowane bez deduplikacji: `NAG-RESEARCH = 11/88`, `
 | `CTRL-DECISIONS` | `docs/spec/decisions.md` | `CANONICAL` | `CANONICAL` | wyłącznie readback decyzji |
 | `CTRL-ECHO` | `docs/process/echo.md` | `CANONICAL` | `CANONICAL` | protokół decyzji właściciela |
 
-## RESEARCH-01 — historyczne rozeznanie nAgents
+## RESEARCH-01 — historyczne rozeznanie 8gent
 
 Źródła tej sekcji to noty i handoffy o statusie `HISTORY`. Ich wartość polega na śladzie rozumowania, wariantach i korektach; nie są źródłem aktualnej topologii, uprawnień ani stanu wdrożenia.
 
@@ -143,7 +143,7 @@ SOURCE_LINK: [PF-0203](../../../nota-05-kupic-czy-zbudowac.md)
 TEZA: Wynik należy czytać jako uzasadnienie historyczne; norma bezpieczeństwa jest w dokumentacji kanonicznej.
 CROSS_LINKS: brak
 
-#### R01-S07 — Nota 08 wyznacza granicę: wykonanie integracji jest pracą Hermesa, a nAgents zarządza zakresem i dostępem; MVP1 pracuje na pliku.
+#### R01-S07 — Nota 08 wyznacza granicę: wykonanie integracji jest pracą Hermesa, a 8gent zarządza zakresem i dostępem; MVP1 pracuje na pliku.
 TYPE: `SOURCE`  |  DATE/RANGE: `2026-08-25`  |  RANK: `HISTORY`
 SOURCE_STATUS: `HISTORY`  |  STATE/CURRENTNESS: `HISTORY_ONLY`  |  CONFIDENCE: `udokumentowane`
 SOURCE_PATH: `docs/nota-08-wybory-otwarte.md`  |  SOURCE_REF: `PF-0206`  |  LOCATOR: `§1-§3; lines 15-103`
@@ -185,7 +185,7 @@ SOURCE_LINK: [CTRL-HISTORY](../../pamiec.md)
 TEZA: Analiza wskazuje miejsce weryfikacji; nie przenosi normy automatycznie.
 CROSS_LINKS: brak
 
-#### R01-A05 — Rozdzielenie wykonania Hermesa od zarządzania nAgents jest stabilnym filtrem zakresu dla dalszych badań integracyjnych.
+#### R01-A05 — Rozdzielenie wykonania Hermesa od zarządzania 8gent jest stabilnym filtrem zakresu dla dalszych badań integracyjnych.
 TYPE: `ANALYSIS`  |  DATE/RANGE: `2026-08-25`  |  RANK: `HISTORY_ANALYSIS`
 SOURCE_STATUS: `HISTORY`  |  STATE/CURRENTNESS: `ANALYSIS_ONLY`  |  CONFIDENCE: `udokumentowane`
 SOURCE_PATH: `docs/nota-08-wybory-otwarte.md`  |  SOURCE_REF: `PF-0206`  |  LOCATOR: `§3; lines 75-103`
@@ -273,7 +273,7 @@ TYPE: `SOURCE`  |  DATE/RANGE: `2026-07-06 effective; captured 2026-08-25`  |  R
 SOURCE_STATUS: `SOURCE`  |  STATE/CURRENTNESS: `LEGAL_SNAPSHOT`  |  CONFIDENCE: `udokumentowane`
 SOURCE_PATH: `docs/process/zrodla/appto-polityka-prywatnosci-pl.md`  |  SOURCE_REF: `PF-0230`  |  LOCATOR: `§Data, transfery, podmioty; lines 71-113`
 SOURCE_LINK: <https://www.appto.ai/pl/polityka-prywatnosci/>
-TEZA: To snapshot dokumentu prawnego, nie niezależna opinia prawna nAgents.
+TEZA: To snapshot dokumentu prawnego, nie niezależna opinia prawna 8gent.
 CROSS_LINKS: brak
 
 #### R02-S05 — Regulamin wraz z umową powierzenia opisuje dostęp administracyjny, usuwanie po 30 dniach, DPA i limit odpowiedzialności; wersja ma datę 2026-07-06.
@@ -289,7 +289,7 @@ TYPE: `SOURCE`  |  DATE/RANGE: `2026-08-25`  |  RANK: `PRIMARY_MARKETING_SNAPSHO
 SOURCE_STATUS: `SOURCE`  |  STATE/CURRENTNESS: `SOURCE_SNAPSHOT`  |  CONFIDENCE: `udokumentowane`
 SOURCE_PATH: `docs/process/zrodla/appto-strona-glowna-pl.md`  |  SOURCE_REF: `PF-0232`  |  LOCATOR: `§Funkcje i role; lines 39-63, 129-152`
 SOURCE_LINK: <https://www.appto.ai/pl/>
-TEZA: Pakiet nie zamienia deklaracji w capability nAgents.
+TEZA: Pakiet nie zamienia deklaracji w capability 8gent.
 CROSS_LINKS: brak
 
 #### R02-S07 — Katalog wtórny porządkuje 58 funkcji (54 marketingowe i 4 prawne), 26 kandydatów do planu, 25 luk i 7 odrzuceń.
@@ -349,7 +349,7 @@ TYPE: `ANALYSIS`  |  DATE/RANGE: `2026-08-25`  |  RANK: `LEGAL_RISK_ANALYSIS`
 SOURCE_STATUS: `SOURCE`  |  STATE/CURRENTNESS: `ANALYSIS_ONLY`  |  CONFIDENCE: `udokumentowane`
 SOURCE_PATH: `docs/process/zrodla/appto-regulamin-pl.md`  |  SOURCE_REF: `PF-0231`  |  LOCATOR: `§Powierzenie; lines 25-75`
 SOURCE_LINK: <https://www.appto.ai/pl/regulamin/>
-TEZA: Wniosek kontrolny, nie automatyczna norma dla nAgents.
+TEZA: Wniosek kontrolny, nie automatyczna norma dla 8gent.
 CROSS_LINKS: brak
 
 ### 4.4 DECISION / owner gate

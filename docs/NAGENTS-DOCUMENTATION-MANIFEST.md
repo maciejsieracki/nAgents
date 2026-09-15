@@ -1,26 +1,29 @@
-# nAgents — manifest paczki dokumentacji
+# 8gent — manifest paczki dokumentacji
 
-Status: paczka dokumentacji przygotowana do kontrolowanej publikacji
-Branch docelowy publikacji: `docs/consolidated-2026-09-15`
+Status: aktualizacja marki dokumentacji przygotowana do kontrolowanej publikacji
+Branch docelowy publikacji: `docs/rename-8gent-2026-09-15`
 Repozytorium: `maciejsieracki/nAgents`
 
 ## Zawartość główna
 
-Poniższe dziewięć ksiąg jest byte-identical względem pakietów, które przeszły
-Operator → niezależny Evaluator → Final Control → lokalny P7. Nagłówki
-`stagingowy` w kopiach są zachowane celowo, aby nie zgubić proweniencji.
+Poniższe dziewięć ksiąg zachowuje treść i identyfikatory pakietów, które przeszły
+Operator → niezależny Evaluator → Final Control → lokalny P7. Ta gałąź dodaje
+wyłącznie warstwę marki `8gent` w bieżących tekstach oraz osobną politykę
+nazewnictwa; historyczne stagingi i raporty evidence pozostają niezmienione.
+Hashe poniżej dotyczą plików z tej gałęzi. Nagłówki `stagingowy` w kopiach są
+zachowane celowo, aby nie zgubić proweniencji pakietów.
 
 | Plik | Zakres | SHA-256 |
 |---|---|---|
-| `NAGENTS-SPEC.md` | architektura, zakres MVP, bezpieczeństwo, scenariusze | `3c431da703b7b53c7f4d7e6b655d92ef5283558f0161f481754edea7a6ddf855` |
-| `NAGENTS-DECISIONS.md` | decyzje D-001…D-013, ECHO, pytania, historia | `cec183df199f7cbded295779cf0358e60a0db7df288b86a3d3894e5e13e329df` |
-| `NAGENTS-PROCESS.md` | role, pętla, allowlista, evidence, watchdog, P1–P7 | `5643480dc51d97b4382998239eef684e98e8af7a091f06cb1c860009db1c5b22` |
-| `NAGENTS-HANDOFF.md` | format przekazania, blokady i następne bramki | `15dc2cf43e2142e99126e40e28107c62ab6857cd7319a1ec23db52f5d31456ea` |
-| `NAGENTS-RESEARCH.md` | research, źródła, porównania i korekty | `45440cc69e398698e7941a506459e3ff7bbc8e64cc0f149b610cf9854b1a9489` |
-| `NAGENTS-USER-GUIDE.md` | instrukcja pracownika i granica pracownik–administrator | `67a1e3bbaa77244147886992aadf60df6c1139535a517679c36d8c41bb5480fe` |
-| `AUTOBOT-PROJECT.md` | kontrakt AutoBot Monitor, routing i statusy | `7d97cee29c95a0a37a80f9594c5dcf880b5d81940ced842f63692091cf83cd82` |
+| `NAGENTS-SPEC.md` | architektura, zakres MVP, bezpieczeństwo, scenariusze | `ac62ce18a6a0c825cba512ba22dd5bf31a8f803a864eb21f4f2c5278b58483cf` |
+| `NAGENTS-DECISIONS.md` | decyzje D-001…D-013, ECHO, pytania, historia | `2640ee7083f075bf2543787e1b0caf8576dfb892f7522753f945981d8f70c58e` |
+| `NAGENTS-PROCESS.md` | role, pętla, allowlista, evidence, watchdog, P1–P7 | `d81465d36951b27b7148d2d0ac43c69256ee82c7277d974ca4d96eeacfe09243` |
+| `NAGENTS-HANDOFF.md` | format przekazania, blokady i następne bramki | `d00734d350829ab6b9c58ee1b78d366e13296ba7e4daccb5b9351d6dfe419a5e` |
+| `NAGENTS-RESEARCH.md` | research, źródła, porównania i korekty | `6c39b0fd5f0aa8d4cc867452fa5f0d1babb15743d88db874efbfcb92d42169d1` |
+| `NAGENTS-USER-GUIDE.md` | instrukcja pracownika i granica pracownik–administrator | `5dbbb7f2249453889c376dd23a8e710bbb8e0141985cab2509ad3f318e66fd80` |
+| `AUTOBOT-PROJECT.md` | kontrakt AutoBot Monitor, routing i statusy | `75f70419a6dd63ce331252412990504eb8003595abdc919e13a818e1205ccb26` |
 | `docs/ABM-HISTORY.md` | historyczny indeks kart, runów, eventów i artefaktów ABM | `27b73324a3af9c3ee8827bc2b75a191062d5e84f8129ae1ad1e26c83675a9dec` |
-| `docs/ABM-LIFECYCLE.md` | manual installation/uninstall/rollback/backup | `c5935a69131f2f7d04fe59130277932b844fdb7a785e7d6f50f7db21144693d2` |
+| `docs/ABM-LIFECYCLE.md` | manual installation/uninstall/rollback/backup | `ff7d0c8845a6f2fd5ecf03c3b10fdabbd64faafc3e9c4a7c3c9bdc77fbbd2b07` |
 
 ## Plik wejściowy dla następnego agenta
 
@@ -31,7 +34,7 @@ Operator → niezależny Evaluator → Final Control → lokalny P7. Nagłówki
 - procedurę wyszukiwania po identyfikatorach `SPEC-*`, `DEC-*`, `PROCESS-*`,
   `HANDOFF-*`, `RESEARCH-*`, `USER-*`, `ABM-*` i `LIFE-*`;
 - rozdzielenie faktów z dokumentów od świeżego stanu Git/Kanbana/usług;
-- granice nAgents, AutoBot Monitor i The-Game;
+- granice 8gent, AutoBot Monitor i The-Game;
 - zasady zachowania dokumentów historycznych i sprzątania.
 
 ## Dowody i odtwarzalność
@@ -43,12 +46,13 @@ Do paczki dołączone są:
 - `docs/process/NAGENTS-DOCS-CONSOLIDATION-PLAN.md`;
 - `docs/process/NAGENTS-BOARD-SEPARATION-HANDOFF.md`;
 - `docs/NAGENTS-DOCUMENTATION-PACKAGE-CONTENTS.sha256`;
+- `docs/N8GENT-BRAND-NAMING.md`;
 - `docs/SECURITY-REDACTIONS.md`;
 - audyt P1–P5 w `docs/process/audit/NAG-DOCS-CONSOLIDATION-Q1/`;
 - `docs/CONSOLIDATION-CLEANUP-MANIFEST.md`.
 
 Do archiwum trafia również bezpieczny snapshot dokumentacji i maszynowych
-manifestów z bieżącego checkoutu nAgents (`*.md` oraz audytowe `*.json`,
+manifestów z bieżącego checkoutu 8gent (`*.md` oraz audytowe `*.json`,
 `*.jsonl`, `*.csv`, `*.yaml`). Nie jest to snapshot kodu ani runtime.
 
 Raporty faz zachowują exact task/run/event/artifact IDs, statusy, hashe i

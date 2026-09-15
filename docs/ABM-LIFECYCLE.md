@@ -50,7 +50,7 @@ celu, wersji, bazowego SHA, listy plików, manifestu, testów i readbacku.
 5. Statyczny dokument, raport `PASS`, nazwa worktree, `queued`, `delivered`,
    status UI, obecność pliku, lokalny hash lub wyjście procesu nie dowodzą
    instalacji, żywej usługi, dostarczenia ani poprawności runtime.
-6. Źródła AutoBot Monitor i nAgents są osobnymi projektami. Nie przenosić
+6. Źródła AutoBot Monitor i 8gent są osobnymi projektami. Nie przenosić
    kart, profili, danych, patchy ani runtime między nimi.
 
 ## 2. LIFE-01 — bezpieczna instalacja i wymagania
@@ -413,7 +413,7 @@ lokalny/remote.
 ## 8. Granice tego stagingu i następna bramka
 
 Wykonano wyłącznie addytywny zapis trzech plików w katalogu stagingowym tego
-tematu. Nie zmieniono źródeł AutoBot Monitor, źródeł nAgents, kart, runów,
+tematu. Nie zmieniono źródeł AutoBot Monitor, źródeł 8gent, kart, runów,
 profili, boardu, Crona, receivera, gatewaya, Desktopu ani GitHuba.
 
 Następna bramka: niezależny Evaluator ma odczytać księgę i `coverage.json`,

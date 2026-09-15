@@ -179,14 +179,14 @@ kosztem tego, że agenci nie uczą się z rozmów.
 ## D-012 · Web-first i serwerowa własność pracy
 **2026-09-13 · przyjęta dyrektywą właściciela**
 
-**Decyzja:** NAgents dostarcza najpierw bezpieczny, prosty dostęp webowy do
+**Decyzja:** 8gent dostarcza najpierw bezpieczny, prosty dostęp webowy do
 gotowych profili i czatów. Pracownik nie konfiguruje gatewaya, serwera, profilu
 technicznego, modeli ani poświadczeń. Serwer jest właścicielem sesji, kolejki,
 workerów, pamięci i audytu; przeglądarka oraz Desktop są klientami.
 
 Nakładka na Desktop albo dostosowanie Desktopu wchodzi dopiero jako drugi etap,
 po potwierdzeniu scenariusza webowego. AutoBot Router i AutoBot Monitor pozostają
-modułami NAgents, a nie osobnymi projektami nadrzędnymi.
+modułami 8gent, a nie osobnymi projektami nadrzędnymi.
 
 **Rozważane opcje:**
 
@@ -207,12 +207,12 @@ serwerową ścieżkę wykonania.
 **Konsekwencje:**
 
 1. Pierwszym zadaniem jest potwierdzenie bezpiecznego, łatwego dostępu przez
-   istniejącą webową powierzchnię Hermesa albo web NAgents.
+   istniejącą webową powierzchnię Hermesa albo web 8gent.
 2. Zamknięcie przeglądarki musi zostać sprawdzone jako scenariusz ciągłości;
    sam status „połączono" nie jest dowodem.
-3. Ustawienia zaawansowane trafiają do powierzchni administratora NAgents/Hermesa
+3. Ustawienia zaawansowane trafiają do powierzchni administratora 8gent/Hermesa
    albo terminala; pracownik widzi przydzielony profil i czat.
-4. Desktop nie może być wymagany do działania NAgents ani do utrzymania workerów.
+4. Desktop nie może być wymagany do działania 8gent ani do utrzymania workerów.
 5. Dokładny wybór hosta, uwierzytelniania, TLS i rezydencji danych pozostaje
    osobnymi decyzjami, jeśli zmieni koszt, dostęp, dane lub odwracalność.
 
@@ -221,7 +221,7 @@ serwerową ścieżkę wykonania.
 ## D-013 · Serwerowy pomocnik procesu dla autonomicznej pętli
 **2026-09-13 · przyjęta wyborem właściciela wariantu A**
 
-**Decyzja:** NAgents używa serwerowego pomocnika procesu z trwałą instrukcją,
+**Decyzja:** 8gent używa serwerowego pomocnika procesu z trwałą instrukcją,
 który odbiera dyspozycje Crona i prowadzi wyłącznie kwalifikowane przejścia
 istniejącego grafu Kanbana. Pomocnik nie jest dzieckiem bieżącego czatu ani
 Desktopu. Działa jako niezależny profil/sesja procesu pod nadzorem serwera.
@@ -254,7 +254,7 @@ strumienia i eskalację.
 **Konsekwencje:**
 
 1. Kanban, eventy, rodzice, runy i durable receipts pozostają źródłem prawdy.
-2. Reguły nAgents i AutoBot są ładowane z wersjonowanych dokumentów, a krytyczne
+2. Reguły 8gent i AutoBot są ładowane z wersjonowanych dokumentów, a krytyczne
    przejścia są dodatkowo wymuszane przez kod; sama instrukcja językowa nie jest
    kontrolą bezpieczeństwa.
 3. Pomocnik może działać bez obecności właściciela przy przejściach

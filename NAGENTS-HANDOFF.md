@@ -57,7 +57,7 @@ na żywo.
 Minimalny format bieżącego handoffu:
 
 ```text
-# HANDOFF — projekt nAgents
+# HANDOFF — projekt 8gent
 
 STAN_NA: <data i czas UTC>
 HEAD: <pełny lub jednoznaczny identyfikator rewizji>
@@ -315,7 +315,7 @@ odnosi się do chwili tamtego snapshotu, nie do bieżącego boardu.
 | §7.14 | Założono wyłącznie logowanie Google | odczyt cennika ujawnił także Microsoft i własne SSO | `HISTORY_CLOSED` |
 | §7.15 | Błędnie stwierdzono brak umowy powierzenia | sprostowanie wskazało umowę jako załącznik regulaminu | `HISTORY_CLOSED` |
 | §7.16 | Zbyt szeroko założono brak zastosowania DSA | rozdzielono zakres dostawcy od zakresu narzędzia wewnętrznego | `HISTORY_CLOSED_WITH_SCOPE_NOTE` |
-| §7.17 | Integrację programów przypisano naszej warstwie | zakres zmniejszono: Hermes wykonuje operacje, nAgents zarządza | `HISTORY_CLOSED` |
+| §7.17 | Integrację programów przypisano naszej warstwie | zakres zmniejszono: Hermes wykonuje operacje, 8gent zarządza | `HISTORY_CLOSED` |
 | §7.18 | Program rozliczeniowy opisano jako system z logowaniem | dopasowano integracje do faktycznej pracy na plikach | `HISTORY_CLOSED` |
 
 ### Zasada korekty
