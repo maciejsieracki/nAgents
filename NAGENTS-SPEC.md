@@ -15,6 +15,10 @@ P4 OBSERVED_AT_UTC: 2026-09-14T14:47:54+00:00
 P4 CLASSIFICATION SHA-256: `95d2a06fc80e4cf1c27d59959d84b8631e70acbb3e0b879b83df95c38bf382b8`
 P6 PLAN SHA-256: `b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c`
 
+**Aktualizacja platformy:** bieżącą podstawą jest `docs/OPENCLAW-STRATEGY.md`
+i decyzja D-014. Hashe źródeł w ledgerach P4 poniżej są historycznymi snapshotami;
+nie są bieżącym hashem zmodyfikowanego źródła. Przed implementacją wykonaj świeży
+odczyt i użyj aktualnego manifestu.
 ## 0. Zasada proweniencji i rangi
 
 Kolejność rozstrzygania treści:
@@ -54,20 +58,23 @@ P4: `NAG-SPEC/CANONICAL`, `NAG-ENTRY/CANONICAL`, `NAG-INDEX/CONSOLIDATION_CANDID
 
 ### Czym jest 8gent
 
-8gent to warstwa zarządzania nad flotą instancji Hermesa. Hermes pozostaje
-silnikiem agenta: wykonuje rozmowę, narzędzia, piaskownicę, pamięć, kanały i
-wybór modelu. 8gent odpowiada za cztery pytania, których sam Hermes nie
-rozstrzyga:
+8gent to warstwa zarządzania nad agentami, workspace'ami i sesjami OpenClaw.
+OpenClaw dostarcza self-hosted Gateway, runtime agenta, kanały, narzędzia,
+sesje, automatyzacje i control-plane surfaces. Szczegółowa decyzja, mapowanie
+oraz lista luk są w `docs/OPENCLAW-STRATEGY.md`.
+
+8gent odpowiada za cztery pytania, których sam OpenClaw nie rozstrzyga w naszej
+domenie:
 
 1. kto to jest — tożsamość pracownika z firmowego katalogu;
 2. do czego ma prawo — agenci widoczni i uruchamialni dla tej osoby;
 3. ile wolno wydać — limity kosztowe egzekwowane, nie tylko obserwowane;
 4. co zostało po operacji — audyt operacji dozwolonych i odrzuconych.
 
-Budujemy wyłącznie własną warstwę zarządzania. 8gent nie jest silnikiem
-agenta, komunikatorem, hostem modeli ani magazynem pamięci Hermesa. Teams,
-Hermes i dostawcy modeli są zależnościami o odrębnej randze i granicy.
-The-Game jest osobnym projektem i nie należy do tej specyfikacji.
+Nie budujemy drugiego runtime'u, OpenRoutera ani OpenMonitora. OpenClaw jest
+platformą wykonawczą; własny kod 8gent obejmuje politykę domenową. AutoBot
+Monitor jest wyłącznie kandydatem na opcjonalny plugin OpenClaw. The-Game jest
+osobnym projektem i nie należy do tej specyfikacji.
 
 ### Granice nienaruszalne
 
@@ -88,8 +95,8 @@ pakietu. Zmiana bariery wymaga osobnej decyzji/ECHO, a nie edycji tego stagingu.
 
 | ID | Status | Konsekwencja dla specyfikacji |
 |---|---|---|
-| D-001 | przyjęta | budujemy własną warstwę na Hermesie; gotowe platformy są wzorcem, nie zakupem |
-| D-002 | przyjęta | wszystkie wywołania modeli przechodzą przez naszą bramę |
+| D-001 | przyjęta; platforma superseded przez D-014 | budujemy własną warstwę zarządzania; aktualnym runtime'em jest OpenClaw, nie Hermes |
+| D-002 | superseded przez D-014 | nie budujemy LiteLLM jako obowiązkowej bramy; provider/model wybiera bezpośrednio OpenClaw |
 | D-003 | przyjęta | agent stanowiskowy pobiera dane przez domenę i nie ma własnych kluczy |
 | D-004 | przyjęta | brak dostępu to 404 i równoległy wpis `deny` w audycie |
 | D-005 | przyjęta | wiedza firmowa i zespołowa jest wersjonowana w plikach repozytorium |
@@ -97,10 +104,11 @@ pakietu. Zmiana bariery wymaga osobnej decyzji/ECHO, a nie edycji tego stagingu.
 | D-007 | przyjęta | `tenant_id` istnieje od MVP1 |
 | D-008 | przyjęta | FastAPI + Jinja2 + HTMX, bez osobnego SPA |
 | D-009 | przyjęta | tokenizacja ogranicza szkodę, ale nie zastępuje umowy powierzenia |
-| D-010 | otwarta | topologia agentów zostaje obsłużona w obu wariantach do czasu decyzji przed MVP3 |
-| D-011 | otwarta, blokująca MVP3 | rezydencja wspólnej pamięci nie jest rozstrzygnięta; MVP1/MVP2 działają bez niej |
-| D-012 | przyjęta | najpierw bezpieczna powierzchnia webowa, serwer jest właścicielem pracy |
-| D-013 | przyjęta | autonomiczna pętla używa niezależnego pomocnika serwerowego |
+| D-010 | otwarta | topologia agentów wymaga ponownego testu na izolacji OpenClaw |
+| D-011 | otwarta, blokująca MVP3 | rezydencja wspólnej pamięci nie jest rozstrzygnięta; OpenClaw nie zmienia tej bramki |
+| D-012 | przyjęta | web-first przez OpenClaw Control UI/kanał/web 8gent; klient nie jest właścicielem pracy |
+| D-013 | przyjęta; implementacja Hermes-era superseded przez D-014 | zachować readback/fail-closed; oprzeć automatyzację na OpenClaw tasks/Task Flow |
+| D-014 | przyjęta | OpenClaw jako runtime i control plane; bez osobnego OpenRoutera/OpenMonitora; AutoBot Monitor tylko jako kandydat pluginu |
 
 Źródło normatywne i pełne uzasadnienie: `docs/spec/decisions.md`, hash
 `57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49`.

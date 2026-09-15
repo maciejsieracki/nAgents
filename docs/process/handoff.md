@@ -5,6 +5,11 @@ tylko zdjęcie bieżącej sytuacji.
 
 **Ostatnia aktualizacja:** 2026-08-22 (po zestawie pytań nr 1)
 
+> **STATUS SNAPSHOTU:** Ten handoff powstał przed D-014. Jego opis Hermesa i
+> LiteLLM jest historyczny/superseded. Bieżąca podstawa to
+> [`docs/OPENCLAW-STRATEGY.md`](../OPENCLAW-STRATEGY.md) oraz D-014; nie traktuj
+> tego snapshotu jako aktualnego stanu runtime.
+
 ---
 
 ## Gdzie jesteśmy

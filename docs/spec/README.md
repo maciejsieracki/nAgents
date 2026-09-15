@@ -1,15 +1,19 @@
 # Dokumentacja techniczna 8gent
 
-Warstwa zarządzania nad flotą instancji Hermesa.
+Warstwa zarządzania nad agentami, workspace'ami i sesjami OpenClaw. Aktualna
+decyzja platformowa, mapowanie wcześniejszej pracy i plan pluginu są w
+[`../OPENCLAW-STRATEGY.md`](../OPENCLAW-STRATEGY.md).
 
 ## Kolejność czytania
 
 1. **[00-architektura.md](00-architektura.md)** — czym jest system, model danych,
-   model bezpieczeństwa, stos technologiczny. Dokument źródłowy dla wszystkich etapów.
-2. **[decisions.md](decisions.md)** — dziennik decyzji. Każdy wybór dotyczący kosztu,
+   model bezpieczeństwa, stos technologiczny i relacja z OpenClaw. Dokument źródłowy dla wszystkich etapów.
+2. **[../OPENCLAW-STRATEGY.md](../OPENCLAW-STRATEGY.md)** — aktualna decyzja
+   platformowa, mapowanie Hermes → OpenClaw i granica pluginu AutoBot Monitor.
+3. **[decisions.md](decisions.md)** — dziennik decyzji. Każdy wybór dotyczący kosztu,
    danych, dostępu lub odwracalności, z uzasadnieniem. **Dwie pozycje otwarte.**
-3. **[scenarios.md](scenarios.md)** — sytuacje, które system ma obsłużyć. Źródło testów.
-4. Etapy: **[MVP1](01-mvp1.md)** → **[MVP2](02-mvp2.md)** →
+4. **[scenarios.md](scenarios.md)** — sytuacje, które system ma obsłużyć. Źródło testów.
+5. Etapy: **[MVP1](01-mvp1.md)** → **[MVP2](02-mvp2.md)** →
    **[MVP3](03-mvp3.md)** → **[MVP4](04-mvp4.md)**
 
 ## Skrót
@@ -27,26 +31,30 @@ Warstwa zarządzania nad flotą instancji Hermesa.
 
 Kolejność produktu jest nadrzędna wobec wygody konkretnego klienta:
 
-1. **Najpierw web.** Potwierdzamy bezpieczny i prosty dostęp do serwerowej
-   wersji webowej Hermesa albo budujemy webową powierzchnię 8gent. Pracownik
-   dostaje gotowy profil i czat; nie konfiguruje gatewaya ani serwera. Praca
-   musi pozostać na serwerze po zamknięciu przeglądarki.
-2. **Później Desktop.** Nakładka lub dostosowanie Desktopu jest drugim etapem.
-   Desktop jest klientem dodatkowym i nie może być właścicielem cyklu życia
-   sesji, workerów, kolejki ani profilu.
+1. **Najpierw web.** Potwierdzamy bezpieczny i prosty dostęp przez OpenClaw
+   Control UI, wybrany kanał albo webową powierzchnię 8gent. Pracownik dostaje
+   gotowego agenta i sesję; nie konfiguruje Gatewaya ani serwera. Praca musi
+   pozostać na serwerze po zamknięciu przeglądarki.
+2. **Później dodatkowe klienty.** Desktop, mobile, node i własny panel są
+   klientami dodatkowymi. Nie mogą być właścicielem cyklu życia sesji, workerów,
+   kolejki ani agenta.
 
 Zaawansowane ustawienia pozostają dla administratora i są dostępne przez
-webową powierzchnię administracyjną 8gent/Hermesa albo terminal. Pracownik
-widzi tylko przydzielonego agenta i jego czat.
+Control UI/CLI OpenClaw albo webową warstwę administracyjną 8gent. Pracownik
+widzi tylko przydzielonego agenta i jego sesję.
 
 ## Trzy rzeczy do zapamiętania
 
-1. **Nie budujemy agenta.** Hermes nim jest. Budujemy warstwę, która odpowiada na
-   pytania: kto to jest, do czego ma prawo, ile mu wolno wydać, co po sobie zostawił.
-2. **Brama modeli należy do nas.** To fundament, nie detal — z niego wynika swoboda
-   wyboru modelu i egzekwowalny budżet.
-3. **Nie gonimy parytetu z gotowymi platformami.** Budujemy pod pięć wymagań.
-   Gonienie parytetu zamienia projekt na trzy miesiące w projekt na rok.
+1. **Nie budujemy agenta ani drugiego Gatewaya.** OpenClaw dostarcza runtime,
+   kanały, sesje, narzędzia i automatyzacje. Budujemy warstwę 8gent odpowiadającą
+   na pytania: kto to jest, do czego ma prawo, ile mu wolno wydać i co po sobie
+   zostawił.
+2. **Nie budujemy obowiązkowego proxy modeli.** OpenClaw konfiguruje provider,
+   primary model, fallbacks i allowlistę. OpenRouter nie jest wymaganym elementem
+   tej architektury.
+3. **Nie budujemy OpenMonitora.** Najpierw używamy Control UI, tasks,
+   automations i Task Flow OpenClaw. AutoBot Monitor pozostaje opcjonalnym
+   pluginem wyłącznie dla potwierdzonej luki.
 
 ## Blokada
 

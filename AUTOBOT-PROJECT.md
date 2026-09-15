@@ -13,6 +13,12 @@ zmianę. `AUTOBOT-KANBAN.md` pozostaje kanonicznym źródłem ABM; źródła sup
 oraz runbooki nie podnoszą rangi ponad ten kontrakt. Statusy runtime są tylko
 snapshotami opisanymi w źródłach i wymagają świeżego readbacku.
 
+## Aktualizacja platformy D-014
+
+AutoBot Monitor nie jest bieżącym osobnym runtime'em 8gent. Ten pakiet jest
+materiałem do ewentualnej adaptacji jako plugin OpenClaw; Hermes-specific
+profile, Cron, receiver i komendy Kanbana są historyczne. Nie wynika z niego
+zgoda na instalację pluginu, zmianę Gatewaya ani operację live.
 ## 0. Zakres, precedencja i granice
 
 - Zakres obejmuje sześć sekcji planu `ABM-01`–`ABM-06`; `ABM-07` pozostaje

@@ -42,6 +42,30 @@ dowód konkretnego przebiegu, `HISTORY` opisuje kontekst, a `LIVE_READBACK_REQUI
 oznacza, że statyczny plik nie wystarcza. `STAGING_ONLY` opisuje ten wytwór,
 nie stan źródeł.
 
+## 0A. Aktualizacja runtime po D-014
+
+Bieżący proces 8gent działa koncepcyjnie na OpenClaw, nie na Hermesie. Zachowane
+bramki jakości nadal obowiązują:
+
+```text
+Operator → Evaluator → Defense tylko przy konkretnych zarzutach
+→ Final Control → osobna bramka integracji
+```
+
+Zmienia się warstwa wykonawcza:
+
+- OpenClaw Gateway, agenci, workspace'y i sesje zastępują profil/serwer Hermesa;
+- OpenClaw automations zastępują Hermes Cron jako scheduler;
+- OpenClaw tasks i Task Flow są pierwszym kandydatem na ewidencję oraz
+  wieloetapową orkiestrację;
+- AutoBot Monitor może uzupełnić wyłącznie potwierdzoną lukę jako plugin;
+- Hermes-specific helper, receiver, profile i Kanban commands są legacy
+  evidence, nie instrukcją dla nowego runtime'u.
+
+Szczegółowe mapowanie, otwarte luki i acceptance gates są w
+[`docs/OPENCLAW-STRATEGY.md`](docs/OPENCLAW-STRATEGY.md). Nie instalujemy,
+nie konfigurujemy i nie migrujemy OpenClaw w ramach tego dokumentu.
+
 ## 1. Mapa sekcji i pokrycia P6
 
 | Sekcja | Zakres | Pierwsze źródło normatywne | P4 / zakres | Status pakietu |

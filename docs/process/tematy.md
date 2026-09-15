@@ -11,9 +11,14 @@ Format ID: `NAG-<ETAP>-<NNN>-<slug>`. ID jest niezmienne i nigdy nieużywane pon
 
 | ID | GOAL | Status |
 |---|---|---|
-| `NAG-INFRA-002-pomocnik-serwerowy` | Serwerowy pomocnik odbiera dyspozycje Crona i prowadzi kwalifikowane przejścia Kanbana bez Desktopu | wariant A przyjęty; implementacja i canary do wykonania |
+| `NAG-INFRA-002-pomocnik-serwerowy` | **Legacy baseline:** pomocnik Cron/Kanban wymaga rekwalifikacji na OpenClaw automations/tasks/Task Flow; nie dispatchować bez D-014 readbacku | OWNER_HOLD / rekwalifikacja OpenClaw do decyzji |
 
 Tematy MVP1-001, MVP1-003, MVP1-004, MVP1-005, MVP1-006, MVP1-007, MVP1-008 oraz zakresy infrastrukturalne zatwierdzone przez petle AutoBot sa zamkniete lokalnie; push wymaga osobnej zgody.
+
+**Aktualizacja D-014:** zamknięte tematy MVP1 oraz aktywny pomocnik opisują
+Hermes-era baseline. Nie wolno ich ponownie dispatchować pod tym samym zakresem.
+Przed kontynuacją trzeba utworzyć/uzgodnić rekwalifikację OpenClaw: agent,
+session, provider/model, automations/tasks/Task Flow oraz ewentualny plugin.
 
 ## Zablokowane
 

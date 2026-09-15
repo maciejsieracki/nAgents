@@ -28,6 +28,21 @@ Każdy blok treści ma `SOURCE_PATH`, SHA-256, status źródła i locator. Bloki
 oznaczone `BEGIN_LITERAL_SOURCE` są kopiami zakresów bajtów źródła, bez
 parafrazowania. Szczegółowy ledger maszynowy znajduje się w `coverage.json`.
 
+## 0A. Aktualna decyzja platformowa
+
+Bieżąca decyzja właściciela jest zapisana jako **D-014** w
+`docs/spec/decisions.md` i rozwinięta w `docs/OPENCLAW-STRATEGY.md`:
+
+- runtime i control plane 8gent: **OpenClaw**;
+- osobny OpenRouter: **nie budujemy**;
+- osobny OpenMonitor: **nie budujemy**;
+- AutoBot Monitor: **kandydat na opcjonalny plugin OpenClaw**;
+- Hermes/LiteLLM: wcześniejszy wariant, zachowany w literalnych blokach jako
+  `HISTORY/EVIDENCE`, nie jako bieżąca architektura.
+
+`DEC-01` poniżej pozostaje snapshotem zakresu D-001…D-013 z czasu konsolidacji.
+Nie wolno używać jego starych twierdzeń o Hermesie lub LiteLLM ponad D-014.
+
 ## 0. Zakres, statusy i bramy
 
 P6 wyznacza cztery sekcje tego pakietu (P6 §4.2, linie 110–117):

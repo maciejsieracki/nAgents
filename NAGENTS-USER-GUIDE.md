@@ -13,7 +13,7 @@ tego katalogu stagingowego nie zmienia żadnego źródła kanonicznego.
 
 ## Dla pracownika
 
-Ten przewodnik opisuje prostą drogę do pracy z przydzielonym profilem i czatem
+Ten przewodnik opisuje prostą drogę do pracy z przydzielonym agentem i sesją
 oraz sposób przekazywania i odbierania zadań. Mówi, jaki skutek ma mieć ta
 organizacja pracy. Nie wymaga wiedzy technicznej.
 
@@ -27,18 +27,20 @@ SCENARIUSZE: `U1`, `U2`
 
 Docelowa ścieżka pracownika jest krótka:
 
-1. Otwierasz webową stronę 8gent/Hermesa.
+1. Otwierasz OpenClaw Control UI, wybrany kanał albo webową stronę 8gent.
 2. Logujesz się firmowym kontem.
-3. Widzisz gotowy profil i wyłącznie czaty przydzielone Tobie.
-4. Otwierasz swój czat i pracujesz.
+3. Widzisz gotowego agenta i wyłącznie sesje przydzielone Tobie.
+4. Otwierasz swoją sesję i pracujesz.
 
 Nie konfigurujesz gatewaya, serwera, profilu technicznego, modelu, poświadczeń
 ani routingu. Nie musisz znać adresu zaplecza ani sposobu, w jaki odpowiedź
-powstaje. Jeśli nie widzisz potrzebnego profilu lub czatu, nie próbuj otwierać
-cudzego — zgłoś to przełożonemu albo osobie odpowiedzialnej za dostęp.
+powstaje. Jeśli nie widzisz potrzebnego agenta lub sesji, nie próbuj otwierać
+cudzej — zgłoś to przełożonemu albo osobie odpowiedzialnej za dostęp.
 
-Web jest podstawowym miejscem pracy. Desktop może być później wygodnym dodatkiem,
-ale nie powinien być warunkiem rozpoczęcia ani kontynuowania pracy.
+Web jest podstawowym miejscem pracy. OpenClaw Control UI i kanały są klientami
+Gatewaya, nie właścicielem jego sesji ani zadań. Desktop, mobile i node mogą być
+później wygodnymi dodatkami, ale nie powinny być warunkiem rozpoczęcia ani
+kontynuowania pracy.
 
 ## USER-02 — Pięć sytuacji, które znasz
 
