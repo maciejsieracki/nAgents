@@ -39,8 +39,8 @@ Allowlisty i plany testów ustalane przy dispatchu, nie z góry.
 | `NAG-MVP1-003-uprawnienia` | Osoba spoza grupy nie dobija się do agenta ani przez UI, ani z jego pominięciem | A1, A2 | 001 |
 | `NAG-MVP1-004-rejestr` | Rejestr w YAML wczytywany do bazy; `validate` i `apply` idempotentne | — | 001 |
 | `NAG-MVP1-005-rozmowa` | Ekran rozmowy ze strumieniowaniem odpowiedzi | A1 | 003 |
-| `NAG-MVP1-006-proxy-hermes` | Wiadomość trafia do właściwego profilu; identyfikator żądania przechodzi przez warstwy | A1 | 005 |
-| `NAG-MVP1-007-brama-modeli` | Wszystkie wywołania przez bramę; wyczerpany budżet zatrzymuje agenta | K1, K2, K5 | 006 |
+| `NAG-MVP1-006-proxy-hermes` | **LEGACY / REQUALIFY:** adapter do agenta/session binding OpenClaw; nie dispatchować starego proxy | A1 | 005 |
+| `NAG-MVP1-007-brama-modeli` | **LEGACY / REQUALIFY:** OpenClaw provider/model config + polityka budżetu 8gent; nie uruchamiać starej bramy | K1, K2, K5 | 006 |
 | `NAG-MVP1-008-audyt` | Operacje dozwolone i odrzucone zapisane; widok dziennika | A2 | 003 |
 | `NAG-MVP1-009-wdrozenie` | Compose na serwerze, TLS, kopia dobowa, **przećwiczone odtworzenie** | C1 | 007, 008 |
 | `NAG-MVP1-010-pilot-rozliczenia` | Trzy zamknięte miesiące zgadzają się co do złotówki z liczeniem ręcznym | R1, R2, R3, R4 | 009 |

@@ -182,7 +182,7 @@ stanu, nie lektury kolejnego snapshotu.
 | Która faza lub karta może ruszyć teraz? | `NAGENTS-PROCESS.md` + audit evidence; stan tylko live | indeks §3–§4.5; board `autobot-monitor`: task, rodzice, run, event i receipt — `LIVE_READBACK_REQUIRED` |
 | Jaki jest bieżący stan repozytorium, tematów i usług? | `NAGENTS-HANDOFF.md` (kandydat P6) + runtime readback | indeks §4 i §5; `git status/branch/HEAD`, rejestr tematów, board, profil i usługa |
 | Gdzie jest bieżący handoff i jaki ma format? | `NAGENTS-HANDOFF.md` (kandydat P6) | [`docs/process/handoff.md`](docs/process/handoff.md) §Gdzie jesteśmy, §Co blokuje, §Następna bramka |
-| Jakie decyzje właściciela obowiązują? | `NAGENTS-DECISIONS.md` (kandydat P6) | [`docs/spec/decisions.md`](docs/spec/decisions.md) §D-001–D-013 oraz [`docs/process/echo.md`](docs/process/echo.md) §Wpisy |
+| Jakie decyzje właściciela obowiązują? | `NAGENTS-DECISIONS.md` (kandydat P6) | [`docs/spec/decisions.md`](docs/spec/decisions.md) §D-001–D-014 oraz [`docs/process/echo.md`](docs/process/echo.md) §Wpisy |
 | Jakie pytania właścicielskie są otwarte? | `NAGENTS-DECISIONS.md` (kandydat P6) | `docs/process/pytania/2026-08-25-wybory.md` §Pytanie 1–8; przed wysłaniem porównaj `decisions.md` i `echo.md` |
 | Jakie sytuacje muszą działać i z czego wynikają testy? | `NAGENTS-SPEC.md` (kandydat P6); scenariusze pozostają osobno | [`docs/spec/scenarios.md`](docs/spec/scenarios.md) §Dostęp i tożsamość, §Rozliczenia, §Wiedza, §Koszty, §Proaktywność, §Ciągłość, §Interfejs, §Pomocnik |
 | Jakie integracje są wybrane i co dowiedziono? | `NAGENTS-INTEGRATIONS.md` (dopiero po decyzji) | `OWNER_DECISION_REQUIRED`: `docs/nota-09-*`, `docs/nota-10-*`, handoff Microsoft 365; wybór właściciela i live test przed konsolidacją |

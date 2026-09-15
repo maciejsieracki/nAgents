@@ -16,7 +16,7 @@ kopiach są zachowane celowo, aby nie zgubić proweniencji pakietów.
 
 | Plik | Zakres | SHA-256 |
 |---|---|---|
-| `NAGENTS-SPEC.md` | architektura, zakres MVP, bezpieczeństwo, scenariusze | `ff13ffee7cada5457b64a497267ba54b7fac63b69bb5aec81180fa2c4c6b5e48` |
+| `NAGENTS-SPEC.md` | architektura, zakres MVP, bezpieczeństwo, scenariusze | `37a7ae859c36b4dd7535e96eb143486deb56af7e0cf96e31132486cc9e9d9f2d` |
 | `docs/OPENCLAW-STRATEGY.md` | aktualna podstawa OpenClaw, mapowanie Hermes → OpenClaw, AutoBot plugin boundary | `19726bb8dcb58ef3958777a030a2a1bf81c4bf767618dd3b0fcef9a7c1973ac9` |
 | `NAGENTS-DECISIONS.md` | decyzje D-001…D-014, ECHO, pytania, historia | `2f09069de8e9734110429a1d16c812f2b45bb0ce25dc807de976857ad8c1fedf` |
 | `NAGENTS-PROCESS.md` | role, pętla, allowlista, evidence, watchdog, P1–P7 | `56656e16506b74db6e0efafc65757c12f97f2ba2a5bbd0575ad5194cab8bb072` |

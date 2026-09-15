@@ -184,13 +184,14 @@ kosztem tego, że agenci nie uczą się z rozmów.
 **2026-09-13 · przyjęta dyrektywą właściciela**
 
 **Decyzja:** 8gent dostarcza najpierw bezpieczny, prosty dostęp webowy do
-gotowych profili i czatów. Pracownik nie konfiguruje gatewaya, serwera, profilu
-technicznego, modeli ani poświadczeń. Serwer jest właścicielem sesji, kolejki,
-workerów, pamięci i audytu; przeglądarka oraz Desktop są klientami.
+agentów i sesji OpenClaw. Pracownik nie konfiguruje Gatewaya, serwera, agenta,
+modeli ani poświadczeń. Gateway jest właścicielem sesji, zadań i runtime'u;
+przeglądarka, Control UI, kanały i Desktop są klientami.
 
-Nakładka na Desktop albo dostosowanie Desktopu wchodzi dopiero jako drugi etap,
-po potwierdzeniu scenariusza webowego. AutoBot Router i AutoBot Monitor pozostają
-modułami 8gent, a nie osobnymi projektami nadrzędnymi.
+Nakładka na Desktop albo dostosowanie dodatkowego klienta wchodzi dopiero jako
+kolejny etap, po potwierdzeniu scenariusza webowego. AutoBot Monitor nie jest
+bieżącym osobnym modułem: zgodnie z D-014 może zostać tylko kandydatem na
+opcjonalny plugin OpenClaw po potwierdzeniu luki.
 
 **Rozważane opcje:**
 
