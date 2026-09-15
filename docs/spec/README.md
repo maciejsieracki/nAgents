@@ -1,4 +1,4 @@
-# Dokumentacja techniczna nAgents
+# Dokumentacja techniczna 8gent
 
 Warstwa zarządzania nad flotą instancji Hermesa.
 
@@ -28,7 +28,7 @@ Warstwa zarządzania nad flotą instancji Hermesa.
 Kolejność produktu jest nadrzędna wobec wygody konkretnego klienta:
 
 1. **Najpierw web.** Potwierdzamy bezpieczny i prosty dostęp do serwerowej
-   wersji webowej Hermesa albo budujemy webową powierzchnię NAgents. Pracownik
+   wersji webowej Hermesa albo budujemy webową powierzchnię 8gent. Pracownik
    dostaje gotowy profil i czat; nie konfiguruje gatewaya ani serwera. Praca
    musi pozostać na serwerze po zamknięciu przeglądarki.
 2. **Później Desktop.** Nakładka lub dostosowanie Desktopu jest drugim etapem.
@@ -36,7 +36,7 @@ Kolejność produktu jest nadrzędna wobec wygody konkretnego klienta:
    sesji, workerów, kolejki ani profilu.
 
 Zaawansowane ustawienia pozostają dla administratora i są dostępne przez
-webową powierzchnię administracyjną NAgents/Hermesa albo terminal. Pracownik
+webową powierzchnię administracyjną 8gent/Hermesa albo terminal. Pracownik
 widzi tylko przydzielonego agenta i jego czat.
 
 ## Trzy rzeczy do zapamiętania

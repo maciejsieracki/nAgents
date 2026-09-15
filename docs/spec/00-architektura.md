@@ -1,4 +1,4 @@
-# nAgents — architektura systemu
+# 8gent — architektura systemu
 
 **Wersja 0.1 · 22 sierpnia 2026 · dokument źródłowy dla wszystkich etapów**
 
@@ -6,11 +6,11 @@
 
 ## 1. Cel systemu
 
-nAgents to **warstwa zarządzania** nad flotą instancji Hermesa. Nie jest silnikiem agenta —
+8gent to **warstwa zarządzania** nad flotą instancji Hermesa. Nie jest silnikiem agenta —
 Hermes nim jest, jest otwarty i wykonuje całą pracę: rozmowę, narzędzia, piaskownicę,
 pamięć, kanały, wybór modelu.
 
-nAgents odpowiada wyłącznie na cztery pytania, na które Hermes nie odpowiada:
+8gent odpowiada wyłącznie na cztery pytania, na które Hermes nie odpowiada:
 
 1. **Kto to jest** — tożsamość pracownika, pobrana z firmowego katalogu
 2. **Do czego ma prawo** — którzy agenci są dla niego widoczni i uruchamialni
@@ -234,17 +234,17 @@ czekającym na następny.
 
 ## 12. Kolejność interfejsu i niezależność od klienta
 
-### 12.1 Web jest podstawową powierzchnią NAgents
+### 12.1 Web jest podstawową powierzchnią 8gent
 
-NAgents najpierw dostarcza bezpieczny dostęp webowy. W pierwszym etapie należy
+8gent najpierw dostarcza bezpieczny dostęp webowy. W pierwszym etapie należy
 potwierdzić, czy wystarczy serwerowa wersja webowa Hermesa, czy potrzebna jest
-webowa warstwa NAgents przed nią. W obu przypadkach pracownik ma dostać gotowy
+webowa warstwa 8gent przed nią. W obu przypadkach pracownik ma dostać gotowy
 profil i czat, a nie instrukcję konfigurowania gatewaya lub serwera.
 
 Webowa powierzchnia pracownika pokazuje wyłącznie agentów wynikających z
 `agent_grant`. Nie pokazuje ustawień modeli, poświadczeń, budżetów, provisionera,
 profilów technicznych ani routingu. Te funkcje są dostępne tylko administratorowi
-przez powierzchnię administracyjną NAgents/Hermesa albo terminal.
+przez powierzchnię administracyjną 8gent/Hermesa albo terminal.
 
 ### 12.2 Serwer jest właścicielem pracy
 
@@ -259,7 +259,7 @@ ukryty pod etykietą „połączenie działa".
 Nakładka na Desktop Hermesa albo dostosowanie istniejącego Desktopu może wejść
 dopiero po przejściu pierwszego etapu webowego. Desktop może wyświetlać stan,
 prowadzić rozmowę i wykonywać dozwolone operacje użytkownika, ale nie może być
-procesowym rodzicem NAgents, Orkiestratora, workera ani kolejki.
+procesowym rodzicem 8gent, Orkiestratora, workera ani kolejki.
 
 Nie projektujemy obiegu, w którym pracownik ręcznie wybiera gateway, wpisuje
 adres serwera, zakłada profil albo pilnuje, czy klient pozostaje otwarty.

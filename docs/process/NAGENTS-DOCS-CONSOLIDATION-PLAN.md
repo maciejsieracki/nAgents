@@ -1,10 +1,10 @@
-# Plan porządkowania i konsolidacji dokumentacji nAgents
+# Plan porządkowania i konsolidacji dokumentacji 8gent
 
 **Status:** `ACTIVE / AUTONOMOUS_EXECUTION`
 
 **Właściciel:** zatwierdził pełne wykonanie planu w głównym wątku.
 
-**Cel:** przeanalizować, uporządkować i skonsolidować dokumentację nAgents oraz
+**Cel:** przeanalizować, uporządkować i skonsolidować dokumentację 8gent oraz
 powiązanego AutoBot Monitor, zachowując treść, proweniencję i dowody. Plan ma
 być także stałym playbookiem dla przyszłych porządków dokumentacji.
 
@@ -30,7 +30,7 @@ AutoBot Monitor
 ```
 
 AutoBot Monitor dostarcza Kanban, dispatcher, receiver, watchdog i kontrakt
-procesu. Nie wolno mieszać jego kodu z dokumentacją nAgents bez wskazania
+procesu. Nie wolno mieszać jego kodu z dokumentacją 8gent bez wskazania
 konkretnej ścieżki i uzasadnienia.
 
 ### Projekt odrębny
@@ -39,17 +39,17 @@ konkretnej ścieżki i uzasadnienia.
 The-Game
 ```
 
-The-Game nie jest scalany z nAgents. Można odnotować jego dokumenty i handoffy
-jako `SEPARATE_PROJECT`, ale nie wolno ustanawiać ich źródłem prawdy nAgents.
+The-Game nie jest scalany z 8gent. Można odnotować jego dokumenty i handoffy
+jako `SEPARATE_PROJECT`, ale nie wolno ustanawiać ich źródłem prawdy 8gent.
 
 ### Źródła objęte audytem
 
-- checkout nAgents na OVH;
-- wszystkie istotne worktree nAgents;
-- handoffy i artefakty używane przez nAgents;
+- checkout 8gent na OVH;
+- wszystkie istotne worktree 8gent;
+- handoffy i artefakty używane przez 8gent;
 - dokumentacja AutoBot Monitor związana z routingiem, Kanbanem, Cronem,
   receiverem i procesem;
-- wskazane branche GitHuba nAgents i AutoBot Monitor;
+- wskazane branche GitHuba 8gent i AutoBot Monitor;
 - dokumenty publikacyjne, plany, decyzje, scenariusze, dispatchy i evidence.
 
 ### Wyłączenia
@@ -123,7 +123,7 @@ Task ID nadaje Kanban. Stable ID nie zmienia się między rundami.
 | server Kanban watchdog | `6911e5eac7d3` | active, `every 5m`, `no_agent`, receiver active |
 | current-chat reminder | `c02f6f601e09` | active, `every 5m`, `deliver=origin`; manual run delivered successfully to this conversation |
 
-Nowe karty nAgents będą używać wspólnego boardu `autobot-monitor` z aktualnym
+Nowe karty 8gent będą używać wspólnego boardu `autobot-monitor` z aktualnym
 `project_id: p_e90c30bc`, slugiem `nagents-docs`, tenantem `nagents-docs`,
 assignee `default`, prefiksem `NAG-`, jawnym `process_phase`, stabilnym `topic`
 i unikalnym `idempotency_key`. Karty P1–P6 powyżej pozostają historycznymi
@@ -220,7 +220,7 @@ P1-sources.json
 P1-exclusions.md
 ```
 
-**Kryterium PASS:** każdy późniejszy plik ma przypisane źródło: nAgents,
+**Kryterium PASS:** każdy późniejszy plik ma przypisane źródło: 8gent,
 AutoBot Monitor, The-Game, handoff, GitHub, runtime albo evidence.
 
 ### P2 — inwentaryzacja Markdownów
@@ -459,7 +459,7 @@ idempotency_key:    unikalny dla task/phase/round
 
 `autobotmonitor` i project `p_ffb5c6ad` dotyczą historycznego execution path.
 Aktywny P5/run 199 pozostaje nietknięty do terminalnego readbacku; nie tworzyć
-jego duplikatu. Nowe lub odtwarzane karty nAgents mają używać wspólnego boardu,
+jego duplikatu. Nowe lub odtwarzane karty 8gent mają używać wspólnego boardu,
 ale aktualnego `project_id: p_e90c30bc` i zarejestrowanego assignee `default`.
 
 Nie tworzyć nowego profilu ani boardu bez decyzji i preflightu. Nie używać

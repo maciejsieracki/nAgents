@@ -27,7 +27,7 @@ SCENARIUSZE: `U1`, `U2`
 
 Docelowa ścieżka pracownika jest krótka:
 
-1. Otwierasz webową stronę NAgents/Hermesa.
+1. Otwierasz webową stronę 8gent/Hermesa.
 2. Logujesz się firmowym kontem.
 3. Widzisz gotowy profil i wyłącznie czaty przydzielone Tobie.
 4. Otwierasz swój czat i pracujesz.

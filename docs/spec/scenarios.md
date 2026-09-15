@@ -74,7 +74,7 @@ przypadków testowych. Każdy scenariusz ma etap, w którym musi zacząć dział
 
 | # | Scenariusz | Etap |
 |---|---|---|
-| U1 | Pracownik loguje się do webowej powierzchni NAgents/Hermesa i widzi gotowy profil oraz wyłącznie przydzielone czaty | MVP1 |
+| U1 | Pracownik loguje się do webowej powierzchni 8gent/Hermesa i widzi gotowy profil oraz wyłącznie przydzielone czaty | MVP1 |
 | U2 | Pracownik otwiera czat bez znajomości gatewaya, adresu serwera, modelu, poświadczeń i routingu | MVP1 |
 | U3 | Zamknięcie przeglądarki odłącza widok, ale serwerowy backend i rozpoczęta zdrowa praca pozostają aktywne; ponowne wejście pozwala odczytać ten sam stan | MVP1 |
 | U4 | Pracownik nie ma dostępu do profili technicznych, budżetów, poświadczeń, routingu ani zaawansowanych ustawień | MVP1 |

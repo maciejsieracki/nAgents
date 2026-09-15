@@ -16,7 +16,7 @@ Kanbana/Git/usługi i nie jest publikacją.
 
 Cel pakietu: zebrać w siedmiu sekcjach normę procesu, rejestr tematów, handoff,
 dispatch, evidence, watchdog, recovery oraz granicę pracownik–proces techniczny.
-Wartości projektowe nAgents są oddzielone od reguł przenośnych; historyczne
+Wartości projektowe 8gent są oddzielone od reguł przenośnych; historyczne
 raporty i snapshoty nie stają się normą przez samo umieszczenie tutaj.
 
 Źródła wskazane dla tej fali:
@@ -211,7 +211,7 @@ zamyka lub świadomie zawiesza dotknięte tematy, zapisuje przypadek, który
 wykazał brak obecnej reguły, tworzy dispatch, pracuje w izolacji i uruchamia
 niezależnego Evaluatora oraz Final Control. Zmiana bariery, limitu rund,
 puli, progu `ZWIS` albo ścieżek zakazanych wymaga ABC/ECHO. Uniwersalny szkielet
-właściciela jest read-only; różnice nAgents zapisuje się w skillu projektowym.
+właściciela jest read-only; różnice 8gent zapisuje się w skillu projektowym.
 Zmiana wchodzi z datą, ID, powodem i śladem korekty.
 
 ## PROCESS-03 — dispatch, GOAL, allowlista, izolacja i raport
@@ -243,14 +243,14 @@ anty-samooszukiwaniu zakazuje sposobu uznania błędnej pracy za gotową.
 
 ### Allowlista i izolacja
 
-Allowlista jest per temat i per pozycja, nigdy „cały projekt”. Dla nAgents
+Allowlista jest per temat i per pozycja, nigdy „cały projekt”. Dla 8gent
 proces obejmuje odpowiednie `docs/process/**`, `.claude/skills/**` i `CLAUDE.md`,
 ale nie pliki z sekretami, `.env*`, `docs/spec/decisions.md`, `.git/**` ani
 konfigurację produkcyjną bez jawnej zgody. Zmiana procesu nie jedzie w
 allowliście tematu produktowego; dostaje osobny temat `PROCES`.
 
 Jeden temat ma jedno worktree i jeden aktywny przebieg Operatora. Ustalona
-postać nAgents to `../nagents-<ID>`, branch `auto/<ID>`, baza wskazana przez
+postać 8gent to `../nagents-<ID>`, branch `auto/<ID>`, baza wskazana przez
 właściciela, nie domyślnie `main`. Współdzielony checkout wymaga allowlisty
 per plik/hunk; nigdy `git add -A` ani `git add .`.
 
@@ -339,7 +339,7 @@ UNIQUE_FRAGMENTS: `F-12`, `F-13`, `F-14`
 
 ### Watchdog i pojemność
 
-Stałe tokeny procesu to `Watchdog` i `ZWIS`. W nAgents obowiązuje jeden aktywny
+Stałe tokeny procesu to `Watchdog` i `ZWIS`. W 8gent obowiązuje jeden aktywny
 przebieg Operatora na temat, próg ciszy 20 minut i pula dwóch tematów
 równolegle, bo każdy wynik musi przejść realny przegląd. Przy `ZWIS` najpierw
 sprawdź przebieg, worktree i artefakty; nie anuluj ani nie restartuj w ciemno.
@@ -347,7 +347,7 @@ sprawdź przebieg, worktree i artefakty; nie anuluj ani nie restartuj w ciemno.
 Dla wykonawcy-programu limit technicznego fan-outu wynosi
 `min(16, liczba_CPU − 2)`. To nie jest to samo co pula tematów: pierwsze
 zależy od zasobów kontenera, drugie od pojemności przeglądu. Model, effort i
-sposób delegowania są jawne; w nAgents praca subagenta idzie przez workflow.
+sposób delegowania są jawne; w 8gent praca subagenta idzie przez workflow.
 
 ### Pomocnik i recovery
 
@@ -482,7 +482,7 @@ wyniku testu/scenariuszy i kolejnej bramki; nie zawiera surowych logów, sekret�
 ani niezweryfikowanych twierdzeń. `N/D`, `UNKNOWN` i `INFRA` są lepsze niż
 wymyślone liczby lub deklaracja bez artefaktu.
 
-## 7. Siedem barier nAgents
+## 7. Siedem barier 8gent
 
 [FRAGMENT F-19] Źródła: `.claude/skills/nagents-autobot/SKILL.md` | `aa5aab364e0a86c6053e46532d835a35a466357a81c562021bf78555dbb6ac3e` | `CANONICAL` | §7; `CLAUDE.md` | `8de583cc4fe98c55c49b5fac9f1562669040204f571ee2daacc9905e9390d2` | `CANONICAL` | §Siedem barier; `docs/process/zmiana-procesu.md` | `2c2d366e3ed54a28dae14b47aa78387366e20d2c9b20b1eac9c286af380e0546` | `CANONICAL` | §3.2.
 

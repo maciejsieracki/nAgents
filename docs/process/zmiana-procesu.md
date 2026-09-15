@@ -91,7 +91,7 @@ projektu. **Nie modyfikujemy go.** Wszystkie różnice, zawężenia i wartości
 konkretne idą do `nagents-autobot` — z odnotowaniem w mapie zgodności (§0),
 gdzie i jak dana zasada została związana.
 
-Jeśli zasada ze szkieletu wydaje się nie pasować do nAgents — **nie jest to powód
+Jeśli zasada ze szkieletu wydaje się nie pasować do 8gent — **nie jest to powód
 do jej pominięcia.** Zgłoś właścicielowi jako pytanie ABC. Domyślnie stosujemy
 wszystko, bez wyłączeń.
 
