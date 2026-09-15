@@ -3,6 +3,11 @@
 Realne sytuacje, które system ma obsłużyć. **Powstają przed kodem** i są źródłem
 przypadków testowych. Każdy scenariusz ma etap, w którym musi zacząć działać.
 
+> **D-014 / platform override:** bieżący runtime scenariuszy to OpenClaw Gateway,
+> agenci, sesje, kanały, automatyzacje, tasks i Task Flow. Dawne odniesienia do
+> Hermesa są historycznym mapowaniem; aktualny zakres i luki są w
+> `docs/OPENCLAW-STRATEGY.md`.
+
 ---
 
 ## Dostęp i tożsamość
@@ -64,7 +69,7 @@ przypadków testowych. Każdy scenariusz ma etap, w którym musi zacząć dział
 | # | Scenariusz | Etap |
 |---|---|---|
 | C1 | Odtworzenie bazy z kopii — przećwiczone, nie zadeklarowane | MVP1 |
-| C2 | Awaria instancji Hermesa — rozmowy przenoszone, sesje odtwarzane | MVP4 |
+| C2 | Awaria OpenClaw Gatewaya — rozmowy przenoszone, sesje odtwarzane zgodnie z potwierdzonym modelem runtime | MVP4 |
 | C3 | Żądanie usunięcia danych osoby zrealizowane, audyt zanonimizowany | MVP4 |
 | C4 | Eksport danych osoby w formacie tekstowym | MVP4 |
 | C5 | Instalacja dla drugiego klienta w jeden dzień, wyłącznie konfiguracja | MVP4 |
@@ -74,7 +79,7 @@ przypadków testowych. Każdy scenariusz ma etap, w którym musi zacząć dział
 
 | # | Scenariusz | Etap |
 |---|---|---|
-| U1 | Pracownik loguje się do webowej powierzchni 8gent/Hermesa i widzi gotowy profil oraz wyłącznie przydzielone czaty | MVP1 |
+| U1 | Pracownik loguje się do OpenClaw Control UI, kanału albo webowej warstwy 8gent i widzi gotowego agenta oraz wyłącznie przydzielone sesje | MVP1 |
 | U2 | Pracownik otwiera czat bez znajomości gatewaya, adresu serwera, modelu, poświadczeń i routingu | MVP1 |
 | U3 | Zamknięcie przeglądarki odłącza widok, ale serwerowy backend i rozpoczęta zdrowa praca pozostają aktywne; ponowne wejście pozwala odczytać ten sam stan | MVP1 |
 | U4 | Pracownik nie ma dostępu do profili technicznych, budżetów, poświadczeń, routingu ani zaawansowanych ustawień | MVP1 |
@@ -85,8 +90,8 @@ przypadków testowych. Każdy scenariusz ma etap, w którym musi zacząć dział
 
 | # | Scenariusz | Etap |
 |---|---|---|
-| U7 | Cron uruchomiony na serwerze dostarcza pełną dyspozycję do pomocnika bez otwartego Desktopu | MVP1 |
-| U8 | Pomocnik po terminalnym evencie uruchamia dokładnie następny zatwierdzony etap grafu Operator → Evaluator → Obrona warunkowo → Final Control | MVP1 |
-| U9 | Pomocnik nie tworzy nowego zakresu ani pustej Obrony; używa wyłącznie istniejącej lub ściśle przewidzianej kontynuacji | MVP1 |
-| U10 | Niejasny raport, brak dowodu, obcy profil/projekt albo konflikt receiptu zatrzymuje strumień i tworzy eskalację bez mutacji Kanbana poza śladem diagnostycznym | MVP1 |
-| U11 | Restart pomocnika lub replay tej samej dyspozycji nie tworzy drugiego runu, następcy ani dostarczenia | MVP1 |
+| U7 | OpenClaw automation uruchomiona na serwerze dostarcza pełną dyspozycję do Task Flow bez otwartego klienta | MVP1 |
+| U8 | Task Flow po terminalnym stanie uruchamia dokładnie następny zatwierdzony etap grafu Operator → Evaluator → Obrona warunkowo → Final Control | MVP1 |
+| U9 | Plugin/proces nie tworzy nowego zakresu ani pustej Obrony; używa wyłącznie istniejącej lub ściśle przewidzianej kontynuacji | MVP1 |
+| U10 | Niejasny wynik, brak dowodu, obcy agent/projekt albo konflikt dostarczenia zatrzymuje strumień i tworzy eskalację bez niejawnej mutacji | MVP1 |
+| U11 | Restart Gatewaya, pluginu albo replay tej samej automatyzacji nie tworzy drugiego tasku, flow ani dostarczenia | MVP1 |

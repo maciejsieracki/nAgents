@@ -40,6 +40,17 @@ albo zatrzymaj właściwy strumień jako `UNKNOWN/INFRA`.
 bieżącym routingiem. `NO_PUBLISH_BOUNDARY: ACTIVE` oznacza, że ten pakiet nie
 autoryzuje publikacji, integracji ani zastąpienia źródeł.
 
+## 0A. Aktualna podstawa platformowa
+
+D-014 zmienił bieżącą podstawę runtime'u na OpenClaw. Czytaj
+[`docs/OPENCLAW-STRATEGY.md`](docs/OPENCLAW-STRATEGY.md) przed decyzjami o
+Gatewayu, sesjach, modelach, automatyzacjach, tasks, Task Flow lub pluginie.
+
+Hermes, LiteLLM, profile, Cron, receiver i komendy Kanbana opisane w starszych
+sekcjach są zachowanym baseline'em historycznym. Nie wykonuj na ich podstawie
+migracji ani operacji live. AutoBot Monitor może zostać zaadaptowany jako
+opcjonalny plugin OpenClaw dopiero po potwierdzeniu luki.
+
 ## HANDOFF-01 — format bieżącego handoffu i zasada zastępowania
 
 ŹRÓDŁO: [`docs/process/handoff.md`](../../handoff.md)

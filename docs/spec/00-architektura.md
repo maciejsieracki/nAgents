@@ -1,48 +1,58 @@
 # 8gent — architektura systemu
 
-**Wersja 0.1 · 22 sierpnia 2026 · dokument źródłowy dla wszystkich etapów**
+**Wersja 0.2 · 15 września 2026 · aktualizacja D-014; dokument źródłowy dla wszystkich etapów**
 
 ---
 
 ## 1. Cel systemu
 
-8gent to **warstwa zarządzania** nad flotą instancji Hermesa. Nie jest silnikiem agenta —
-Hermes nim jest, jest otwarty i wykonuje całą pracę: rozmowę, narzędzia, piaskownicę,
-pamięć, kanały, wybór modelu.
+8gent to **warstwa zarządzania** nad agentami, workspace'ami i sesjami OpenClaw.
+OpenClaw jest self-hosted Gatewayem i control plane dla kanałów, agentów,
+narzędzi, sesji oraz zdarzeń; bieżący opis jego zakresu znajduje się w
+[`docs/OPENCLAW-STRATEGY.md`](../OPENCLAW-STRATEGY.md).[1][2][3]
 
-8gent odpowiada wyłącznie na cztery pytania, na które Hermes nie odpowiada:
+8gent odpowiada wyłącznie na cztery pytania, których sam runtime OpenClaw nie
+rozstrzyga w domenie naszego produktu:
 
 1. **Kto to jest** — tożsamość pracownika, pobrana z firmowego katalogu
 2. **Do czego ma prawo** — którzy agenci są dla niego widoczni i uruchamialni
 3. **Ile mu wolno wydać** — limity kosztowe egzekwowane, nie obserwowane
 4. **Co po sobie zostawił** — ślad audytowy operacji dozwolonych i odrzuconych
 
-Wszystko poza tym jest cudze, otwarte i wymienne.
+OpenClaw dostarcza wykonanie agenta, kanały, sesje, narzędzia, automatyzacje i
+powierzchnie operatorskie. Nie budujemy równoległego runtime'u, OpenRoutera ani
+OpenMonitora. Wszystko, co ma być dodane ponad natywne możliwości OpenClaw,
+musi mieć wskazaną lukę i osobną bramkę właściciela.
 
-## 2. Zasada nadrzędna: brama modeli należy do nas
+## 2. Zasada nadrzędna: OpenClaw jest runtime'em i control plane
 
-Rozliczenie za tokeny u dostawcy platformy odbiera wybór modelu, więc odpada.
-**Wszystkie wywołania modeli przechodzą przez naszą bramę, z naszymi kluczami.**
+Model, provider, sesja, kanał, automatyzacja i narzędzie są konfigurowane oraz
+uruchamiane przez OpenClaw. OpenClaw ma własny wybór modelu, allowlistę,
+primary model i fallbacks; 8gent nie wymaga osobnego proxy modelowego.[5][13]
 
-To nie jest detal wdrożeniowy, tylko fundament architektury. Konsekwencje:
+Konsekwencje:
 
-- zmiana dostawcy modelu nie dotyka ani jednej konfiguracji agenta
-- budżet jest egzekwowany w jednym punkcie, a nie w dwudziestu siedmiu
-- koszt jest przypisywalny do agenta i do człowieka
-- żaden komponent poza bramą nie zna kluczy dostawców
+- nie budujemy LiteLLM jako obowiązkowej warstwy;
+- nie budujemy ani nie dodajemy OpenRoutera jako wymaganej bramy lub fallbacku;
+- 8gent egzekwuje RBAC, tenant, budżet, approval i audyt przed oraz po wywołaniu;
+- bezpośredni dostawca i sposób auth są wybierane jawnie, bez ukrytego routingu;
+- awaria lub brak funkcji OpenClaw nie jest naprawiany przez drugi, niejawny
+  control plane;
+- AutoBot Monitor może wejść wyłącznie jako opcjonalny plugin, jeżeli readback
+  potwierdzi konkretną lukę.[6][7][8][11]
 
 ## 3. Słownik
 
 | Pojęcie | Znaczenie |
 |---|---|
-| **Uprząż** | Nasze oprogramowanie. Warstwa zarządzania, nie runtime |
 | **Agent** | Wpis w rejestrze: nazwa, rodzaj, model, uprawnienia, budżet |
-| **Profil** | Instancja Hermesa realizująca agenta. Osobny katalog domowy, własna konfiguracja, pamięć, skille, sesje |
-| **Rodzaj agenta** | `zarzadzajacy` (uprawnienia, jeden), `projektowy` (domena, klucze do systemów), `stanowiskowy` (jedna osoba, bez kluczy) |
-| **Nadanie** (`grant`) | Powiązanie agenta z użytkownikiem lub grupą z katalogu |
-| **Brama modeli** | LiteLLM. Jedyne wyjście do dostawców modeli |
-| **Rejestr** | Źródło prawdy o agentach. Baza + eksport do gita |
-| **Provisioner** | Proces wystawiający profile Hermesa na podstawie rejestru |
+| **Agent OpenClaw** | Izolowany agent z własnym `agentId`, `agentDir` i workspace'em |
+| **Sesja** | Sesja należąca do Gatewaya OpenClaw, identyfikowana przez session key |
+| **Rodzaj agenta** | `zarzadzajacy` (uprawnienia, jeden), `projektowy` (domena, kontrolowane narzędzia), `stanowiskowy` (jedna osoba, bez własnych sekretów) |
+| **Nadanie** (`grant`) | Powiązanie agenta 8gent z użytkownikiem lub grupą z katalogu |
+| **Brama / runtime** | OpenClaw Gateway: kanały, sesje, narzędzia, automatyzacje i provider/model config |
+| **Rejestr** | Źródło prawdy o agentach 8gent. Baza + eksport do gita |
+| **Provisioner** | Proces synchronizujący agentów 8gent z deklarowanym agentem/workspace'em OpenClaw |
 
 ## 4. Warstwy
 
@@ -50,27 +60,32 @@ To nie jest detal wdrożeniowy, tylko fundament architektury. Konsekwencje:
 ┌─ 1 · TOŻSAMOŚĆ ────────────────────────────────────────────┐
 │  Microsoft Entra ID — konta, grupy, wyłączanie pracowników │
 └────────────────────────────┬───────────────────────────────┘
-                             │ OIDC
-┌─ 2 · UPRZĄŻ (nasz kod) ────▼───────────────────────────────┐
-│  logowanie · rejestr agentów · uprawnienia · audyt         │
-│  budżety · provisioner · strona rozmowy                    │
-└──────────┬─────────────────────────────────┬───────────────┘
-           │ wystawia i odbiera              │ proxy rozmowy
-┌─ 3 · FLOTA HERMESÓW ──────▼─────────────────▼──────────────┐
-│  profil: księgowość · sprzedaż · marketing · …             │
-│  skille, pamięć, narzędzia, piaskownica, zatwierdzenia     │
+                             │ OIDC / verified identity
+┌─ 2 · 8GENT (nasz kod) ─────▼───────────────────────────────┐
+│  rejestr agentów · uprawnienia · audyt · budżety            │
+│  polityka · nadania · webowa warstwa domenowa               │
 └────────────────────────────┬───────────────────────────────┘
-                             │ wszystkie wywołania modeli
-┌─ 4 · BRAMA MODELI ─────────▼───────────────────────────────┐
-│  LiteLLM — klucze wirtualne, budżety, limity, routing      │
+                             │ controlled agent request
+┌─ 3 · OPENCLAW GATEWAY ─────▼───────────────────────────────┐
+│  agenci · agentDir · workspace'y · sesje · kanały           │
+│  narzędzia · skills · Control UI · CLI · nodes              │
 └────────────────────────────┬───────────────────────────────┘
-                             │
+                             │ native automation/control
+┌─ 4 · OPENCLAW AUTOMATION ──▼───────────────────────────────┐
+│  automations/cron · background tasks · Task Flow · events   │
+│  opcjonalne pluginy: tools · hooks · services · CLI         │
+└────────────────────────────┬───────────────────────────────┘
+                             │ provider/model config
 ┌─ 5 · DOSTAWCY MODELI ──────▼───────────────────────────────┐
-│  dowolni, wymienni bez ruszania warstw 2 i 3               │
+│  wybierani bezpośrednio w OpenClaw; OpenRouter nie jest     │
+│  wymaganym elementem architektury 8gent                    │
 └────────────────────────────────────────────────────────────┘
 ```
 
-**Budujemy wyłącznie warstwę 2.** Warstwy 3 i 4 wdrażamy jako gotowe otwarte oprogramowanie.
+**Budujemy wyłącznie warstwę 2.** Warstwy 3–4 dostarcza OpenClaw; AutoBot
+Monitor może zostać dołączony tylko jako plugin po potwierdzeniu konkretnej
+luki. OpenClaw opisuje Gateway jako control plane, a pluginy jako rozszerzenia
+bez zmiany core.[2][6][7]
 
 ## 5. Model danych
 
@@ -92,7 +107,8 @@ user_group(user_id, group_id, PRIMARY KEY(user_id, group_id))
 agent(id, tenant_id, slug, nazwa, opis,
       rodzaj CHECK IN ('zarzadzajacy','projektowy','stanowiskowy'),
       parent_agent_id NULL REFERENCES agent(id),
-      hermes_profile, hermes_endpoint,
+      openclaw_agent_id,
+      openclaw_workspace_ref,
       model_default, model_fallback NULL,
       budget_monthly_usd NUMERIC(10,2),
       is_active, created_at, updated_at,
@@ -103,10 +119,10 @@ agent_grant(id, agent_id, principal_type CHECK IN ('user','group'),
             principal_id, rola CHECK IN ('user','owner'),
             granted_by, granted_at, revoked_at NULL)
 
--- Sekrety: wyłącznie odwołania. Wartości nigdy nie trafiają do bazy.
+-- Sekrety: wyłącznie odwołania. Wartości nigdy tu nie trafiają.
 agent_secret_ref(agent_id, nazwa, vault_ref, PRIMARY KEY(agent_id, nazwa))
 
-conversation(id, agent_id, user_id, hermes_session_id, started_at, last_at)
+conversation(id, agent_id, user_id, openclaw_session_key, started_at, last_at)
 
 -- Audyt: rejestruje także to, czego odmówiono
 audit_event(id, tenant_id, at, actor_user_id NULL, actor_ip,
@@ -144,11 +160,14 @@ uprawnienia niezależnie od tego, co pokazał interfejs.
 
 ### 6.5 Operacja nieodwracalna wymaga człowieka
 Wysłanie korespondencji, zmiana w rozliczeniu, modyfikacja danych w systemie
-zewnętrznym — zawsze przez zatwierdzenie. Hermes ma ten mechanizm wbudowany.
+zewnętrznym — zawsze przez zatwierdzenie. OpenClaw ma własne mechanizmy
+approval i polityki narzędzi; 8gent musi je wywołać oraz zweryfikować na
+konkretnym kanale, a nie zakładać ich istnienia na podstawie samej konfiguracji.[12]
 
 ### 6.6 Sekrety nigdy w kodzie ani w bazie
-W bazie wyłącznie odwołania. Wartości w magazynie sekretów środowiska.
-Brama modeli jest jedynym komponentem znającym klucze dostawców.
+W bazie wyłącznie odwołania. Wartości są przechowywane w zatwierdzonym
+magazynie sekretów środowiska. Żaden dokument, plugin ani agent nie może
+utrwalać wartości tokenu, hasła lub klucza.
 
 ### 6.7 Model zagrożeń — co zakładamy
 
@@ -165,18 +184,17 @@ Brama modeli jest jedynym komponentem znającym klucze dostawców.
 
 | Warstwa | Wybór | Uzasadnienie |
 |---|---|---|
-| Uprząż | **Python 3.12 + FastAPI** | ten sam język co brama modeli; jedna osoba utrzymuje jeden stos |
-| Interfejs | **Jinja2 + HTMX** | bez osobnego procesu budowania frontendu; w MVP1 pięć ekranów |
+| Uprząż | **Python 3.12 + FastAPI** | warstwa domenowa 8gent pozostaje własnym kodem |
+| Interfejs | **OpenClaw Control UI + web 8gent** | korzystamy z natywnej powierzchni, a własny panel dodajemy tylko dla funkcji domenowych |
 | Baza | **PostgreSQL 16** | standard przenośny wszędzie; JSONB do metadanych audytu |
 | Migracje | **Alembic** | wersjonowanie schematu od pierwszego dnia |
-| Tożsamość | **OIDC → Entra ID** (Authlib) | żadnych własnych haseł |
-| Sesja | ciasteczko podpisane, `HttpOnly`, `Secure`, `SameSite=Lax` | bez własnego magazynu tokenów |
-| Brama modeli | **LiteLLM proxy** | klucze wirtualne, budżety na czterech poziomach, otwarte |
-| Silnik agenta | **Hermes** | otwarty, 200+ backendów, profil jako jednostka izolacji |
-| Reverse proxy / TLS | **Caddy** | certyfikaty automatycznie; wymagane pod webhooki Teams w MVP3 |
-| Wdrożenie | **Docker Compose** → pula kontenerów | MVP1 na jednym serwerze; przenośne poza Azure |
+| Tożsamość | **OIDC → Entra ID** (Authlib) | żadnych własnych haseł; zakres integracji pozostaje owner-gated |
+| Sesja | sesja Gatewaya OpenClaw + jawny ref 8gent | bez własnego magazynu kopii rozmów |
+| Runtime / brama | **OpenClaw Gateway** | kanały, agenci, sesje, narzędzia, automatyzacje i provider/model config |
+| Plugin | **AutoBot Monitor jako opcjonalny plugin OpenClaw** | tylko po potwierdzeniu luki w tasks/Task Flow |
+| Wdrożenie | **Docker Compose** lub środowisko zatwierdzone dla OpenClaw | wybór hosta pozostaje osobną decyzją |
 | Testy | **pytest** + zestaw scenariuszy | scenariusze przed kodem, patrz `scenarios.md` |
-| Telemetria | **OpenTelemetry** | Hermes eksportuje natywnie; wspólny zbiór od MVP2 |
+| Telemetria | **OpenClaw tasks/events + OpenTelemetry, jeśli potwierdzone** | usage i audyt muszą mieć niezależny readback |
 
 **Odrzucone świadomie:** osobny frontend SPA (koszt utrzymania bez korzyści przy pięciu
 ekranach), Kubernetes w MVP1 (złożoność bez skali), własny system logowania (ryzyko bez
@@ -236,48 +254,72 @@ czekającym na następny.
 
 ### 12.1 Web jest podstawową powierzchnią 8gent
 
-8gent najpierw dostarcza bezpieczny dostęp webowy. W pierwszym etapie należy
-potwierdzić, czy wystarczy serwerowa wersja webowa Hermesa, czy potrzebna jest
-webowa warstwa 8gent przed nią. W obu przypadkach pracownik ma dostać gotowy
-profil i czat, a nie instrukcję konfigurowania gatewaya lub serwera.
+8gent najpierw dostarcza bezpieczny, prosty dostęp webowy. W pierwszym etapie
+pracownik korzysta z OpenClaw Control UI, wybranego kanału albo webowej
+warstwy domenowej 8gent; nie konfiguruje sam Gatewaya, serwera, modelu ani
+poświadczeń. Control UI jest klientem Gatewaya, a nie osobnym runtime'em.[2][14]
 
 Webowa powierzchnia pracownika pokazuje wyłącznie agentów wynikających z
 `agent_grant`. Nie pokazuje ustawień modeli, poświadczeń, budżetów, provisionera,
-profilów technicznych ani routingu. Te funkcje są dostępne tylko administratorowi
-przez powierzchnię administracyjną 8gent/Hermesa albo terminal.
+agentDir ani routingu. Te funkcje są dostępne administratorowi przez jawnie
+wybrane powierzchnie OpenClaw i warstwę administracyjną 8gent.
 
-### 12.2 Serwer jest właścicielem pracy
+### 12.2 Gateway jest właścicielem pracy
 
-Sesje, wywołania modeli, narzędzia, kolejka, workerzy, pamięć i audyt muszą być
-utrzymywane na serwerze przez nadzorowane procesy. Zamknięcie przeglądarki lub
-Desktopu odłącza klienta, ale nie zatrzymuje backendu ani niezależnego zadania.
+Sesje, wywołania modeli, narzędzia, kanały, automatyzacje, background tasks,
+Task Flow i audyt integracyjny muszą być utrzymywane przez nadzorowany
+OpenClaw Gateway oraz warstwę 8gent. Zamknięcie przeglądarki, Control UI albo
+kanału odłącza klienta, ale nie zatrzymuje Gatewaya ani niezależnego zadania.
+OpenClaw opisuje sesje jako własność Gatewaya, a tasks jako rejestr pracy poza
+sesją główną.[2][4][10]
+
 Każdy wyjątek musi być ujawniony jako niespełnienie scenariusza ciągłości, nie
-ukryty pod etykietą „połączenie działa".
+ukryty pod etykietą „połączenie działa". Sam status tasku, UI lub obecność
+procesu nie zastępuje readbacku wykonania i dostarczenia.
 
-### 12.3 Desktop jest drugim etapem
+### 12.3 Klient dodatkowy nie jest procesowym rodzicem
 
-Nakładka na Desktop Hermesa albo dostosowanie istniejącego Desktopu może wejść
-dopiero po przejściu pierwszego etapu webowego. Desktop może wyświetlać stan,
-prowadzić rozmowę i wykonywać dozwolone operacje użytkownika, ale nie może być
-procesowym rodzicem 8gent, Orkiestratora, workera ani kolejki.
+Aplikacja Desktop, przeglądarka, kanał, CLI i node są powierzchniami klienta.
+Nie mogą być procesowym rodzicem 8gent, agenta, Task Flow, workera ani kolejki.
+Możemy dodać własną warstwę webową tylko dla funkcji domenowych, których
+Control UI nie pokrywa.
 
-Nie projektujemy obiegu, w którym pracownik ręcznie wybiera gateway, wpisuje
-adres serwera, zakłada profil albo pilnuje, czy klient pozostaje otwarty.
+Nie projektujemy obiegu, w którym pracownik ręcznie wybiera Gateway, wpisuje
+adres serwera, zakłada agentDir albo pilnuje, czy klient pozostaje otwarty.
 
-### 12.4 Serwerowy pomocnik procesu
+### 12.4 Automatyzacja procesu
 
-Wariant A z decyzji D-013 wprowadza pomocnika działającego jako niezależny
-proces serwerowy. Cron przekazuje mu dyspozycję, ale nie daje mu prawa do
-tworzenia nowego zakresu. Pomocnik czyta kanoniczne reguły projektu, Kanban,
-rodziców, runy, eventy i receipts, a następnie wykonuje wyłącznie przejścia
-jednoznacznie zapisane w grafie.
+Wcześniejszy wariant D-013 z Cronem i pomocnikiem Hermes-era jest bazą
+historyczną, nie bieżącą instrukcją. Obecna kolejność jest następująca:
 
-Przy `Operator` zakończonym terminalnie uruchamia `Evaluator`; niepusta lista
-konkretnych zarzutów uruchamia `Obrona`, a pusta prowadzi do `Final Control`.
-Po `PASS` zatrzymuje się na `INTEGRATION_REQUIRED`. `FAIL`, `BLOCK`, `TIMEOUT`,
-`INFRA`, brak artefaktu, obcy profil, niespójny projekt lub nieznany receipt
-kończą się fail-closed i eskalacją, nie zgadywaniem.
+```text
+OpenClaw automation / event
+→ OpenClaw task
+→ Task Flow, jeżeli proces jest wieloetapowy
+→ readback agenta, runu, wyniku i dostarczenia
+→ 8gent policy/audit
+→ opcjonalny AutoBot Monitor plugin tylko przy potwierdzonej luce
+```
 
-Desktop i przeglądarka są tylko klientami oraz podglądem. Ich zamknięcie nie
-może kończyć pomocnika ani workera. Wymóg ten jest sprawdzany scenariuszami
-U7–U11, a nie przyjmowany na podstawie istnienia procesu gatewaya.
+OpenClaw automations są schedulerem, tasks są ewidencją pracy, a Task Flow
+koordynuje trwałe procesy wieloetapowe.[9][10][11] AutoBot Monitor nie może
+powielać tych mechanizmów bez wykazania konkretnej luki. Po `PASS` procesu
+pozostaje osobna bramka `INTEGRATION_REQUIRED`; żaden plugin nie otrzymuje
+prawa do merge, push, deployu ani zmiany decyzji właściciela.
+
+## Sources
+
+[1] https://docs.openclaw.ai — OpenClaw official documentation overview
+[2] https://docs.openclaw.ai/concepts/architecture — OpenClaw Gateway architecture
+[3] https://docs.openclaw.ai/concepts/multi-agent — OpenClaw multi-agent routing
+[4] https://docs.openclaw.ai/concepts/session — OpenClaw session management
+[5] https://docs.openclaw.ai/gateway/configuration — OpenClaw Gateway configuration
+[6] https://docs.openclaw.ai/docs/plugins — OpenClaw plugins
+[7] https://docs.openclaw.ai/plugins/building-plugins — OpenClaw building plugins
+[8] https://docs.openclaw.ai/plugins/hooks — OpenClaw plugin hooks
+[9] https://docs.openclaw.ai/automation — OpenClaw automation overview
+[10] https://docs.openclaw.ai/automation/tasks — OpenClaw background tasks
+[11] https://docs.openclaw.ai/automation/taskflow — OpenClaw Task Flow
+[12] https://docs.openclaw.ai/gateway/security — OpenClaw security
+[13] https://docs.openclaw.ai/concepts/models — OpenClaw models CLI and model selection
+[14] https://docs.openclaw.ai/web/control-ui — OpenClaw Control UI

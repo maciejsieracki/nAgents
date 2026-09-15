@@ -1,26 +1,27 @@
 # 8gent documentation package contents
 # This file lists every package file except itself.
-listed_files=133
+listed_files=134
 
 4215172be4100187dfe52697d2a8dd18023d521d85d1dc6ac78255d8d68c270e  .claude/skills/nagents-autobot/README.md  7930 bytes
 aa5aab364e0a86c6053e46532d835a35a466357a81c562021bf78555dbb6ac3e  .claude/skills/nagents-autobot/SKILL.md  168486 bytes
-75f70419a6dd63ce331252412990504eb8003595abdc919e13a818e1205ccb26  AUTOBOT-PROJECT.md  35061 bytes
+6ff35fb9b7400e7065ecd202c39842956b0cc3a744057276f9dec5627ac0eaa7  AUTOBOT-PROJECT.md  35392 bytes
 8de583cc4fece98c55c49b5fac9f1562669040204f571ee2daacc9905e9390d2  CLAUDE.md  6521 bytes
 4587b110fcc1a79fa9c0cdfeb40a5e56e6de1eadb7cdc68e1b89029db1412da1  HANDOFF-nagents.md  24191 bytes
 8e888abd8041b230e7c40125650680226e28bb81558285b15cd5bbef3372a308  NAGENTS-CONSOLIDATION-PLAN.md  130319 bytes
-2640ee7083f075bf2543787e1b0caf8576dfb892f7522753f945981d8f70c58e  NAGENTS-DECISIONS.md  103497 bytes
-d00734d350829ab6b9c58ee1b78d366e13296ba7e4daccb5b9351d6dfe419a5e  NAGENTS-HANDOFF.md  18979 bytes
-d81465d36951b27b7148d2d0ac43c69256ee82c7277d974ca4d96eeacfe09243  NAGENTS-PROCESS.md  28851 bytes
-0a0e993f7e5d2c4c6c58d77a6ef9ecaed70298cde79f2d036bf24bb1b44b373b  NAGENTS-PROJECT.md  56844 bytes
-6c39b0fd5f0aa8d4cc867452fa5f0d1babb15743d88db874efbfcb92d42169d1  NAGENTS-RESEARCH.md  47523 bytes
-ac62ce18a6a0c825cba512ba22dd5bf31a8f803a864eb21f4f2c5278b58483cf  NAGENTS-SPEC.md  34009 bytes
-5dbbb7f2249453889c376dd23a8e710bbb8e0141985cab2509ad3f318e66fd80  NAGENTS-USER-GUIDE.md  12655 bytes
+2f09069de8e9734110429a1d16c812f2b45bb0ce25dc807de976857ad8c1fedf  NAGENTS-DECISIONS.md  104154 bytes
+160c9615498b4759538d0a4944d79723302899b2a7eb9769a932601ddde38b1b  NAGENTS-HANDOFF.md  19529 bytes
+56656e16506b74db6e0efafc65757c12f97f2ba2a5bbd0575ad5194cab8bb072  NAGENTS-PROCESS.md  29834 bytes
+317b262ac5b1aec88813d663fcc447c668dc09a4dc6e7d091d5be135e1e71deb  NAGENTS-PROJECT.md  58891 bytes
+df8f9c7de6810fe98ea4490ba45c25814139ed46d93382e3509cd100248e7af2  NAGENTS-RESEARCH.md  48169 bytes
+37a7ae859c36b4dd7535e96eb143486deb56af7e0cf96e31132486cc9e9d9f2d  NAGENTS-SPEC.md  36054 bytes
+9291cb09731bb62b03c37560a81f48308d6e7b3e0dba5321268e6b41ba3d1dc3  NAGENTS-USER-GUIDE.md  12801 bytes
 30da1d3d9d3beccf49d048356e8f19bc72b28156c12ed8896376ede7f5945045  README.md  8 bytes
 27b73324a3af9c3ee8827bc2b75a191062d5e84f8129ae1ad1e26c83675a9dec  docs/ABM-HISTORY.md  38069 bytes
-ff7d0c8845a6f2fd5ecf03c3b10fdabbd64faafc3e9c4a7c3c9bdc77fbbd2b07  docs/ABM-LIFECYCLE.md  27521 bytes
+e82ce1431639111983fae3d8e3db7209c0441d576102cdec51954d86ceff6494  docs/ABM-LIFECYCLE.md  27923 bytes
 879a34255618e1b02ba2c0633fe0a5502d87a77c797b47f113021b4830d4b270  docs/CONSOLIDATION-CLEANUP-MANIFEST.md  2674 bytes
 b24aefea209ab03adc8d6ae2a01f1f187236f95ccd9f2c0648f7ef6886af5cab  docs/N8GENT-BRAND-NAMING.md  1399 bytes
-30a49a0e3a3f73c0501e33eb88b0e6a8b69a21cd6041fa62e8d7c0498a31643c  docs/NAGENTS-DOCUMENTATION-MANIFEST.md  4698 bytes
+4fb94e6e1e34824df6b6d6017a5faebbfd653d62890c9cf9edf9ba42efdf20d3  docs/NAGENTS-DOCUMENTATION-MANIFEST.md  5046 bytes
+19726bb8dcb58ef3958777a030a2a1bf81c4bf767618dd3b0fcef9a7c1973ac9  docs/OPENCLAW-STRATEGY.md  18241 bytes
 e0f2af7f286a81e15e37e0463c9c17232c45583ef6dbb57d34552d5bccd3aed5  docs/SECURITY-REDACTIONS.md  1116 bytes
 0927f3dc6168ef3a15fb5b805c0dfa6d02ab0f3b2d1127bd74b1bc9e09962461  docs/nota-01-trzy-drogi-do-agenta.md  11456 bytes
 9af3e69b558f18b1c61551a264e6137d30811fb6512ab43f03d7adb488824d28  docs/nota-02-uprzaz-dla-agentow.md  10096 bytes
@@ -60,7 +61,7 @@ de4fa883b9581186f424920a31e46cb1fea683ece5f96ce300b3325250320b83  docs/process/d
 deb070449f73d63841e31bd7dcc7856b534679e921c2ddfa7bc07dc885e67452  docs/process/dispatch/NAG-PROC-006-ulotka-dla-pracownikow.md  3595 bytes
 6f6317cfba20f461c1a62f3bf4edfe4f1fd987e3e57aa140c4e222717ed5b0a1  docs/process/dispatch/SZABLON.md  1851 bytes
 e631fb90812066690a1c1a927abb885472157c2607f8c0ba4f2e6ad56996bbde  docs/process/echo.md  5334 bytes
-16f22b7a1bad1d22226be206f8b3f827a4b9f24eca6ef3d6c4f00bc663ac06f8  docs/process/handoff.md  3506 bytes
+78782f11f43090d07b07c4a7427d8f379045088e0e08207a4b74b3babebebd8a  docs/process/handoff.md  3775 bytes
 6e1efb3fb3db353979f9d90fa461f3404183697ee861f8b0631258477aeb2318  docs/process/pamiec.md  9784 bytes
 ee6b2e5e9427917eabd5d5d35cd608f22a8d5d6fe6d0ba37275a00f743fd29d3  docs/process/pytania/2026-08-22-kontrola.md  13433 bytes
 80dbd006995368c93e019bf522dc6620473165dd464db45ea3949f2d84a7200c  docs/process/pytania/2026-08-22-warianty-c.md  14009 bytes
@@ -118,7 +119,7 @@ d0bdbfeecf579ed0dd3478ae181b69a966df86fd2e18809e1d9f3a5b850c35b6  docs/process/s
 8d6145d9b4a5c2c0249b0b31324712a82b5ab13d1df3a67fa81fcd0f7b9a5dfc  docs/process/staging/NAG-CONSOLIDATE-USER-GUIDE-Q1/final-control-report.md  2472 bytes
 6881ef2fd2ab0d10c36aacf16288c7bb61552f43ffff2cd78c8047af72bbea7f  docs/process/staging/NAG-CONSOLIDATE-USER-GUIDE-Q1/operator-report.md  5310 bytes
 9bc00142d9012829b73b9829a3aa5922f332dfe302c3ea358f197130484edc15  docs/process/staging/NAG-CONSOLIDATE-USER-GUIDE-Q1/package-report.md  3758 bytes
-9257a6cd1c08ce221a7e9be1039e07019dac82d1d37024aa11f25875da59c125  docs/process/tematy.md  5613 bytes
+cff6b34a0479b1961205e20ceaa7e093458aacb7bc41955116417ebcf02a7d2a  docs/process/tematy.md  6009 bytes
 92635aca2f576b95ecd6dc3a5b125f953001f13499c7545b8596efe9ff7467c7  docs/process/zmiana-procesu.md  4604 bytes
 6d3f67d1cc180b13a05e66e119192ecdebc930b171a2c537f8805ab53ceda8c7  docs/process/zrodla/appto-cennik-pl.md  5608 bytes
 d65d393a1480eb0c6e35bf67e0a56a42a3bd8c1006549789bfbc5736487fb254  docs/process/zrodla/appto-integracje-pl.md  3627 bytes
@@ -127,11 +128,11 @@ a1fe0ae2ce145b1773deae0ad5adfc62eb5a74ab0bd525fc5927da918bf8a0e9  docs/process/z
 01366cefcc214319fe55494c913fdc29735eff8ee573685fd4d7cea61aaa34ef  docs/process/zrodla/appto-strona-glowna-pl.md  7667 bytes
 9851abbe210fada59f3ed0616f27ab9361e3cf83c400965dade1ab5664a68e33  docs/process/zrodla/appto-wdrozenie-kohortowe-pl.md  3533 bytes
 74c72b76a65b14341b87c9f9d805ea84245a361b14dd29f2eb1621bb93a42858  docs/process/zrodla/autobots-szkielet-uniwersalny.md  9413 bytes
-14de279bcec3719c8e60178765c7c547034f22481b1df93635337585bb18199b  docs/spec/00-architektura.md  15096 bytes
-4983ad41fc052fdca9ae6736d48d9a197bc433bea2e666145f05d4e824c8f0e5  docs/spec/01-mvp1.md  9279 bytes
-0169f5719c9138df027d97dc5b816413f6759d45b370735401834b8ff900fb38  docs/spec/02-mvp2.md  6881 bytes
-8d86f8ff83722b7e835d9f385dfe062960069982e55d512eeff2db3cc48b4047  docs/spec/03-mvp3.md  9409 bytes
-cd52c8cf8a37cd31de8d34ca4a62a621a72a61fe8d37b3bdf5843fdf1f1fd7d6  docs/spec/04-mvp4.md  6398 bytes
-eebca83735f635f96dac2cb3d1f2fa4bec4e11648216c13a38947dfb98d11f8e  docs/spec/README.md  2667 bytes
-c3961fd391e10871b4643c2a1021e8adca334d53ddf7b204903e25af51e5c16e  docs/spec/decisions.md  10775 bytes
-d0ce7864c0a27fa0f5a2f94cba7b2674ec5f1bd49c1bf4397f44e3c4cbe3c142  docs/spec/scenarios.md  5322 bytes
+08f8919bbf61f79ec0a627f2e6d9185328b401d0b8682ff9255a35a8ce1b1f5b  docs/spec/00-architektura.md  17611 bytes
+b34bb0ae30f11171362dd265beed01a74afeaabfc5083b28481376b5ea2e89f4  docs/spec/01-mvp1.md  10162 bytes
+7bf4c4a403ca2eac8159ee539670ce7038f30b029db359de6d4e631041123b71  docs/spec/02-mvp2.md  7340 bytes
+7f75bc4acfc450373ff42dae61f2975f8c467bb553861d82ccd886646674f68c  docs/spec/03-mvp3.md  9787 bytes
+56a35857622bada9aac1acd246e729c7da20b36b8d84f2982fb58fbdda61d113  docs/spec/04-mvp4.md  6870 bytes
+3df5938709e7bc255276c95e54cdd2cd3d6c339450fccfd71d5bb7d5f6a53ab5  docs/spec/README.md  3172 bytes
+a7fafa769a9672662a0cb614640fb3a52096b7f3c3bec4e18fd32618edd71650  docs/spec/decisions.md  13457 bytes
+bce156a14968a1bef898b0f4d60dff35d015f1c2e3fa93143103c18b91761193  docs/spec/scenarios.md  5654 bytes

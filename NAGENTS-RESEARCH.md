@@ -25,6 +25,19 @@ Każda teza ma jawne pola `TYPE`, `DATE/RANGE`, `RANK`, `SOURCE_STATUS`, `STATE/
 
 Ranga nie zastępuje dowodu: `PRIMARY_LEGAL_SNAPSHOT` ma większą wagę dla zobowiązań prawnych niż marketing, ale nadal jest snapshotem; `HISTORY` opisuje przebieg myślenia; `PLAN_ONLY` opisuje kryterium pakietowania.
 
+## 0A. Aktualizacja po decyzji D-014
+
+Bieżący research platformowy jest zebrany w
+[`docs/OPENCLAW-STRATEGY.md`](docs/OPENCLAW-STRATEGY.md). OpenClaw zastępuje
+Hermesa jako wybrany runtime 8gent; OpenRouter i OpenMonitor nie są wybranymi
+elementami architektury. Dotychczasowe materiały Hermes/LiteLLM pozostają
+`HISTORY` lub `EVIDENCE` i mogą zasilać mapowanie oraz przyszły plugin AutoBot
+Monitor, ale nie są bieżącym dowodem capability ani instalacji.
+
+Nie wykonano jeszcze inventory wersji OpenClaw, testu Gatewaya, wyboru auth,
+canary ani plugin spike. Te braki są jawne i pozostają `OWNER_GATE`/`GAP TO
+VERIFY`, a nie `PASS`.
+
 ## 1. Macierz wymagań P6
 
 | Sekcja | Zakres | Główne źródła | Wymóg proweniencji | Stan |

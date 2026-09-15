@@ -32,11 +32,12 @@ naraz.
 2. docs/process/tematy.md                     — bieżący rejestr tematów
 3. docs/process/handoff.md                    — bieżący format handoffu
 4. docs/spec/README.md                         — skrót projektu i etapów
-5. docs/spec/decisions.md                      — decyzje, także otwarte i blokujące
-6. docs/spec/scenarios.md                      — kontrakt scenariuszy/testów
-7. docs/spec/01-mvp1.md                        — specyfikacja bieżącego etapu
-8. właściwy dispatch, raport i artefakt         — dopiero dla konkretnego tematu
-9. live readback                               — zawsze przed twierdzeniem o stanie
+5. docs/OPENCLAW-STRATEGY.md                   — aktualna podstawa runtime i plugin boundary
+6. docs/spec/decisions.md                      — decyzje, także otwarte i blokujące
+7. docs/spec/scenarios.md                      — kontrakt scenariuszy/testów
+8. docs/spec/01-mvp1.md                        — specyfikacja bieżącego etapu
+9. właściwy dispatch, raport i artefakt         — dopiero dla konkretnego tematu
+10. live readback                               — zawsze przed twierdzeniem o stanie
 ```
 
 `01-mvp1.md` jest bieżącą specyfikacją, ponieważ projekt jest przed MVP1; po
@@ -49,9 +50,10 @@ etapy.
 8gent
 ├── aplikacja i warstwa zarządzania użytkownikiem, rolami, kosztami i audytem
 ├── dokumentacja architektury, decyzji i scenariuszy
-├── AutoBot jako proces pracy i kontrola faz
-├── AutoBot Monitor jako osobne repozytorium wykonawcze/obserwacyjne
-└── Hermes jako zewnętrzny silnik agentów i runtime
+├── OpenClaw jako runtime, Gateway, sesje, automatyzacje i plugin host
+├── AutoBot Monitor jako opcjonalny plugin OpenClaw, nie osobny control plane
+├── wcześniejsze materiały Hermes jako historia/evidence do adaptacji
+└── The-Game jako osobny projekt
 ```
 
 Zasada marki i identyfikatorów technicznych jest opisana w
@@ -72,8 +74,9 @@ nie są samodzielnym źródłem bieżącego runtime.
 
 | Pakiet | Gdzie szukać | Co odpowiada | Źródło, które nadal ma pierwszeństwo |
 |---|---|---|---|
-| SPEC | `NAGENTS-SPEC.md` | tożsamość, architektura, zakres MVP, bezpieczeństwo, scenariusze | `docs/spec/` i `CLAUDE.md` |
-| DECISIONS | `NAGENTS-DECISIONS.md` | decyzje D-001…D-013, ECHO, pytania i historia | `docs/spec/decisions.md`, `docs/process/echo.md` |
+| SPEC | `NAGENTS-SPEC.md` | tożsamość, architektura, zakres MVP, bezpieczeństwo, scenariusze | `docs/spec/` + `docs/OPENCLAW-STRATEGY.md` i `CLAUDE.md` |
+| OPENCLAW STRATEGY | `docs/OPENCLAW-STRATEGY.md` | aktualna podstawa OpenClaw, mapowanie, luki i kandydat AutoBot plugin | D-014, oficjalna dokumentacja OpenClaw, świeży readback |
+| DECISIONS | `NAGENTS-DECISIONS.md` | decyzje D-001…D-014, ECHO, pytania i historia | `docs/spec/decisions.md`, `docs/process/echo.md` |
 | PROCESS | `NAGENTS-PROCESS.md` | role, pętla, allowlista, evidence, watchdog, recovery, P1–P7 | `.claude/skills/nagents-autobot/SKILL.md`, `CLAUDE.md` |
 | HANDOFF | `NAGENTS-HANDOFF.md` | format przekazania, blokady, następna bramka, live-readback boundary | `docs/process/handoff.md` + świeży odczyt |
 | RESEARCH | `NAGENTS-RESEARCH.md` | research, źródła, porównania i korekty | `docs/process/pamiec.md` i źródła z datą/hash/linkiem |
@@ -96,9 +99,12 @@ nie są samodzielnym źródłem bieżącego runtime.
    Pakiet, raport `PASS`, `queued`, `done` ani stary handoff nie dowodzi live state.
 6. Gdy pytanie dotyczy decyzji, sprawdź `docs/process/echo.md` i
    `docs/spec/decisions.md`; rekomendacja lub research nie są decyzją.
-7. Gdy pytanie dotyczy integracji Microsoft/Entra/Graph/Hermes, zatrzymaj się
-   na `OWNER_HOLD`: wybór A oznacza research-only, bez integracji live.
-8. Gdy znajdziesz starą lub podobną treść, sprawdź `NAGENTS-CONSOLIDATION-PLAN.md`
+7. Gdy pytanie dotyczy runtime'u, modeli, sesji, automatyzacji, Task Flow albo
+   pluginu, najpierw przeczytaj `docs/OPENCLAW-STRATEGY.md`; nie używaj dawnych
+   instrukcji Hermes jako bieżącej architektury.
+8. Gdy pytanie dotyczy integracji Microsoft/Entra/Graph, sprawdź D-014 oraz
+   aktualny zakres owner-gated; sama zmiana runtime'u nie uruchamia integracji.
+9. Gdy znajdziesz starą lub podobną treść, sprawdź `NAGENTS-CONSOLIDATION-PLAN.md`
    i `docs/CONSOLIDATION-CLEANUP-MANIFEST.md`. Nie usuwaj pliku tylko dlatego,
    że jego temat pojawia się w nowym pakiecie.
 
@@ -114,18 +120,25 @@ Gdy dwa dokumenty mówią co innego, użyj tej kolejności:
 
 1. **Świeży odczyt stanu obowiązującego** — Git/worktree, Kanban, event,
    receipt, usługa lub test wykonany na wskazanej wersji.
-2. **Jednoznaczna decyzja właściciela** zapisana w `docs/process/echo.md` lub
+2. **Jednoznaczna decyzja właściciela** zapisana w `docs/spec/decisions.md` lub
    w aktualnym dzienniku decyzji.
-3. **Aktualna specyfikacja repozytorium** — `docs/spec/` i `CLAUDE.md`.
-4. **Aktualny kontrakt AutoBot** — `Autoboot-Monitor/AUTOBOT-KANBAN.md`.
-5. **Bieżący handoff** — obraz stanu, który może się zestarzeć.
-6. **Raport Operatora/Evaluatora/Final Control** — dowód określonej fazy,
-   nie globalny stan projektu.
-7. **Noty, pytania, stare handoffy i rozmowy** — historia lub propozycja,
+3. **Aktualna decyzja platformowa** — `docs/OPENCLAW-STRATEGY.md` i D-014.
+4. **Aktualna specyfikacja repozytorium** — `docs/spec/` i zasady procesu z `CLAUDE.md`.
+5. **Aktualny kontrakt AutoBot** — `Autoboot-Monitor/AUTOBOT-KANBAN.md`, tylko dla
+   zakresu opcjonalnego pluginu/legacy evidence.
+6. **Bieżący handoff** — obraz stanu, który może się zestarzeć.
+7. **Raport Operatora/Evaluatora/Final Control** — dowód określonej fazy,
+   nie globalny stan.
+8. **Noty, pytania, stare handoffy i rozmowy** — historia lub propozycja,
    nigdy samodzielny routing.
 
 `PASS` w raporcie, nazwa brancha, obecność pliku, status `done` lub stary
 snapshot nie oznaczają samodzielnie integracji, publikacji ani wdrożenia.
+
+**Wyjątek platformowy:** dla wyboru runtime'u i control plane bieżąca decyzja
+D-014 oraz `docs/OPENCLAW-STRATEGY.md` supersedują wcześniejsze Hermes/LiteLLM
+założenia w materiałach historycznych. Nie supersedują zasad bezpieczeństwa,
+RBAC, readbacku, allowlisty ani osobnych bramek właściciela.
 
 ---
 
@@ -134,18 +147,20 @@ snapshot nie oznaczają samodzielnie integracji, publikacji ani wdrożenia.
 | Potrzebna informacja | Czytaj najpierw | Potem, jeśli potrzebne |
 |---|---|---|
 | Czym jest 8gent i jaki ma zakres | [`docs/spec/00-architektura.md`](docs/spec/00-architektura.md) | `docs/spec/01-mvp1.md` … `04-mvp4.md` |
-| Co jest decyzją właściciela | [`docs/process/echo.md`](docs/process/echo.md) | [`docs/spec/decisions.md`](docs/spec/decisions.md) |
+| Jaki runtime i jakie natywne capability są wybrane? | [`docs/OPENCLAW-STRATEGY.md`](docs/OPENCLAW-STRATEGY.md) | oficjalne docs OpenClaw; potem świeży readback wersji/konfiguracji |
+| Co jest decyzją właściciela | [`docs/spec/decisions.md`](docs/spec/decisions.md) D-001…D-014 | [`docs/process/echo.md`](docs/process/echo.md), jeśli decyzja ma wpis ECHO |
 | Jakie decyzje są otwarte | `docs/spec/decisions.md` | `docs/process/pytania/2026-08-25-wybory.md`, `docs/nota-08-wybory-otwarte.md` |
 | Jakie sytuacje muszą działać | [`docs/spec/scenarios.md`](docs/spec/scenarios.md) | testy wskazane w dispatchu |
 | Co jest aktywne/zablokowane | [`docs/process/tematy.md`](docs/process/tematy.md) | świeży board Kanbana |
 | Co ustalono ostatnio | [`HANDOFF-nagents.md`](HANDOFF-nagents.md) | `git log`, `git status`, świeży readback |
 | Jak zmieniać sam proces | [`docs/process/zmiana-procesu.md`](docs/process/zmiana-procesu.md) | projektowy skill AutoBot |
 | Jak utworzyć i ocenić temat | `docs/process/dispatch/SZABLON.md` | konkretny `docs/process/dispatch/<ID>.md` |
-| Jak działa AutoBot Monitor | `/home/ubuntu/projects/Autoboot-Monitor/AUTOBOT-KANBAN.md` | runbook i dokument Crona poniżej |
-| Jak działa Cron/receiver | `Autoboot-Monitor/docs/CRON-DIRECTIVE-LOOP.md` | `ABM-CRON-HELPER-OPERATING-RUNBOOK.md`, live `cron list` |
-| Jak działa routing modelu/effortu | `Autoboot-Monitor/docs/AUTOBOT-MODEL-EFFORT-FAST-POLICY.md` | karta/run i receipt konkretnego workera |
-| Jak działa relay owner chatu | aktywny dispatch `ABM-OWNER-CHAT-RELAY-001` | `docs/OWNER-CHAT-RELAY.md` w aktywnym worktree, potem Final Control |
-| Jak działa Microsoft 365 | `docs/nota-10-entra-instrukcja-dla-administratora.md` | `/home/ubuntu/handoffs/INTEGRACJA-MICROSOFT365.md` |
+| Jak działa OpenClaw automation/tasks/Task Flow | [`docs/OPENCLAW-STRATEGY.md`](docs/OPENCLAW-STRATEGY.md) §6 | oficjalne docs OpenClaw; po decyzji O1 świeży readback wersji i konfiguracji |
+| Jak działa AutoBot Monitor | [`docs/OPENCLAW-STRATEGY.md`](docs/OPENCLAW-STRATEGY.md) §5 | `AUTOBOT-PROJECT.md` i `/home/ubuntu/projects/Autoboot-Monitor/AUTOBOT-KANBAN.md`; kandydat pluginu, nie drugi runtime |
+| Jak działa Hermes-era Cron/receiver | `Autoboot-Monitor/docs/CRON-DIRECTIVE-LOOP.md` | materiał historyczny do adaptacji; nie uruchamiać jako bieżącej architektury |
+| Jak działa routing modelu | `docs/OPENCLAW-STRATEGY.md` §7 | [`docs.openclaw.ai/concepts/models`](https://docs.openclaw.ai/concepts/models); provider/model/auth do osobnej decyzji |
+| Jak działa Hermes-era relay owner chatu | aktywny dispatch `ABM-OWNER-CHAT-RELAY-001` | materiał historyczny; docelową dostawę trzeba opisać przez OpenClaw sessions/channels/tasks |
+| Jak działa Microsoft 365 | `docs/OPENCLAW-STRATEGY.md` §10 + D-014 | `docs/nota-10-entra-instrukcja-dla-administratora.md`; zakres nadal owner-gated |
 | Skąd wzięły się historyczne ustalenia | `docs/process/pamiec.md` | `/home/ubuntu/handoffs/RAPORT-nAgents-scenariusz-i-plan.md` |
 | Jak wygląda infrastruktura OVH | świeży odczyt usług i profilu | `/home/ubuntu/handoffs/MIGRACJA-OVH-STATUS.md`, `SERWERY-nAgents-ustalenia.md` |
 | Co jest na GitHubie | `git ls-remote`, `git ls-tree` lub `gh api` | porównanie z lokalnym HEAD i diffem |
@@ -167,7 +182,7 @@ stanu, nie lektury kolejnego snapshotu.
 | Która faza lub karta może ruszyć teraz? | `NAGENTS-PROCESS.md` + audit evidence; stan tylko live | indeks §3–§4.5; board `autobot-monitor`: task, rodzice, run, event i receipt — `LIVE_READBACK_REQUIRED` |
 | Jaki jest bieżący stan repozytorium, tematów i usług? | `NAGENTS-HANDOFF.md` (kandydat P6) + runtime readback | indeks §4 i §5; `git status/branch/HEAD`, rejestr tematów, board, profil i usługa |
 | Gdzie jest bieżący handoff i jaki ma format? | `NAGENTS-HANDOFF.md` (kandydat P6) | [`docs/process/handoff.md`](docs/process/handoff.md) §Gdzie jesteśmy, §Co blokuje, §Następna bramka |
-| Jakie decyzje właściciela obowiązują? | `NAGENTS-DECISIONS.md` (kandydat P6) | [`docs/spec/decisions.md`](docs/spec/decisions.md) §D-001–D-013 oraz [`docs/process/echo.md`](docs/process/echo.md) §Wpisy |
+| Jakie decyzje właściciela obowiązują? | `NAGENTS-DECISIONS.md` (kandydat P6) | [`docs/spec/decisions.md`](docs/spec/decisions.md) §D-001–D-014 oraz [`docs/process/echo.md`](docs/process/echo.md) §Wpisy |
 | Jakie pytania właścicielskie są otwarte? | `NAGENTS-DECISIONS.md` (kandydat P6) | `docs/process/pytania/2026-08-25-wybory.md` §Pytanie 1–8; przed wysłaniem porównaj `decisions.md` i `echo.md` |
 | Jakie sytuacje muszą działać i z czego wynikają testy? | `NAGENTS-SPEC.md` (kandydat P6); scenariusze pozostają osobno | [`docs/spec/scenarios.md`](docs/spec/scenarios.md) §Dostęp i tożsamość, §Rozliczenia, §Wiedza, §Koszty, §Proaktywność, §Ciągłość, §Interfejs, §Pomocnik |
 | Jakie integracje są wybrane i co dowiedziono? | `NAGENTS-INTEGRATIONS.md` (dopiero po decyzji) | `OWNER_DECISION_REQUIRED`: `docs/nota-09-*`, `docs/nota-10-*`, handoff Microsoft 365; wybór właściciela i live test przed konsolidacją |
@@ -181,65 +196,66 @@ stanu, nie lektury kolejnego snapshotu.
 
 ## 3. Routing projektu
 
-### 3.1. 8gent → AutoBot Monitor → Hermes
+### 3.1. 8gent → OpenClaw → opcjonalny AutoBot Monitor plugin
 
 ```text
 8gent
-  → repozytorium dokumentacji, aplikacji i decyzji
-  → AutoBot Monitor / board autobot-monitor
-  → profile: autobotmonitor
-  → Cron read-only, no_agent=true, every 5m
-  → server spool
-  → supervised receiver/helper
-  → Kanban task/run/event/receipt
-  → Operator
-  → Evaluator
-  → Defense tylko przy konkretnych zarzutach
-  → Final Control
-  → INTEGRATION_REQUIRED
-  → integracja przez Orkiestratora
+  → RBAC, tenant, budżet, approval i audyt domenowy
+  → OpenClaw Gateway
+  → OpenClaw agents / agentDir / workspace / sessions
+  → native channels / Control UI / CLI / nodes
+  → direct provider/model configuration
+  → automations / background tasks / Task Flow
+  → AutoBot Monitor plugin tylko po potwierdzonej luce
 ```
 
-Worker nie wykonuje merge, push, deploy ani publikacji. Cron nie jest workerem
-produktu i nie mutuje Kanbana. Desktop jest klientem/obserwatorem, nie
-rodzicem serwerowego procesu.
+OpenClaw jest jedynym bieżącym runtime'em i control plane. AutoBot Monitor nie
+jest drugim Gatewayem, schedulerem, OpenMonitorem ani OpenRouterem. Wcześniejsze
+komendy Hermesa, profile, receiver, Cron i Kanban są zachowane jako historyczne
+materiały procesu; nie stanowią nowej ścieżki wykonania.
 
-### 3.2. Kanoniczne identyfikatory runtime
+### 3.2. Kanoniczne identyfikatory runtime i legacy evidence
 
 | Element | Wartość / reguła | Gdzie sprawdzać |
 |---|---|---|
-| AutoBot profile | `autobotmonitor` | `hermes profile list/show`, karta Kanbana |
-| AutoBot board | `autobot-monitor` | `hermes kanban boards list`, każda komenda z `--board` |
-| 8gent project anchor | `nagents-docs / p_e90c30bc` | `hermes --profile default project show nagents-docs`; używać jako `project_id` na wspólnym boardzie |
-| 8gent card assignee | `default` (właściciel/orkiestrator) | decyzja właściciela; nie zmieniać na `autobotmonitor` |
-| 8gent card tenant | `nagents-docs` | karta/body i readback |
-| 8gent card prefix | `NAG-` | stabilny topic/title |
-| 8gent card contract | `process_phase`, stabilny `topic`, unikalny `idempotency_key` | create/show/readback; nie tworzyć duplikatu aktywnego P5 |
+| OpenClaw Gateway | `openclaw gateway status`, `openclaw status`, `openclaw health` | bieżący runtime; zawsze świeży odczyt |
+| OpenClaw config | `~/.openclaw/openclaw.json` | `openclaw config schema`, `config get`, Control UI; nie wpisywać sekretów do repo |
+| OpenClaw agent | `agentId` + `agentDir` + workspace | `docs.openclaw.ai/concepts/multi-agent`; dokładne pola do potwierdzenia w O1 |
+| OpenClaw session | Gateway-owned session / session key | `openclaw sessions`/Control UI; nie kopiować state.db ręcznie |
+| OpenClaw automation | `openclaw automations` (`openclaw cron` jako alias) | natywny scheduler; nie tworzyć drugiego Cron/receivera |
+| OpenClaw task/flow | `openclaw tasks list`, `tasks audit`, `tasks flow list` | rejestr pracy i orkiestracja; nie zakładać pełnego Kanbana 1:1 |
+| AutoBot Monitor plugin | `docs/OPENCLAW-STRATEGY.md` §5 | kandydat pluginu; nie drugi Gateway ani OpenMonitor |
+| Legacy AutoBot board | `autobot-monitor` | historia i evidence wcześniejszego toru Hermes; nie bieżąca tożsamość OpenClaw |
+| Legacy AutoBot project | `autoboot-monitor` / `p_ffb5c6ad` | historia ABM; nie tworzyć nowego OpenClaw agenta na podstawie tego ID |
+| Legacy nAgents docs project | `nagents-docs / p_e90c30bc` | historyczny routing dokumentacji; nie jest OpenClaw agent ID |
+| Legacy card prefix | `NAG-` | zachować w historii; nowy OpenClaw Task Flow wymaga osobnego kontraktu |
 | The-Game profile | `the-game` | osobny projekt, nie fallback dla 8gent |
 | The-Game board | `the-game-real24` | osobny board |
-| AutoBot Cron | `LIVE_READBACK_REQUIRED`; statyczne materiały podają historyczne ID `83e4098a9f87` i `6911e5eac7d3`, nominalnie every 5m, `no_agent=true`, `deliver=local` | `hermes --profile autobotmonitor cron list --all` + status receivera |
-| Worker completion | native `kanban_complete` albo `kanban_block` | karta, event, run, raport |
-| Dostawa | `queued → claimed → settled` | native delivery receipt; `queued` nie oznacza ukończenia |
-| Fallbacki | `default_assignee: ''`, `orchestrator_profile: ''` | profil Hermes, nie zgadywać |
+| Legacy worker completion | `kanban_complete` albo `kanban_block` | historyczny kontrakt; nowy plugin musi zmapować terminal state jawnie |
+| Legacy delivery | `queued → claimed → settled` | zachować jako evidence; OpenClaw delivery/task status wymaga osobnego testu |
+
 
 ### 3.3. Live readback — komendy
 
 ```bash
+# OpenClaw: bieżący runtime, wyłącznie odczyt
+openclaw status --all
+openclaw gateway status --deep --require-rpc
+openclaw health --verbose
+openclaw tasks list
+openclaw tasks audit
+openclaw tasks flow list
+openclaw automations list
+openclaw plugins list --enabled --verbose
+openclaw security audit
+
 # 8gent: wersja lokalna i różnice; bez pull/reset/stash/clean
 cd /home/ubuntu/projects/nAgents-readonly
 git status --short --branch
 git log -5 --oneline --decorate
 
-# AutoBot Monitor: zawsze jawny profil i board
-hermes --profile autobotmonitor kanban --board autobot-monitor stats --json
-hermes --profile autobotmonitor kanban --board autobot-monitor list --status running --json
-hermes --profile autobotmonitor cron list
-systemctl --user is-active hermes-gateway-autobotmonitor.service
-systemctl --user is-active autobot-monitor-cron-receiver.service
-
 # Sprawdzenie GitHuba — odczyt, bez fetch/pull
-cd /home/ubuntu/projects/nAgents-readonly
-git ls-remote origin refs/heads/main refs/heads/claude/git-connection-9sz6dg
+git ls-remote origin refs/heads/main
 ```
 
 ---

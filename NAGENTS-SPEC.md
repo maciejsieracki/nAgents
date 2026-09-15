@@ -15,6 +15,10 @@ P4 OBSERVED_AT_UTC: 2026-09-14T14:47:54+00:00
 P4 CLASSIFICATION SHA-256: `95d2a06fc80e4cf1c27d59959d84b8631e70acbb3e0b879b83df95c38bf382b8`
 P6 PLAN SHA-256: `b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c`
 
+**Aktualizacja platformy:** bieżącą podstawą jest `docs/OPENCLAW-STRATEGY.md`
+i decyzja D-014. Hashe źródeł w ledgerach P4 poniżej są historycznymi snapshotami;
+nie są bieżącym hashem zmodyfikowanego źródła. Przed implementacją wykonaj świeży
+odczyt i użyj aktualnego manifestu.
 ## 0. Zasada proweniencji i rangi
 
 Kolejność rozstrzygania treści:
@@ -54,20 +58,23 @@ P4: `NAG-SPEC/CANONICAL`, `NAG-ENTRY/CANONICAL`, `NAG-INDEX/CONSOLIDATION_CANDID
 
 ### Czym jest 8gent
 
-8gent to warstwa zarządzania nad flotą instancji Hermesa. Hermes pozostaje
-silnikiem agenta: wykonuje rozmowę, narzędzia, piaskownicę, pamięć, kanały i
-wybór modelu. 8gent odpowiada za cztery pytania, których sam Hermes nie
-rozstrzyga:
+8gent to warstwa zarządzania nad agentami, workspace'ami i sesjami OpenClaw.
+OpenClaw dostarcza self-hosted Gateway, runtime agenta, kanały, narzędzia,
+sesje, automatyzacje i control-plane surfaces. Szczegółowa decyzja, mapowanie
+oraz lista luk są w `docs/OPENCLAW-STRATEGY.md`.
+
+8gent odpowiada za cztery pytania, których sam OpenClaw nie rozstrzyga w naszej
+domenie:
 
 1. kto to jest — tożsamość pracownika z firmowego katalogu;
 2. do czego ma prawo — agenci widoczni i uruchamialni dla tej osoby;
 3. ile wolno wydać — limity kosztowe egzekwowane, nie tylko obserwowane;
 4. co zostało po operacji — audyt operacji dozwolonych i odrzuconych.
 
-Budujemy wyłącznie własną warstwę zarządzania. 8gent nie jest silnikiem
-agenta, komunikatorem, hostem modeli ani magazynem pamięci Hermesa. Teams,
-Hermes i dostawcy modeli są zależnościami o odrębnej randze i granicy.
-The-Game jest osobnym projektem i nie należy do tej specyfikacji.
+Nie budujemy drugiego runtime'u, OpenRoutera ani OpenMonitora. OpenClaw jest
+platformą wykonawczą; własny kod 8gent obejmuje politykę domenową. AutoBot
+Monitor jest wyłącznie kandydatem na opcjonalny plugin OpenClaw. The-Game jest
+osobnym projektem i nie należy do tej specyfikacji.
 
 ### Granice nienaruszalne
 
@@ -88,8 +95,8 @@ pakietu. Zmiana bariery wymaga osobnej decyzji/ECHO, a nie edycji tego stagingu.
 
 | ID | Status | Konsekwencja dla specyfikacji |
 |---|---|---|
-| D-001 | przyjęta | budujemy własną warstwę na Hermesie; gotowe platformy są wzorcem, nie zakupem |
-| D-002 | przyjęta | wszystkie wywołania modeli przechodzą przez naszą bramę |
+| D-001 | przyjęta; platforma superseded przez D-014 | budujemy własną warstwę zarządzania; aktualnym runtime'em jest OpenClaw, nie Hermes |
+| D-002 | superseded przez D-014 | nie budujemy LiteLLM jako obowiązkowej bramy; provider/model wybiera bezpośrednio OpenClaw |
 | D-003 | przyjęta | agent stanowiskowy pobiera dane przez domenę i nie ma własnych kluczy |
 | D-004 | przyjęta | brak dostępu to 404 i równoległy wpis `deny` w audycie |
 | D-005 | przyjęta | wiedza firmowa i zespołowa jest wersjonowana w plikach repozytorium |
@@ -97,13 +104,14 @@ pakietu. Zmiana bariery wymaga osobnej decyzji/ECHO, a nie edycji tego stagingu.
 | D-007 | przyjęta | `tenant_id` istnieje od MVP1 |
 | D-008 | przyjęta | FastAPI + Jinja2 + HTMX, bez osobnego SPA |
 | D-009 | przyjęta | tokenizacja ogranicza szkodę, ale nie zastępuje umowy powierzenia |
-| D-010 | otwarta | topologia agentów zostaje obsłużona w obu wariantach do czasu decyzji przed MVP3 |
-| D-011 | otwarta, blokująca MVP3 | rezydencja wspólnej pamięci nie jest rozstrzygnięta; MVP1/MVP2 działają bez niej |
-| D-012 | przyjęta | najpierw bezpieczna powierzchnia webowa, serwer jest właścicielem pracy |
-| D-013 | przyjęta | autonomiczna pętla używa niezależnego pomocnika serwerowego |
+| D-010 | otwarta | topologia agentów wymaga ponownego testu na izolacji OpenClaw |
+| D-011 | otwarta, blokująca MVP3 | rezydencja wspólnej pamięci nie jest rozstrzygnięta; OpenClaw nie zmienia tej bramki |
+| D-012 | przyjęta | web-first przez OpenClaw Control UI/kanał/web 8gent; klient nie jest właścicielem pracy |
+| D-013 | przyjęta; implementacja Hermes-era superseded przez D-014 | zachować readback/fail-closed; oprzeć automatyzację na OpenClaw tasks/Task Flow |
+| D-014 | przyjęta | OpenClaw jako runtime i control plane; bez osobnego OpenRoutera/OpenMonitora; AutoBot Monitor tylko jako kandydat pluginu |
 
 Źródło normatywne i pełne uzasadnienie: `docs/spec/decisions.md`, hash
-`57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49`.
+`a7fafa769a9672662a0cb614640fb3a52096b7f3c3bec4e18fd32618edd71650`.
 
 ## SPEC-02 — Architektura, dane, bezpieczeństwo i środowiska
 
@@ -114,28 +122,32 @@ P4: `NAG-SPEC/CANONICAL`, rodzina `PF-0235`
 ### Warstwy systemu
 
 1. **Tożsamość:** Microsoft Entra ID — konta, grupy i wyłączanie pracowników.
-2. **Uprząż:** logowanie, rejestr agentów, uprawnienia, audyt, budżety,
-   provisioner i strona rozmowy.
-3. **Flota Hermesów:** profile z pamięcią, skillami, narzędziami, piaskownicą
-   i zatwierdzeniami.
-4. **Brama modeli:** LiteLLM — klucze wirtualne, budżety, limity i routing.
-5. **Dostawcy modeli:** wymienni bez zmiany warstw uprzęży i floty.
+2. **Warstwa 8gent:** logowanie, rejestr agentów, uprawnienia, audyt, budżety,
+   provisioner i domenowa strona rozmowy.
+3. **OpenClaw Gateway:** agenci, `agentDir`, workspace'y, kanały, sesje,
+   narzędzia, skills i approvals.
+4. **OpenClaw automation:** automations/cron, background tasks i Task Flow;
+   AutoBot Monitor tylko jako opcjonalny plugin po potwierdzeniu luki.
+5. **Dostawcy modeli:** wybierani bezpośrednio przez OpenClaw provider/model
+   config; OpenRouter nie jest wymaganym komponentem.
 
-8gent buduje warstwę 2; warstwy 3–4 są wdrażanymi komponentami otwartymi.
+8gent buduje warstwę 2; warstwy 3–4 dostarcza OpenClaw. Poniższe pola i nazwy
+Hermes-era zachowane w historycznych ledgerach nie są bieżącą instrukcją.
 
 ### Słownik
 
 | Pojęcie | Znaczenie |
 |---|---|
-| Uprząż | własne oprogramowanie zarządzające, nie runtime agenta |
+| Uprząż | własne oprogramowanie zarządzające domeną 8gent, nie runtime agenta |
 | Agent | wpis w rejestrze: nazwa, rodzaj, model, uprawnienia i budżet |
-| Profil | instancja Hermesa z osobnym katalogiem domowym, konfiguracją, pamięcią i sesjami |
+| Agent OpenClaw | agent z `agentId`, `agentDir` i workspace'em |
+| Sesja | Gateway-owned OpenClaw session / session key |
 | `zarzadzajacy` | agent zarządzający uprawnieniami, jeden w projekcie |
-| `projektowy` | agent domenowy z kontrolowanymi kluczami systemowymi |
+| `projektowy` | agent domenowy z kontrolowanymi narzędziami |
 | `stanowiskowy` | agent jednej osoby, bez własnych kluczy, powiązany z agentem projektowym |
 | Nadanie (`grant`) | powiązanie agenta z użytkownikiem albo grupą katalogową |
 | Rejestr | źródło prawdy o agentach: baza oraz eksport do gita |
-| Provisioner | proces wystawiający profile Hermesa z rejestru |
+| Provisioner | proces synchronizujący wpis 8gent z agentem/workspace'em OpenClaw |
 
 ### Model danych
 
@@ -147,12 +159,12 @@ Każda tabela ma `tenant_id` tam, gdzie wymaga tego model domeny.
 | `tenant` | `id`, unikalny `slug`, nazwa, `created_at`; w MVP1 jeden wiersz |
 | `app_user` | `tenant_id`, unikalne `entra_object_id`, UPN, nazwa, `is_active`, daty |
 | `directory_group` / `user_group` | lustro katalogu i członkostwo; Entra pozostaje źródłem prawdy |
-| `agent` | slug, rodzaj, `parent_agent_id`, profil/end-point Hermesa, modele, budżet, aktywność |
+| `agent` | slug, rodzaj, `parent_agent_id`, `openclaw_agent_id`, workspace, modele, budżet, aktywność |
 | `agent_grant` | agent, principal `user|group`, rola `user|owner`, nadanie/cofnięcie |
 | `agent_secret_ref` | `(agent_id, nazwa, vault_ref)`; wartości sekretów nigdy tu nie trafiają |
-| `conversation` | agent, użytkownik, `hermes_session_id`, czas rozpoczęcia i ostatniej aktywności |
+| `conversation` | agent, użytkownik, `openclaw_session_key`, czas rozpoczęcia i ostatniej aktywności |
 | `audit_event` | actor, akcja, cel, decyzja `allow|deny|error`, powód, request ID, metadane |
-| `usage_event` | agent, użytkownik, model, tokeny wejścia/wyjścia, koszt, klucz bramy, request ID |
+| `usage_event` | agent, użytkownik, model, tokeny wejścia/wyjścia, koszt, provider/model ref, request ID |
 
 Krytyczne indeksy to aktywne nadania, audyt po najemcy/czasie oraz zużycie po
 agencie/czasie. Brak wiersza aktywnego nadania oznacza brak dostępu.
@@ -163,7 +175,7 @@ agencie/czasie. Brak wiersza aktywnego nadania oznacza brak dostępu.
 - Żądanie bez nadania zwraca 404, a prawdziwy powód pozostaje w audycie.
 - Klucze schodzą w dół hierarchii; agent stanowiskowy nie ma sekretów.
 - Operacja nieodwracalna wymaga zatwierdzenia człowieka.
-- Brama modeli jest jedynym komponentem znającym klucze dostawców.
+- Provider/model/auth są wybierane przez OpenClaw; 8gent egzekwuje budżet i audyt.
 - Treść rozmów nie trafia do zwykłych logów aplikacyjnych; retencja jest
   konfigurowalna w MVP4.
 
@@ -171,7 +183,7 @@ agencie/czasie. Brak wiersza aktywnego nadania oznacza brak dostępu.
 |---|---|
 | Próba wejścia do cudzego agenta z pominięciem UI | ponowne sprawdzenie, 404 i `deny` w audycie |
 | Wyciek klucza agenta projektowego | magazyn sekretów, rotacja i zakres jednej domeny |
-| Agent generuje nadmierny rachunek | twardy limit w bramie, blokada zamiast samego ostrzeżenia |
+| Agent generuje nadmierny rachunek | twardy limit egzekwowany przez politykę 8gent/OpenClaw provider config, blokada zamiast samego ostrzeżenia |
 | Odejście pracownika | synchronizacja katalogu i unieważnienie dostępu/sesji |
 | Prompt injection w dokumencie | zatwierdzenia operacji nieodwracalnych i brak kluczy u agenta stanowiskowego |
 | Dane osobowe w logach | brak treści rozmów w logach, kontrolowana retencja |
@@ -180,13 +192,14 @@ agencie/czasie. Brak wiersza aktywnego nadania oznacza brak dostępu.
 
 | Obszar | Ustalenie |
 |---|---|
-| Uprząż | Python 3.12 + FastAPI |
-| Interfejs | Jinja2 + HTMX, bez SPA |
-| Baza/migracje | PostgreSQL 16 + Alembic |
-| Tożsamość/sesja | OIDC → Entra ID; podpisane ciasteczko `HttpOnly`, `Secure`, `SameSite=Lax` |
-| Brama/silnik | LiteLLM proxy; Hermes |
-| TLS/wdrożenie | Caddy; Docker Compose |
-| Testy/telemetria | pytest + scenariusze; OpenTelemetry |
+| Uprząż | Python 3.12 + FastAPI | warstwa domenowa 8gent |
+| Interfejs | OpenClaw Control UI + web 8gent | natywna powierzchnia plus funkcje domenowe |
+| Baza/migracje | PostgreSQL 16 + Alembic | źródło danych domenowych i audytu |
+| Tożsamość/sesja | OIDC → Entra ID + OpenClaw session ref | dokładny auth i binding do potwierdzenia w O1 |
+| Runtime / brama | OpenClaw Gateway | agenci, sesje, kanały, narzędzia, automations, tasks, flows |
+| Plugin | AutoBot Monitor jako opcjonalny plugin | tylko po potwierdzeniu luki |
+| Testy/telemetria | pytest + scenariusze; OpenClaw tasks/events, OpenTelemetry jeśli potwierdzone | niezależny readback |
+
 
 `dev` używa wyłącznie danych syntetycznych, `staging` syntetycznych lub
 zanonimizowanych, a `prod` danych firmowych i pełnego audytu. Cele MVP1 to
@@ -205,31 +218,31 @@ P4: `NAG-SPEC/CANONICAL`, rodziny `PF-0236`–`PF-0240`
 
 | Etap | Cel | Wycena | Zależności/warunek |
 |---|---|---:|---|
-| MVP1 · Spięcie | logowanie, rejestr, uprawnienia, rozmowa, brama, audyt | 10–12 dni | zewnętrzne Entra; odbiór biznesowy R1–R4 |
-| MVP2 · Zarządzalność | panel, katalog, budżety, zatwierdzenia, kopie | 12–15 dni | MVP1; Graph i role administratora |
-| MVP3 · Wiedza | kontekst, indeksy, rutyny, testy, Teams | 18–22 dni | odpowiedź na D-011 przed startem |
-| MVP4 · Skala | tokenizacja, pula, router, konektory, retencja | 20–25 dni | wyniki i potrzeby z wcześniejszych etapów |
+| MVP1 · Spięcie | logowanie, rejestr, uprawnienia, rozmowa z OpenClaw, provider/model config, audyt | 10–12 dni | zewnętrzne Entra; odbiór biznesowy R1–R4 |
+| MVP2 · Zarządzalność | panel, katalog, budżety 8gent, zatwierdzenia, kopie | 12–15 dni | MVP1; Graph i role administratora |
+| MVP3 · Wiedza | kontekst, indeksy, rutyny, testy, kanały OpenClaw | 18–22 dni | odpowiedź na D-011 przed startem |
+| MVP4 · Skala | tokenizacja, OpenClaw Gateway/agents/workspaces, konektory, retencja | 20–25 dni | wyniki i potrzeby z wcześniejszych etapów |
 
 Każdy etap ma kończyć się działającym stanem produkcyjnym, a nie półproduktem.
 
 ### MVP1 — Spięcie
 
 STATUS: `CANONICAL`; SOURCE: `docs/spec/01-mvp1.md`, SHA-256
-`e2dfb80d198052474450b08a5a4de0b740c1230021a7608e51d56f37e6405066`.
+`b34bb0ae30f11171362dd265beed01a74afeaabfc5083b28481376b5ea2e89f4`.
 
 Zakres: szkielet FastAPI/Postgres/migracje, logowanie Entra przez OIDC,
 rejestr YAML, funkcja `can_use`, lista agentów, rozmowa ze streamingiem,
-proxy do profilu Hermesa, LiteLLM z kluczem wirtualnym i limitem, audyt,
-`usage_event`, provisioner oraz Compose/TLS/kopia bazy. Poza zakresem pozostają
-panel i synchronizacja grup, wspólna pamięć, Teams, rutyny, agenci
-stanowiskowi i tokenizacja.
+adapter do właściwego agenta/session binding OpenClaw, provider/model config
+OpenClaw z polityką budżetu 8gent, audyt, `usage_event`, provisioner oraz
+Compose/TLS/kopia bazy. Poza zakresem pozostają panel i synchronizacja grup,
+wspólna pamięć, Teams, rutyny, agenci stanowiskowi i tokenizacja.
 
 Punkty wejścia: `/login`, `/agents`, `/agents/{slug}`,
 `/agents/{slug}/messages`, `/agents/{slug}/stream`, `/admin/audit`,
 `/healthz` i `/readyz`. Każdy punkt z `{slug}` sprawdza uprawnienia niezależnie.
-Przepływ wiadomości ponawia kontrolę po otwarciu ekranu, przekazuje użytkownika
-i request ID do Hermesa, zapisuje koszt po zakończeniu, a przekroczenie budżetu
-blokuje odpowiedź czytelnym komunikatem.
+Przepływ wiadomości ponawia kontrolę po otwarciu ekranu, przekazuje użytkownika,
+request ID i jawny session key do OpenClaw, zapisuje koszt po zakończeniu,
+a przekroczenie budżetu blokuje odpowiedź czytelnym komunikatem.
 
 Odbiór obejmuje logowanie, 404 dla wejścia spoza grupy, odrzucenie wiadomości
 po cofnięciu nadania, blokadę budżetu, dodanie agenta, zgodność rozliczenia,
@@ -240,7 +253,7 @@ zastępuje identyfikatorów `scenarios.md`.
 ### MVP2 — Zarządzalność
 
 STATUS: `CANONICAL`; SOURCE: `docs/spec/02-mvp2.md`, SHA-256
-`10cbba06ac5179dee6ff97107fb9f1a109f91419cca7d803412eba25faaddd48`.
+`7bf4c4a403ca2eac8159ee539670ce7038f30b029db359de6d4e631041123b71`.
 
 Zakres: panel administracyjny, synchronizacja Microsoft Graph, obsługa odejść,
 twarde budżety agenta/zespołu/najemcy, podgląd kosztów, zatwierdzenia, audyt z
@@ -250,9 +263,10 @@ zakresem: wspólna pamięć, rutyny, Teams i tokenizacja.
 Synchronizacja działa cyklicznie i ręcznie: pobiera wskazane grupy, porównuje
 członkostwo i nadaje/odbiera tylko to, co wynika z rejestru. Wyłączenie konta
 unieważnia dostępy i sesje, a zniknięcie z katalogu tworzy zgłoszenie obsady.
-Budżety są egzekwowane w bramie; ostrzeżenia przy 70%/90% nie zastępują
-blokady. Podniesienie limitu i każda zmiana panelu wymagają właściwej roli,
-audytu i wersjonowania.
+Budżety są egzekwowane przez politykę 8gent przed przekazaniem do OpenClaw i
+przez potwierdzony mechanizm provider/model config; ostrzeżenia przy 70%/90%
+nie zastępują blokady. Podniesienie limitu i każda zmiana panelu wymagają
+właściwej roli, audytu i wersjonowania.
 
 Agent stanowiskowy ma `parent`, jedną osobę/grant i `secrets: []`; walidator
 odrzuca niepustą listę sekretów. Przejęcie stanowiska odbiera dostęp poprzedniej
@@ -261,7 +275,7 @@ osobie, nadaje następnej i zachowuje dorobek stanowiska.
 ### MVP3 — Wiedza
 
 STATUS: `CANONICAL` z blokadą D-011; SOURCE: `docs/spec/03-mvp3.md`, SHA-256
-`8d86f8ff83722b7e835d9f385dfe062960069982e55d512eeff2db3cc48b4047`.
+`7f75bc4acfc450373ff42dae61f2975f8c467bb553861d82ccd886646674f68c`.
 
 Zakres: poziomy firma → zespół → prywatny, wersjonowana wiedza w repozytorium,
 skrócone indeksy i pobieranie dokumentów na żądanie, rozdzielenie pamięci,
@@ -279,18 +293,19 @@ pamięci. Bez tego MVP3 nie startuje; MVP1 i MVP2 są niezależne.
 ### MVP4 — Skala
 
 STATUS: `CANONICAL`; SOURCE: `docs/spec/04-mvp4.md`, SHA-256
-`cd52c8cf8a37cd31de8d34ca4a62a621a72a61fe8d37b3bdf5843fdf1f1fd7d6`.
+`56a35857622bada9aac1acd246e729c7da20b36b8d84f2982fb58fbdda61d113`.
 
-Zakres: tokenizacja przed wysłaniem promptu, pula instancji z konsekwentnym
-routingiem sesji, jeden router Teams, konektory, wielonajemność, retencja i
-eksport oraz bramka akcji z domyślną odmową.
+Zakres: tokenizacja przed wysłaniem promptu, OpenClaw Gateway/agents/workspaces
+z potwierdzonym routingiem sesji i failoverem, kanały/connectors, wielonajemność,
+retencja i eksport oraz bramka akcji z domyślną odmową.
 
 Tokenizacja podmienia identyfikatory przed wyjściem do modelu, a tablica mapowań
 zostaje po stronie firmy. Jest pseudonimizacją, nie anonimizacją; dane nadal są
-osobowe i wymagana umowa powierzenia nie znika. Pula zachowuje zasadę jednego
-pisarza profilu i odtwarza sesje po awarii. Router przed przekazaniem wykonuje
-`can_use`. Izolacja najemców jest wymuszana po stronie dostępu, profile i klucze
-są odrębne, a instalacja drugiego klienta ma być konfiguracyjna.
+osobowe i wymagana umowa powierzenia nie znika. Model failoveru sesji i stan
+agenta wymaga testu na wybranej wersji OpenClaw. Routing kanałów wykonuje
+OpenClaw, a 8gent egzekwuje `can_use`. Izolacja najemców jest wymuszana po
+stronie dostępu, agenci/workspace'y i refs providerów są odrębne, a instalacja
+drugiego klienta ma być konfiguracyjna.
 
 Każda akcja narzędzia przechodzi przez regułę polityki: brak reguły oznacza
 blokadę i audyt próby, reguła zezwalająca oznacza wykonanie i audyt. Retencja
@@ -301,7 +316,7 @@ retencji audytu.
 
 STATUS: `CANONICAL_INPUT` → ekstrakcja `STAGING_ONLY`
 SOURCE_OF_TRUTH: `docs/spec/scenarios.md`, SHA-256
-`8b8be2a4e631fa92306dca1779a858d0c95803bc6623b0fc60a84c5b55dd570d`
+`bce156a14968a1bef898b0f4d60dff35d015f1c2e3fa93143103c18b91761193`
 P4: `PF-0242` oraz tabele odbioru `PF-0236`–`PF-0239`
 
 Identyfikatory są zachowane literalnie. Pełny plik `docs/spec/scenarios.md`
@@ -366,7 +381,7 @@ pozostaje kontraktem testowym; poniższa lista jest kopią katalogu do stagingu.
 | ID | Scenariusz | Etap |
 |---|---|---|
 | C1 | Odtworzenie bazy z kopii jest przećwiczone, nie zadeklarowane | MVP1 |
-| C2 | Awaria instancji Hermesa przenosi rozmowy i odtwarza sesje | MVP4 |
+| C2 | Awaria OpenClaw Gatewaya — rozmowy przenoszone, sesje odtwarzane zgodnie z potwierdzonym modelem runtime | MVP4 |
 | C3 | Żądanie usunięcia danych osoby działa, a audyt jest zanonimizowany | MVP4 |
 | C4 | Eksport danych osoby jest tekstowy | MVP4 |
 | C5 | Instalacja drugiego klienta wymaga tylko konfiguracji i jednego dnia | MVP4 |
@@ -376,22 +391,22 @@ pozostaje kontraktem testowym; poniższa lista jest kopią katalogu do stagingu.
 
 | ID | Scenariusz | Etap |
 |---|---|---|
-| U1 | Pracownik loguje się do webowej powierzchni i widzi gotowy profil oraz przydzielone czaty | MVP1 |
-| U2 | Pracownik otwiera czat bez znajomości gatewaya, serwera, modelu, poświadczeń i routingu | MVP1 |
+| U1 | Pracownik loguje się do OpenClaw Control UI, kanału albo webowej warstwy 8gent i widzi gotowego agenta oraz wyłącznie przydzielone sesje | MVP1 |
+| U2 | Pracownik otwiera sesję bez znajomości Gatewaya, adresu serwera, modelu, poświadczeń i routingu | MVP1 |
 | U3 | Zamknięcie przeglądarki odłącza widok, ale serwer utrzymuje zdrową pracę i ten sam stan | MVP1 |
-| U4 | Pracownik nie ma dostępu do profili technicznych, budżetów, poświadczeń, routingu ani ustawień zaawansowanych | MVP1 |
-| U5 | Administrator zarządza przez web administracyjny albo terminal, bez wymogu Desktopu | MVP2 |
+| U4 | Pracownik nie ma dostępu do agentDir, budżetów, poświadczeń, routingu ani ustawień zaawansowanych | MVP1 |
+| U5 | Administrator zarządza przez web administracyjny OpenClaw/8gent albo CLI, bez wymogu Desktopu | MVP2 |
 | U6 | Nakładka Desktopu korzysta z obiegu serwerowego i nie zatrzymuje pracy po zamknięciu klienta | MVP2 |
 
 ### Serwerowy pomocnik procesu
 
 | ID | Scenariusz | Etap |
 |---|---|---|
-| U7 | Cron na serwerze dostarcza pełną dyspozycję pomocnikowi bez otwartego Desktopu | MVP1 |
-| U8 | Pomocnik po terminalnym evencie uruchamia dokładnie następny zatwierdzony etap grafu | MVP1 |
-| U9 | Pomocnik nie tworzy nowego zakresu ani pustej Obrony | MVP1 |
-| U10 | Niejasność, brak dowodu, obcy profil/projekt lub konflikt receipt zatrzymuje strumień i eskaluje | MVP1 |
-| U11 | Restart lub replay tej samej dyspozycji nie tworzy drugiego runu, następcy ani dostarczenia | MVP1 |
+| U7 | OpenClaw automation uruchomiona na serwerze dostarcza pełną dyspozycję do Task Flow bez otwartego klienta | MVP1 |
+| U8 | Task Flow po terminalnym stanie uruchamia dokładnie następny zatwierdzony etap grafu | MVP1 |
+| U9 | Plugin/proces nie tworzy nowego zakresu ani pustej Obrony | MVP1 |
+| U10 | Niejasność, brak dowodu, obcy agent/projekt lub konflikt dostarczenia zatrzymuje strumień i eskaluje | MVP1 |
+| U11 | Restart Gatewaya, pluginu albo replay tej samej automatyzacji nie tworzy drugiego tasku, flow ani dostarczenia | MVP1 |
 
 ## SPEC-05 — Web-first, serwerowa własność pracy i pomocnik
 
@@ -402,38 +417,39 @@ P4: `PF-0235`, `PF-0240`, `PF-0173`
 
 ### Kolejność interfejsu
 
-Najpierw potwierdza się bezpieczny, prosty dostęp webowy do gotowego profilu i
-czatu. Pracownik nie konfiguruje gatewaya, serwera, profilu technicznego,
-modelu, poświadczeń ani routingu. Ustawienia zaawansowane są dla administratora
-przez powierzchnię administracyjną albo terminal. Desktop jest późniejszym
-klientem dodatkowym i nie jest warunkiem działania.
+Najpierw potwierdza się bezpieczny, prosty dostęp webowy do gotowego agenta i
+sesji OpenClaw. Pracownik nie konfiguruje Gatewaya, serwera, `agentDir`, modelu,
+poświadczeń ani routingu. Ustawienia zaawansowane są dla administratora przez
+OpenClaw Control UI/CLI albo powierzchnię administracyjną 8gent. Desktop jest
+późniejszym klientem dodatkowym i nie jest warunkiem działania.
 
 ### Serwer jako właściciel pracy
 
-Sesje, wywołania modeli, narzędzia, kolejka, workerzy, pamięć i audyt są
-utrzymywane przez nadzorowane procesy serwerowe. Zamknięcie przeglądarki lub
-Desktopu odłącza klienta, ale nie zatrzymuje backendu ani niezależnego zadania.
-Ponowne wejście ma pokazać ten sam stan. Sam napis „połączono” nie jest
-dowodem scenariusza U3.
+Gateway OpenClaw utrzymuje sesje, wywołania modeli, narzędzia i kanały; 8gent
+utrzymuje politykę domenową, budżet, audyt i binding użytkownika do agenta.
+Zamknięcie przeglądarki lub Desktopu odłącza klienta, ale nie zatrzymuje
+Gatewaya ani niezależnego zadania. Ponowne wejście ma pokazać ten sam stan.
+Sam napis „połączono” nie jest dowodem scenariusza U3.
 
-### Pomocnik procesu
+### Automatyzacja procesu
 
-Wariant przyjęty w D-013 to niezależny serwerowy pomocnik. Cron jest
-read-only generatorem dyspozycji. Pomocnik wykonuje świeży readback Kanbana,
-rodziców, runów, eventów i receipts, a następnie prowadzi wyłącznie istniejące,
-jednoznaczne przejścia:
+Wariant przyjęty w D-013 wymaga rekwalifikacji na OpenClaw. Bieżącym kandydatem
+są OpenClaw automations/tasks/Task Flow; AutoBot Monitor nie jest osobnym
+schedulerem ani runtime'em 8gent. Plugin/proces wykonuje świeży readback
+Kanbana, rodziców, runów, eventów i receipts, a następnie prowadzi wyłącznie
+istniejące, jednoznaczne przejścia:
 
 `Operator → Evaluator → Obrona tylko przy konkretnych zarzutach → Final Control → INTEGRATION_REQUIRED`
 
 Nie tworzy nowego zakresu, nie zmienia GOAL ani allowlisty, nie tworzy pustej
 Obrony i nie integruje, nie pushuje, nie scala ani nie wdraża. Brak dowodu,
-obcy profil/projekt, nieznany receipt, konflikt lub niejasność kończą się
+obcy agent/projekt, nieznany receipt, konflikt lub niejasność kończą się
 fail-closed i eskalacją. Restart/replay jest idempotentny, a terminalny event
 plus readback — nie status UI, raport ani `queued` — wyznacza zakończenie fazy.
 
 Wymagania te są testowane przez U7–U11. Staging nie rozstrzyga ich live stanu;
-`AUTOBOT-KANBAN.md` AutoBot Monitor i readback runtime pozostają odrębnym
-kontraktem operacyjnym.
+`AUTOBOT-KANBAN.md` i readback runtime pozostają odrębnym kontraktem
+operacyjnym oraz materiałem do ewentualnego pluginu OpenClaw.
 
 ## SPEC-06 — Techniczna macierz ról, nadań i egzekwowania
 
@@ -460,7 +476,7 @@ P4: `NAG-RBAC`, `PF-0191`, status historyczny; źródła bieżące `PF-0235`, `P
 | Nadanie grupowe | wpis w rejestrze, potem synchronizacja tylko tej grupy | MVP2 §3 | norma bieżąca; A4/A5 |
 | Wyłączenie konta | odebranie dostępów i unieważnienie sesji bez czekania na zwykły cykl | MVP2 §3 | norma bieżąca; A3/A6 |
 | Podniesienie limitu | właściwa rola, zatwierdzenie i audyt | MVP2 §4, §7 | norma bieżąca; K3 |
-| Zmiana w systemie zewnętrznym | wbudowane zatwierdzenie Hermesa z określeniem, kto może zatwierdzić | architektura §6.5; MVP2 §5 | norma bieżąca; R6 |
+| Zmiana w systemie zewnętrznym | OpenClaw approval policy + kontrola roli 8gent; wiadomość nie wychodzi bez zatwierdzenia | architektura §6.5; MVP2 §5 | norma bieżąca; R6 |
 | Przejęcie stanowiska | odebranie starego grantu, nadanie nowego, dorobek bez zmian | MVP2 §6 | norma bieżąca; A7 |
 | Użycie sekretu przez stanowiskowego | walidator odrzuca niepustą `secrets` | D-003; MVP2 §6 | twarda bariera; B-02 |
 | Webhook/akcja | sekret-ref, podpis, rate-limit, polityka i audyt także odmowy | MVP3 §5; MVP4 §6 | przyszły zakres; P2/P3/C6 |
@@ -517,13 +533,13 @@ bieżący SHA to `bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae0023
 | Source path | Source ID / P4 family | Status P4 | Bieżący SHA-256 | P4 preferred / warianty |
 |---|---|---|---|---|
 | `docs/spec/00-architektura.md` | `NAGENTS_CHECKOUT`; `PF-0235` | `CANONICAL` | `322a6c2a76dc4c6bee53c7c1569c306767eb29cd05420bf298e34672aca133cc` | `322a...` current; `17318e...` history |
-| `docs/spec/01-mvp1.md` | `NAGENTS_CHECKOUT`; `PF-0236` | `CANONICAL` | `e2dfb80d198052474450b08a5a4de0b740c1230021a7608e51d56f37e6405066` | `e2df...` current; `cc268...` history |
-| `docs/spec/02-mvp2.md` | `NAGENTS_CHECKOUT`; `PF-0237` | `CANONICAL` | `10cbba06ac5179dee6ff97107fb9f1a109f91419cca7d803412eba25faaddd48` | one P4 hash |
-| `docs/spec/03-mvp3.md` | `NAGENTS_CHECKOUT`; `PF-0238` | `CANONICAL` | `8d86f8ff83722b7e835d9f385dfe062960069982e55d512eeff2db3cc48b4047` | one P4 hash |
-| `docs/spec/04-mvp4.md` | `NAGENTS_CHECKOUT`; `PF-0239` | `CANONICAL` | `cd52c8cf8a37cd31de8d34ca4a62a621a72a61fe8d37b3bdf5843fdf1f1fd7d6` | one P4 hash |
+| `docs/spec/01-mvp1.md` | `NAGENTS_CHECKOUT`; `PF-0236` | `CANONICAL` | `d3a331379cc14fa96072d5c557f3fa25f4c27bfd8d313ba6ff2be0836b5059b5` | `e2df...` current; `cc268...` history |
+| `docs/spec/02-mvp2.md` | `NAGENTS_CHECKOUT`; `PF-0237` | `CANONICAL` | `7bf4c4a403ca2eac8159ee539670ce7038f30b029db359de6d4e631041123b71` | one P4 hash |
+| `docs/spec/03-mvp3.md` | `NAGENTS_CHECKOUT`; `PF-0238` | `CANONICAL` | `143bf077581f998cac52fdc61f10fc1fda951bd43603c043d2338263dc031a1f` | one P4 hash |
+| `docs/spec/04-mvp4.md` | `NAGENTS_CHECKOUT`; `PF-0239` | `CANONICAL` | `71bf821ddab23eec1653b01b2fb6cc3fb4ea68b3aadc0e7dcc5dd62bbbb64a0e` | one P4 hash |
 | `docs/spec/README.md` | `NAGENTS_CHECKOUT`; `PF-0240` | `CANONICAL` | `2f5719a2a41e0fb9f69404b66a0adfce6d90e3e8fabc96caaf8e5815d036b1f6` | `2f5719...` current; `d075...` history |
-| `docs/spec/decisions.md` | `NAGENTS_CHECKOUT`; `PF-0241` | `CANONICAL` | `57264a14bcf38b38811d42b025aba31359470db6c4e33dbc7abe9cad03681d49` | `57264...` current; `ee793...` history |
-| `docs/spec/scenarios.md` | `NAGENTS_CHECKOUT`; `PF-0242` | `CANONICAL` | `8b8be2a4e631fa92306dca1779a858d0c95803bc6623b0fc60a84c5b55dd570d` | `8b8be2...` current; `7084...` history |
+| `docs/spec/decisions.md` | `NAGENTS_CHECKOUT`; `PF-0241` | `CANONICAL` | `a7fafa769a9672662a0cb614640fb3a52096b7f3c3bec4e18fd32618edd71650` | `57264...` current; `ee793...` history |
+| `docs/spec/scenarios.md` | `NAGENTS_CHECKOUT`; `PF-0242` | `CANONICAL` | `bce156a14968a1bef898b0f4d60dff35d015f1c2e3fa93143103c18b91761193` | `8b8be2...` current; `7084...` history |
 | `CLAUDE.md` | `NAGENTS_CHECKOUT`; `PF-0173` | `CANONICAL` | `8de583cc4fece98c55c49b5fac9f1562669040204f571ee2daacc9905e9390d2` | P4 variant `8de583...` is current local input |
 | `NAGENTS-PROJECT.md` | `NAGENTS_CHECKOUT`; `PF-0184` | `CONSOLIDATION_CANDIDATE` | `bab1666d8528622b055b1a3f0b9e21a918be5efabc5be0af2ac06064ae00236a` | live readback required; not a spec authority |
 | `NAGENTS-CONSOLIDATION-PLAN.md` | P6 plan artifact | `PLAN_ONLY` | `b282d9e49bf77994a290fbfab71803217d02c9565ab8809e6fbf33501ca4b15c` | matrix source |

@@ -8,7 +8,7 @@ Format: numer, data, stan, decyzja, rozważane opcje, uzasadnienie, konsekwencje
 ---
 
 ## D-001 · Budujemy, nie kupujemy
-**2026-08-22 · przyjęta**
+**2026-08-22 · przyjęta; wybór platformy superseded przez D-014**
 
 **Decyzja:** budujemy własną warstwę zarządzania na Hermesie. Gotowa platforma
 (appto) pozostaje **wzorcem projektowym**, nie zakupem.
@@ -26,7 +26,7 @@ Wzorce funkcjonalne kopiujemy świadomie — bez gonienia parytetu.
 ---
 
 ## D-002 · Brama modeli jest nasza
-**2026-08-22 · przyjęta**
+**2026-08-22 · przyjęta; superseded przez D-014**
 
 **Decyzja:** wszystkie wywołania modeli przechodzą przez LiteLLM, z naszymi kluczami.
 Żaden inny komponent nie zna poświadczeń dostawców.
@@ -156,6 +156,10 @@ i `parent_agent_id` istnieją od MVP1. Wybór zapada po MVP1, na danych z realne
 
 **Termin:** przed rozpoczęciem MVP3.
 
+**Aktualizacja po D-014:** pytanie o topologię pozostaje otwarte, ale jego
+uzasadnienie i test należy oprzeć na izolacji agentów, `agentDir`, workspace'ach
+i sesjach OpenClaw, a nie na ograniczeniach Hermesa. Sprawdzenie nie jest
+jeszcze wykonane.
 ---
 
 ## D-011 · Rezydencja wspólnej pamięci — blokada
@@ -180,13 +184,14 @@ kosztem tego, że agenci nie uczą się z rozmów.
 **2026-09-13 · przyjęta dyrektywą właściciela**
 
 **Decyzja:** 8gent dostarcza najpierw bezpieczny, prosty dostęp webowy do
-gotowych profili i czatów. Pracownik nie konfiguruje gatewaya, serwera, profilu
-technicznego, modeli ani poświadczeń. Serwer jest właścicielem sesji, kolejki,
-workerów, pamięci i audytu; przeglądarka oraz Desktop są klientami.
+agentów i sesji OpenClaw. Pracownik nie konfiguruje Gatewaya, serwera, agenta,
+modeli ani poświadczeń. Gateway jest właścicielem sesji, zadań i runtime'u;
+przeglądarka, Control UI, kanały i Desktop są klientami.
 
-Nakładka na Desktop albo dostosowanie Desktopu wchodzi dopiero jako drugi etap,
-po potwierdzeniu scenariusza webowego. AutoBot Router i AutoBot Monitor pozostają
-modułami 8gent, a nie osobnymi projektami nadrzędnymi.
+Nakładka na Desktop albo dostosowanie dodatkowego klienta wchodzi dopiero jako
+kolejny etap, po potwierdzeniu scenariusza webowego. AutoBot Monitor nie jest
+bieżącym osobnym modułem: zgodnie z D-014 może zostać tylko kandydatem na
+opcjonalny plugin OpenClaw po potwierdzeniu luki.
 
 **Rozważane opcje:**
 
@@ -207,11 +212,11 @@ serwerową ścieżkę wykonania.
 **Konsekwencje:**
 
 1. Pierwszym zadaniem jest potwierdzenie bezpiecznego, łatwego dostępu przez
-   istniejącą webową powierzchnię Hermesa albo web 8gent.
+   OpenClaw Control UI, wybrany kanał albo web 8gent.
 2. Zamknięcie przeglądarki musi zostać sprawdzone jako scenariusz ciągłości;
    sam status „połączono" nie jest dowodem.
-3. Ustawienia zaawansowane trafiają do powierzchni administratora 8gent/Hermesa
-   albo terminala; pracownik widzi przydzielony profil i czat.
+3. Ustawienia zaawansowane trafiają do powierzchni administratora 8gent,
+   Control UI/CLI OpenClaw albo terminala; pracownik widzi przydzielonego agenta i sesję.
 4. Desktop nie może być wymagany do działania 8gent ani do utrzymania workerów.
 5. Dokładny wybór hosta, uwierzytelniania, TLS i rezydencji danych pozostaje
    osobnymi decyzjami, jeśli zmieni koszt, dostęp, dane lub odwracalność.
@@ -219,7 +224,7 @@ serwerową ścieżkę wykonania.
 ---
 
 ## D-013 · Serwerowy pomocnik procesu dla autonomicznej pętli
-**2026-09-13 · przyjęta wyborem właściciela wariantu A**
+**2026-09-13 · przyjęta wyborem właściciela wariantu A; implementacja Hermes-era superseded przez D-014**
 
 **Decyzja:** 8gent używa serwerowego pomocnika procesu z trwałą instrukcją,
 który odbiera dyspozycje Crona i prowadzi wyłącznie kwalifikowane przejścia
@@ -262,3 +267,47 @@ strumienia i eskalację.
 4. Pytania produktowe, decyzje o danych, kosztach, dostępie, prawie,
    odwracalności oraz wszystkie niejednoznaczności trafiają do eskalacji.
 5. Zamykanie Desktopu jest wymaganym scenariuszem testowym, nie założeniem.
+
+---
+
+## D-014 · OpenClaw jako podstawa runtime; bez osobnego OpenRoutera i OpenMonitora
+**2026-09-15 · przyjęta dyrektywą właściciela**
+
+**Źródło:** literalna decyzja właściciela z 2026-09-15, zapisana w
+`docs/OPENCLAW-STRATEGY.md`.
+
+**Decyzja:** 8gent nie będzie oparty o Hermesa. Podstawą runtime i control plane
+jest OpenClaw. Nie budujemy osobnego OpenRoutera ani OpenMonitora, ponieważ
+najpierw wykorzystujemy natywne możliwości OpenClaw. Dotychczasowa praca nie
+jest odrzucana: jej użyteczne elementy mogą zostać wykorzystane w 8gent albo
+zaadaptowane jako opcjonalna wtyczka AutoBot Monitor dla OpenClaw.
+
+**Rozważane warianty:**
+
+- **(A) Hermes + LiteLLM** — zachowuje wcześniejszą pracę, ale pozostaje poza
+  nową decyzją strategiczną i wymaga osobnego control plane.
+- **(B) OpenClaw-first** — korzysta z Gatewaya, agentów, sesji, kanałów,
+  automatyzacji, tasks, Task Flow i pluginów OpenClaw; własny kod ogranicza do
+  potrzeb domeny 8gent.
+- **(C) własny runtime 8gent** — daje pełną kontrolę, ale powiela funkcje
+  platformy i zwiększa zakres utrzymania.
+
+**Wybór właściciela:** **(B)**.
+
+**Konsekwencje:**
+
+1. D-001 zachowuje decyzję „budujemy własną warstwę”, ale jego założenie o
+   Hermesie jako platformie jest zastąpione przez OpenClaw.
+2. D-002 o LiteLLM jako obowiązkowej bramie modeli jest superseded. Provider,
+   model, fallback i allowlista są punktem wyjścia w OpenClaw; budżet, RBAC,
+   usage i audyt pozostają odpowiedzialnością domeny 8gent.
+3. D-013 zachowuje procesowe zasady readbacku, fail-closed i eskalacji, ale
+   pomocnik Hermes-era nie jest bieżącą architekturą. Nowy proces należy oprzeć
+   najpierw na OpenClaw automations, tasks i Task Flow.
+4. AutoBot Monitor jest tylko kandydatem na plugin. Nie wolno tworzyć drugiego
+   Gatewaya, schedulera, OpenMonitora ani ukrytego OpenRoutera.
+5. Instalacja OpenClaw, kanały, auth, migracja danych, test wieloagentowy i
+   plugin pozostają osobnymi bramkami właściciela. Sama dokumentacja OpenClaw
+   nie dowodzi działającego runtime'u na naszym środowisku.
+6. D-010 i D-011 wymagają ponownego sprawdzenia w modelu OpenClaw; nie
+   rozstrzygają ich założenia odziedziczone po Hermesie.

@@ -21,6 +21,14 @@ backup pushu, publikacji, restartu, zmiany profilu, zmiany gatewaya, operacji
 na Desktopie ani operacji live. Wszystkie komendy w dalszej części są
 procedurą dla właściciela do wykonania dopiero po sprawdzeniu celu i bram.
 
+## Aktualizacja platformy D-014
+
+Ten lifecycle nie jest bieżącym runbookiem OpenClaw. Traktuj go jako materiał
+reuse do ewentualnego pluginu AutoBot Monitor. Odwołania do profilu Hermesa,
+Desktop pluginu, backendu, gatewaya i instalacji są historyczne/proceduralne;
+nie wolno ich wykonać bez nowej macierzy OpenClaw, wersji hosta, manifestu,
+testu bezpieczeństwa i osobnej zgody właściciela.
+
 ## 0. Trzy rozdzielone warstwy działania
 
 | Warstwa | Co obejmuje | Kto wykonuje | Stan w tym artefakcie |
